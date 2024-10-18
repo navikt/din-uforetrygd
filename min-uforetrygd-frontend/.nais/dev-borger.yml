@@ -19,13 +19,13 @@ spec:
     min: 2
     max: 2
   liveness:
-    path: /api/internal/health
+    path: /uforetrygd/selvbetjening/api/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
   readiness:
-    path: /api/internal/health
+    path: /uforetrygd/selvbetjening/api/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5
