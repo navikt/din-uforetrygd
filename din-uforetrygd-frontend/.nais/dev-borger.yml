@@ -19,13 +19,13 @@ spec:
     min: 2
     max: 2
   liveness:
-    path: /internal/health/liveness
+    path: /api/internal/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
   readiness:
-    path: /internal/health/readiness
+    path: /api/internal/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5
