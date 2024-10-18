@@ -3,10 +3,10 @@ import { Heading } from "@navikt/ds-react"
 import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr"
 import Script from "next/script"
 
-const decoratorEnv = (process.env.DECORATOR_ENV ?? "prod") as "dev" | "prod"
-const mode = process.env.MODE as "borger" | "veileder"
-
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
+    const decoratorEnv = (process.env.DECORATOR_ENV ?? "prod") as "dev" | "prod"
+    const mode = process.env.MODE as "borger" | "veileder"
+
     const Decorator = await fetchDecoratorReact({
         env: decoratorEnv
     })
