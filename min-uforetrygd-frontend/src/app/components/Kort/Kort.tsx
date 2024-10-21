@@ -1,12 +1,19 @@
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import styles from "./kort.module.css";
+import React, {
+  ForwardRefExoticComponent,
+  RefAttributes,
+  SVGProps,
+} from "react";
 
 interface IKortProps {
   title: string;
   description?: string;
   link: string;
-  icon: React.ReactNode;
+  icon: ForwardRefExoticComponent<
+    SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+  >;
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
@@ -27,7 +34,7 @@ export const Kort: React.FC<IKortProps> = (props) => {
               padding="3"
               aria-hidden
             >
-              {props.icon}
+              <props.icon fontSize="1.5rem" />
             </Box>
             <VStack justify="center" gap="1">
               <Heading
