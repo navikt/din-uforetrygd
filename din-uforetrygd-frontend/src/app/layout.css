@@ -1,0 +1,26 @@
+@import "@navikt/ds-tokens";
+
+:root {
+  --content-width: 992px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--a-bg-default);
+}
+
+.main-content > section {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: 12px;
+}
+
+.main-content {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--a-spacing-10);
+  margin-top: var(--a-spacing-6);
+  margin-bottom: var(--a-spacing-18);
+}
