@@ -27,6 +27,9 @@ export default function Home() {
         <Heading level="2" size="medium">
           Dine saker til behandling
         </Heading>
+        <LinkList>
+          <Link href="#">Uføretrygd</Link>
+        </LinkList>
       </section>
 
       <ShowMore

@@ -14,14 +14,18 @@
 }
 
 .dividedVariantLink:first-child {
+  padding-top: 10px;
   border-top: 1px solid var(--a-border-divider); /* Divider between links */
 }
 
 .dividedVariantLink {
-  margin: 0;
   border-bottom: 1px solid var(--a-border-divider); /* Divider between links */
 }
 
+.link:not(:first-child) {
+  padding-top: 10px;
+}
+
 .link {
-  padding: 13px 0;
+  padding-bottom: 10px;
 }
