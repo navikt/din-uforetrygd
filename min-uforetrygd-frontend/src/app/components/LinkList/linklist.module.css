@@ -5,6 +5,23 @@
   grid-template-colums: auto 1fr;
 }
 
+.dividedVariant {
+  color: black;
+}
+
+.dividedVariantLink a {
+  color: var(--a-text-default);
+}
+
+.dividedVariantLink:first-child {
+  border-top: 1px solid var(--a-border-divider); /* Divider between links */
+}
+
+.dividedVariantLink {
+  margin: 0;
+  border-bottom: 1px solid var(--a-border-divider); /* Divider between links */
+}
+
 .link {
-  margin: 10px 0;
+  padding: 13px 0;
 }
