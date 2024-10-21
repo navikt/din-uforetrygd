@@ -1,4 +1,4 @@
-import { Box, Heading, Link } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, Link, List } from "@navikt/ds-react";
 import { Kort, KortGrid } from "./components/Kort";
 import {
   EnvelopeClosedIcon,
@@ -6,6 +6,8 @@ import {
   SackKronerIcon,
 } from "@navikt/aksel-icons";
 import { SakTilBehandling } from "./components/SakTilBehandling";
+import { ShowMore } from "./components/ShowMore";
+import { ListItem } from "@navikt/ds-react/List";
 
 export default function Home() {
   return (
@@ -20,6 +22,40 @@ export default function Home() {
         <Heading level="2" size="medium">
           Dine saker til behandling
         </Heading>
+      </section>
+
+      <section>
+        <ShowMore
+          heading="Ditt uførevedtak, inntekt og inntektsgrenser"
+          aria-labelledby="info-heading"
+          collapsedHeight="10rem"
+          scrollBackOnCollapse={false}
+          variant="info"
+        >
+          <List>
+            <ListItem>Uføregrad 80 prosent</ListItem>
+            <ListItem>Uføretidspunkt 03.05.2018</ListItem>
+            <ListItem>Uføretrygd ble invilget 06.07.2021</ListItem>
+            <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>
+          </List>
+          <Heading level="3" size="small">
+            Tillegg til uføretrygden
+          </Heading>
+          <List>
+            <ListItem>Barnetillegg for 1 særkullsbarn og 2 fellesbarn</ListItem>
+            <ListItem>Gjenlevendetillegg</ListItem>
+          </List>
+
+          <Heading level="3" size="small">
+            Inntektsgrense og registrert forventet inntekt
+          </Heading>
+          <BodyShort>
+            Har du inntekt ved siden av uføretrygden? Du finner dine
+            inntektsgrenser, trekkprosent (kompensasjonsgrad) og hvilken inntekt
+            vi har beregnet din uføretrygd ut fra, på førstesiden i{" "}
+            <Link href="#">inntektsplanleggeren</Link>.
+          </BodyShort>
+        </ShowMore>
       </section>
 
       <section>
