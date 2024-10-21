@@ -1,0 +1,10 @@
+.linkList {
+  list-style: none;
+  padding-inline-start: 0;
+  display: grid;
+  grid-template-colums: auto 1fr;
+}
+
+.link {
+  margin: 10px 0;
+}
