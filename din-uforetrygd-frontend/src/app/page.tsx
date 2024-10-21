@@ -139,6 +139,15 @@ export default function Home() {
         <Heading level="2" size="medium">
           Relevante søknader
         </Heading>
+        <div style={{ maxWidth: "450px" }}>
+          <LinkList variant="divided">
+            <Link href="#">
+              Søknad om endret inntektsgrense - gradert uføretrygd
+            </Link>
+            <Link href="#">Søknad om uføretrygd</Link>
+            <Link href="#">Søknad om barnetillegg til uføretrygd</Link>
+          </LinkList>
+        </div>
       </section>
 
       <section>
