@@ -47,7 +47,9 @@ const RootLayout = async ({
       </head>
       <body>
         <Decorator.Header />
-        <main className="main-content">{children}</main>
+        <main className="main-content" id="maincontent" tabIndex={-1}>
+          {children}
+        </main>
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
       </body>
