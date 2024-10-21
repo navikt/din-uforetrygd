@@ -12,6 +12,7 @@ import {
 import { SakTilBehandling } from "./components/SakTilBehandling";
 import { ShowMore } from "./components/ShowMore";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkList } from "./components/LinkList";
 
 export default function Home() {
   return (
@@ -144,6 +145,13 @@ export default function Home() {
         <Heading level="2" size="medium">
           Kan være aktuelt for deg
         </Heading>
+        <LinkList>
+          <Link href="#">Les mer om uføretrygd</Link>
+          <Link href="#">Endre kontonummer</Link>
+          <Link href="#">Personopplysninger</Link>
+          <Link href="#">Økonomiske tillegg og andre ordninger</Link>
+          <Link href="#">Klage</Link>
+        </LinkList>
       </section>
     </>
   );
