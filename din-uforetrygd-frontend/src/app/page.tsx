@@ -13,12 +13,20 @@ import { SakTilBehandling } from "@/components/SakTilBehandling";
 import { ShowMore } from "@/components/ShowMore";
 import { ListItem } from "@navikt/ds-react/List";
 import { LinkList } from "@/components/LinkList";
+import type { paths } from "@/api.d.ts";
+import createClient from "openapi-fetch";
 
-export default function Home() {
+const client = createClient<paths>({
+  baseUrl: "http://localhost:3000/uforetrygd/selvbetjening",
+});
+
+export default async function Home() {
+  const initResponse = await client.GET("/api/initiate");
+
   return (
     <>
       <Heading size="xlarge" level="1">
-        Uføretrygd
+        Uføretrygd: {initResponse?.data?.loggetInnSom ?? "ikke funnet"}
       </Heading>
 
       <SakTilBehandling />
