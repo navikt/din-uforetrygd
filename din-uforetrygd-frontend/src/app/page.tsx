@@ -1,5 +1,5 @@
 import { BodyShort, Box, Heading, Link, List } from "@navikt/ds-react";
-import { Kort, KortGrid } from "./components/Kort";
+import { Kort, KortGrid } from "@/components/Kort";
 import {
   EnvelopeClosedIcon,
   FileExportIcon,
@@ -9,10 +9,10 @@ import {
   ReceiptIcon,
   SackKronerIcon,
 } from "@navikt/aksel-icons";
-import { SakTilBehandling } from "./components/SakTilBehandling";
-import { ShowMore } from "./components/ShowMore";
+import { SakTilBehandling } from "@/components/SakTilBehandling";
+import { ShowMore } from "@/components/ShowMore";
 import { ListItem } from "@navikt/ds-react/List";
-import { LinkList } from "./components/LinkList";
+import { LinkList } from "@/components/LinkList";
 
 export default function Home() {
   return (
