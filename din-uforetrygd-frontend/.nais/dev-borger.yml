@@ -48,12 +48,14 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
-        - application: tokenx-token-generator
+        - application: tokenx-token-generator # only in dev
           namespace: aura
           cluster: dev-gcp
-        - application: azure-token-generator
+        - application: azure-token-generator # only in dev
           namespace: aura
           cluster: dev-gcp
+        - application: wonderwalled-idporten # only in dev
+          namespace: aura
   #        - application: uforetrygd-backend-q2
   env:
     - name: MODE
