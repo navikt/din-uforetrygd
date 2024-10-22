@@ -6,17 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api.d.ts"
   },
   "dependencies": {
+    "@elastic/ecs-winston-format": "^1.5.3",
     "@navikt/aksel-icons": "^7.2.1",
     "@navikt/ds-css": "^7.2.1",
     "@navikt/ds-react": "^7.2.1",
     "@navikt/nav-dekoratoren-moduler": "^3.1.1",
+    "@navikt/oasis": "^3.4.0",
     "clsx": "^2.1.1",
     "next": "14.2.15",
+    "openapi-fetch": "^0.12.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "winston": "^3.15.0"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -24,6 +29,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
+    "openapi-typescript": "^7.4.1",
     "typescript": "^5"
   }
 }
