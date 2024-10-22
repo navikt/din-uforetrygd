@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class PensjonService(val penClient: PenClient) {
+class PenService(val penClient: PenClient) {
     fun getSaker(pid: String): List<Sak> {
         return penClient.getSaksammendrag(pid)
             .map { mapSakSammendragToSak(it, pid) }
