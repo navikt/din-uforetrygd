@@ -8,7 +8,9 @@ async function handler(req: NextRequest) {
   const backendUrl = `https://uforetrygd-backend.intern.dev.nav.no/${apiPath}`;
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const oboToken = await getOboToken(req);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = await fetch(backendUrl);
     return NextResponse.json({ loggetInnSom: "tester en person" });
   } catch (error) {
