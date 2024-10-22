@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class UforetrygdController {
 
     @GetMapping("initiate")
-    fun initiateDinPensjon(): ResponseEntity<InitResponse> {
+    fun initiateUforetrygd(): ResponseEntity<InitResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(InitResponse(true))
