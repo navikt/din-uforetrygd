@@ -1,0 +1,108 @@
+package no.nav.uforetrygdbackend.fullmakt
+
+import no.nav.uforetrygdbackend.WebClientTest
+import no.nav.uforetrygdbackend.configuration.AppId
+import no.nav.uforetrygdbackend.security.TokenService
+import okhttp3.mockwebserver.MockResponse
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.springframework.http.HttpStatus
+import org.springframework.web.reactive.function.client.WebClient
+
+class FullmaktClientTest : WebClientTest() {
+    val tokenService = Mockito.mock(TokenService::class.java)
+    lateinit var fullmaktClient: FullmaktClient
+
+    @BeforeEach
+    override fun setup() {
+        super.setup()
+        fullmaktClient = FullmaktClient(
+            baseUrl = baseUrl, webClient = WebClient.create(), scope = "", audience = "", tokenService = tokenService
+        )
+        `when`(tokenService.getEgressToken("", "", PID_FULLMEKTIG, AppId.PENSJON_FULLMAKT)).thenReturn("")
+    }
+
+    @Test
+    fun `should return RepresentasjonsforholdValidity when 200 response from hasValidRepresentasjonsforhold`() {
+        prepare(hasValidRepresentasjonsforholdResponse200())
+        assertEquals(
+            RepresentasjonsforholdValidity(true, "Navn Navnesen"),
+            fullmaktClient.hasValidRepresentasjonsforhold(PID_FULLMAKTSGIVER, PID_FULLMEKTIG)
+        )
+        val request = takeRequest()
+
+        assertEquals(
+            "/representasjon/hasValidRepresentasjonsforhold?" +
+                    "validRepresentasjonstyper=PENSJON_FULLSTENDIG" +
+                    "&validRepresentasjonstyper=PENSJON_BEGRENSET" +
+                    "&validRepresentasjonstyper=PENSJON_SKRIV" +
+                    "&validRepresentasjonstyper=PENSJON_KOMMUNISER" +
+                    "&validRepresentasjonstyper=PENSJON_LES" +
+                    "&validRepresentasjonstyper=PENSJON_VERGE" +
+                    "&validRepresentasjonstyper=PENSJON_SAMHANDLER" +
+                    "&validRepresentasjonstyper=PENSJON_SAMHANDLER_ADMIN" +
+                    "&validRepresentasjonstyper=PENSJON_SUPERADMIN" +
+                    "&validRepresentasjonstyper=PENSJON_VERGE_PENGEMOTTAKER" +
+                    "&includeFullmaktsgiverNavn=false",
+            request.path
+        )
+        assertEquals(PID_FULLMAKTSGIVER, request.getHeader("fullmaktsgiverPid"))
+    }
+
+    @Test
+    fun `should return list of representasjonsforhold when 200 response from findAllRepresentasjonsforhold`() {
+        prepare(findAllRepresentasjonsforholdResponse200())
+        assertEquals(
+            listOf(
+                Representasjonsforhold(
+                    PID_FULLMAKTSGIVER,
+                    "Navn Navnesen",
+                    listOf("PENSJON_SKRIV"),
+                    "PDL"
+                )
+            ),
+            fullmaktClient.findAllRepresentasjonsforhold(PID_FULLMEKTIG)
+        )
+        val request = takeRequest()
+
+        assertEquals("/representasjon/findAllRepresentasjonsforhold", request.path)
+    }
+
+    private fun hasValidRepresentasjonsforholdResponse200(): MockResponse {
+        return jsonResponse(HttpStatus.OK)!!
+            .setBody(
+                """
+                    {
+                    "hasValidRepresentasjonsforhold": true,
+                    "fullmaktsgiverNavn": "Navn Navnesen"
+                    }
+                """.trimIndent()
+            )
+    }
+
+    private fun findAllRepresentasjonsforholdResponse200(): MockResponse {
+        return jsonResponse(HttpStatus.OK)!!
+            .setBody(
+                """
+                        [
+                            {
+                                "fullmaktsgiver": "$PID_FULLMAKTSGIVER",
+                                "fullmaktsgiverNavn": "Navn Navnesen",
+                                "typer": ["PENSJON_SKRIV"],
+                                "gyldigFraOgMed": "2000-01-02",
+                                "gyldigTilOgMed": "2018-09-12",
+                                "kilde": "PDL"
+                            }
+                        ]
+                """.trimIndent()
+            )
+    }
+
+    companion object {
+        const val PID_FULLMEKTIG = "00000000001"
+        const val PID_FULLMAKTSGIVER = "00000000000"
+    }
+}
