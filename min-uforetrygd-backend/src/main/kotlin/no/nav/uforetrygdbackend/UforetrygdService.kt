@@ -1,17 +1,26 @@
 package no.nav.uforetrygdbackend
 
 import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
-import no.nav.uforetrygdbackend.pensjon.pen.PensjonService
+import no.nav.uforetrygdbackend.pensjon.pen.PenService
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
 import org.springframework.stereotype.Service
 
 @Service
 class UforetrygdService(
-    private val pensjonService: PensjonService,
+    private val penService: PenService,
     private val tokenService: TokenService,
     private val fullmaktClient: FullmaktClient,
 ) {
+
+    fun constructUforetrygdResponse(pid: String): UforetrygdResponse = UforetrygdResponse(
+        pid = pid,
+        loggetInnSom = tokenService.determineLoggedInUser(),
+        saker = penService.getSaker(pid),
+        tilgangstype = determineTilgangstype(),
+        innloggingstype = tokenService.getInnloggingstype(),
+        harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
+    )
 
     private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
         if(SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
