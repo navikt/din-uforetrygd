@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: uforetrygd-frontend-veileder-q2
+  name: uforetrygd-frontend-veileder
   namespace: pensjonselvbetjening
   labels:
     team: pensjonselvbetjening
@@ -11,8 +11,8 @@ metadata:
 spec:
   image: "{{ image }}"
   ingresses:
-    - https://uforetrygd-selvbetjening-frontend-veileder-q2.intern.dev.nav.no/uforetrygd/selvbetjening
-    - https://uforetrygd-selvbetjening-frontend-veileder-q2.ansatt.dev.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-selvbetjening-frontend-veileder.intern.dev.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-selvbetjening-frontend-veileder.ansatt.dev.nav.no/uforetrygd/selvbetjening
 
   port: 8080
   replicas:
