@@ -44,10 +44,8 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
-    outbound:
+    inbound:
       rules:
-        - application: nav-dekoratoren
-          namespace: personbruker
         - application: tokenx-token-generator # only in dev
           namespace: aura
           cluster: dev-gcp
@@ -56,6 +54,10 @@ spec:
           cluster: dev-gcp
         - application: wonderwalled-idporten # only in dev
           namespace: aura
+    outbound:
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
   #        - application: uforetrygd-backend-q2
   env:
     - name: MODE
