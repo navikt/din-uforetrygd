@@ -64,5 +64,5 @@ spec:
       value: borger
     - name: DECORATOR_ENV
       value: dev
-    - name: UFORETRYG_BACKEND
+    - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
