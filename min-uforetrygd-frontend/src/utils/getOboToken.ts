@@ -1,23 +1,21 @@
-import { unstable_noStore as noStore } from "next/cache";
+import { headers } from "next/headers";
 import {
   getToken,
   requestTokenxOboToken,
   validateIdportenToken,
 } from "@navikt/oasis";
 
-const getOboToken = async (req: Request) => {
-  noStore();
+const getOboToken = async () => {
   return new Promise(async (resolve, reject) => {
-    const token = getToken(req);
+    const clientHeaders = await headers();
+    const token = getToken(clientHeaders);
     if (!token) {
       return reject("Missing wonderwall cookie");
     }
     const validation = await validateIdportenToken(token);
     if (!validation.ok) {
-      console.log(validation.error);
       return reject(`Validation failed: ${validation.error}`);
     }
-
     const obo = await requestTokenxOboToken(
       token,
       "dev-gcp:pensjonselvbetjening:uforetrygd-backend", // TODO: Bruk miljøvariabel
@@ -26,9 +24,6 @@ const getOboToken = async (req: Request) => {
     if (!obo.ok) {
       return reject(`OBO Exchange failed: ${obo.error}`);
     }
-
-    console.log("OBO token:");
-    console.log(obo.token);
 
     resolve(obo.token);
   });

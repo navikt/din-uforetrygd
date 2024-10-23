@@ -15,14 +15,23 @@ import { ListItem } from "@navikt/ds-react/List";
 import { LinkList } from "@/components/LinkList";
 import type { paths } from "@/api.d.ts";
 import createClient from "openapi-fetch";
+import getOboToken from "@/utils/getOboToken";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
 });
 
 export default async function Home() {
-  console.log(`Prøver å kalle ${process.env.UFORETRYGD_BACKEND}/api/initiate`);
-  const initResponse = await client.GET("/api/initiate");
+  const oboToken = await getOboToken();
+  const initResponse = await client.GET("/api/initiate", {
+    headers: {
+      Authorization: `Bearer ${oboToken}`,
+    },
+    cache: "no-store",
+  });
+
+  console.log("Init response: ");
+  console.log(initResponse);
 
   return (
     <>

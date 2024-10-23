@@ -8,7 +8,7 @@ async function handler(req: NextRequest) {
   console.log("fetching", backendUrl);
 
   try {
-    const oboToken = await getOboToken(req);
+    const oboToken = await getOboToken();
     const data = await fetch(backendUrl, {
       headers: {
         Authorization: `Bearer ${oboToken}`,
