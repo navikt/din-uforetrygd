@@ -21,6 +21,7 @@ const client = createClient<paths>({
 });
 
 export default async function Home() {
+  console.log(`Prøver å kalle ${process.env.UFORETRYGD_BACKEND}/api/initiate`);
   const initResponse = await client.GET("/api/initiate");
 
   return (
