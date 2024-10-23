@@ -58,7 +58,9 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
-  #        - application: uforetrygd-backend-q2
+        - application: uforetrygd-backend
+          cluster: dev-gcp
+          namespace: pensjonselvbetjening
   env:
     - name: MODE
       value: borger

@@ -54,10 +54,18 @@ spec:
       enabled: true
       tenant: trygdeetaten.no
 
-  #  accessPolicy:
-  #    outbound:
-  #      rules:
-  #        - application: uforetrygd-backend-q2
+  accessPolicy:
+    inbound:
+      rules:
+        - application: azure-token-generator # only in dev
+          namespace: aura
+          cluster: dev-gcp
+    outbound:
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
+        - application: uforetrygd-backend
+          namespace: pensjonselvbetjening
   env:
     - name: MODE
       value: veileder
