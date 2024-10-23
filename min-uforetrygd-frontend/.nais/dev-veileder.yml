@@ -64,4 +64,4 @@ spec:
     - name: DECORATOR_ENV
       value: dev
     - name: UFORETRYGD_BACKEND
-      value: http://uforetrygd-backend
+      value: http://uforetrygd-backend:8080
