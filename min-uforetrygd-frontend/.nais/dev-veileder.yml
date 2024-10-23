@@ -63,3 +63,5 @@ spec:
       value: veileder
     - name: DECORATOR_ENV
       value: dev
+    - name: UFORETRYG_BACKEND
+      value: http://uforetrygd-backend:8080

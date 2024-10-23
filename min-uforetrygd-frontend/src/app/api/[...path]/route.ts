@@ -11,8 +11,8 @@ async function handler(req: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const oboToken = await getOboToken(req);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const data = await fetch(backendUrl);
-    return NextResponse.json({ loggetInnSom: "tester en person" });
+    const data = await fetch(backendUrl).then((res) => res.json());
+    return NextResponse.json(data);
   } catch (error) {
     logger.info(error);
     return NextResponse.json({ error }, { status: 401 });
