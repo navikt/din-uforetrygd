@@ -17,7 +17,7 @@ import type { paths } from "@/api.d.ts";
 import createClient from "openapi-fetch";
 
 const client = createClient<paths>({
-  baseUrl: "http://localhost:3000/uforetrygd/selvbetjening",
+  baseUrl: process.env.UFORETRYGD_BACKEND,
 });
 
 export default async function Home() {
