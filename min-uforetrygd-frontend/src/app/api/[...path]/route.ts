@@ -3,15 +3,17 @@ import logger from "@/utils/logger";
 import { NextRequest, NextResponse } from "next/server";
 
 async function handler(req: NextRequest) {
-  console.log("HIT PROXY");
   const apiPath = new URL(req.url);
-  const backendUrl = `https://uforetrygd-backend.intern.dev.nav.no/${apiPath}`;
+  const backendUrl = `${process.env.UFORETRYGD_BACKEND}/${apiPath}`;
+  console.log("fetching", backendUrl);
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const oboToken = await getOboToken(req);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const data = await fetch(backendUrl).then((res) => res.json());
+    const data = await fetch(backendUrl, {
+      headers: {
+        Authorization: `Bearer ${oboToken}`,
+      },
+    });
     return NextResponse.json(data);
   } catch (error) {
     logger.info(error);
