@@ -1,0 +1,57 @@
+import { LinkList } from "@/components/LinkList";
+import { Visningskriterier } from "@/const";
+import getEnv from "@/utils/env";
+import filterShowFor from "@/utils/filterShowFor";
+import { Heading, Link } from "@navikt/ds-react";
+
+interface IKanVaereAktueltForDegProps {
+  visningskriterier: Visningskriterier[];
+}
+
+const links = [
+  {
+    href: getEnv("LINK_LES_MER_OM_UFORETRYGD"),
+    text: "Les mer om uføretrygd",
+    showFor: [],
+  },
+  {
+    href: getEnv("LINK_ENDRE_KONTONUMMER"),
+    text: "Endre kontonummer",
+    showFor: [Visningskriterier.Uforetrygd],
+  },
+  {
+    href: getEnv("LINK_PERSONOPPLYSNINGER"),
+    text: "Personopplysninger",
+    showFor: [],
+  },
+  {
+    href: getEnv("LINK_OKONOMISKE_TILLEGG"),
+    text: "Økonomiske tillegg og andre ordninger",
+    showFor: [Visningskriterier.Uforetrygd],
+  },
+  {
+    href: getEnv("LINK_KLAGE"),
+    text: "Klage",
+    showFor: [],
+  },
+];
+
+export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (
+  props,
+) => {
+  const aktueltForDegLenker = filterShowFor(props.visningskriterier, links);
+  return (
+    <section>
+      <Heading level="2" size="medium">
+        Kan være aktuelt for deg
+      </Heading>
+      <LinkList>
+        {aktueltForDegLenker.map((link) => (
+          <Link key={link.href} href={link.href}>
+            {link.text}
+          </Link>
+        ))}
+      </LinkList>
+    </section>
+  );
+};

@@ -74,3 +74,13 @@ spec:
       value: "#UFORE"
     - name: LINK_SOKNAD_BARNETILLEGG
       value: "#BARNETILLLEGG"
+    - name: LINK_LES_MER_OM_UFORETRYGD
+      value: "#LES_MER_OM_UFORETRYGD"
+    - name: LINK_ENDRE_KONTONUMMER
+      value: "#KONTONR"
+    - name: LINK_PERSONOPPLYSNINGER
+      value: "#PERSONOPPLYSNINGER"
+    - name: LINK_OKONOMISKE_TILLEGG
+      value: "#OKONOMISKE_TILLEGG"
+    - name: LINK_KLAGE
+      value: "#KLAGE"
