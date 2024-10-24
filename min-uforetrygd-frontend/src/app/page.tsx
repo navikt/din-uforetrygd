@@ -1,5 +1,5 @@
-import { BodyShort, Box, Heading, Link, List } from "@navikt/ds-react";
-import { Kort, KortGrid } from "@/components/Kort";
+import {BodyShort, Box, Heading, Link, List} from "@navikt/ds-react";
+import {Kort, KortGrid} from "@/components/Kort";
 import {
   EnvelopeClosedIcon,
   FileExportIcon,
@@ -9,12 +9,14 @@ import {
   ReceiptIcon,
   SackKronerIcon,
 } from "@navikt/aksel-icons";
-import { SakTilBehandling } from "@/components/SakTilBehandling";
-import { ShowMore } from "@/components/ShowMore";
-import { ListItem } from "@navikt/ds-react/List";
-import { LinkList } from "@/components/LinkList";
-import type { paths } from "@/api.d.ts";
+import {SakTilBehandling} from "@/components/SakTilBehandling";
+import {ShowMore} from "@/components/ShowMore";
+import {ListItem} from "@navikt/ds-react/List";
+import {LinkList} from "@/components/LinkList";
+import type {paths} from "@/api.d.ts";
 import createClient from "openapi-fetch";
+import {RelevanteSoknader} from "@/sections/RelevanteSoknader";
+import {Visningskriterier} from "@/const";
 import getOboToken from "@/utils/getOboToken";
 
 const client = createClient<paths>({
@@ -36,7 +38,7 @@ export default async function Home() {
   return (
     <>
       <Heading size="xlarge" level="1">
-        Uføretrygd: {initResponse?.data?.loggetInnSom ?? "ikke funnet"}
+        Uføretrygd
       </Heading>
 
       <SakTilBehandling />
@@ -156,20 +158,8 @@ export default async function Home() {
         </Box>
       </section>
 
-      <section>
-        <Heading level="2" size="medium">
-          Relevante søknader
-        </Heading>
-        <div style={{ maxWidth: "450px" }}>
-          <LinkList variant="divided">
-            <Link href="#">
-              Søknad om endret inntektsgrense - gradert uføretrygd
-            </Link>
-            <Link href="#">Søknad om uføretrygd</Link>
-            <Link href="#">Søknad om barnetillegg til uføretrygd</Link>
-          </LinkList>
-        </div>
-      </section>
+      <RelevanteSoknader visningskriterier={[Visningskriterier.Uforetrygd, Visningskriterier.GradertUfore]} />
+      <RelevanteSoknader visningskriterier={[]} />
 
       <section>
         <Heading level="2" size="medium">

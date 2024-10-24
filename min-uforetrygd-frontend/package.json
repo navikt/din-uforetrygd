@@ -1,12 +1,14 @@
 {
   "name": "uforetrygd-frontend",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run test && next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest --run",
     "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api.d.ts"
   },
   "dependencies": {
@@ -30,6 +32,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
     "openapi-typescript": "^7.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.1.3"
   }
 }
