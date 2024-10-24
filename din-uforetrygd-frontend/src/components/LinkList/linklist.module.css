@@ -1,0 +1,31 @@
+.linkList {
+  list-style: none;
+  padding-inline-start: 0;
+  display: grid;
+  grid-template-colums: auto 1fr;
+}
+
+.dividedVariant {
+  color: black;
+}
+
+.dividedVariantLink a {
+  color: var(--a-text-default);
+}
+
+.dividedVariantLink:first-child {
+  padding-top: 10px;
+  border-top: 1px solid var(--a-border-divider); /* Divider between links */
+}
+
+.dividedVariantLink {
+  border-bottom: 1px solid var(--a-border-divider); /* Divider between links */
+}
+
+.link:not(:first-child) {
+  padding-top: 10px;
+}
+
+.link {
+  padding-bottom: 10px;
+}
