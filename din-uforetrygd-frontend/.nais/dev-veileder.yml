@@ -73,3 +73,9 @@ spec:
       value: dev
     - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
+    - name: LINK_SOKNAD_GRADERT_UFORE
+      value: "#GRADERT_UFORE"
+    - name: LINK_SOKNAD_UFORE
+      value: "#UFORE"
+    - name: LINK_SOKNAD_BARNETILLEGG
+      value: "#BARNETILLLEGG"
