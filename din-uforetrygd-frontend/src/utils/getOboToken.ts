@@ -7,6 +7,9 @@ import {
 
 const getOboToken = async () => {
   return new Promise(async (resolve, reject) => {
+    if (process.env.NODE_ENV !== "production") {
+      resolve("mock-token");
+    }
     const clientHeaders = await headers();
     const token = getToken(clientHeaders);
     if (!token) {
