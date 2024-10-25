@@ -1,7 +1,7 @@
 import {Heading, Link} from "@navikt/ds-react";
 import {LinkList} from "@/components/LinkList";
 import {Visningskriterier} from "@/const";
-import filterShowFor from "@/utils/filterShowFor";
+import filterShowFor, { matchAll } from "@/utils/filterShowFor";
 import getEnv from "@/utils/env";
 
 interface IRelevanteSoknaderProps {
@@ -12,17 +12,17 @@ const lenker = [
     {
         href: getEnv("LINK_SOKNAD_GRADERT_UFORE"),
         text: "Søknad om endret inntektsgrense - gradert uføretrygd",
-        showFor: [Visningskriterier.GradertUfore]
+        showFor: matchAll([Visningskriterier.GradertUfore])
     },
     {
         href: getEnv("LINK_SOKNAD_UFORE"),
         text: "Søknad om uføretrygd",
-        showFor: []
+        showFor: true
     },
     {
         href: getEnv("LINK_SOKNAD_BARNETILLEGG"),
         text: "Søknad om barnetillegg til uføretrygd",
-        showFor: []
+        showFor: true
     }
 ]
 

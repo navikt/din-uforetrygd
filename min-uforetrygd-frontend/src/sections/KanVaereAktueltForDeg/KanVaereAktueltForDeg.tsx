@@ -1,7 +1,7 @@
 import { LinkList } from "@/components/LinkList";
 import { Visningskriterier } from "@/const";
 import getEnv from "@/utils/env";
-import filterShowFor from "@/utils/filterShowFor";
+import filterShowFor, { matchAll } from "@/utils/filterShowFor";
 import { Heading, Link } from "@navikt/ds-react";
 
 interface IKanVaereAktueltForDegProps {
@@ -12,27 +12,27 @@ const links = [
   {
     href: getEnv("LINK_LES_MER_OM_UFORETRYGD"),
     text: "Les mer om uføretrygd",
-    showFor: [],
+    showFor: true,
   },
   {
     href: getEnv("LINK_ENDRE_KONTONUMMER"),
     text: "Endre kontonummer",
-    showFor: [Visningskriterier.Uforetrygd],
+    showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
     href: getEnv("LINK_PERSONOPPLYSNINGER"),
     text: "Personopplysninger",
-    showFor: [],
+    showFor: true,
   },
   {
     href: getEnv("LINK_OKONOMISKE_TILLEGG"),
     text: "Økonomiske tillegg og andre ordninger",
-    showFor: [Visningskriterier.Uforetrygd],
+    showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
     href: getEnv("LINK_KLAGE"),
     text: "Klage",
-    showFor: [],
+    showFor: true,
   },
 ];
 
