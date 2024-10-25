@@ -19,6 +19,7 @@ import { RelevanteSoknader } from "@/sections/RelevanteSoknader";
 import { Visningskriterier } from "@/const";
 import getOboToken from "@/utils/getOboToken";
 import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
+import {InformasjonOgRegistreringer} from "@/sections/InformasjonOgRegistreringer";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -88,61 +89,7 @@ export default async function Home() {
         </BodyShort>
       </ShowMore>
 
-      <section>
-        <Heading level="2" size="medium">
-          Informasjon og registreringer
-        </Heading>
-        <KortGrid>
-          <Kort
-            title="Utbetalinger"
-            description="Oversikt og detaljer"
-            link="about:blank"
-            icon={SackKronerIcon}
-          />
-          <Kort
-            title="Brev for uføretrygd"
-            description="Vedtak med mer"
-            link="about:blank"
-            icon={EnvelopeClosedIcon}
-          />
-          <Kort
-            title="Inntektsplanlegger"
-            description="Meld fra om endring i inntekt"
-            link="about:blank"
-            icon={FileTextIcon}
-          />
-          <Kort
-            title="Sakene dine"
-            description="Status på søknader og vedtak"
-            link="about:blank"
-            icon={FileTextIcon}
-          />
-          <Kort
-            title="Frivillig skattetrekk"
-            description="Registrer tilleggstrekk"
-            link="about:blank"
-            icon={ReceiptIcon}
-          />
-          <Kort
-            title="Famileforhold"
-            description="Samboerforhold, sivilstand, barn"
-            link="about:blank"
-            icon={PersonPlusIcon}
-          />
-          <Kort
-            title="Dine fullmakter"
-            description="Gi fullmakt og se dine fullmakter"
-            link="about:blank"
-            icon={PersonGroupIcon}
-          />
-          <Kort
-            title="Ettersend informasjon"
-            description="Til uføresaken din"
-            link="about:blank"
-            icon={FileExportIcon}
-          />
-        </KortGrid>
-      </section>
+        <InformasjonOgRegistreringer />
 
       <section>
         <Box
