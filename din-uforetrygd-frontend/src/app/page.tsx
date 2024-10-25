@@ -19,7 +19,7 @@ import { RelevanteSoknader } from "@/sections/RelevanteSoknader";
 import { Visningskriterier } from "@/const";
 import getOboToken from "@/utils/getOboToken";
 import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
-import {InformasjonOgRegistreringer} from "@/sections/InformasjonOgRegistreringer";
+import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistreringer";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -89,7 +89,10 @@ export default async function Home() {
         </BodyShort>
       </ShowMore>
 
-        <InformasjonOgRegistreringer />
+      <InformasjonOgRegistreringer visningskriterier={[]} />
+      <InformasjonOgRegistreringer
+        visningskriterier={[Visningskriterier.Uforetrygd]}
+      />
 
       <section>
         <Box

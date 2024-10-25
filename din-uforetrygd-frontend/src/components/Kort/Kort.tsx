@@ -1,5 +1,5 @@
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import { ChevronRightIcon } from "@navikt/aksel-icons";
+import { ChevronRightIcon, FileExportIcon } from "@navikt/aksel-icons";
 import styles from "./kort.module.css";
 import React, {
   ForwardRefExoticComponent,
@@ -10,15 +10,15 @@ import React, {
 interface IKortProps {
   title: string;
   description?: string;
-  link: string;
-  icon: ForwardRefExoticComponent<
+  href: string;
+  icon?: ForwardRefExoticComponent<
     SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
   >;
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
   return (
-    <a href={props.link} className={styles.kort}>
+    <a href={props.href} className={styles.kort}>
       <Box
         background="surface-neutral-subtle"
         borderRadius="large"
@@ -34,7 +34,7 @@ export const Kort: React.FC<IKortProps> = (props) => {
               padding="3"
               aria-hidden
             >
-              <props.icon fontSize="1.5rem" />
+              {props.icon ? <props.icon fontSize="1.5rem" /> : <FileExportIcon />}
             </Box>
             <VStack justify="center" gap="1">
               <Heading
