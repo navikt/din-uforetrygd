@@ -1,0 +1,1 @@
+export { InformasjonOgRegistreringer } from "./InformasjonOgRegistreringer";

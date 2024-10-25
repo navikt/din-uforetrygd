@@ -18,8 +18,14 @@ const lenker = [
         href: "#",
         text: "Søknad om barnetillegg til uføretrygd",
         showFor: []
+    },
+    {
+        href: "#",
+        text: "Ettersend informasjon",
+        showFor: [Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd],
     }
 ]
+
 
 describe("filterShowFor", () => {
     it("should show relevante lenker when no ufore", () => {
@@ -34,6 +40,12 @@ describe("filterShowFor", () => {
             "Søknad om uføretrygd",
             "Søknad om barnetillegg til uføretrygd"
         ])
+    })
+
+    it("should show if one creteria is met", () => {
+        const actual = filterShowFor([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd], lenker).map(lenke => lenke.text)
+        expect(actual).toEqual(["Ettersend informasjon"])
+
     })
 
 })

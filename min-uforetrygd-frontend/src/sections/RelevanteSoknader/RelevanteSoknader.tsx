@@ -12,7 +12,7 @@ const lenker = [
     {
         href: getEnv("LINK_SOKNAD_GRADERT_UFORE"),
         text: "Søknad om endret inntektsgrense - gradert uføretrygd",
-        showFor: [Visningskriterier.GradertUfore, Visningskriterier.Uforetrygd]
+        showFor: [Visningskriterier.GradertUfore]
     },
     {
         href: getEnv("LINK_SOKNAD_UFORE"),
