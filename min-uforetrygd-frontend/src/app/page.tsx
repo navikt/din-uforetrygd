@@ -22,6 +22,7 @@ import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
 import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistreringer";
 import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
 import {DittVedtak} from "@/sections/DittVedtak";
+import { MeldeFra } from "@/sections/MeldeFra";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -66,20 +67,8 @@ export default async function Home() {
         visningskriterier={[Visningskriterier.Uforetrygd]}
       />
 
-      <section>
-        <Box
-          background="surface-alt-3-subtle"
-          padding="4"
-          borderRadius="xlarge"
-        >
-          <Heading level="2" size="medium">
-            Husk å gi oss beskjed om endringer i din situasjon
-          </Heading>
-          <Link href="#">
-            Se hvile endringer du må si fra om og hvordan du sier fra.
-          </Link>
-        </Box>
-      </section>
+      <MeldeFra visningskriterier={[Visningskriterier.Uforetrygd]}/>
+      <MeldeFra visningskriterier={[Visningskriterier.GradertUfore]}/>
 
       <RelevanteSoknader
         visningskriterier={[
