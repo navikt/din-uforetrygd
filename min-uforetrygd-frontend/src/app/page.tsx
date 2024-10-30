@@ -20,7 +20,7 @@ import { Visningskriterier } from "@/const";
 import getOboToken from "@/utils/getOboToken";
 import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
 import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistreringer";
-import {UforeStatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
+import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -44,9 +44,9 @@ export default async function Home() {
         Uføretrygd
       </Heading>
 
-      <UforeStatusGuidePanel visningskriterier={[Visningskriterier.Uforetrygd]} />
-      <UforeStatusGuidePanel visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
-      <UforeStatusGuidePanel visningskriterier={[Visningskriterier.IngenUforetrygd]} />
+      <UforestatusGuidePanel visningskriterier={[Visningskriterier.Uforetrygd]} />
+      <UforestatusGuidePanel visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
+      <UforestatusGuidePanel visningskriterier={[Visningskriterier.IngenUforetrygd]} />
 
       <section>
         <Heading level="2" size="medium">
