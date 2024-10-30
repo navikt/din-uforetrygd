@@ -23,6 +23,7 @@ import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistrerin
 import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
 import {DittVedtak} from "@/sections/DittVedtak";
 import { MeldeFra } from "@/sections/MeldeFra";
+import {DineSaker} from "@/sections/DineSaker";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -50,14 +51,8 @@ export default async function Home() {
       <UforestatusGuidePanel visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
       <UforestatusGuidePanel visningskriterier={[Visningskriterier.IngenUforetrygd]} />
 
-      <section>
-        <Heading level="2" size="medium">
-          Dine saker til behandling
-        </Heading>
-        <LinkList>
-          <Link href="#">Uføretrygd</Link>
-        </LinkList>
-      </section>
+      <DineSaker visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
+      <DineSaker visningskriterier={[Visningskriterier.Uforetrygd]} />
 
         <DittVedtak visningskriterier={[Visningskriterier.GradertUfore]} />
         <DittVedtak visningskriterier={[Visningskriterier.Uforetrygd]} />
