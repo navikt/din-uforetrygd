@@ -1,28 +1,14 @@
-import { BodyShort, Box, Heading, Link, List } from "@navikt/ds-react";
-import { Kort, KortGrid } from "@/components/Kort";
-import {
-  EnvelopeClosedIcon,
-  FileExportIcon,
-  FileTextIcon,
-  PersonGroupIcon,
-  PersonPlusIcon,
-  ReceiptIcon,
-  SackKronerIcon,
-} from "@navikt/aksel-icons";
-import { SakTilBehandling } from "@/components/SakTilBehandling";
-import { ShowMore } from "@/components/ShowMore";
-import { ListItem } from "@navikt/ds-react/List";
-import { LinkList } from "@/components/LinkList";
-import type { paths } from "@/api.d.ts";
+import {Heading} from "@navikt/ds-react";
+import type {paths} from "@/api.d.ts";
 import createClient from "openapi-fetch";
-import { RelevanteSoknader } from "@/sections/RelevanteSoknader";
-import { Visningskriterier } from "@/const";
+import {RelevanteSoknader} from "@/sections/RelevanteSoknader";
+import {Visningskriterier} from "@/const";
 import getOboToken from "@/utils/getOboToken";
-import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
-import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistreringer";
+import {KanVaereAktueltForDeg} from "@/sections/KanVaereAktueltForDeg";
+import {InformasjonOgRegistreringer} from "@/sections/InformasjonOgRegistreringer";
 import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
 import {DittVedtak} from "@/sections/DittVedtak";
-import { MeldeFra } from "@/sections/MeldeFra";
+import {MeldeFra} from "@/sections/MeldeFra";
 import {DineSaker} from "@/sections/DineSaker";
 
 const client = createClient<paths>({
