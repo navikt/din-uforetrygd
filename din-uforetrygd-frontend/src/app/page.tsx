@@ -21,6 +21,7 @@ import getOboToken from "@/utils/getOboToken";
 import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg";
 import { InformasjonOgRegistreringer } from "@/sections/InformasjonOgRegistreringer";
 import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
+import {DittVedtak} from "@/sections/DittVedtak";
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
@@ -57,40 +58,8 @@ export default async function Home() {
         </LinkList>
       </section>
 
-      <ShowMore
-        heading="Ditt uførevedtak, inntekt og inntektsgrenser"
-        aria-labelledby="info-heading"
-        collapsedHeight="10rem"
-        scrollBackOnCollapse={false}
-        variant="info"
-        as="section"
-        headingSize="medium"
-        headingLevel="2"
-      >
-        <List>
-          <ListItem>Uføregrad 80 prosent</ListItem>
-          <ListItem>Uføretidspunkt 03.05.2018</ListItem>
-          <ListItem>Uføretrygd ble invilget 06.07.2021</ListItem>
-          <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>
-        </List>
-        <Heading level="3" size="small">
-          Tillegg til uføretrygden
-        </Heading>
-        <List>
-          <ListItem>Barnetillegg for 1 særkullsbarn og 2 fellesbarn</ListItem>
-          <ListItem>Gjenlevendetillegg</ListItem>
-        </List>
-
-        <Heading level="3" size="small">
-          Inntektsgrense og registrert forventet inntekt
-        </Heading>
-        <BodyShort>
-          Har du inntekt ved siden av uføretrygden? Du finner dine
-          inntektsgrenser, trekkprosent (kompensasjonsgrad) og hvilken inntekt
-          vi har beregnet din uføretrygd ut fra, på førstesiden i{" "}
-          <Link href="#">inntektsplanleggeren</Link>.
-        </BodyShort>
-      </ShowMore>
+        <DittVedtak visningskriterier={[Visningskriterier.GradertUfore]} />
+        <DittVedtak visningskriterier={[Visningskriterier.Uforetrygd]} />
 
       <InformasjonOgRegistreringer visningskriterier={[]} />
       <InformasjonOgRegistreringer
