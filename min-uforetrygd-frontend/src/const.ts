@@ -1,7 +1,7 @@
 export enum Visningskriterier {
-    Uforetrygd = "Uføretrygd",
-    GradertUfore = "Gradert uføretrygd",
-    UforesoknadTilBehandling = "Uføresøknad til behandling",
-    IngenUforetrygd = "Ingen uføretrygd",
+    Uforetrygd = "Uforetrygd",
+    GradertUfore = "GradertUforetrygd",
+    UforesoknadTilBehandling = "UforesoknadTilBehandling",
+    IngenUforetrygd = "IngenUfOretrygd",
 
 }

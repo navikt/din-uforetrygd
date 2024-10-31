@@ -13,13 +13,28 @@ app.use(
   }),
 );
 
-const gradertUfoereMock = {
+const uforeMock = {
   pid: "81549300",
-  grad: 50,
   tilgangstype: "PERSONLIG",
   innloggingstype: "LEVEL4",
   harGammelFullmaktmottaker: false,
   saker: [{ type: "UFORETRYGD", grad: 50, status: "LOPENDE" }],
+};
+
+const gradertUfoereMock = {
+    pid: "81549300",
+    tilgangstype: "PERSONLIG",
+    innloggingstype: "LEVEL4",
+    harGammelFullmaktmottaker: false,
+    saker: [{ type: "UFORETRYGD", grad: 50, status: "LOPENDE" }],
+};
+
+const ingenUforesakMock = {
+    pid: "81549300",
+    tilgangstype: "PERSONLIG",
+    innloggingstype: "LEVEL4",
+    harGammelFullmaktmottaker: false,
+    saker: [{ type: "ALDERSPENSJON", grad: 50, status: "LOPENDE" }],
 };
 
 app.get("/api/initiate", (req, res) => {
