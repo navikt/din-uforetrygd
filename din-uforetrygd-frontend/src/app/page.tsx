@@ -1,4 +1,4 @@
-import {Heading} from "@navikt/ds-react";
+import {Alert, Heading} from "@navikt/ds-react";
 import type {paths} from "@/api.d.ts";
 import createClient from "openapi-fetch";
 import {RelevanteSoknader} from "@/sections/RelevanteSoknader";
@@ -10,59 +10,49 @@ import {UforestatusGuidePanel} from "@/sections/UforeStatusGuidePanel";
 import {DittVedtak} from "@/sections/DittVedtak";
 import {MeldeFra} from "@/sections/MeldeFra";
 import {DineSaker} from "@/sections/DineSaker";
+import {getVisningskriterier} from "@/utils/getVisningskriterier";
 
 const client = createClient<paths>({
-  baseUrl: process.env.UFORETRYGD_BACKEND,
+    baseUrl: process.env.UFORETRYGD_BACKEND,
 });
 
 export default async function Home() {
-  const oboToken = await getOboToken();
-  const initResponse = await client.GET("/api/initiate", {
-    headers: {
-      Authorization: `Bearer ${oboToken}`,
-    },
-    cache: "no-store",
-  });
+    const oboToken = await getOboToken();
+    const initResponse = await client.GET("/api/initiate", {
+        headers: {
+            Authorization: `Bearer ${oboToken}`,
+        },
+        cache: "no-store",
+    });
 
-  console.log("Init response: ");
-  console.log(initResponse);
+    console.log("Init response: ");
+    console.log(initResponse);
 
-  return (
-    <>
-      <Heading size="xlarge" level="1">
-        Uføretrygd
-      </Heading>
 
-      <UforestatusGuidePanel visningskriterier={[Visningskriterier.Uforetrygd]} />
-      <UforestatusGuidePanel visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
-      <UforestatusGuidePanel visningskriterier={[Visningskriterier.IngenUforetrygd]} />
+    console.log(initResponse.data?.saker)
 
-      <DineSaker visningskriterier={[Visningskriterier.UforesoknadTilBehandling]} />
-      <DineSaker visningskriterier={[Visningskriterier.Uforetrygd]} />
-
-        <DittVedtak visningskriterier={[Visningskriterier.GradertUfore]} />
-        <DittVedtak visningskriterier={[Visningskriterier.Uforetrygd]} />
-
-      <InformasjonOgRegistreringer visningskriterier={[]} />
-      <InformasjonOgRegistreringer
-        visningskriterier={[Visningskriterier.Uforetrygd]}
-      />
-
-      <MeldeFra visningskriterier={[Visningskriterier.Uforetrygd]}/>
-      <MeldeFra visningskriterier={[Visningskriterier.GradertUfore]}/>
-
-      <RelevanteSoknader
-        visningskriterier={[
-          Visningskriterier.Uforetrygd,
-          Visningskriterier.GradertUfore,
-        ]}
-      />
-      <RelevanteSoknader visningskriterier={[]} />
-
-      <KanVaereAktueltForDeg visningskriterier={[]} />
-      <KanVaereAktueltForDeg
-        visningskriterier={[Visningskriterier.Uforetrygd]}
-      />
-    </>
-  );
+    if (initResponse.data) {
+        const visningskriterier: Visningskriterier[] = getVisningskriterier(initResponse.data);
+        console.log(visningskriterier)
+        return (
+            <>
+                <Heading size="xlarge" level="1">
+                    Uføretrygd
+                </Heading>
+                <UforestatusGuidePanel visningskriterier={visningskriterier}/>
+                <DineSaker visningskriterier={visningskriterier}/>
+                <DittVedtak visningskriterier={visningskriterier}/>
+                <InformasjonOgRegistreringer visningskriterier={visningskriterier}/>
+                <MeldeFra visningskriterier={visningskriterier}/>
+                <RelevanteSoknader visningskriterier={visningskriterier}/>
+                <KanVaereAktueltForDeg visningskriterier={visningskriterier}/>
+            </>
+        )
+    } else {
+        return (
+            <Alert variant="error" role="alert">
+                Noe gikk galt. Prøv igjen senere.
+            </Alert>
+        )
+    }
 }
