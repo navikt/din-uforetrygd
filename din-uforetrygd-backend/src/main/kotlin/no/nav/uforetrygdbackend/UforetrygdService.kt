@@ -22,6 +22,18 @@ class UforetrygdService(
         harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
     )
 
+    fun getDittUforevedtak(pid: String) = penService.getDinUforetrygd(pid).let {
+        DittUforevedtak(
+            uforegrad = it.uforegrad,
+            virkFom = it.virkFom,
+            uforetidspunkt = it.uforetidspunkt,
+            hasBarnetilleggFellesBarn = it.hasBarnetilleggFellesBarn,
+            hasBarnetilleggSaerkullsbarn = it.hasBarnetilleggSaerkullsbarn,
+            hasGjenlevendeTillegg = it.hasGjenlevendeTillegg,
+            hasVarigTilrettelagtArbeid = it.hasVarigTilrettelagtArbeid
+        )
+    }
+
     private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
         if(SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
             false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler

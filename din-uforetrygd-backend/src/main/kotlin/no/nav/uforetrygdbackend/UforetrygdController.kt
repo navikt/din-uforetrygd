@@ -3,7 +3,9 @@ package no.nav.uforetrygdbackend
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api")
@@ -17,4 +19,10 @@ class UforetrygdController(
             .status(HttpStatus.OK)
             .body(uforetrygdService.constructUforetrygdResponse(SecurityContextUtil.getPidFromContext()))
     }
+
+    @GetMapping("ditt-uforevedtak")
+    fun dittUforevedtak(): ResponseEntity<DittUforevedtak> = ResponseEntity
+        .status(HttpStatus.OK)
+        .body(uforetrygdService.getDittUforevedtak(SecurityContextUtil.getPidFromContext()))
 }
+
