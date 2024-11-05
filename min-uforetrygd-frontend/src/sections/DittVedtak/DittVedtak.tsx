@@ -2,13 +2,24 @@ import {Visningskriterier} from "@/const";
 import {ShowMore} from "@/components/ShowMore";
 import {BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
+import {dittUforevedtak} from "@/api/endpoints";
+import {format, parseISO } from "date-fns";
 
 interface IDittVedtak {
     visningskriterier: Visningskriterier[];
 }
 
-export const DittVedtak: React.FC<IDittVedtak> = ({visningskriterier}) => {
+export const DittVedtak: React.FC<IDittVedtak> = async ({visningskriterier}) => {
     if (visningskriterier.includes(Visningskriterier.Uforetrygd)) {
+        const dittUforevedtakData = await dittUforevedtak()
+        const uforegrad = dittUforevedtakData?.uforegrad?? 0
+        const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt?? ""), "dd.MM.yyyy")
+        const uforetrygdInnvilget = format(parseISO(dittUforevedtakData?.virkFom?? ""), "dd.MM.yyyy")
+        const hasVarigTilrettelagtArbeid = dittUforevedtakData?.hasVarigTilrettelagtArbeid?? false
+        const hasBarnetilleggFellesBarn  = dittUforevedtakData?.hasBarnetilleggFellesBarn?? false
+        const hasBarnetilleggSaerkullsbarn = dittUforevedtakData?.hasBarnetilleggSaerkullsbarn?? false
+        const hasGjenlevendeTillegg = dittUforevedtakData?.hasGjenlevendeTillegg?? false
+
         return (
             <section>
                 <ShowMore
@@ -22,17 +33,18 @@ export const DittVedtak: React.FC<IDittVedtak> = ({visningskriterier}) => {
                     headingLevel="2"
                 >
                     <List>
-                        <ListItem>Uføregrad 50 prosent</ListItem>
-                        <ListItem>Uføretidspunkt 03.05.2018</ListItem>
-                        <ListItem>Uføretrygd ble invilget 06.07.2021</ListItem>
-                        <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>
+                        <ListItem>Uføregrad {uforegrad} prosent</ListItem>
+                        <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>
+                        <ListItem>Uføretrygd ble invilget {uforetrygdInnvilget}</ListItem>
+                        { hasVarigTilrettelagtArbeid && (<ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>)}
                     </List>
                     <Heading level="3" size="small">
                         Tillegg til uføretrygden
                     </Heading>
                     <List>
-                        <ListItem>Barnetillegg for 1 særkullsbarn og 2 fellesbarn</ListItem>
-                        <ListItem>Gjenlevendetillegg</ListItem>
+                        {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
+                        {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
+                        {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
                     </List>
 
                     <Heading level="3" size="small">

@@ -13,6 +13,16 @@ app.use(
   }),
 );
 
+const dittUforevedtakMock = {
+    uforegrad: 50,
+    virkFom: "2021-01-01",
+    uforetidspunkt: "2020-01-01",
+    hasBarnetilleggFellesBarn: true,
+    hasBarnetilleggSaerkullsbarn: true,
+    hasGjenlevendeTillegg: true,
+    hasVarigTilrettelagtArbeid: true
+}
+
 const uforeMock = {
   pid: "81549300",
   tilgangstype: "PERSONLIG",
@@ -39,6 +49,10 @@ const ingenUforesakMock = {
 
 app.get("/api/initiate", (req, res) => {
   res.json(gradertUfoereMock);
+});
+
+app.get("/api/ditt-uforevedtak", (req, res) => {
+  res.json(dittUforevedtakMock);
 });
 
 app.listen(PORT, () => {

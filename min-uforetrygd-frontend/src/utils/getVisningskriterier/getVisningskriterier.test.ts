@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {getVisningskriterier} from "@/utils/getVisningskriterier/index";
-import {components} from "@/api";
+import {components} from "@/api/api";
 import {Visningskriterier} from "@/const";
 
 const uforeResponse: components["schemas"]["UforetrygdResponse"] = {
