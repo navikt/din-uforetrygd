@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
-    "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api.d.ts"
+    "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api/api.d.ts"
   },
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.5.3",
@@ -19,6 +19,7 @@
     "@navikt/nav-dekoratoren-moduler": "^3.1.1",
     "@navikt/oasis": "^3.4.0",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "next": "14.2.15",
     "openapi-fetch": "^0.12.2",
     "react": "^18",
