@@ -100,7 +100,7 @@ class PenClient(
     }
 
     fun getDinUforetrygdResponse(pid: String): DinUforetrygdResponse {
-        val path = "pen/api/selvbetjening/uforetrygd/din-uforetrygd"
+        val path = "/pen/api/selvbetjening/uforetrygd/din-uforetrygd"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
