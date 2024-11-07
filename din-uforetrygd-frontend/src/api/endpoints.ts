@@ -6,8 +6,8 @@ const client = createClient<paths>({
     baseUrl: process.env.UFORETRYGD_BACKEND,
 });
 
-export const initate = async () => {
-    const oboToken = await getOboToken();
+export const initate = async (pid: string | undefined) => {
+    const oboToken = await getOboToken()
     return await client.GET("/api/initiate", {
         headers: {
             Authorization: `Bearer ${oboToken}`,
@@ -16,8 +16,8 @@ export const initate = async () => {
     }).then((response) => response.data)
 }
 
-export const dittUforevedtak = async () => {
-    const oboToken = await getOboToken();
+export const dittUforevedtak = async (pid: string | undefined) => {
+    const oboToken = await getOboToken()
     return await client.GET("/api/ditt-uforevedtak", {
         headers: {
             Authorization: `Bearer ${oboToken}`,
