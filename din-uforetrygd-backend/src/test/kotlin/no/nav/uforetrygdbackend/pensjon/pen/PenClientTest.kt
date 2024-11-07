@@ -162,6 +162,51 @@ class PenClientTest : WebClientTest() {
         assertEquals("/pen/api/selvbetjening/uforetrygd/uforegrad/seneste", exception.service)
     }
 
+    @Test
+    fun `returns dinuforetrygdresponse when 200 response from din-uforetrygd seneste`() {
+        prepare(dinUforetrygdResponse200())
+        assertEquals(
+            DinUforetrygdResponse(
+                uforegrad = 50,
+                virkFom = LocalDate.parse("2020-01-01"),
+                uforetidspunkt = LocalDate.parse("2020-01-01"),
+                hasBarnetilleggFellesBarn = false,
+                hasBarnetilleggSaerkullsbarn = false,
+                hasGjenlevendeTillegg = false,
+                hasVarigTilrettelagtArbeid = false
+            ), penClient.getDinUforetrygdResponse(PID)
+        )
+        val request = takeRequest()
+
+        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", request.path)
+        assertEquals(PID, request.getHeader("fnr"))
+    }
+
+    @Test
+    fun `throws ForbiddenException when 403 response from din-uforetrygd`() {
+        prepare(response403())
+        val exception = assertThrows<ForbiddenException> { penClient.getDinUforetrygdResponse(PID) }
+        assertEquals(AppId.PEN.name, exception.system)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+    }
+
+    @Test
+    fun `throws ClientException when 500 response from din-uforetrygd`() {
+        prepare(response500())
+        val exception = assertThrows<ClientException> { penClient.getDinUforetrygdResponse(PID) }
+        assertEquals(AppId.PEN.name, exception.system)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+    }
+
+    @Test
+    fun `throws ClientException when unexpected exception occurs in getDinUforetrygdResponse`() {
+        prepare(uforegradResponse200())
+        `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
+        val exception = assertThrows<ClientException> { penClient.getDinUforetrygdResponse(PID) }
+        assertEquals(AppId.PEN.name, exception.system)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+    }
+
     private fun sakSammendragResponse200(): MockResponse {
         return jsonResponse(HttpStatus.OK)!!
             .setBody(
@@ -196,6 +241,23 @@ class PenClientTest : WebClientTest() {
                         }
                     ]
                 }
+                """.trimIndent()
+            )
+    }
+
+    private fun dinUforetrygdResponse200(): MockResponse {
+        return jsonResponse(HttpStatus.OK)!!
+            .setBody(
+                """
+                    {
+                        "uforegrad": 50,
+                        "virkFom": "2020-01-01",
+                        "uforetidspunkt" : "2020-01-01",
+                        "hasBarnetilleggFellesBarn": false,
+                        "hasBarnetilleggSaerkullsbarn": false,
+                        "hasGjenlevendeTillegg": false,
+                        "hasVarigTilrettelagtArbeid": false
+                    }
                 """.trimIndent()
             )
     }
