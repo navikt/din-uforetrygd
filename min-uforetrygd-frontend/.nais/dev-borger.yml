@@ -84,3 +84,5 @@ spec:
       value: "#OKONOMISKE_TILLEGG"
     - name: LINK_KLAGE
       value: "#KLAGE"
+    - name: BACKEND_DIN_UFORETRYGD_SCOPE
+      value: "dev-gcp:pensjonselvbetjening:uforetrygd-backend"

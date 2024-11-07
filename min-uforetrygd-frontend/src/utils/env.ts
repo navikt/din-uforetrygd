@@ -19,7 +19,8 @@ type Env =
   | "LINK_SKATTETREKK"
   | "LINK_FAMILIEFORHOLD"
   | "LINK_FULLMAKTER"
-  | "LINK_ETTERSENDE";
+  | "LINK_ETTERSENDE"
+  | "BACKEND_DIN_UFORETRYGD_SCOPE";
 
 export default function getEnv(env: Env) {
   noStore();
