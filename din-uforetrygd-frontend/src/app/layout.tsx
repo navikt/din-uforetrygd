@@ -4,7 +4,6 @@ import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
 import getEnv from '@/utils/env'
 import './layout.css'
-import { Metadata, ResolvingMetadata } from 'next'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
