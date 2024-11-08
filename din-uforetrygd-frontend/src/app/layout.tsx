@@ -1,48 +1,33 @@
-import "@navikt/ds-css";
-import { Heading } from "@navikt/ds-react";
-import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
-import Script from "next/script";
-import getEnv from "@/utils/env";
-import "./layout.css";
-import { Metadata, ResolvingMetadata } from "next";
+import '@navikt/ds-css'
+import { Heading } from '@navikt/ds-react'
+import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
+import Script from 'next/script'
+import getEnv from '@/utils/env'
+import './layout.css'
+import { Metadata, ResolvingMetadata } from 'next'
 
-type Props = {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export async function generateMetadata({
-  searchParams,
-}: Props): Promise<Metadata> {
-  await searchParams;
-  console.log("inni her: ", searchParams);
-
-  return {};
-}
-
-const RootLayout = async ({
-  children,
-}: Readonly<{ children: React.ReactNode }>) => {
-  const decoratorEnv = (getEnv("DECORATOR_ENV") ?? "prod") as "dev" | "prod";
-  const mode = getEnv("MODE") as "borger" | "veileder";
+const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
+  const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
+  const mode = getEnv('MODE') as 'borger' | 'veileder'
 
   const Decorator = await fetchDecoratorReact({
     env: decoratorEnv,
     params: {
-      context: "privatperson",
+      context: 'privatperson',
       breadcrumbs: [
         {
-          title: "Min side",
-          url: "https://www.nav.no",
+          title: 'Min side',
+          url: 'https://www.nav.no',
         },
         {
-          title: "Uføretrygd",
-          url: "https://www.nav.no/uføretrygd",
+          title: 'Uføretrygd',
+          url: 'https://www.nav.no/uføretrygd',
         },
       ],
     },
-  });
-  if (mode === "veileder") {
+  })
+
+  if (mode === 'veileder') {
     return (
       <html lang="no">
         <body>
@@ -52,7 +37,7 @@ const RootLayout = async ({
           {children}
         </body>
       </html>
-    );
+    )
   }
 
   return (
@@ -69,7 +54,7 @@ const RootLayout = async ({
         <Decorator.Scripts loader={Script} />
       </body>
     </html>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout
