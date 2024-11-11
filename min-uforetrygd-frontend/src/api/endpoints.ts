@@ -14,9 +14,9 @@ export const initate = async (pid: string | undefined) => {
     .GET('/api/initiate', {
       headers: {
         Authorization: `Bearer ${oboToken}`,
+        pid: pid,
       },
       cache: 'no-store',
-      pid: pid,
     })
     .then((response) => response.data)
     .catch((error) => {
@@ -32,9 +32,9 @@ export const dittUforevedtak = async (pid: string | undefined) => {
     .GET('/api/ditt-uforevedtak', {
       headers: {
         Authorization: `Bearer ${oboToken}`,
+        pid: pid,
       },
       cache: 'no-store',
-      pid: pid,
     })
     .then((response) => response.data)
     .catch((error) => {
