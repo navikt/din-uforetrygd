@@ -1,78 +1,77 @@
-"use client";
+'use client'
 // TODO: Fix slik at denne kan være serverside rendret
-import React, { forwardRef, useMemo, useRef, useState } from "react";
+import React, { forwardRef, useMemo, useRef, useState } from 'react'
 
-import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
-import { Button, Heading, HeadingProps, useId } from "@navikt/ds-react";
-import cl from "clsx";
+import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons'
+import { Button, Heading, HeadingProps, useId } from '@navikt/ds-react'
+import cl from 'clsx'
 
-import "./ShowMore.styles.css";
+import './ShowMore.styles.css'
 
-type PossibleRef<T> = React.Ref<T> | undefined;
+type PossibleRef<T> = React.Ref<T> | undefined
 export function mergeRefs<T>(refs: PossibleRef<T>[]): React.RefCallback<T> {
   return (value) => {
     refs.forEach((ref) => {
-      if (typeof ref === "function") {
-        ref(value);
+      if (typeof ref === 'function') {
+        ref(value)
       } else if (ref !== null && ref !== undefined) {
-        (ref as React.MutableRefObject<T | null>).current = value;
+        ;(ref as React.MutableRefObject<T | null>).current = value
       }
-    });
-  };
+    })
+  }
 }
-export interface ShowMoreProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "onClick"> {
+export interface ShowMoreProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onClick'> {
   /**
    * Override what element to render the wrapper as.
    *
    * @default aside
    */
-  as?: "aside" | "section";
+  as?: 'aside' | 'section'
   /**
    * Content. Is [inert](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) when collapsed.
    */
-  children: React.ReactNode;
+  children: React.ReactNode
   /**
    * Changes button size
    *
    * @default medium
    */
-  size?: "medium" | "small";
+  size?: 'medium' | 'small'
   /**
    * Changes background color
    *
    * @default default
    */
-  variant?: "default" | "subtle" | "info";
+  variant?: 'default' | 'subtle' | 'info'
   /**
    * Custom height of content when collapsed.
    *
    * @default 10rem
    */
-  collapsedHeight?: `${number}${string}` | number;
+  collapsedHeight?: `${number}${string}` | number
   /**
    * Heading text. Always available to screen readers.
    * Used as accessible label unless you define `aria-label` or `aria-labelledby`.
    */
-  heading?: string;
+  heading?: string
   /**
    * Heading size
    *
    * @default medium
    */
-  headingSize?: HeadingProps["size"];
+  headingSize?: HeadingProps['size']
   /**
    * Heading level
    *
    * @default "1"
    */
-  headingLevel?: HeadingProps["level"];
+  headingLevel?: HeadingProps['level']
   /**
    * Scroll back up to the component after collapsing.
    *
    * @default true
    */
-  scrollBackOnCollapse?: boolean;
+  scrollBackOnCollapse?: boolean
 }
 
 /**
@@ -89,51 +88,46 @@ export interface ShowMoreProps
 export const ShowMore = forwardRef<HTMLElement, ShowMoreProps>(
   (
     {
-      as: Component = "aside",
+      as: Component = 'aside',
       children,
-      size = "medium",
-      variant = "default",
-      collapsedHeight = "10rem",
+      size = 'medium',
+      variant = 'default',
+      collapsedHeight = '10rem',
       heading,
-      headingSize = "medium",
-      headingLevel = "1",
+      headingSize = 'medium',
+      headingLevel = '1',
       scrollBackOnCollapse = true,
       className,
-      "aria-labelledby": ariaLabelledby,
+      'aria-labelledby': ariaLabelledby,
       ...rest
     },
-    ref,
+    ref
   ) => {
-    const localRef = useRef<HTMLElement>(null);
-    const mergedRef = useMemo(() => mergeRefs([localRef, ref]), [ref]);
-    const [isOpen, setIsOpen] = useState(false);
-    const ariaLabelId = useId();
+    const localRef = useRef<HTMLElement>(null)
+    const mergedRef = useMemo(() => mergeRefs([localRef, ref]), [ref])
+    const [isOpen, setIsOpen] = useState(false)
+    const ariaLabelId = useId()
 
-    const ChevronIcon = isOpen ? ChevronUpIcon : ChevronDownIcon;
+    const ChevronIcon = isOpen ? ChevronUpIcon : ChevronDownIcon
 
     const toggleOpen = () => {
       if (isOpen) {
-        setIsOpen(false);
+        setIsOpen(false)
         if (scrollBackOnCollapse) {
-          localRef.current?.scrollIntoView();
+          localRef.current?.scrollIntoView()
         }
       } else {
-        setIsOpen(true);
+        setIsOpen(true)
       }
-    };
+    }
 
     return (
       <Component
         ref={mergedRef}
-        className={cl(
-          "navds-show-more",
-          `navds-show-more--${variant}`,
-          className,
-          { "navds-show-more--closed": !isOpen },
-        )}
-        aria-labelledby={
-          !ariaLabelledby && !rest["aria-label"] ? ariaLabelId : ariaLabelledby
-        }
+        className={cl('navds-show-more', `navds-show-more--${variant}`, className, {
+          'navds-show-more--closed': !isOpen,
+        })}
+        aria-labelledby={!ariaLabelledby && !rest['aria-label'] ? ariaLabelId : ariaLabelledby}
         {...rest}
       >
         {heading && (
@@ -154,24 +148,19 @@ export const ShowMore = forwardRef<HTMLElement, ShowMoreProps>(
               size={size}
               onClick={toggleOpen}
             >
-              {isOpen ? "Vis mindre" : "Vis mer"}
+              {isOpen ? 'Vis mindre' : 'Vis mer'}
             </Button>
           </div>
         </div>
 
-        <div
-          className="navds-show-more__content"
-          style={isOpen ? {} : { height: collapsedHeight }}
-          // @ts-expect-error https://github.com/DefinitelyTyped/DefinitelyTyped/pull/60822
-          inert={isOpen ? undefined : ""}
-        >
+        <div className="navds-show-more__content" style={isOpen ? {} : { height: collapsedHeight }} inert={!isOpen}>
           {children}
         </div>
       </Component>
-    );
-  },
-);
+    )
+  }
+)
 
-ShowMore.displayName = "ShowMore";
+ShowMore.displayName = 'ShowMore'
 
-export default ShowMore;
+export default ShowMore

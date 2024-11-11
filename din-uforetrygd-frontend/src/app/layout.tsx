@@ -33,7 +33,9 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
           <Heading size="xlarge" level="1">
             {process.env.MODE}
           </Heading>
-          {children}
+          <main className="main-content" id="maincontent" tabIndex={-1}>
+            {children}
+          </main>
         </body>
       </html>
     )
