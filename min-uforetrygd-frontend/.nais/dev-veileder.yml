@@ -65,6 +65,7 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
         - application: uforetrygd-backend
+          cluster: dev-gcp
           namespace: pensjonselvbetjening
   env:
     - name: MODE
