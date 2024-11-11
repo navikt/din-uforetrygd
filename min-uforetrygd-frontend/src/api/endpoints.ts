@@ -7,7 +7,9 @@ const client = createClient<paths>({
 })
 
 export const initate = async (pid: string | undefined) => {
-  const oboToken = await getOboToken()
+  const oboToken = await getOboToken().catch((error) => {
+    console.error('Error:', error)
+  })
   return await client
     .GET('/api/initiate', {
       headers: {
@@ -17,10 +19,15 @@ export const initate = async (pid: string | undefined) => {
       pid: pid,
     })
     .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
 
 export const dittUforevedtak = async (pid: string | undefined) => {
-  const oboToken = await getOboToken()
+  const oboToken = await getOboToken().catch((error) => {
+    console.error('Error:', error)
+  })
   return await client
     .GET('/api/ditt-uforevedtak', {
       headers: {
@@ -30,4 +37,7 @@ export const dittUforevedtak = async (pid: string | undefined) => {
       pid: pid,
     })
     .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
