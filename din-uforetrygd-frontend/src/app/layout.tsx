@@ -9,6 +9,21 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
   const mode = getEnv('MODE') as 'borger' | 'veileder'
 
+  if (mode === 'veileder') {
+    return (
+      <html lang="no">
+        <body>
+          <Heading size="xlarge" level="1">
+            {process.env.MODE}
+          </Heading>
+          <main className="main-content" id="maincontent" tabIndex={-1}>
+            {children}
+          </main>
+        </body>
+      </html>
+    )
+  }
+
   const Decorator = await fetchDecoratorReact({
     env: decoratorEnv,
     params: {
@@ -25,21 +40,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       ],
     },
   })
-
-  if (mode === 'veileder') {
-    return (
-      <html lang="no">
-        <body>
-          <Heading size="xlarge" level="1">
-            {process.env.MODE}
-          </Heading>
-          <main className="main-content" id="maincontent" tabIndex={-1}>
-            {children}
-          </main>
-        </body>
-      </html>
-    )
-  }
 
   return (
     <html lang="no">
