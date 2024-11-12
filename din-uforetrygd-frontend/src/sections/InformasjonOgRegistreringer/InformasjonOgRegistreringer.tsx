@@ -17,58 +17,59 @@ interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
 }
-const links = (pid: string | undefined) => [
+
+const getLinks = async (pid: string | undefined) => [
   {
-    href: getUrl('LINK_UTBETALINGER', pid),
+    href: await getUrl('LINK_UTBETALINGER', pid),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: SackKronerIcon,
     showFor: true,
   },
   {
-    href: getUrl('LINK_BREV', pid),
+    href: await getUrl('LINK_BREV', pid),
     title: 'Brev for uføretrygd',
     description: 'Vedtak med mer',
     icon: EnvelopeClosedIcon,
     showFor: true,
   },
   {
-    href: getUrl('LINK_INNTEKTSPLANLEGGER', pid),
+    href: await getUrl('LINK_INNTEKTSPLANLEGGER', pid),
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getUrl('LINK_SAKER', pid),
+    href: await getUrl('LINK_SAKER', pid),
     title: 'Sakene dine',
     description: 'Status på søknader og vedtak',
     icon: FileTextIcon,
     showFor: true,
   },
   {
-    href: getUrl('LINK_SKATTETREKK', pid),
+    href: await getUrl('LINK_SKATTETREKK', pid),
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
     icon: ReceiptIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getUrl('LINK_FAMILIEFORHOLD', pid),
+    href: await getUrl('LINK_FAMILIEFORHOLD', pid),
     title: 'Famileforhold',
     description: 'Samboerforhold, sivilstand, barn',
     icon: PersonPlusIcon,
     showFor: true,
   },
   {
-    href: getUrl('LINK_FULLMAKTER', pid),
+    href: await getUrl('LINK_FULLMAKTER', pid),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
     icon: PersonGroupIcon,
     showFor: true,
   },
   {
-    href: getUrl('LINK_ETTERSENDE', pid),
+    href: await getUrl('LINK_ETTERSENDE', pid),
     title: 'Ettersend informasjon',
     description: 'Til uføresaken din',
     icon: FileExportIcon,
@@ -76,8 +77,9 @@ const links = (pid: string | undefined) => [
   },
 ]
 
-export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerProps> = (props) => {
-  const relevantLinks = filterShowFor(props.visningskriterier, links(props.pid))
+export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerProps> = async (props) => {
+  const links = await getLinks(props.pid)
+  const relevantLinks = filterShowFor(props.visningskriterier, links)
   console.log(relevantLinks) // TODO REMOVE_ME
   return (
     <section>

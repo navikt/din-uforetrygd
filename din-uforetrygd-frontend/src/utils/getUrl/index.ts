@@ -1,6 +1,6 @@
 import getEnv from '@/utils/env'
-import getOboToken from '@/api/getOboToken'
-import { parseAzureUserToken } from '@navikt/oasis'
+import { getToken, parseAzureUserToken } from '@navikt/oasis'
+import { headers } from 'next/headers'
 
 type EnvUrl =
   | 'LINK_SOKNAD_GRADERT_UFORE'
@@ -21,28 +21,14 @@ type EnvUrl =
   | 'LINK_ETTERSENDE'
   | 'LINK_MELD_FRA_OM_ENDRINGER'
 
-/*export const getUrl = async (urlFromEnv: EnvUrl, pid: string | undefined) => {
+export const getUrl = async (urlFromEnv: EnvUrl, pid: string | undefined) => {
   if (getEnv('MODE') === 'veileder') {
-    const oboToken = await getOboToken()
-    const parse = parseAzureUserToken(oboToken as string)
+    const clientHeaders = await headers()
+    const token = getToken(clientHeaders)
+    const parse = parseAzureUserToken(token as string)
     if (parse.ok && pid) {
       return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
     }
-  }
-  return getEnv(urlFromEnv)
-}*/
-
-export const getUrl = (urlFromEnv: EnvUrl, pid: string | undefined) => {
-  if (getEnv('MODE') === 'veileder') {
-    getOboToken()
-      .then((token) => parseAzureUserToken(token as string))
-      .then((parse) => {
-        if (parse.ok && pid) {
-          const link = getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
-          console.log(link) // TODO REMOVE_ME
-          return link
-        }
-      })
   }
   return getEnv(urlFromEnv)
 }
