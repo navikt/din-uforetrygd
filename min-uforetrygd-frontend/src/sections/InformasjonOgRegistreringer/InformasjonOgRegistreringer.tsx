@@ -80,7 +80,6 @@ const getLinks = async (pid: string | undefined) => [
 export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerProps> = async (props) => {
   const links = await getLinks(props.pid)
   const relevantLinks = filterShowFor(props.visningskriterier, links)
-  console.log(relevantLinks) // TODO REMOVE_ME
   return (
     <section>
       <Heading level="2" size="medium">
