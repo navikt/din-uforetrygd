@@ -33,11 +33,14 @@ type EnvUrl =
 }*/
 
 export const getUrl = (urlFromEnv: EnvUrl, pid: string | undefined) => {
+  console.log(urlFromEnv) //TODO REMOVE_ME
+  console.log(pid) // TODO REMOVE_ME
   if (getEnv('MODE') === 'veileder') {
     getOboToken()
       .then((token) => parseAzureUserToken(token as string))
       .then((parse) => {
         if (parse.ok && pid) {
+          console.log(parse.name) // TODO REMOVE_ME
           return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
         }
       })
