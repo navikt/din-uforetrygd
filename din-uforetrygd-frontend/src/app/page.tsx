@@ -27,7 +27,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <UforestatusGuidePanel visningskriterier={visningskriterier} />
         <DineSaker visningskriterier={visningskriterier} />
         <DittVedtak visningskriterier={visningskriterier} pid={params.pid} />
-        <InformasjonOgRegistreringer visningskriterier={visningskriterier} />
+        <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
         <MeldeFra visningskriterier={visningskriterier} />
         <RelevanteSoknader visningskriterier={visningskriterier} />
         <KanVaereAktueltForDeg visningskriterier={visningskriterier} />

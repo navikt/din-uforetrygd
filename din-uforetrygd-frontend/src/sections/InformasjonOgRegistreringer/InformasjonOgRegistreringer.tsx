@@ -1,5 +1,5 @@
-import { Heading } from "@navikt/ds-react";
-import { Kort, KortGrid } from "@/components/Kort";
+import { Heading } from '@navikt/ds-react'
+import { Kort, KortGrid } from '@/components/Kort'
 import {
   EnvelopeClosedIcon,
   FileExportIcon,
@@ -8,80 +8,76 @@ import {
   PersonPlusIcon,
   ReceiptIcon,
   SackKronerIcon,
-} from "@navikt/aksel-icons";
-import getEnv from "@/utils/env";
-import { Visningskriterier } from "@/const";
-import filterShowFor, { matchAll, matchSome } from "@/utils/filterShowFor";
+} from '@navikt/aksel-icons'
+import { Visningskriterier } from '@/const'
+import filterShowFor, { matchAll, matchSome } from '@/utils/filterShowFor'
+import { getUrl } from '@/utils/getUrl'
 
 interface IInformasjonOgRegistreringerProps {
-  visningskriterier: Visningskriterier[];
+  visningskriterier: Visningskriterier[]
+  pid: string | undefined
 }
-const links = [
+const links = (pid: string | undefined) => [
   {
-    href: getEnv("LINK_UTBETALINGER"),
-    title: "Utbetalinger",
-    description: "Oversikt og detaljer",
+    href: getUrl('LINK_UTBETALINGER', pid),
+    title: 'Utbetalinger',
+    description: 'Oversikt og detaljer',
     icon: SackKronerIcon,
     showFor: true,
   },
   {
-    href: getEnv("LINK_BREV"),
-    title: "Brev for uføretrygd",
-    description: "Vedtak med mer",
+    href: getUrl('LINK_BREV', pid),
+    title: 'Brev for uføretrygd',
+    description: 'Vedtak med mer',
     icon: EnvelopeClosedIcon,
     showFor: true,
   },
   {
-    href: getEnv("LINK_INNTEKTSPLANLEGGER"),
-    title: "Inntektsplanlegger",
-    description: "Meld fra om endring i inntekt",
+    href: getUrl('LINK_INNTEKTSPLANLEGGER', pid),
+    title: 'Inntektsplanlegger',
+    description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getEnv("LINK_SAKER"),
-    title: "Sakene dine",
-    description: "Status på søknader og vedtak",
+    href: getUrl('LINK_SAKER', pid),
+    title: 'Sakene dine',
+    description: 'Status på søknader og vedtak',
     icon: FileTextIcon,
     showFor: true,
   },
   {
-    href: getEnv("LINK_SKATTETREKK"),
-    title: "Frivillig skattetrekk",
-    description: "Registrer tilleggstrekk",
+    href: getUrl('LINK_SKATTETREKK', pid),
+    title: 'Frivillig skattetrekk',
+    description: 'Registrer tilleggstrekk',
     icon: ReceiptIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getEnv("LINK_FAMILIEFORHOLD"),
-    title: "Famileforhold",
-    description: "Samboerforhold, sivilstand, barn",
+    href: getUrl('LINK_FAMILIEFORHOLD', pid),
+    title: 'Famileforhold',
+    description: 'Samboerforhold, sivilstand, barn',
     icon: PersonPlusIcon,
     showFor: true,
   },
   {
-    href: getEnv("LINK_FULLMAKTER"),
-    title: "Dine fullmakter",
-    description: "Gi fullmakt og se dine fullmakter",
+    href: getUrl('LINK_FULLMAKTER', pid),
+    title: 'Dine fullmakter',
+    description: 'Gi fullmakt og se dine fullmakter',
     icon: PersonGroupIcon,
     showFor: true,
   },
   {
-    href: getEnv("LINK_ETTERSENDE"),
-    title: "Ettersend informasjon",
-    description: "Til uføresaken din",
+    href: getUrl('LINK_ETTERSENDE', pid),
+    title: 'Ettersend informasjon',
+    description: 'Til uføresaken din',
     icon: FileExportIcon,
-    showFor: matchSome([
-      Visningskriterier.UforesoknadTilBehandling,
-      Visningskriterier.Uforetrygd,
-    ]),
+    showFor: matchSome([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
   },
-];
+]
 
-export const InformasjonOgRegistreringer: React.FC<
-  IInformasjonOgRegistreringerProps
-> = (props) => {
-  const relevantLinks = filterShowFor(props.visningskriterier, links);
+export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerProps> = (props) => {
+  const relevantLinks = filterShowFor(props.visningskriterier, links(props.pid))
   return (
     <section>
       <Heading level="2" size="medium">
@@ -93,12 +89,11 @@ export const InformasjonOgRegistreringer: React.FC<
             key={link.title}
             title={link.title}
             description={link.description}
-            href={link.href ?? ""}
+            href={link.href ?? ''}
             icon={link.icon}
           />
         ))}
       </KortGrid>
     </section>
-  );
-};
-
+  )
+}
