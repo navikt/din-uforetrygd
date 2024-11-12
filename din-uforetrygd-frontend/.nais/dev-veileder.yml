@@ -75,20 +75,38 @@ spec:
     - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
     - name: LINK_SOKNAD_GRADERT_UFORE
-      value: "#GRADERT_UFORE"
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav120605&sub=digital
     - name: LINK_SOKNAD_UFORE
-      value: "#UFORE"
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav120901&sub=digital
     - name: LINK_SOKNAD_BARNETILLEGG
-      value: "#BARNETILLLEGG"
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav121501&sub=digital
     - name: LINK_LES_MER_OM_UFORETRYGD
-      value: "#LES_MER_OM_UFORETRYGD"
+      value: https://www.ansatt.dev.nav.no/uforetrygd
     - name: LINK_ENDRE_KONTONUMMER
-      value: "#KONTONR"
+      value: https://www.ansatt.dev.nav.no/person/personopplysninger/nb/#utbetaling
     - name: LINK_PERSONOPPLYSNINGER
-      value: "#PERSONOPPLYSNINGER"
+      value: https://www.ansatt.dev.nav.no/person/personopplysninger
     - name: LINK_OKONOMISKE_TILLEGG
-      value: "#OKONOMISKE_TILLEGG"
+      value: https://www.ansatt.dev.nav.no/uforetrygd#tillegg
     - name: LINK_KLAGE
-      value: "#KLAGE"
+      value: https://www.ansatt.dev.nav.no/person/kontakt-oss/tilbakemeldinger
+    - name: LINK_MELD_FRA_OM_ENDRINGER
+      value: https://www.ansatt.dev.nav.no/uforetrygd#melde
+    - name: LINK_UTBETALINGER
+      value: https://www.intern.dev.nav.no/utbetalingsoversikt
+    - name: LINK_BREV
+      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/dininnboks.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+    - name: LINK_INNTEKTSPLANLEGGER
+      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+    - name: LINK_SAKER
+      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+    - name: LINK_SKATTETREKK
+      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/transaksjon/inntektogskatt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+    - name: LINK_FAMILIEFORHOLD
+      value: https://pensjon-selvbetjening-familieforhold-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
+    - name: LINK_FULLMAKTER
+      value: https://www.intern.dev.nav.no/person/pdl-fullmakt-ui
+    - name: LINK_ETTERSENDE
+      value: https://www.ansatt.dev.nav.no/ettersende#uforetrygd
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
-      value: "api://dev-gcp.pensjonselvbetjening.uforetrygd-backend/.default"
+      value: api://dev-gcp.pensjonselvbetjening.uforetrygd-backend/.default
