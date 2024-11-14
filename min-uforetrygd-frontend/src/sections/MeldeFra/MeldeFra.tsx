@@ -15,7 +15,7 @@ export const MeldeFra: React.FC<IMeldeFra> = ({ visningskriterier }) => {
           <Heading level="2" size="medium">
             Husk å gi oss beskjed om endringer i din situasjon
           </Heading>
-          <Link href={link}>Se hvile endringer du må si fra om og hvordan du sier fra.</Link>
+          <Link href={link}>Se hvilke endringer du må si fra om og hvordan du sier fra.</Link>
         </Box>
       </section>
     )
