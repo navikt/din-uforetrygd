@@ -1,9 +1,13 @@
 .navds-show-more {
+  /* stylelint-disable-next-line property-no-unknown  */
+  interpolate-size: allow-keywords;
+
   --ac-show-more-mask: linear-gradient(
     rgba(0 0 0 / 100%),
     rgba(0 0 0 / 0%) calc(100% - 0.5rem)
   );
 
+  padding: var(--a-spacing-6);
   position: relative;
   border-radius: var(--a-border-radius-large);
   height: fit-content; /* in case the parent is stretching */
@@ -39,6 +43,12 @@
 .navds-show-more--closed .navds-show-more__content {
   mask-image: var(--ac-show-more-mask);
   overflow: hidden;
+}
+
+.navds-show-more__content {
+  transition: height cubic-bezier(0, 0.3, 0.15, 1) 400ms;
+  overflow: hidden;
+  height: max-content;
 }
 
 .navds-show-more__button-section {

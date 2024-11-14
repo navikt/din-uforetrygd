@@ -5,6 +5,7 @@ import { ListItem } from '@navikt/ds-react/List'
 import { dittUforevedtak } from '@/api/endpoints'
 import { format, parseISO } from 'date-fns'
 import getEnv from '@/utils/env'
+import styles from './DittVedtak.module.css'
 
 interface IDittVedtak {
   visningskriterier: Visningskriterier[]
@@ -24,7 +25,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
     const hasGjenlevendeTillegg = dittUforevedtakData?.hasGjenlevendeTillegg ?? false
 
     return (
-      <section>
+      <section className={styles.dittVedtak}>
         <ShowMore
           heading="Ditt uførevedtak, inntekt og inntektsgrenser"
           aria-labelledby="info-heading"
@@ -38,7 +39,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
           <List>
             <ListItem>Uføregrad {uforegrad} prosent</ListItem>
             <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>
-            <ListItem>Uføretrygd ble invilget {uforetrygdInnvilget}</ListItem>
+            <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>
             {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
           </List>
           <Heading level="3" size="small">
