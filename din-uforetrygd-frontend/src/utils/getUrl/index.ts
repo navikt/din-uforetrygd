@@ -19,8 +19,10 @@ type EnvUrl =
   | 'LINK_FULLMAKTER'
   | 'LINK_ETTERSENDE'
   | 'LINK_MELD_FRA_OM_ENDRINGER'
+  | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
+  | 'LINK_DITT_LOKALE_NAV_KONTOR'
 
-export const getUrl = async (urlFromEnv: EnvUrl, pid: string | undefined) => {
+export const getUrl = async (urlFromEnv: EnvUrl, pid = '') => {
   if (getEnv('MODE') === 'veileder' && pid) {
     const parse = await getAzureUserPayload()
     return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)

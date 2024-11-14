@@ -2,13 +2,16 @@ import { Visningskriterier } from '@/const'
 import { BodyLong, GuidePanel, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
 import styles from './uforestatusGuidePanel.module.css'
+import { getUrl } from '@/utils/getUrl'
 
 interface IUforeStatusGuidePanel {
   visningskriterier: Visningskriterier[]
 }
 
-export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visningskriterier }) => {
+export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ visningskriterier }) => {
   if (visningskriterier.includes(Visningskriterier.UforesoknadTilBehandling)) {
+    const saksbehandlingstiderLenke = await getUrl('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD')
+    const saksoversiktLenke = await getUrl('LINK_SAKER')
     return (
       <section>
         <GuidePanel className={styles.tilBehandling}>
@@ -17,10 +20,10 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visnin
           </Heading>
           <List>
             <ListItem>
-              <Link href="#">Se saksbehandlingstider for uføretrygd</Link>
+              <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd</Link>
             </ListItem>
             <ListItem>
-              <Link href="#">Se saken din</Link>
+              <Link href={saksoversiktLenke}>Se saken din</Link>
             </ListItem>
           </List>
         </GuidePanel>
@@ -29,6 +32,7 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visnin
   }
 
   if (visningskriterier.includes(Visningskriterier.IngenUforetrygd)) {
+    const dittLokaleNavKontorLenke = await getUrl('LINK_DITT_LOKALE_NAV_KONTOR')
     return (
       <section>
         <GuidePanel className={styles.ingenUforetrygd}>
@@ -38,8 +42,8 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visnin
             </Heading>
             <BodyLong>
               Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-              kommer frem til dette i samarbeid med deg. Kontakt <Link href={'#'}>ditt lokale Nav-kontor</Link> for
-              veiledning.
+              kommer frem til dette i samarbeid med deg. Kontakt{' '}
+              <Link href={dittLokaleNavKontorLenke}>ditt lokale Nav-kontor</Link> for veiledning.
             </BodyLong>
           </VStack>
         </GuidePanel>

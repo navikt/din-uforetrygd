@@ -22,6 +22,8 @@ type Env =
   | 'LINK_ETTERSENDE'
   | 'LINK_MELD_FRA_OM_ENDRINGER'
   | 'BACKEND_DIN_UFORETRYGD_SCOPE'
+  | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
+  | 'LINK_DITT_LOKALE_NAV_KONTOR'
 
 export default function getEnv(env: Env) {
   noStore()

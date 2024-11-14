@@ -108,5 +108,9 @@ spec:
       value: https://www.intern.dev.nav.no/person/pdl-fullmakt-ui
     - name: LINK_ETTERSENDE
       value: https://www.ansatt.dev.nav.no/ettersende#uforetrygd
+    - name: LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD
+      value: https://www.ansatt.dev.nav.no/saksbehandlingstider#uforetrygd
+    - name: LINK_DITT_LOKALE_NAV_KONTOR
+      value: https://www.ansatt.dev.nav.no/person/personopplysninger/nb/#ditt-nav-kontor
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: api://dev-gcp.pensjonselvbetjening.uforetrygd-backend/.default
