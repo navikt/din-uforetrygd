@@ -9,6 +9,7 @@ import { MeldeFra } from '@/sections/MeldeFra'
 import { DineSaker } from '@/sections/DineSaker'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
+import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -19,18 +20,22 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
   if (initResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(initResponse)
+
     return (
       <>
-        <Heading size="xlarge" level="1">
-          Uføretrygd
-        </Heading>
-        <UforestatusGuidePanel visningskriterier={visningskriterier} />
-        <DineSaker visningskriterier={visningskriterier} />
-        <DittVedtak visningskriterier={visningskriterier} pid={params.pid} />
-        <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
-        <MeldeFra visningskriterier={visningskriterier} />
-        <RelevanteSoknader visningskriterier={visningskriterier} />
-        <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
+        <VeilederBorgerinformasjon pid={params.pid} />
+        <main className="main-content" id="maincontent" tabIndex={-1}>
+          <Heading size="xlarge" level="1">
+            Uføretrygd
+          </Heading>
+          <UforestatusGuidePanel visningskriterier={visningskriterier} />
+          <DineSaker visningskriterier={visningskriterier} />
+          <DittVedtak visningskriterier={visningskriterier} pid={params.pid} />
+          <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
+          <MeldeFra visningskriterier={visningskriterier} />
+          <RelevanteSoknader visningskriterier={visningskriterier} />
+          <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
+        </main>
       </>
     )
   } else {

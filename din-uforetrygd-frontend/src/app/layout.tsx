@@ -1,9 +1,11 @@
 import '@navikt/ds-css'
-import { Heading } from '@navikt/ds-react'
+import { InternalHeader, Spacer } from '@navikt/ds-react'
+import { InternalHeaderTitle, InternalHeaderUser } from '@navikt/ds-react/InternalHeader'
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
 import getEnv from '@/utils/env'
 import './layout.css'
+import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -27,15 +29,17 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   })
 
   if (mode === 'veileder') {
+    const veileder = await getAzureUserPayload()
+
     return (
       <html lang="no">
         <body>
-          <Heading size="xlarge" level="1">
-            {process.env.MODE}
-          </Heading>
-          <main className="main-content" id="maincontent" tabIndex={-1}>
-            {children}
-          </main>
+          <InternalHeader>
+            <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
+            <Spacer />
+            <InternalHeaderUser name={veileder.name} />
+          </InternalHeader>
+          {children}
         </body>
       </html>
     )
@@ -48,9 +52,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Decorator.Header />
-        <main className="main-content" id="maincontent" tabIndex={-1}>
-          {children}
-        </main>
+        {children}
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
       </body>
