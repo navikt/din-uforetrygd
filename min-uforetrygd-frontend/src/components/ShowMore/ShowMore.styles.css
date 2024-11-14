@@ -28,7 +28,7 @@
 
 .navds-show-more--subtle,
 .navds-show-more--subtle .navds-show-more__button-wrapper {
-  background: var(--a-surface-subtle);
+  background: var(--a-surface-action-subtle);
 }
 
 .navds-show-more--info,

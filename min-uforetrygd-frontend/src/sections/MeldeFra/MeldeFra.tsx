@@ -11,7 +11,7 @@ export const MeldeFra: React.FC<IMeldeFra> = ({ visningskriterier }) => {
     const link = getEnv('LINK_MELD_FRA_OM_ENDRINGER')
     return (
       <section>
-        <Box background="surface-alt-3-subtle" padding="4" borderRadius="xlarge">
+        <Box background="surface-action-subtle" padding="4" borderRadius="xlarge">
           <Heading level="2" size="medium">
             Husk å gi oss beskjed om endringer i din situasjon
           </Heading>
