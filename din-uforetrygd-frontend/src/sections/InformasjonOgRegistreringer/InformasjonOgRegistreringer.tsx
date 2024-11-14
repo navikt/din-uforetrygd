@@ -82,7 +82,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
   const relevantLinks = filterShowFor(props.visningskriterier, links)
   return (
     <section>
-      <Heading level="2" size="medium">
+      <Heading level="2" size="medium" spacing>
         Informasjon og registreringer
       </Heading>
       <KortGrid>
