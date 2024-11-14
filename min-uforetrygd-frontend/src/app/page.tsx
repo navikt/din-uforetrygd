@@ -26,7 +26,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={params.pid} />
         <main className="main-content" id="maincontent" tabIndex={-1}>
           <Heading size="xlarge" level="1">
-            Uføretrygd
+            Din uføretrygd
           </Heading>
           <UforestatusGuidePanel visningskriterier={visningskriterier} />
           <DineSaker visningskriterier={visningskriterier} />
