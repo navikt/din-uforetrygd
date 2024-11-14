@@ -1,6 +1,5 @@
 import getEnv from '@/utils/env'
-import { getToken, parseAzureUserToken } from '@navikt/oasis'
-import { headers } from 'next/headers'
+import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 
 type EnvUrl =
   | 'LINK_SOKNAD_GRADERT_UFORE'
@@ -22,13 +21,9 @@ type EnvUrl =
   | 'LINK_MELD_FRA_OM_ENDRINGER'
 
 export const getUrl = async (urlFromEnv: EnvUrl, pid: string | undefined) => {
-  if (getEnv('MODE') === 'veileder') {
-    const clientHeaders = await headers()
-    const token = getToken(clientHeaders)
-    const parse = parseAzureUserToken(token as string)
-    if (parse.ok && pid) {
-      return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
-    }
+  if (getEnv('MODE') === 'veileder' && pid) {
+    const parse = await getAzureUserPayload()
+    return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
   }
   return getEnv(urlFromEnv)
 }
