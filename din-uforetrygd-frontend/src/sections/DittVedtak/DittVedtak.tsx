@@ -1,6 +1,6 @@
 import { Visningskriterier } from '@/const'
 import { ShowMore } from '@/components/ShowMore'
-import { BodyShort, Heading, Link, List } from '@navikt/ds-react'
+import { BodyShort, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
 import { dittUforevedtak } from '@/api/endpoints'
 import { format, parseISO } from 'date-fns'
@@ -19,10 +19,12 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
     const uforegrad = dittUforevedtakData?.uforegrad ?? 0
     const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
     const uforetrygdInnvilget = format(parseISO(dittUforevedtakData?.virkFom ?? ''), 'dd.MM.yyyy')
+    const inntektsgrense = dittUforevedtakData?.inntektsgrense ?? 0
     const hasVarigTilrettelagtArbeid = dittUforevedtakData?.hasVarigTilrettelagtArbeid ?? false
     const hasBarnetilleggFellesBarn = dittUforevedtakData?.hasBarnetilleggFellesBarn ?? false
     const hasBarnetilleggSaerkullsbarn = dittUforevedtakData?.hasBarnetilleggSaerkullsbarn ?? false
     const hasGjenlevendeTillegg = dittUforevedtakData?.hasGjenlevendeTillegg ?? false
+    const currentYear = new Date().getFullYear()
 
     return (
       <section className={styles.dittVedtak}>
@@ -50,15 +52,29 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
             {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
             {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
           </List>
-
-          <Heading level="3" size="small">
-            Inntektsgrense og registrert forventet inntekt
-          </Heading>
-          <BodyShort>
-            Har du inntekt ved siden av uføretrygden? Du finner dine inntektsgrenser, trekkprosent (kompensasjonsgrad)
-            og hvilken inntekt vi har beregnet din uføretrygd ut fra, på førstesiden i{' '}
-            <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
-          </BodyShort>
+          <VStack gap="6">
+            <VStack>
+              <Heading level="3" size="small">
+                Din inntektsgrense: {inntektsgrense} kr
+              </Heading>
+              <BodyShort>
+                Tjener du mer enn dette, vil du få lavere utbetaling av uføretrygd. Vi reduserer uføretrygden din av
+                beløpet du tjener over inntektsgrensen. Beløpet opp til inntektsgrensen blir du aldri trukket for. Bruk{' '}
+                <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker
+                utbetalingen av uføretrygden din.
+              </BodyShort>
+            </VStack>
+            <VStack>
+              <Heading level="3" size="small">
+                Din registrerte inntekt i {currentYear}: PLACEHOLDER
+              </Heading>
+              <BodyShort>
+                Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger
+                vi har hentet. Du kan endre registrert inntekt i{' '}
+                <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
+              </BodyShort>
+            </VStack>
+          </VStack>
         </ShowMore>
       </section>
     )
