@@ -99,8 +99,8 @@ class PenClient(
         }
     }
 
-    fun getDinUforetrygdResponse(pid: String): DinUforetrygdResponse {
-        val path = "/pen/api/selvbetjening/uforetrygd/din-uforetrygd"
+    fun getVedtakssammendragResponse(pid: String): VedtakssammendragResponse {
+        val path = "/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -112,7 +112,7 @@ class PenClient(
                         .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
-                        .bodyToMono(DinUforetrygdResponse::class.java)
+                        .bodyToMono(VedtakssammendragResponse::class.java)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {

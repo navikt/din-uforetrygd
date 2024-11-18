@@ -166,7 +166,7 @@ class PenClientTest : WebClientTest() {
     fun `returns dinuforetrygdresponse when 200 response from din-uforetrygd seneste`() {
         prepare(dinUforetrygdResponse200())
         assertEquals(
-            DinUforetrygdResponse(
+            VedtakssammendragResponse(
                 uforegrad = 50,
                 virkFom = LocalDate.parse("2020-01-01"),
                 uforetidspunkt = LocalDate.parse("2020-01-01"),
@@ -174,7 +174,7 @@ class PenClientTest : WebClientTest() {
                 hasBarnetilleggSaerkullsbarn = false,
                 hasGjenlevendeTillegg = false,
                 hasVarigTilrettelagtArbeid = false
-            ), penClient.getDinUforetrygdResponse(PID)
+            ), penClient.getVedtakssammendragResponse(PID)
         )
         val request = takeRequest()
 
@@ -185,7 +185,7 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `throws ForbiddenException when 403 response from din-uforetrygd`() {
         prepare(response403())
-        val exception = assertThrows<ForbiddenException> { penClient.getDinUforetrygdResponse(PID) }
+        val exception = assertThrows<ForbiddenException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
     }
@@ -193,7 +193,7 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `throws ClientException when 500 response from din-uforetrygd`() {
         prepare(response500())
-        val exception = assertThrows<ClientException> { penClient.getDinUforetrygdResponse(PID) }
+        val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
     }
@@ -202,7 +202,7 @@ class PenClientTest : WebClientTest() {
     fun `throws ClientException when unexpected exception occurs in getDinUforetrygdResponse`() {
         prepare(uforegradResponse200())
         `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
-        val exception = assertThrows<ClientException> { penClient.getDinUforetrygdResponse(PID) }
+        val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
     }

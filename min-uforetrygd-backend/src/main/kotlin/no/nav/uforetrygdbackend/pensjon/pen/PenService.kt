@@ -1,6 +1,5 @@
 package no.nav.uforetrygdbackend.pensjon.pen
 
-import no.nav.uforetrygdbackend.DittUforevedtak
 import no.nav.uforetrygdbackend.Sak
 import no.nav.uforetrygdbackend.Sakstatus
 import no.nav.uforetrygdbackend.Sakstype
@@ -17,7 +16,7 @@ class PenService(val penClient: PenClient) {
                     it.type == Sakstype.GRUNNBLANKETTER || it.type == Sakstype.KRIGSPENSJON}
     }
 
-    fun getDinUforetrygd(pid: String) = penClient.getDinUforetrygdResponse(pid)
+    fun getVedtakssammendrag(pid: String) = penClient.getVedtakssammendragResponse(pid)
 
     private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag, pid: String): Sak {
         val sakstype = mapSakstype(sakSammendrag.sakType)
