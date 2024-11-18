@@ -170,6 +170,7 @@ class PenClientTest : WebClientTest() {
                 uforegrad = 50,
                 virkFom = LocalDate.parse("2020-01-01"),
                 uforetidspunkt = LocalDate.parse("2020-01-01"),
+                inntektsgrense = 140_000,
                 hasBarnetilleggFellesBarn = false,
                 hasBarnetilleggSaerkullsbarn = false,
                 hasGjenlevendeTillegg = false,
@@ -178,7 +179,7 @@ class PenClientTest : WebClientTest() {
         )
         val request = takeRequest()
 
-        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", request.path)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", request.path)
         assertEquals(PID, request.getHeader("fnr"))
     }
 
@@ -187,7 +188,7 @@ class PenClientTest : WebClientTest() {
         prepare(response403())
         val exception = assertThrows<ForbiddenException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     @Test
@@ -195,7 +196,7 @@ class PenClientTest : WebClientTest() {
         prepare(response500())
         val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     @Test
@@ -204,7 +205,7 @@ class PenClientTest : WebClientTest() {
         `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
         val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/din-uforetrygd", exception.service)
+        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     private fun sakSammendragResponse200(): MockResponse {
@@ -253,6 +254,7 @@ class PenClientTest : WebClientTest() {
                         "uforegrad": 50,
                         "virkFom": "2020-01-01",
                         "uforetidspunkt" : "2020-01-01",
+                        "inntektsgrense": 140000,
                         "hasBarnetilleggFellesBarn": false,
                         "hasBarnetilleggSaerkullsbarn": false,
                         "hasGjenlevendeTillegg": false,
