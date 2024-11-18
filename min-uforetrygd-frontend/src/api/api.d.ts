@@ -65,6 +65,8 @@ export interface components {
             virkFom?: string;
             /** Format: date */
             uforetidspunkt?: string;
+            /** Format: int32 */
+            inntektsgrense?: number;
             hasBarnetilleggFellesBarn?: boolean;
             hasBarnetilleggSaerkullsbarn?: boolean;
             hasGjenlevendeTillegg?: boolean;
