@@ -124,4 +124,30 @@ class PenClient(
             throw ClientException(AppId.PEN.name, path, e.message, e)
         }
     }
+
+    fun getForventedeInntekterResponse(pid: String): ForventedeInntekterResponse {
+        val path = "/pen/api/selvbetjening/rightColumnHelper"
+        return try {
+            tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
+                .let { accessToken ->
+                    webClient
+                        .get()
+                        .uri("$url$path")
+                        .header("fnr", pid)
+                        .header("Authorization", "Bearer $accessToken")
+                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .bodyToMono(ForventedeInntekterResponse::class.java)
+                        .block()!!
+                }
+        } catch (e: WebClientResponseException) {
+            if (HttpStatus.FORBIDDEN == e.statusCode) {
+                throw ForbiddenException(AppId.PEN.name, path, e.message, e)
+            }
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        } catch (e: Exception) {
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        }
+    }
 }

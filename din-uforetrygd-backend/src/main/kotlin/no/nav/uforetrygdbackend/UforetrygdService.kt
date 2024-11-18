@@ -22,21 +22,25 @@ class UforetrygdService(
         harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
     )
 
-    fun getDittUforevedtak(pid: String) = penService.getVedtakssammendrag(pid).let {
-        DittUforevedtak(
-            uforegrad = it.uforegrad,
-            virkFom = it.virkFom,
-            uforetidspunkt = it.uforetidspunkt,
-            inntektsgrense = it.inntektsgrense,
-            hasBarnetilleggFellesBarn = it.hasBarnetilleggFellesBarn,
-            hasBarnetilleggSaerkullsbarn = it.hasBarnetilleggSaerkullsbarn,
-            hasGjenlevendeTillegg = it.hasGjenlevendeTillegg,
-            hasVarigTilrettelagtArbeid = it.hasVarigTilrettelagtArbeid
+    fun getDittUforevedtak(pid: String): DittUforevedtak {
+        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+        val vedtakssammendrag = penService.getVedtakssammendrag(pid)
+
+        return DittUforevedtak(
+            uforegrad = vedtakssammendrag.uforegrad,
+            virkFom = vedtakssammendrag.virkFom,
+            uforetidspunkt = vedtakssammendrag.uforetidspunkt,
+            inntektsgrense = vedtakssammendrag.inntektsgrense,
+            sumAvForventedeInntekter = sumAvForventedeInntekter,
+            hasBarnetilleggFellesBarn = vedtakssammendrag.hasBarnetilleggFellesBarn,
+            hasBarnetilleggSaerkullsbarn = vedtakssammendrag.hasBarnetilleggSaerkullsbarn,
+            hasGjenlevendeTillegg = vedtakssammendrag.hasGjenlevendeTillegg,
+            hasVarigTilrettelagtArbeid = vedtakssammendrag.hasVarigTilrettelagtArbeid
         )
     }
 
     private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
-        if(SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
+        if (SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
             false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler
         else
             fullmaktClient.harBprofFullmaktmottager(pid)?.value ?: false
@@ -126,9 +130,11 @@ class UforetrygdService(
 
     private fun isValidSamhandlerAdmin(samhandlerAdminPid: String): Boolean {
         val allFullmakter = fullmaktClient.findAllRepresentasjonsforhold(samhandlerAdminPid)
-        return allFullmakter.stream().anyMatch{representasjonsforhold -> representasjonsforhold.typer.contains(
-            SAMHANDLER_ADMIN_TYPE
-        )}
+        return allFullmakter.stream().anyMatch { representasjonsforhold ->
+            representasjonsforhold.typer.contains(
+                SAMHANDLER_ADMIN_TYPE
+            )
+        }
     }
 
     companion object {
