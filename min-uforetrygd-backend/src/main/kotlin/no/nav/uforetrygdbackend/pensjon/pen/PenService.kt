@@ -18,6 +18,9 @@ class PenService(val penClient: PenClient) {
 
     fun getVedtakssammendrag(pid: String) = penClient.getVedtakssammendragResponse(pid)
 
+    fun getSumAvForventedeInntekter(pid: String): Long? =
+        penClient.getForventedeInntekterResponse(pid).sumAvForventedeInntekter
+
     private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag, pid: String): Sak {
         val sakstype = mapSakstype(sakSammendrag.sakType)
         val grad = when (sakstype) {
