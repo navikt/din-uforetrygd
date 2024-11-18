@@ -20,6 +20,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
     const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
     const uforetrygdInnvilget = format(parseISO(dittUforevedtakData?.virkFom ?? ''), 'dd.MM.yyyy')
     const inntektsgrense = dittUforevedtakData?.inntektsgrense ?? 0
+    const sumAvForventedeInntekter = dittUforevedtakData?.sumAvForventedeInntekter ?? 0
     const hasVarigTilrettelagtArbeid = dittUforevedtakData?.hasVarigTilrettelagtArbeid ?? false
     const hasBarnetilleggFellesBarn = dittUforevedtakData?.hasBarnetilleggFellesBarn ?? false
     const hasBarnetilleggSaerkullsbarn = dittUforevedtakData?.hasBarnetilleggSaerkullsbarn ?? false
@@ -66,7 +67,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
             </VStack>
             <VStack>
               <Heading level="3" size="small">
-                Din registrerte inntekt i {currentYear}: PLACEHOLDER
+                Din registrerte inntekt i {currentYear}: {sumAvForventedeInntekter} kr
               </Heading>
               <BodyShort>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger

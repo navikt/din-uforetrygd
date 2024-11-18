@@ -18,6 +18,7 @@ const dittUforevedtakMock = {
   virkFom: '2021-01-01',
   uforetidspunkt: '2020-01-01',
   inntektsgrense: 140000,
+  sumAvForventedeInntekter: 200000,
   hasBarnetilleggFellesBarn: true,
   hasBarnetilleggSaerkullsbarn: true,
   hasGjenlevendeTillegg: true,

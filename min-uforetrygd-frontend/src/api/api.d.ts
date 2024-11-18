@@ -67,6 +67,8 @@ export interface components {
             uforetidspunkt?: string;
             /** Format: int32 */
             inntektsgrense?: number;
+            /** Format: int64 */
+            sumAvForventedeInntekter?: number;
             hasBarnetilleggFellesBarn?: boolean;
             hasBarnetilleggSaerkullsbarn?: boolean;
             hasGjenlevendeTillegg?: boolean;
