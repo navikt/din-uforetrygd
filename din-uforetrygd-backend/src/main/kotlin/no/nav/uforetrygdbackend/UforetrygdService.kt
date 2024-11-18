@@ -22,11 +22,12 @@ class UforetrygdService(
         harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
     )
 
-    fun getDittUforevedtak(pid: String) = penService.getDinUforetrygd(pid).let {
+    fun getDittUforevedtak(pid: String) = penService.getVedtakssammendrag(pid).let {
         DittUforevedtak(
             uforegrad = it.uforegrad,
             virkFom = it.virkFom,
             uforetidspunkt = it.uforetidspunkt,
+            inntektsgrense = it.inntektsgrense,
             hasBarnetilleggFellesBarn = it.hasBarnetilleggFellesBarn,
             hasBarnetilleggSaerkullsbarn = it.hasBarnetilleggSaerkullsbarn,
             hasGjenlevendeTillegg = it.hasGjenlevendeTillegg,
