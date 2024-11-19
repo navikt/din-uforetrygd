@@ -75,9 +75,9 @@ spec:
     - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
     - name: LINK_SOKNAD_GRADERT_UFORE
-      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav120605&sub=paper
-    - name: LINK_SOKNAD_UFORE
       value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav120901&sub=paper
+    - name: LINK_SOKNAD_UFORE
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav120605&sub=paper
     - name: LINK_SOKNAD_BARNETILLEGG
       value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/test/login?formPath=nav121501&sub=paper
     - name: LINK_LES_MER_OM_UFORETRYGD
@@ -103,7 +103,7 @@ spec:
     - name: LINK_SKATTETREKK
       value: https://pensjon-pselv-q2.dev.adeo.no/pselv/transaksjon/inntektogskatt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_FAMILIEFORHOLD
-      value: https://pensjon-selvbetjening-familieforhold-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut&pid=PID
+      value: https://pensjon-selvbetjening-familieforhold-frontend-veileder-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut&pid=PID
     - name: LINK_FULLMAKTER
       value: https://www.intern.dev.nav.no/person/pdl-fullmakt-ui
     - name: LINK_ETTERSENDE
