@@ -38,14 +38,7 @@ class FullmaktClientTest : WebClientTest() {
             "/representasjon/hasValidRepresentasjonsforhold?" +
                     "validRepresentasjonstyper=PENSJON_FULLSTENDIG" +
                     "&validRepresentasjonstyper=PENSJON_BEGRENSET" +
-                    "&validRepresentasjonstyper=PENSJON_SKRIV" +
-                    "&validRepresentasjonstyper=PENSJON_KOMMUNISER" +
-                    "&validRepresentasjonstyper=PENSJON_LES" +
-                    "&validRepresentasjonstyper=PENSJON_VERGE" +
-                    "&validRepresentasjonstyper=PENSJON_SAMHANDLER" +
-                    "&validRepresentasjonstyper=PENSJON_SAMHANDLER_ADMIN" +
-                    "&validRepresentasjonstyper=PENSJON_SUPERADMIN" +
-                    "&validRepresentasjonstyper=PENSJON_VERGE_PENGEMOTTAKER" +
+                    "&validRepresentasjonstyper=UFORETRYGD_LES" +
                     "&includeFullmaktsgiverNavn=false",
             request.path
         )
