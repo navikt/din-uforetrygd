@@ -45,6 +45,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     )
   }
 
+  const REPRESENTASJON_BANNER = getEnv("REPRESENTASJON_BANNER")
   return (
     <html lang="no">
       <head>
@@ -52,9 +53,11 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Decorator.Header />
+        <representasjon-banner representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"></representasjon-banner>
         {children}
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
+        <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
       </body>
     </html>
   )
