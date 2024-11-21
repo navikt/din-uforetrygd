@@ -1,21 +1,11 @@
 import type { paths } from '@/api/api'
 import createClient from 'openapi-fetch'
 import getOboToken from '@/api/getOboToken'
-import { cookies } from 'next/headers'
+import { getFullmaktCookie } from './getFullmaktCookie'
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
 })
-
-// Hent fullmaktscookie dersom dennes finnes
-const getFullmaktCookie = async () => {
-  const cookie = await cookies()
-  const fullmaktCookie = cookie.get('nav-obo')
-  if (!fullmaktCookie) return undefined
-
-  const parsedCookie = `${fullmaktCookie.name}=${fullmaktCookie.value}`
-  return parsedCookie
-}
 
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getOboToken().catch((error) => {
