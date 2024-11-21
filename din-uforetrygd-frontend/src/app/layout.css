@@ -1,4 +1,4 @@
-@import "@navikt/ds-tokens";
+@import '@navikt/ds-tokens';
 
 :root {
   --content-width: 992px;
@@ -10,6 +10,12 @@ body {
 }
 
 .main-content > section {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: 12px;
+}
+
+.main-content > h1 {
   max-width: var(--content-width);
   width: 100%;
   padding-inline: 12px;
