@@ -3,10 +3,6 @@ package no.nav.uforetrygdbackend.person.pdl
 class PdlQueryBuilder {
     companion object {
 
-        fun getPersonQuery(pid: String): PdlPersonQuery {
-            return getPdlQuery(pid, "/pdl/person.graphql", false)
-        }
-
         fun getAdressebeskyttelseQuery(pid: String): PdlPersonQuery {
             return getPdlQuery(pid, "/pdl/adressebeskyttelse.graphql", false)
         }

@@ -8,36 +8,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class PdlPerson(
-    @JsonProperty("foedsel") val foedsel: List<PdlFoedsel>?,
     @JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<PdlAdressebskyttelse>?,
-    @JsonProperty("forelderBarnRelasjon") val forelderBarnRelasjon: List<PdlForelderBarnRelasjon>?
 )
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class PdlFoedsel(
-    @JsonProperty("foedselsdato") val foedselsdato: LocalDate?,
-    @JsonProperty("foedeland") val foedeland: String?,
-    @JsonProperty("metadata") val metadata: PdlMetadata?,
-    @JsonProperty("folkeregistermetadata") override val folkeregistermetadata: PdlFolkeregisterMetadata?
-) : ParallellSannhet(metadata, folkeregistermetadata)
-
 
 data class PdlAdressebskyttelse(
     @JsonProperty("gradering") val gradering: PdlAdressebeskyttelsesgradering,
     @JsonProperty("metadata") val metadata: PdlMetadata?,
     @JsonProperty("folkeregistermetadata") override val folkeregistermetadata: PdlFolkeregisterMetadata?
 ): ParallellSannhet(metadata, folkeregistermetadata)
-
-data class PdlForelderBarnRelasjon(
-    @JsonProperty("relatertPersonsRolle") val relatertPersonsRolle: PdlForelderBarnRelasjonRolle,
-)
-
-enum class PdlForelderBarnRelasjonRolle {
-    BARN,
-    MOR,
-    FAR,
-    MEDMOR
-}
 
 enum class  PdlAdressebeskyttelsesgradering{
     //Also known as "kode 7"

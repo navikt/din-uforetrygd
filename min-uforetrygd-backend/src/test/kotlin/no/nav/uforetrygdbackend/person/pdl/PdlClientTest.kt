@@ -1,6 +1,5 @@
 package no.nav.uforetrygdbackend.person.pdl
 
-
 import no.nav.uforetrygdbackend.ClientException
 import no.nav.uforetrygdbackend.ForbiddenException
 import no.nav.uforetrygdbackend.WebClientTest
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
-import java.time.LocalDate
 
 class PdlClientTest: WebClientTest(){
     val tokenService: TokenService = mock(TokenService::class.java)
@@ -38,8 +36,6 @@ class PdlClientTest: WebClientTest(){
     fun `should return Person when performing pdl query`() {
         prepare(response200())
         val person = pdlClient.performQuery(PdlPersonQuery("", PdlPersonVariables("", false)))
-        assertEquals(LocalDate.of(1955,4,6), person.foedsel?.get(0)?.foedselsdato)
-        assertEquals("NOR", person.foedsel?.get(0)?.foedeland)
         assertEquals(PdlAdressebeskyttelsesgradering.STRENGT_FORTROLIG, person.adressebeskyttelse?.get(0)?.gradering)
     }
 
@@ -114,22 +110,6 @@ class PdlClientTest: WebClientTest(){
                 """{
                         "data": {
                             "hentPerson": {
-                                "foedsel": [{ 
-                                    "foedselsdato": "1955-04-06", 
-                                    "foedeland": "NOR",
-                                    "folkeregistermetadata": {
-                                        "ajourholdstidspunkt": "2021-03-26T10:56:01",
-                                        "gyldighetstidspunkt": "2021-03-26T10:56:01"
-                                    },
-                                    "metadata": {
-                                        "master": "FREG",
-                                        "endringer": [
-                                            {
-                                            "registrert": "2021-03-26T10:56:01"
-                                            }
-                                        ]
-                                    }
-                                }],
                                 "adressebeskyttelse": [{ 
                                     "gradering": "STRENGT_FORTROLIG",
                                     "folkeregistermetadata": {

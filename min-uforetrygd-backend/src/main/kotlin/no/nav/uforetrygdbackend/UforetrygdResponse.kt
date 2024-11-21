@@ -3,7 +3,6 @@ package no.nav.uforetrygdbackend
 data class UforetrygdResponse(
     val pid: String,
     val loggetInnSom: String,
-    // val alder: Int,
     val saker: List<Sak>,
     val tilgangstype: Tilgangstype,
     val innloggingstype: Innloggingstype,

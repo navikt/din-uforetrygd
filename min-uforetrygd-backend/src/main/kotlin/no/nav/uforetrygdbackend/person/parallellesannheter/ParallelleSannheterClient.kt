@@ -2,7 +2,6 @@ package no.nav.uforetrygdbackend.person.parallellesannheter
 
 import no.nav.uforetrygdbackend.ClientException
 import no.nav.uforetrygdbackend.person.parallellesannheter.dto.AdressebeskyttelseParallelleSannheterContainer
-import no.nav.uforetrygdbackend.person.parallellesannheter.dto.FoedselParallelleSannheterContainer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -18,27 +17,6 @@ class ParallelleSannheterClient(private val webClient: WebClient,
                                 @Value("\${parallellesannheter.endpoint.url}") private val url: String) {
 
     private val logger: Logger = LoggerFactory.getLogger(ParallelleSannheterClient::class.java)
-
-    fun decideFoedsel(foedselSannheter: FoedselParallelleSannheterContainer): FoedselParallelleSannheterContainer {
-        val path = "/api/foedsel"
-        try {
-            return webClient
-                .post()
-                .uri("$url$path")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .bodyValue(foedselSannheter)
-                .retrieve()
-                .bodyToMono(FoedselParallelleSannheterContainer::class.java)
-                .block()
-                ?.lockDecision()?: FoedselParallelleSannheterContainer(null)
-        } catch (e: WebClientResponseException) {
-            handleErrorResponse(e, path)
-        } catch (e: Exception) {
-            handleUnexpectedError(e, path)
-        }
-
-        return FoedselParallelleSannheterContainer(null)
-    }
 
     fun decideAdressebeskyttelse(adressebeskyttelseSannheter: AdressebeskyttelseParallelleSannheterContainer): AdressebeskyttelseParallelleSannheterContainer {
         val path = "/api/adressebeskyttelse"
