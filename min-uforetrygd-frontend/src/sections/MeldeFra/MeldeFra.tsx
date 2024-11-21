@@ -1,15 +1,15 @@
 import { Visningskriterier } from '@/const'
 import { Box, Link, Heading, VStack } from '@navikt/ds-react'
-import getEnv from '@/utils/env'
 import styles from './MeldeFra.module.css'
+import { getUrl } from '@/utils/getUrl'
 
 interface IMeldeFra {
   visningskriterier: Visningskriterier[]
 }
 
-export const MeldeFra: React.FC<IMeldeFra> = ({ visningskriterier }) => {
+export const MeldeFra: React.FC<IMeldeFra> = async ({ visningskriterier }) => {
   if (visningskriterier.includes(Visningskriterier.Uforetrygd)) {
-    const link = getEnv('LINK_MELD_FRA_OM_ENDRINGER')
+    const link = await getUrl('LINK_MELD_FRA_OM_ENDRINGER')
     return (
       <section className={styles.meldeFra}>
         <Box background="surface-action-subtle" paddingBlock="8" paddingInline="6" borderRadius="xlarge">
