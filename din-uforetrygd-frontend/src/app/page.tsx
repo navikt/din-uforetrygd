@@ -28,8 +28,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           <Heading size="xlarge" level="1">
             Din uføretrygd
           </Heading>
-          <UforestatusGuidePanel visningskriterier={visningskriterier} />
-          <DineSaker visningskriterier={visningskriterier} />
+          <UforestatusGuidePanel visningskriterier={visningskriterier} pid={params.pid} />
+          <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
           <DittVedtak visningskriterier={visningskriterier} pid={params.pid} />
           <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
           <MeldeFra visningskriterier={visningskriterier} />
