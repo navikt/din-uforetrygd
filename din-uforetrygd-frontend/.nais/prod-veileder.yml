@@ -104,6 +104,6 @@ spec:
     - name: LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD
       value: https://www.nav.no/saksbehandlingstider#uforetrygd
     - name: LINK_DITT_LOKALE_NAV_KONTOR
-      value: https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor
+      value: https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: api://prod-gcp.pensjonselvbetjening.uforetrygd-backend/.default
