@@ -45,7 +45,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     )
   }
 
-  const REPRESENTASJON_BANNER = getEnv("REPRESENTASJON_BANNER")
+  const REPRESENTASJON_BANNER = getEnv('REPRESENTASJON_BANNER')
   return (
     <html lang="no">
       <head>
@@ -53,7 +53,10 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Decorator.Header />
-        <representasjon-banner representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"></representasjon-banner>
+        <representasjon-banner
+          representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"
+          redirectTo={`${window.location.origin}/uforetrygd/selvbetjening`}
+        ></representasjon-banner>
         {children}
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
