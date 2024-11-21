@@ -1,0 +1,97 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: uforetrygd-frontend-borger
+  namespace: pensjonselvbetjening
+  labels:
+    team: pensjonselvbetjening
+  annotations:
+    nais.io/run-as-user: "101" # nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+spec:
+  image: "{{ image }}"
+  ingresses:
+    - https://www.nav.no/uforetrygd/selvbetjening
+
+  port: 8080
+  replicas:
+    min: 1
+    max: 1
+  liveness:
+    path: /uforetrygd/selvbetjening/health
+    initialDelay: 20
+    periodSeconds: 20
+    failureThreshold: 5
+    timeout: 1
+  readiness:
+    path: /uforetrygd/selvbetjening/health
+    initialDelay: 20
+    periodSeconds: 20
+    failureThreshold: 5
+    timeout: 1
+  idporten:
+    enabled: true
+    sidecar:
+      level: idporten-loa-substantial
+      enabled: true
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /internal/ping
+        - /uforetrygd/selvbetjening/_next/static/**
+  tokenx:
+    enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: nav-dekoratoren
+          namespace: personbruker
+        - application: uforetrygd-backend
+          cluster: prod-gcp
+          namespace: pensjonselvbetjening
+  env:
+    - name: MODE
+      value: borger
+    - name: DECORATOR_ENV
+      value: prod
+    - name: UFORETRYGD_BACKEND
+      value: http://uforetrygd-backend:8080
+    - name: LINK_SOKNAD_GRADERT_UFORE
+      value: https://www.nav.no/fyllut/nav120901?sub=digital
+    - name: LINK_SOKNAD_UFORE
+      value: https://www.nav.no/fyllut/nav120605?sub=digital
+    - name: LINK_SOKNAD_BARNETILLEGG
+      value: https://www.nav.no/fyllut/nav121501?sub=digital
+    - name: LINK_LES_MER_OM_UFORETRYGD
+      value: https://www.nav.no/uforetrygd
+    - name: LINK_ENDRE_KONTONUMMER
+      value: https://www.nav.no/person/personopplysninger/nb/#utbetaling
+    - name: LINK_PERSONOPPLYSNINGER
+      value: https://www.nav.no/person/personopplysninger
+    - name: LINK_OKONOMISKE_TILLEGG
+      value: https://www.nav.no/uforetrygd#tillegg
+    - name: LINK_KLAGE
+      value: https://www.nav.no/person/kontakt-oss/tilbakemeldinger
+    - name: LINK_MELD_FRA_OM_ENDRINGER
+      value: https://www.nav.no/uforetrygd#melde
+    - name: LINK_UTBETALINGER
+      value: https://www.nav.no/utbetalingsoversikt
+    - name: LINK_BREV
+      value: https://www.nav.no/pselv/publisering/dininnboks.jsf?context=ut&simpleMode=true
+    - name: LINK_INNTEKTSPLANLEGGER
+      value: https://www.nav.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&simpleMode=true
+    - name: LINK_SAKER
+      value: https://www.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
+    - name: LINK_SKATTETREKK
+      value: https://www.nav.no/pselv/transaksjon/inntektogskatt.jsf?context=ut&simpleMode=true
+    - name: LINK_FAMILIEFORHOLD
+      value: https://www.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
+    - name: LINK_FULLMAKTER
+      value: https://www.nav.no/person/pdl-fullmakt-ui
+    - name: LINK_ETTERSENDE
+      value: https://www.nav.no/ettersende#uforetrygd
+    - name: LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD
+      value: https://www.nav.no/saksbehandlingstider#uforetrygd
+    - name: LINK_DITT_LOKALE_NAV_KONTOR
+      value: https://www.nav.no/person/personopplysninger/nb/#ditt-nav-kontor
+    - name: BACKEND_DIN_UFORETRYGD_SCOPE
+      value: prod-gcp:pensjonselvbetjening:uforetrygd-backend
