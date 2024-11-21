@@ -1,1 +1,1 @@
-export { UforestatusGuidePanel } from "./UforestatusGuidePanel";
+export { UforestatusGuidePanel } from './UforestatusGuidePanel'

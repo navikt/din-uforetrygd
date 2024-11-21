@@ -1,1 +1,1 @@
-export { RelevanteSoknader } from "./RelevanteSoknader";
+export { RelevanteSoknader } from './RelevanteSoknader'

@@ -1,1 +1,1 @@
-export { DineSaker } from "./DineSaker";
+export { DineSaker } from './DineSaker'

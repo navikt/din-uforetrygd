@@ -1,1 +1,1 @@
-export { SakTilBehandlingView as SakTilBehandling } from "./SakTilBehandlingView";
+export { SakTilBehandlingView as SakTilBehandling } from './SakTilBehandlingView'

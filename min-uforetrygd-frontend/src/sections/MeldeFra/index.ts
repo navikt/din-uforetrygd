@@ -1,1 +1,1 @@
-export { MeldeFra } from "./MeldeFra"
+export { MeldeFra } from './MeldeFra'

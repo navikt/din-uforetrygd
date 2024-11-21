@@ -1,1 +1,1 @@
-export { InformasjonOgRegistreringer } from "./InformasjonOgRegistreringer";
+export { InformasjonOgRegistreringer } from './InformasjonOgRegistreringer'
