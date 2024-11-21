@@ -6,6 +6,7 @@ import Script from 'next/script'
 import getEnv from '@/utils/env'
 import './layout.css'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
+import { RepresentasjonBanner } from '@/components/RepresentasjonBanner'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -53,10 +54,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Decorator.Header />
-        <representasjon-banner
-          representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"
-          redirectTo={`${window.location.origin}/uforetrygd/selvbetjening`}
-        ></representasjon-banner>
+        <RepresentasjonBanner />
         {children}
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
