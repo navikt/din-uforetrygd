@@ -1,5 +1,6 @@
 import getEnv from '@/utils/env'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
+import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 
 type EnvUrl =
   | 'LINK_SOKNAD_GRADERT_UFORE'
@@ -22,10 +23,13 @@ type EnvUrl =
   | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
 
-export const getUrl = async (urlFromEnv: EnvUrl, pid = '') => {
+export const getUrl = async (urlFromEnv: EnvUrl, pid = '', isFullmektig = false) => {
   if (getEnv('MODE') === 'veileder' && pid) {
     const parse = await getAzureUserPayload()
     return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
+  }
+  if (getEnv('MODE') === 'borger' && urlFromEnv.startsWith('LINK_SOKNAD')) {
+    return isFullmektig ? getEnv(urlFromEnv) + '?sub=papir' : getEnv(urlFromEnv) + '?sub=digital'
   }
   return getEnv(urlFromEnv)
 }
