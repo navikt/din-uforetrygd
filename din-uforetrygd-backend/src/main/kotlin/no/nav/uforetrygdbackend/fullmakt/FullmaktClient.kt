@@ -164,14 +164,7 @@ class FullmaktClient(
         private val VALID_REPRESENTASJONSTYPER = setOf(
             "PENSJON_FULLSTENDIG",
             "PENSJON_BEGRENSET",
-            "PENSJON_SKRIV",
-            "PENSJON_KOMMUNISER",
-            "PENSJON_LES",
-            "PENSJON_VERGE",
-            "PENSJON_SAMHANDLER",
-            "PENSJON_SAMHANDLER_ADMIN",
-            "PENSJON_SUPERADMIN",
-            "PENSJON_VERGE_PENGEMOTTAKER")
+            "UFORETRYGD_LES")
 
         private val logger: Logger = LoggerFactory.getLogger(FullmaktClient::class.java)
 

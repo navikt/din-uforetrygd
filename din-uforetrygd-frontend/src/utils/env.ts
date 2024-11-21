@@ -24,6 +24,7 @@ type Env =
   | 'BACKEND_DIN_UFORETRYGD_SCOPE'
   | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
+  | 'REPRESENTASJON_BANNER'
 
 export default function getEnv(env: Env) {
   noStore()
