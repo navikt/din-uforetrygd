@@ -5,6 +5,7 @@ import { ListItem } from '@navikt/ds-react/List'
 import { dittUforevedtak } from '@/api/endpoints'
 import { format, parseISO } from 'date-fns'
 import styles from './DittVedtak.module.css'
+import { formatInntekt } from '@/utils/formatter/formatter'
 import { getUrl } from '@/utils/getUrl'
 
 interface IDittVedtak {
@@ -19,8 +20,8 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
     const uforegrad = dittUforevedtakData?.uforegrad ?? 0
     const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
     const uforetrygdInnvilget = format(parseISO(dittUforevedtakData?.virkFom ?? ''), 'dd.MM.yyyy')
-    const inntektsgrense = dittUforevedtakData?.inntektsgrense ?? 0
-    const sumAvForventedeInntekter = dittUforevedtakData?.sumAvForventedeInntekter ?? 0
+    const inntektsgrense = formatInntekt(dittUforevedtakData?.inntektsgrense) ?? 0
+    const sumAvForventedeInntekter = formatInntekt(dittUforevedtakData?.sumAvForventedeInntekter) ?? 0
     const hasVarigTilrettelagtArbeid = dittUforevedtakData?.hasVarigTilrettelagtArbeid ?? false
     const hasBarnetilleggFellesBarn = dittUforevedtakData?.hasBarnetilleggFellesBarn ?? false
     const hasBarnetilleggSaerkullsbarn = dittUforevedtakData?.hasBarnetilleggSaerkullsbarn ?? false
@@ -56,7 +57,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
           <VStack gap="6">
             <VStack>
               <Heading level="3" size="small">
-                Din inntektsgrense: {inntektsgrense} kr
+                Din inntektsgrense: {inntektsgrense}&nbsp;kr
               </Heading>
               <BodyShort>
                 Tjener du mer enn dette, vil du få lavere utbetaling av uføretrygd. Vi reduserer uføretrygden din av
@@ -67,7 +68,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
             </VStack>
             <VStack>
               <Heading level="3" size="small">
-                Din registrerte inntekt i {currentYear}: {sumAvForventedeInntekter} kr
+                Din registrerte inntekt i {currentYear}: {sumAvForventedeInntekter}&nbsp;kr
               </Heading>
               <BodyShort>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger
