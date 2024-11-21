@@ -1,45 +1,43 @@
-import { LinkList } from "@/components/LinkList";
-import { Visningskriterier } from "@/const";
-import getEnv from "@/utils/env";
-import filterShowFor, { matchAll } from "@/utils/filterShowFor";
-import { Heading, Link } from "@navikt/ds-react";
+import { LinkList } from '@/components/LinkList'
+import { Visningskriterier } from '@/const'
+import filterShowFor, { matchAll } from '@/utils/filterShowFor'
+import { Heading, Link } from '@navikt/ds-react'
+import { getUrl } from '@/utils/getUrl'
 
 interface IKanVaereAktueltForDegProps {
-  visningskriterier: Visningskriterier[];
+  visningskriterier: Visningskriterier[]
 }
 
 const links = [
   {
-    href: getEnv("LINK_LES_MER_OM_UFORETRYGD"),
-    text: "Les mer om uføretrygd",
+    href: await getUrl('LINK_LES_MER_OM_UFORETRYGD'),
+    text: 'Les mer om uføretrygd',
     showFor: true,
   },
   {
-    href: getEnv("LINK_ENDRE_KONTONUMMER"),
-    text: "Endre kontonummer",
+    href: await getUrl('LINK_ENDRE_KONTONUMMER'),
+    text: 'Endre kontonummer',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getEnv("LINK_PERSONOPPLYSNINGER"),
-    text: "Personopplysninger",
+    href: await getUrl('LINK_PERSONOPPLYSNINGER'),
+    text: 'Personopplysninger',
     showFor: true,
   },
   {
-    href: getEnv("LINK_OKONOMISKE_TILLEGG"),
-    text: "Økonomiske tillegg og andre ordninger",
+    href: await getUrl('LINK_OKONOMISKE_TILLEGG'),
+    text: 'Økonomiske tillegg og andre ordninger',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: getEnv("LINK_KLAGE"),
-    text: "Klage",
+    href: await getUrl('LINK_KLAGE'),
+    text: 'Klage',
     showFor: true,
   },
-];
+]
 
-export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (
-  props,
-) => {
-  const aktueltForDegLenker = filterShowFor(props.visningskriterier, links);
+export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (props) => {
+  const aktueltForDegLenker = filterShowFor(props.visningskriterier, links)
   return (
     <section>
       <Heading level="2" size="medium">
@@ -53,5 +51,5 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (
         ))}
       </LinkList>
     </section>
-  );
-};
+  )
+}
