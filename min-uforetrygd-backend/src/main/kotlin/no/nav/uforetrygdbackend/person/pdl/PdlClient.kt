@@ -88,7 +88,7 @@ class PdlClient(
     }
 
     companion object {
-        const val PDL_BEHANDLINGSNUMMER_VALUE = "B280,B353,B296,B345,B222"
+        const val PDL_BEHANDLINGSNUMMER_VALUE = "B255"
         const val PDL_BEHANDLINGSNUMMER_KEY = "Behandlingsnummer"
         const val PDL_API = "pdl-api"
 
