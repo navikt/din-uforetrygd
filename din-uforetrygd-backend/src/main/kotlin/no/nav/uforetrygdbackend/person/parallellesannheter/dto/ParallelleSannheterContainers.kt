@@ -2,16 +2,6 @@ package no.nav.uforetrygdbackend.person.parallellesannheter.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.uforetrygdbackend.person.pdl.PdlAdressebskyttelse
-import no.nav.uforetrygdbackend.person.pdl.PdlFoedsel
-
-
-data class FoedselParallelleSannheterContainer(@JsonProperty("foedsel") val foedsel: List<PdlFoedsel>?)
-    : ParallelleSannheterContainer<PdlFoedsel>(foedsel) {
-    override fun lockDecision(): FoedselParallelleSannheterContainer {
-        super.lockDecision()
-        return this
-    }
-}
 
 data class AdressebeskyttelseParallelleSannheterContainer(@JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<PdlAdressebskyttelse>?)
     : ParallelleSannheterContainer<PdlAdressebskyttelse>(adressebeskyttelse) {

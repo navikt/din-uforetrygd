@@ -14,29 +14,11 @@ class PersonService(
     private val tokenService: TokenService
 ) {
 
-    fun getPersondata(pid: String): Persondata {
-        val pdlPerson = pdlClient.performQuery(PdlQueryBuilder.getPersonQuery(pid))
-        return Persondata(getAlder(pdlPerson.foedsel), hasBarn(pdlPerson.forelderBarnRelasjon))
-    }
-
     fun hasSaksbehandlerAccessToPid(pid: String): Boolean {
         val adressebeskyttelse = getAdressebeskyttelsesgrad(pid)
         return (isUgradert(adressebeskyttelse)
                 || isStrengtFortroligAndSaksbehandlerHasAccess(adressebeskyttelse)
                 || isFortroligAndSaksbehandlerHasAccess(adressebeskyttelse))
-    }
-
-    private fun hasBarn(forelderBarnRelasjoner: List<PdlForelderBarnRelasjon>?): Boolean {
-        return forelderBarnRelasjoner?.any { it.relatertPersonsRolle == PdlForelderBarnRelasjonRolle.BARN } ?: false
-    }
-
-    private fun getAlder(pdlFoedsel: List<PdlFoedsel>?): Int {
-        val fodselsdato = parallelleSannheterService.decideFodselsdato(pdlFoedsel)
-            ?: throw IllegalStateException("Not able to determine fodselsdato for user")
-        return Period.between(
-            fodselsdato,
-            LocalDate.now()
-        ).years
     }
 
     fun hasAdressebeskyttelse(pid: String): Boolean {
