@@ -4,9 +4,9 @@ import { BodyShort, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
 import { dittUforevedtak } from '@/api/endpoints'
 import { format, parseISO } from 'date-fns'
-import getEnv from '@/utils/env'
 import styles from './DittVedtak.module.css'
 import { formatInntekt } from '@/utils/formatter/formatter'
+import { getUrl } from '@/utils/getUrl'
 
 interface IDittVedtak {
   visningskriterier: Visningskriterier[]
@@ -15,7 +15,7 @@ interface IDittVedtak {
 
 export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid }) => {
   if (visningskriterier.includes(Visningskriterier.Uforetrygd)) {
-    const linkInntektsplanlegger = getEnv('LINK_INNTEKTSPLANLEGGER')
+    const linkInntektsplanlegger = await getUrl('LINK_INNTEKTSPLANLEGGER', pid)
     const dittUforevedtakData = await dittUforevedtak(pid)
     const uforegrad = dittUforevedtakData?.uforegrad ?? 0
     const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
