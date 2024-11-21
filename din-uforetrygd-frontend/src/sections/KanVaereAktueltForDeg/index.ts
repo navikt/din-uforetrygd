@@ -1,1 +1,1 @@
-export { KanVaereAktueltForDeg } from "./KanVaereAktueltForDeg";
+export { KanVaereAktueltForDeg } from './KanVaereAktueltForDeg'

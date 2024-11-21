@@ -1,5 +1,5 @@
-import { GuidePanel, Heading, Link, List } from "@navikt/ds-react";
-import { ListItem } from "@navikt/ds-react/List";
+import { GuidePanel, Heading, Link, List } from '@navikt/ds-react'
+import { ListItem } from '@navikt/ds-react/List'
 
 export const SakTilBehandlingView = () => {
   return (
@@ -18,5 +18,5 @@ export const SakTilBehandlingView = () => {
         </List>
       </GuidePanel>
     </section>
-  );
-};
+  )
+}

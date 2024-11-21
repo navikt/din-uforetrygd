@@ -1,1 +1,1 @@
-export { DittVedtak } from "./DittVedtak";
+export { DittVedtak } from './DittVedtak'

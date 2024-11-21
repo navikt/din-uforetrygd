@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
-    "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api/api.d.ts"
+    "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api/api.d.ts",
+    "prettier:check": "prettier --check '**/*.{cjs,js,jsx,ts,tsx,json}'",
+    "prettier:fix": "prettier --write '**/*.{cjs,js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.5.3",
