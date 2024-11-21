@@ -56,11 +56,11 @@ spec:
     - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
     - name: LINK_SOKNAD_GRADERT_UFORE
-      value: https://www.nav.no/fyllut/nav120901?sub=digital
+      value: https://www.nav.no/fyllut/nav120901
     - name: LINK_SOKNAD_UFORE
-      value: https://www.nav.no/fyllut/nav120605?sub=digital
+      value: https://www.nav.no/fyllut/nav120605
     - name: LINK_SOKNAD_BARNETILLEGG
-      value: https://www.nav.no/fyllut/nav121501?sub=digital
+      value: https://www.nav.no/fyllut/nav121501
     - name: LINK_LES_MER_OM_UFORETRYGD
       value: https://www.nav.no/uforetrygd
     - name: LINK_ENDRE_KONTONUMMER
