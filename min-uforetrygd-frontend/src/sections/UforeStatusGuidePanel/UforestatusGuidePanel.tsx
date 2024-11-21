@@ -6,12 +6,13 @@ import { getUrl } from '@/utils/getUrl'
 
 interface IUforeStatusGuidePanel {
   visningskriterier: Visningskriterier[]
+  pid: string | undefined
 }
 
-export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ visningskriterier }) => {
+export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ visningskriterier, pid }) => {
   if (visningskriterier.includes(Visningskriterier.UforesoknadTilBehandling)) {
     const saksbehandlingstiderLenke = await getUrl('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD')
-    const saksoversiktLenke = await getUrl('LINK_SAKER')
+    const saksoversiktLenke = await getUrl('LINK_SAKER', pid)
     return (
       <section>
         <GuidePanel className={styles.tilBehandling}>
