@@ -21,7 +21,7 @@ class UforetrygdController(
     }
 
     @GetMapping("ditt-uforevedtak")
-    fun dittUforevedtak(): ResponseEntity<DittUforevedtak> = ResponseEntity
+    fun dittUforevedtak(): ResponseEntity<DittUforevedtakResponse> = ResponseEntity
         .status(HttpStatus.OK)
         .body(uforetrygdService.getDittUforevedtak(SecurityContextUtil.getPidFromContext()))
 }
