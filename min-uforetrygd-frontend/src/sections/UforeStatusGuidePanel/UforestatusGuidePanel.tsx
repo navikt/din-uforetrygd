@@ -11,8 +11,8 @@ interface IUforeStatusGuidePanel {
 
 export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ visningskriterier, pid }) => {
   if (visningskriterier.includes(Visningskriterier.UforesoknadTilBehandling)) {
-    const saksbehandlingstiderLenke = await getUrl('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD')
-    const saksoversiktLenke = await getUrl('LINK_SAKER', pid)
+    const saksbehandlingstiderLenke = await getUrl({ urlFromEnv: 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD' })
+    const saksoversiktLenke = await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid })
     return (
       <section>
         <GuidePanel className={styles.tilBehandling}>
@@ -33,7 +33,7 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ 
   }
 
   if (visningskriterier.includes(Visningskriterier.IngenUforetrygd)) {
-    const dittLokaleNavKontorLenke = await getUrl('LINK_DITT_LOKALE_NAV_KONTOR')
+    const dittLokaleNavKontorLenke = await getUrl({ urlFromEnv: 'LINK_DITT_LOKALE_NAV_KONTOR' })
     return (
       <section>
         <GuidePanel className={styles.ingenUforetrygd}>

@@ -28,7 +28,7 @@ const dittUforevedtakMock = {
 const uforeMock = {
   pid: '81549300',
   tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL4',
+  innloggingstype: 'LEVEL3',
   harGammelFullmaktmottaker: false,
   saker: [{ type: 'UFORETRYGD', grad: 50, status: 'LOPENDE' }],
 }
@@ -36,7 +36,7 @@ const uforeMock = {
 const gradertUfoereMock = {
   pid: '81549300',
   tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL4',
+  innloggingstype: 'LEVEL3',
   harGammelFullmaktmottaker: false,
   saker: [{ type: 'UFORETRYGD', grad: 50, status: 'LOPENDE' }],
 }
@@ -44,7 +44,7 @@ const gradertUfoereMock = {
 const ingenUforesakMock = {
   pid: '81549300',
   tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL4',
+  innloggingstype: 'LEVEL3',
   harGammelFullmaktmottaker: false,
   saker: [{ type: 'ALDERSPENSJON', grad: 50, status: 'LOPENDE' }],
 }
