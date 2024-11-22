@@ -4,154 +4,127 @@
  */
 
 export interface paths {
-  '/api/initiate': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['initiateUforetrygd']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/ditt-uforevedtak': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['dittUforevedtak']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
+    "/api/initiate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["initiateUforetrygd"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ditt-uforevedtak": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["dittUforevedtak"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-export type webhooks = Record<string, never>
+export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    Sak: {
-      /** @enum {string} */
-      type?:
-        | 'ALDERSPENSJON'
-        | 'AFP'
-        | 'AFP_PRIVAT'
-        | 'BARNEPENSJON'
-        | 'FAMILIEPLEIER_YTELSE'
-        | 'GAMMEL_YRKESSKADE'
-        | 'GENERELL'
-        | 'GJENLEVENDE_YTELSE'
-        | 'GRUNNBLANKETTER'
-        | 'KRIGSPENSJON'
-        | 'OMSORGSOPPTJENING'
-        | 'UFORETRYGD'
-        | 'UKJENT'
-      /** Format: int32 */
-      grad?: number
-      /** @enum {string} */
-      status?: 'OPPRETTET' | 'TIL_BEHANDLING' | 'AVSLUTTET' | 'LOPENDE' | 'UKJENT'
-    }
-    UforetrygdResponse: {
-      pid?: string
-      loggetInnSom?: string
-      saker?: components['schemas']['Sak'][]
-      /** @enum {string} */
-      tilgangstype?:
-        | 'PERSONLIG'
-        | 'FULLMAKT_LES'
-        | 'FULLMAKT_KOMMUNISER'
-        | 'FULLMAKT_SKRIV'
-        | 'FULLMAKT_FULLSTENDIG'
-        | 'FULLMAKT_BEGRENSET'
-        | 'FULLMAKT_SAMHANDLER'
-        | 'FULLMAKT_SAMHANDLER_ADMIN'
-        | 'FULLMAKT_SUPER_ADMIN'
-        | 'VERGE'
-        | 'PENGEMOTTAKER'
-        | 'VERGE_PENGEMOTTAKER'
-        | 'SAKSBEHANDLER'
-        | 'VEILEDER'
-        | 'VEILEDER_BEGRENSET'
-        | 'BRUKERHJELPA'
-        | 'KLAGEBEHANDLER'
-        | 'OKONOMI'
-      /** @enum {string} */
-      innloggingstype?: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
-      harGammelFullmaktmottaker?: boolean
-    }
-    DittUforevedtak: {
-      /** Format: int32 */
-      uforegrad?: number
-      /** Format: date */
-      virkFom?: string
-      /** Format: date */
-      uforetidspunkt?: string
-      /** Format: int32 */
-      inntektsgrense?: number
-      /** Format: int64 */
-      sumAvForventedeInntekter?: number
-      hasBarnetilleggFellesBarn?: boolean
-      hasBarnetilleggSaerkullsbarn?: boolean
-      hasGjenlevendeTillegg?: boolean
-      hasVarigTilrettelagtArbeid?: boolean
-    }
-  }
-  responses: never
-  parameters: never
-  requestBodies: never
-  headers: never
-  pathItems: never
+    schemas: {
+        Sak: {
+            /** @enum {string} */
+            type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
+            /** Format: int32 */
+            grad?: number;
+            /** @enum {string} */
+            status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
+        };
+        UforetrygdResponse: {
+            pid?: string;
+            loggetInnSom?: string;
+            saker?: components["schemas"]["Sak"][];
+            /** @enum {string} */
+            tilgangstype?: "PERSONLIG" | "FULLMAKT_LES" | "FULLMAKT_KOMMUNISER" | "FULLMAKT_SKRIV" | "FULLMAKT_FULLSTENDIG" | "FULLMAKT_BEGRENSET" | "FULLMAKT_SAMHANDLER" | "FULLMAKT_SAMHANDLER_ADMIN" | "FULLMAKT_SUPER_ADMIN" | "VERGE" | "PENGEMOTTAKER" | "VERGE_PENGEMOTTAKER" | "SAKSBEHANDLER" | "VEILEDER" | "VEILEDER_BEGRENSET" | "BRUKERHJELPA" | "KLAGEBEHANDLER" | "OKONOMI";
+            /** @enum {string} */
+            innloggingstype?: "LEVEL4" | "LEVEL3" | "NAV" | "SYSTEM";
+            harGammelFullmaktmottaker?: boolean;
+        };
+        DittUforevedtak: {
+            /** Format: int32 */
+            uforegrad?: number;
+            /** Format: date */
+            virkFom?: string;
+            /** Format: date */
+            uforetidspunkt?: string;
+            /** Format: int32 */
+            inntektsgrense?: number;
+            /** Format: int64 */
+            sumAvForventedeInntekter?: number;
+            hasBarnetilleggFellesBarn?: boolean;
+            hasBarnetilleggSaerkullsbarn?: boolean;
+            hasGjenlevendeTillegg?: boolean;
+            hasVarigTilrettelagtArbeid?: boolean;
+        };
+        DittUforevedtakResponse: {
+            hasIverksattVedtak?: boolean;
+            dittUforevedtak?: components["schemas"]["DittUforevedtak"];
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-export type $defs = Record<string, never>
+export type $defs = Record<string, never>;
 export interface operations {
-  initiateUforetrygd: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['UforetrygdResponse']
-        }
-      }
-    }
-  }
-  dittUforevedtak: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          '*/*': components['schemas']['DittUforevedtak']
-        }
-      }
-    }
-  }
+    initiateUforetrygd: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["UforetrygdResponse"];
+                };
+            };
+        };
+    };
+    dittUforevedtak: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DittUforevedtakResponse"];
+                };
+            };
+        };
+    };
 }
