@@ -34,7 +34,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={initResponse.innloggingstype!} />
-          {/*innloggingstype={initResponse.innloggingstype} />*/}
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
         </main>
       </>
