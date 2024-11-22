@@ -15,7 +15,7 @@ interface IDittVedtak {
 
 export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid }) => {
   if (visningskriterier.includes(Visningskriterier.Uforetrygd)) {
-    const linkInntektsplanlegger = await getUrl('LINK_INNTEKTSPLANLEGGER', pid)
+    const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
     const dittUforevedtakData = await dittUforevedtak(pid)
     const uforegrad = dittUforevedtakData?.uforegrad ?? 0
     const uforetidspunkt = format(parseISO(dittUforevedtakData?.uforetidspunkt ?? ''), 'dd.MM.yyyy')

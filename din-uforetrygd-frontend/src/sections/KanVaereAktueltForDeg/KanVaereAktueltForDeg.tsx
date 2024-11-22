@@ -10,27 +10,27 @@ interface IKanVaereAktueltForDegProps {
 
 const links = [
   {
-    href: await getUrl('LINK_LES_MER_OM_UFORETRYGD'),
+    href: await getUrl({ urlFromEnv: 'LINK_LES_MER_OM_UFORETRYGD' }),
     text: 'Les mer om uføretrygd',
     showFor: true,
   },
   {
-    href: await getUrl('LINK_ENDRE_KONTONUMMER'),
+    href: await getUrl({ urlFromEnv: 'LINK_ENDRE_KONTONUMMER' }),
     text: 'Endre kontonummer',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: await getUrl('LINK_PERSONOPPLYSNINGER'),
+    href: await getUrl({ urlFromEnv: 'LINK_PERSONOPPLYSNINGER' }),
     text: 'Personopplysninger',
     showFor: true,
   },
   {
-    href: await getUrl('LINK_OKONOMISKE_TILLEGG'),
+    href: await getUrl({ urlFromEnv: 'LINK_OKONOMISKE_TILLEGG' }),
     text: 'Økonomiske tillegg og andre ordninger',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
-    href: await getUrl('LINK_KLAGE'),
+    href: await getUrl({ urlFromEnv: 'LINK_KLAGE' }),
     text: 'Klage',
     showFor: true,
   },

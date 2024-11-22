@@ -7,24 +7,37 @@ import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
+  innloggingstype: string
 }
 
-export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ visningskriterier }) => {
+export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ visningskriterier, innloggingstype }) => {
   const isFullmektig = (await getFullmaktCookie()) !== undefined
 
   const lenker = [
     {
-      href: await getUrl('LINK_SOKNAD_GRADERT_UFORE', '', isFullmektig),
+      href: await getUrl({
+        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
+        isFullmektig: isFullmektig,
+        innloggingstype: innloggingstype,
+      }),
       text: 'Søknad om endret inntektsgrense - gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
     },
     {
-      href: await getUrl('LINK_SOKNAD_UFORE', '', isFullmektig),
+      href: await getUrl({
+        urlFromEnv: 'LINK_SOKNAD_UFORE',
+        isFullmektig: isFullmektig,
+        innloggingstype: innloggingstype,
+      }),
       text: 'Søknad om uføretrygd',
       showFor: true,
     },
     {
-      href: await getUrl('LINK_SOKNAD_BARNETILLEGG', '', isFullmektig),
+      href: await getUrl({
+        urlFromEnv: 'LINK_SOKNAD_BARNETILLEGG',
+        isFullmektig: isFullmektig,
+        innloggingstype: innloggingstype,
+      }),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
     },
