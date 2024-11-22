@@ -167,14 +167,17 @@ class PenClientTest : WebClientTest() {
         prepare(dinUforetrygdResponse200())
         assertEquals(
             VedtakssammendragResponse(
-                uforegrad = 50,
-                virkFom = LocalDate.parse("2020-01-01"),
-                uforetidspunkt = LocalDate.parse("2020-01-01"),
-                inntektsgrense = 140_000,
-                hasBarnetilleggFellesBarn = false,
-                hasBarnetilleggSaerkullsbarn = false,
-                hasGjenlevendeTillegg = false,
-                hasVarigTilrettelagtArbeid = false
+                hasIverksattVedtak = true,
+                vedtakssammendrag = Vedtakssammendrag(
+                    uforegrad = 50,
+                    virkFom = LocalDate.parse("2020-01-01"),
+                    uforetidspunkt = LocalDate.parse("2020-01-01"),
+                    inntektsgrense = 140_000,
+                    hasBarnetilleggFellesBarn = false,
+                    hasBarnetilleggSaerkullsbarn = false,
+                    hasGjenlevendeTillegg = false,
+                    hasVarigTilrettelagtArbeid = false
+                )
             ), penClient.getVedtakssammendragResponse(PID)
         )
         val request = takeRequest()
@@ -251,14 +254,17 @@ class PenClientTest : WebClientTest() {
             .setBody(
                 """
                     {
-                        "uforegrad": 50,
-                        "virkFom": "2020-01-01",
-                        "uforetidspunkt" : "2020-01-01",
-                        "inntektsgrense": 140000,
-                        "hasBarnetilleggFellesBarn": false,
-                        "hasBarnetilleggSaerkullsbarn": false,
-                        "hasGjenlevendeTillegg": false,
-                        "hasVarigTilrettelagtArbeid": false
+                    "hasIverksattVedtak": true,
+                    "vedtakssammendrag":{
+                            "uforegrad": 50,
+                            "virkFom": "2020-01-01",
+                            "uforetidspunkt" : "2020-01-01",
+                            "inntektsgrense": 140000,
+                            "hasBarnetilleggFellesBarn": false,
+                            "hasBarnetilleggSaerkullsbarn": false,
+                            "hasGjenlevendeTillegg": false,
+                            "hasVarigTilrettelagtArbeid": false
+                        }
                     }
                 """.trimIndent()
             )
