@@ -10,7 +10,7 @@ interface IDineSaker {
 
 export const DineSaker: React.FC<IDineSaker> = async ({ visningskriterier, pid }) => {
   if (visningskriterier.includes(Visningskriterier.UforesoknadTilBehandling)) {
-    const saksoversiktLenke = await getUrl('LINK_SAKER', pid)
+    const saksoversiktLenke = await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid })
     return (
       <section>
         <Heading level="2" size="medium">
