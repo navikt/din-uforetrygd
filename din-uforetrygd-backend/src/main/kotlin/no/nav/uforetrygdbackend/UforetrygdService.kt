@@ -22,20 +22,26 @@ class UforetrygdService(
         harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
     )
 
-    fun getDittUforevedtak(pid: String): DittUforevedtak {
+    fun getDittUforevedtak(pid: String): DittUforevedtakResponse {
         val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-        val vedtakssammendrag = penService.getVedtakssammendrag(pid)
+        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
 
-        return DittUforevedtak(
-            uforegrad = vedtakssammendrag.uforegrad,
-            virkFom = vedtakssammendrag.virkFom,
-            uforetidspunkt = vedtakssammendrag.uforetidspunkt,
-            inntektsgrense = vedtakssammendrag.inntektsgrense,
-            sumAvForventedeInntekter = sumAvForventedeInntekter,
-            hasBarnetilleggFellesBarn = vedtakssammendrag.hasBarnetilleggFellesBarn,
-            hasBarnetilleggSaerkullsbarn = vedtakssammendrag.hasBarnetilleggSaerkullsbarn,
-            hasGjenlevendeTillegg = vedtakssammendrag.hasGjenlevendeTillegg,
-            hasVarigTilrettelagtArbeid = vedtakssammendrag.hasVarigTilrettelagtArbeid
+        return DittUforevedtakResponse(
+            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+            dittUforevedtak = vedtakssammendragResponse.vedtakssammendrag?.let {
+                DittUforevedtak(
+                    uforegrad = it.uforegrad,
+                    virkFom = it.virkFom,
+                    uforetidspunkt = it.uforetidspunkt,
+                    inntektsgrense = it.inntektsgrense,
+                    sumAvForventedeInntekter = sumAvForventedeInntekter,
+                    hasBarnetilleggFellesBarn = it.hasBarnetilleggFellesBarn,
+                    hasBarnetilleggSaerkullsbarn = it.hasBarnetilleggSaerkullsbarn,
+                    hasGjenlevendeTillegg = it.hasGjenlevendeTillegg,
+                    hasVarigTilrettelagtArbeid = it.hasVarigTilrettelagtArbeid
+                )
+
+            }
         )
     }
 
