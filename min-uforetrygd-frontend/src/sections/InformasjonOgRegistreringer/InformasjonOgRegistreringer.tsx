@@ -52,7 +52,7 @@ const getLinks = async (pid: string | undefined) => [
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
     icon: ReceiptIcon,
-    showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFor: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
