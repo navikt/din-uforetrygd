@@ -28,6 +28,9 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
     const hasGjenlevendeTillegg = dittUforevedtakData?.hasGjenlevendeTillegg ?? false
     const currentYear = new Date().getFullYear()
 
+    const shouldShowTilleggTilUforetrygd =
+      hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn || hasGjenlevendeTillegg
+
     return (
       <div className={styles.dittVedtakWrapper}>
         <section className={styles.dittVedtak}>
@@ -47,14 +50,18 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
               <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>
               {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
             </List>
-            <Heading level="3" size="small">
-              Tillegg til uføretrygden
-            </Heading>
-            <List>
-              {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
-              {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
-              {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
-            </List>
+            {shouldShowTilleggTilUforetrygd && (
+              <>
+                <Heading level="3" size="small">
+                  Tillegg til uføretrygden
+                </Heading>
+                <List>
+                  {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
+                  {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
+                  {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
+                </List>
+              </>
+            )}
             <VStack gap="6">
               <VStack>
                 <Heading level="3" size="small">
