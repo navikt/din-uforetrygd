@@ -28,7 +28,7 @@ const getLinks = async (pid: string | undefined) => [
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_BREV', pid: pid }),
-    title: 'Brev for uføretrygd',
+    title: 'Brev',
     description: 'Vedtak med mer',
     icon: EnvelopeClosedIcon,
     showFor: true,
@@ -70,7 +70,7 @@ const getLinks = async (pid: string | undefined) => [
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
-    title: 'Ettersend informasjon',
+    title: 'Ettersend dokumentasjon',
     description: 'Til uføresaken din',
     icon: FileExportIcon,
     showFor: matchSome([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
