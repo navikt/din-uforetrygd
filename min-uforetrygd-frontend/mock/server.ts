@@ -13,16 +13,19 @@ app.use(
   })
 )
 
-const dittUforevedtakMock = {
-  uforegrad: 50,
-  virkFom: '2021-01-01',
-  uforetidspunkt: '2020-01-01',
-  inntektsgrense: 140000,
-  sumAvForventedeInntekter: 200000,
-  hasBarnetilleggFellesBarn: true,
-  hasBarnetilleggSaerkullsbarn: true,
-  hasGjenlevendeTillegg: true,
-  hasVarigTilrettelagtArbeid: true,
+const dittUforevedtakData = {
+  hasIverksattVedtak: true,
+  dittUforevedtak: {
+    uforegrad: 0,
+    virkFom: '2024-12-01',
+    uforetidspunkt: '2020-10-01',
+    inntektsgrense: 49611,
+    sumAvForventedeInntekter: 0,
+    hasBarnetilleggFellesBarn: false,
+    hasBarnetilleggSaerkullsbarn: false,
+    hasGjenlevendeTillegg: false,
+    hasVarigTilrettelagtArbeid: false,
+  },
 }
 
 const uforeMock = {
@@ -54,7 +57,7 @@ app.get('/api/initiate', (req, res) => {
 })
 
 app.get('/api/ditt-uforevedtak', (req, res) => {
-  res.json(dittUforevedtakMock)
+  res.json(dittUforevedtakData)
 })
 
 app.listen(PORT, () => {
