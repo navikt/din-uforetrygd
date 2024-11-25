@@ -1,9 +1,5 @@
 @import '@navikt/ds-tokens';
 
-:root {
-  --content-width: 992px;
-}
-
 body {
   margin: 0;
   background-color: var(--a-bg-default);
