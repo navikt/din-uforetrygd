@@ -1,1 +1,1 @@
-export { RepresentasjonBanner } from './RepresentasjonBanner'
+export { RepresentasjonBanner as default } from './RepresentasjonBanner'
