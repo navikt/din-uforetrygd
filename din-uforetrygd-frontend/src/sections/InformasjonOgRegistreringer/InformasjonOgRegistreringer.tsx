@@ -1,4 +1,4 @@
-import { Heading } from '@navikt/ds-react'
+import { Heading, VStack } from '@navikt/ds-react'
 import { Kort, KortGrid } from '@/components/Kort'
 import {
   EnvelopeClosedIcon,
@@ -82,20 +82,22 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
   const relevantLinks = filterShowFor(props.visningskriterier, links)
   return (
     <section>
-      <Heading level="2" size="medium" spacing>
-        Informasjon og registreringer
-      </Heading>
-      <KortGrid>
-        {relevantLinks.map((link) => (
-          <Kort
-            key={link.title}
-            title={link.title}
-            description={link.description}
-            href={link.href ?? ''}
-            icon={link.icon}
-          />
-        ))}
-      </KortGrid>
+      <VStack gap="5">
+        <Heading level="2" size="medium">
+          Informasjon og registreringer
+        </Heading>
+        <KortGrid>
+          {relevantLinks.map((link) => (
+            <Kort
+              key={link.title}
+              title={link.title}
+              description={link.description}
+              href={link.href ?? ''}
+              icon={link.icon}
+            />
+          ))}
+        </KortGrid>
+      </VStack>
     </section>
   )
 }
