@@ -27,23 +27,3 @@ export const initate = async (pid: string | undefined) => {
       console.error('Error:', error)
     })
 }
-
-export const dittUforevedtak = async (pid: string | undefined) => {
-  const oboToken = await getOboToken().catch((error) => {
-    console.error('Error:', error)
-  })
-  const fullmaktCookie = await getFullmaktCookie()
-  return await client
-    .GET('/api/ditt-uforevedtak', {
-      headers: {
-        Authorization: `Bearer ${oboToken}`,
-        pid: pid,
-        Cookie: fullmaktCookie,
-      },
-      cache: 'no-store',
-    })
-    .then((response) => response.data)
-    .catch((error) => {
-      console.error('Error:', error)
-    })
-}

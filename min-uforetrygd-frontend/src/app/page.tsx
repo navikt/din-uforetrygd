@@ -30,7 +30,11 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           </Heading>
           <UforestatusGuidePanel visningskriterier={visningskriterier} pid={params.pid} />
           <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
-          <DittVedtak pid={params.pid} />
+          <DittVedtak
+            pid={params.pid}
+            hasIverksattVedtak={initResponse.hasIverksattVedtak!}
+            dittUforevedtak={initResponse.uforevedtak}
+          />
           <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={initResponse.innloggingstype!} />
