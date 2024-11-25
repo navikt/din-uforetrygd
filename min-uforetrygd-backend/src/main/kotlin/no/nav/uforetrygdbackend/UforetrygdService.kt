@@ -13,34 +13,28 @@ class UforetrygdService(
     private val fullmaktClient: FullmaktClient,
 ) {
 
-    fun constructUforetrygdResponse(pid: String): UforetrygdResponse = UforetrygdResponse(
-        pid = pid,
-        loggetInnSom = tokenService.determineLoggedInUser(),
-        saker = penService.getSaker(pid),
-        tilgangstype = determineTilgangstype(),
-        innloggingstype = tokenService.getInnloggingstype(),
-        harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype())
-    )
-
-    fun getDittUforevedtak(pid: String): DittUforevedtakResponse {
-        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+    fun constructUforetrygdResponse(pid: String): UforetrygdResponse {
         val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-
-        return DittUforevedtakResponse(
+        return UforetrygdResponse(
+            pid = pid,
+            loggetInnSom = tokenService.determineLoggedInUser(),
+            saker = penService.getSaker(pid),
+            tilgangstype = determineTilgangstype(),
+            innloggingstype = tokenService.getInnloggingstype(),
+            harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()),
             hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-            dittUforevedtak = vedtakssammendragResponse.vedtakssammendrag?.let {
+            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.let {
                 DittUforevedtak(
                     uforegrad = it.uforegrad,
                     virkFom = it.virkFom,
                     uforetidspunkt = it.uforetidspunkt,
                     inntektsgrense = it.inntektsgrense,
-                    sumAvForventedeInntekter = sumAvForventedeInntekter,
+                    sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid),
                     hasBarnetilleggFellesBarn = it.hasBarnetilleggFellesBarn,
                     hasBarnetilleggSaerkullsbarn = it.hasBarnetilleggSaerkullsbarn,
                     hasGjenlevendeTillegg = it.hasGjenlevendeTillegg,
                     hasVarigTilrettelagtArbeid = it.hasVarigTilrettelagtArbeid
                 )
-
             }
         )
     }

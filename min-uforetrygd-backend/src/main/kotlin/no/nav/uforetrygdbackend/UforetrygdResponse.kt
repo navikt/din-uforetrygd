@@ -1,12 +1,28 @@
 package no.nav.uforetrygdbackend
 
+import java.time.LocalDate
+
 data class UforetrygdResponse(
     val pid: String,
     val loggetInnSom: String,
     val saker: List<Sak>,
+    val hasIverksattVedtak: Boolean,
+    val uforevedtak: DittUforevedtak?,
     val tilgangstype: Tilgangstype,
     val innloggingstype: Innloggingstype,
     val harGammelFullmaktmottaker: Boolean
+)
+
+data class DittUforevedtak(
+    val uforegrad: Int,
+    val virkFom: LocalDate?,
+    val uforetidspunkt: LocalDate?,
+    val inntektsgrense: Int?,
+    val sumAvForventedeInntekter: Long?,
+    val hasBarnetilleggFellesBarn: Boolean,
+    val hasBarnetilleggSaerkullsbarn: Boolean,
+    val hasGjenlevendeTillegg: Boolean,
+    val hasVarigTilrettelagtArbeid: Boolean
 )
 
 enum class Innloggingstype {
