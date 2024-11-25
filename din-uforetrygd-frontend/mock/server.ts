@@ -13,10 +13,46 @@ app.use(
   })
 )
 
-const dittUforevedtakData = {
+const uforeMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      grad: 100,
+      status: 'LOPENDE',
+    },
+  ],
   hasIverksattVedtak: true,
-  dittUforevedtak: {
-    uforegrad: 0,
+  uforevedtak: {
+    uforegrad: 100,
+    virkFom: '2024-12-01',
+    uforetidspunkt: '2020-10-01',
+    inntektsgrense: 49611,
+    sumAvForventedeInntekter: 150000,
+    hasBarnetilleggFellesBarn: false,
+    hasBarnetilleggSaerkullsbarn: false,
+    hasGjenlevendeTillegg: false,
+    hasVarigTilrettelagtArbeid: false,
+  },
+  tilgangstype: 'PERSONLIG',
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
+const gradertUforeMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      grad: 50,
+      status: 'LOPENDE',
+    },
+  ],
+  hasIverksattVedtak: true,
+  uforevedtak: {
+    uforegrad: 50,
     virkFom: '2024-12-01',
     uforetidspunkt: '2020-10-01',
     inntektsgrense: 49611,
@@ -26,38 +62,24 @@ const dittUforevedtakData = {
     hasGjenlevendeTillegg: false,
     hasVarigTilrettelagtArbeid: false,
   },
-}
-
-const uforeMock = {
-  pid: '81549300',
   tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL3',
+  innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
-  saker: [{ type: 'UFORETRYGD', grad: 50, status: 'LOPENDE' }],
-}
-
-const gradertUfoereMock = {
-  pid: '81549300',
-  tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL3',
-  harGammelFullmaktmottaker: false,
-  saker: [{ type: 'UFORETRYGD', grad: 50, status: 'LOPENDE' }],
 }
 
 const ingenUforesakMock = {
   pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [],
+  hasIverksattVedtak: false,
+  uforevedtak: null,
   tilgangstype: 'PERSONLIG',
-  innloggingstype: 'LEVEL3',
+  innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
-  saker: [{ type: 'ALDERSPENSJON', grad: 50, status: 'LOPENDE' }],
 }
 
 app.get('/api/initiate', (req, res) => {
-  res.json(gradertUfoereMock)
-})
-
-app.get('/api/ditt-uforevedtak', (req, res) => {
-  res.json(dittUforevedtakData)
+  res.json(ingenUforesakMock)
 })
 
 app.listen(PORT, () => {

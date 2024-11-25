@@ -1,34 +1,33 @@
 import { ShowMore } from '@/components/ShowMore'
 import { BodyShort, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
-import { dittUforevedtak } from '@/api/endpoints'
 import { format, parseISO } from 'date-fns'
 import styles from './DittVedtak.module.css'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import { getUrl } from '@/utils/getUrl'
+import { components } from '@/api/api'
 
 interface IDittVedtak {
   pid?: string
+  hasIverksattVedtak: boolean
+  dittUforevedtak?: components['schemas']['DittUforevedtak']
 }
 
-export const DittVedtak: React.FC<IDittVedtak> = async ({ pid }) => {
-  const dittUforevedtakData = await dittUforevedtak(pid)
-
-  if (dittUforevedtakData?.hasIverksattVedtak === false) {
+export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedtak, dittUforevedtak }) => {
+  if (!hasIverksattVedtak) {
     return null
   }
 
-  const dittVedtak = dittUforevedtakData?.dittUforevedtak
   const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
-  const uforegrad = dittVedtak?.uforegrad ?? 0
-  const uforetidspunkt = format(parseISO(dittVedtak?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
-  const uforetrygdInnvilget = format(parseISO(dittVedtak?.virkFom ?? ''), 'dd.MM.yyyy')
-  const inntektsgrense = formatInntekt(dittVedtak?.inntektsgrense) ?? 0
-  const sumAvForventedeInntekter = formatInntekt(dittVedtak?.sumAvForventedeInntekter) ?? 0
-  const hasVarigTilrettelagtArbeid = dittVedtak?.hasVarigTilrettelagtArbeid ?? false
-  const hasBarnetilleggFellesBarn = dittVedtak?.hasBarnetilleggFellesBarn ?? false
-  const hasBarnetilleggSaerkullsbarn = dittVedtak?.hasBarnetilleggSaerkullsbarn ?? false
-  const hasGjenlevendeTillegg = dittVedtak?.hasGjenlevendeTillegg ?? false
+  const uforegrad = dittUforevedtak?.uforegrad ?? 0
+  const uforetidspunkt = format(parseISO(dittUforevedtak?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
+  const uforetrygdInnvilget = format(parseISO(dittUforevedtak?.virkFom ?? ''), 'dd.MM.yyyy')
+  const inntektsgrense = formatInntekt(dittUforevedtak?.inntektsgrense) ?? 0
+  const sumAvForventedeInntekter = formatInntekt(dittUforevedtak?.sumAvForventedeInntekter) ?? 0
+  const hasVarigTilrettelagtArbeid = dittUforevedtak?.hasVarigTilrettelagtArbeid ?? false
+  const hasBarnetilleggFellesBarn = dittUforevedtak?.hasBarnetilleggFellesBarn ?? false
+  const hasBarnetilleggSaerkullsbarn = dittUforevedtak?.hasBarnetilleggSaerkullsbarn ?? false
+  const hasGjenlevendeTillegg = dittUforevedtak?.hasGjenlevendeTillegg ?? false
   const currentYear = new Date().getFullYear()
 
   const shouldShowTilleggTilUforetrygd =
