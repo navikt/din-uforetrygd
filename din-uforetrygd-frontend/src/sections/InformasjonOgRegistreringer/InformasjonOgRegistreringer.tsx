@@ -73,7 +73,7 @@ const getLinks = async (pid: string | undefined) => [
     title: 'Ettersend dokumentasjon',
     description: 'Til uføresaken din',
     icon: FileExportIcon,
-    showFor: matchSome([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+    showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
   },
 ]
 

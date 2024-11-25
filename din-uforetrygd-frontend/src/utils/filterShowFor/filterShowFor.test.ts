@@ -22,7 +22,7 @@ describe('filterShowFor', () => {
     {
       href: '#',
       text: 'Ettersend informasjon',
-      showFor: matchSome([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+      showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     },
   ]
   describe('test with links', () => {
@@ -74,19 +74,19 @@ describe('filterShowFor', () => {
     const input = [
       {
         text: 'should match 1',
-        showFor: matchAll([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+        showFor: matchAll([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
       },
       {
         text: 'should match 2',
-        showFor: matchAll([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+        showFor: matchAll([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
       },
       {
         text: 'should not match 1',
-        showFor: matchAll([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.GradertUfore]),
+        showFor: matchAll([Visningskriterier.SakTilBehandling, Visningskriterier.GradertUfore]),
       },
     ]
 
-    const actual = filterShowFor([Visningskriterier.Uforetrygd, Visningskriterier.UforesoknadTilBehandling], input)
+    const actual = filterShowFor([Visningskriterier.Uforetrygd, Visningskriterier.SakTilBehandling], input)
     expect(actual.map((it) => it.text)).toEqual(['should match 1', 'should match 2'])
   })
 
@@ -94,15 +94,15 @@ describe('filterShowFor', () => {
     const input = [
       {
         text: 'should match 1',
-        showFor: matchSome([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+        showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
       },
       {
         text: 'should not match 1',
-        showFor: matchAll([Visningskriterier.UforesoknadTilBehandling, Visningskriterier.Uforetrygd]),
+        showFor: matchAll([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
       },
     ]
 
-    const actual = filterShowFor([Visningskriterier.UforesoknadTilBehandling], input)
+    const actual = filterShowFor([Visningskriterier.SakTilBehandling], input)
     expect(actual.map((it) => it.text)).toEqual(['should match 1'])
   })
 })

@@ -78,8 +78,52 @@ const ingenUforesakMock = {
   harGammelFullmaktmottaker: false,
 }
 
+const harUforeOgSakTilBehandlingMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      grad: 100,
+      status: 'TIL_BEHANDLING',
+    },
+  ],
+  hasIverksattVedtak: true,
+  uforevedtak: {
+    uforegrad: 100,
+    virkFom: '2024-12-01',
+    uforetidspunkt: '2020-10-01',
+    inntektsgrense: 49611,
+    sumAvForventedeInntekter: 0,
+    hasBarnetilleggFellesBarn: false,
+    hasBarnetilleggSaerkullsbarn: false,
+    hasGjenlevendeTillegg: false,
+    hasVarigTilrettelagtArbeid: false,
+  },
+  tilgangstype: 'PERSONLIG',
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
+const harSakTilBehandlingOgIngenUforeMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      grad: 50,
+      status: 'TIL_BEHANDLING',
+    },
+  ],
+  hasIverksattVedtak: false,
+  uforevedtak: null,
+  tilgangstype: 'PERSONLIG',
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
 app.get('/api/initiate', (req, res) => {
-  res.json(ingenUforesakMock)
+  res.json(harSakTilBehandlingOgIngenUforeMock)
 })
 
 app.listen(PORT, () => {
