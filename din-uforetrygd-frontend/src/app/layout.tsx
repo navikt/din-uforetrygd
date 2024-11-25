@@ -4,6 +4,7 @@ import { InternalHeaderTitle, InternalHeaderUser } from '@navikt/ds-react/Intern
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
 import getEnv from '@/utils/env'
+import '../global.css'
 import './layout.css'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
