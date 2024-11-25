@@ -11,7 +11,7 @@ interface IKanVaereAktueltForDegProps {
 const links = [
   {
     href: await getUrl({ urlFromEnv: 'LINK_LES_MER_OM_UFORETRYGD' }),
-    text: 'Les mer om uføretrygd',
+    text: 'Les om uføretrygd',
     showFor: true,
   },
   {

@@ -20,7 +20,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
         isFullmektig: isFullmektig,
         innloggingstype: innloggingstype,
       }),
-      text: 'Søknad om endret inntektsgrense - gradert uføretrygd',
+      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
     },
     {
