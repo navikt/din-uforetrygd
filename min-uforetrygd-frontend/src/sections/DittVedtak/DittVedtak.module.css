@@ -1,3 +1,13 @@
 .dittVedtak a {
-    color: var(--a-text-default);
+  color: var(--a-text-default);
+}
+
+.dittVedtak {
+  max-width: 600px;
+}
+
+.dittVedtakWrapper {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: 12px;
 }
