@@ -35,7 +35,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ visningskriterier, pid
       <div className={styles.dittVedtakWrapper}>
         <section className={styles.dittVedtak}>
           <ShowMore
-            heading="Ditt uførevedtak, inntekt og inntektsgrenser"
+            heading="Ditt uførevedtak, registrert inntekt og inntektsgrenser"
             aria-labelledby="info-heading"
             collapsedHeight="10rem"
             scrollBackOnCollapse={false}
