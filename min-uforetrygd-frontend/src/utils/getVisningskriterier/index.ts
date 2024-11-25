@@ -6,15 +6,16 @@ export const getVisningskriterier = (init: components['schemas']['UforetrygdResp
   const visningskriterier = saker
     .filter((sak) => sak.type === 'UFORETRYGD')
     .reduce((acc: Visningskriterier[], sak) => {
-      if (sak.status === 'TIL_BEHANDLING') {
-        acc.push(Visningskriterier.UforesoknadTilBehandling)
-      } else if (sak.status === 'LOPENDE') {
-        if (sak.grad !== 100) {
+      if (init.hasIverksattVedtak) {
+        if (init.uforevedtak?.uforegrad !== 100) {
           acc.push(Visningskriterier.GradertUfore)
         }
         acc.push(Visningskriterier.Uforetrygd)
       }
+      if (sak.status === 'TIL_BEHANDLING') {
+        acc.push(Visningskriterier.SakTilBehandling)
+      }
       return acc
     }, [])
-  return visningskriterier.length > 0 ? visningskriterier : [Visningskriterier.IngenUforetrygd]
+  return visningskriterier.length > 0 ? visningskriterier : [Visningskriterier.IngenUforesak]
 }
