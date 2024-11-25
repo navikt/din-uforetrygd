@@ -23,7 +23,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
           url: 'https://www.nav.no',
         },
         {
-          title: 'Uføretrygd',
+          title: 'Din uføretrygd',
           url: 'https://www.nav.no/uføretrygd',
         },
       ],
@@ -35,6 +35,9 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
 
     return (
       <html lang="no">
+        <head>
+          <title>Din uføretrygd - Veileder</title>
+        </head>
         <body>
           <InternalHeader>
             <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
@@ -51,6 +54,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   return (
     <html lang="no">
       <head>
+        <title>Din uføretrygd</title>
         <Decorator.HeadAssets />
       </head>
       <body>
