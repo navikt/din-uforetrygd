@@ -3,7 +3,6 @@ import styles from './RepresentasjonBanner.module.css'
 
 export const RepresentasjonBanner = () => {
   // Selv om komponenten er 'use client' vil next prøve å rendere den på serveren, og da vil window.location.origin være undefined.
-  if (!window) return
   return (
     <div className={styles.representasjonBannerWrapper}>
       <representasjon-banner
@@ -14,3 +13,5 @@ export const RepresentasjonBanner = () => {
     </div>
   )
 }
+
+export default RepresentasjonBanner
