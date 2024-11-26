@@ -2,9 +2,11 @@ import type { paths } from '@/api/api'
 import createClient from 'openapi-fetch'
 import getOboToken from '@/api/getOboToken'
 import { getFullmaktCookie } from './getFullmaktCookie'
+import { fetchLogger } from '@/utils/logger'
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
+  fetch: fetchLogger,
 })
 
 export const initate = async (pid: string | undefined) => {
@@ -13,6 +15,7 @@ export const initate = async (pid: string | undefined) => {
   })
 
   const fullmaktCookie = await getFullmaktCookie()
+
   return await client
     .GET('/api/initiate', {
       headers: {
@@ -23,7 +26,4 @@ export const initate = async (pid: string | undefined) => {
       cache: 'no-store',
     })
     .then((response) => response.data)
-    .catch((error) => {
-      console.error('Error:', error)
-    })
 }
