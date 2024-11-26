@@ -20,7 +20,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       breadcrumbs: [
         {
           title: 'Min side',
-          url: 'https://www.nav.no',
+          url: 'https://www.nav.no/minside',
         },
         {
           title: 'Din uføretrygd',
