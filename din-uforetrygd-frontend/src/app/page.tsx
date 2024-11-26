@@ -14,6 +14,7 @@ import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjo
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
 }
+
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
