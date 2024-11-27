@@ -36,7 +36,11 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             hasIverksattVedtak={initResponse.hasIverksattVedtak!}
             dittUforevedtak={initResponse.uforevedtak}
           />
-          <InformasjonOgRegistreringer visningskriterier={visningskriterier} pid={params.pid} />
+          <InformasjonOgRegistreringer
+            visningskriterier={visningskriterier}
+            pid={params.pid}
+            bprofFullmakt={initResponse.harGammelFullmaktmottaker!}
+          />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={initResponse.innloggingstype!} />
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
