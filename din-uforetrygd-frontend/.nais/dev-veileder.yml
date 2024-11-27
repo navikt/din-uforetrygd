@@ -72,11 +72,11 @@ spec:
     - name: UFORETRYGD_BACKEND
       value: http://uforetrygd-backend:8080
     - name: LINK_SOKNAD_GRADERT_UFORE
-      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120901?sub=papir
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120901?sub=paper
     - name: LINK_SOKNAD_UFORE
-      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120605?sub=papir
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120605?sub=paper
     - name: LINK_SOKNAD_BARNETILLEGG
-      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav121501?sub=papir
+      value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav121501?sub=paper
     - name: LINK_LES_MER_OM_UFORETRYGD
       value: https://www.ansatt.dev.nav.no/uforetrygd
     - name: LINK_ENDRE_KONTONUMMER
