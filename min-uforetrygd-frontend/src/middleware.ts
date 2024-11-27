@@ -4,10 +4,15 @@ import logger from './utils/logger'
 
 export function middleware(request: NextRequest) {
   const url = new URL(request.url)
-  logger.info(`Request ${url.pathname}`, {
-    method: request.method,
-    host: url.origin,
-    path: url.pathname,
+  logger.info({
+    message: `Request ${url.pathname}`,
+    http: {
+      request: {
+        method: request.method,
+        host: url.origin,
+        path: url.pathname,
+      },
+    },
   })
   return NextResponse.next()
 }

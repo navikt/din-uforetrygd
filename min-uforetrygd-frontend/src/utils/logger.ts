@@ -1,40 +1,49 @@
-const log = (
-  message: string,
-  fields: Record<string, string | number>,
+export interface ILogEntry {
+  message: string
+  correlationId?: string
+  'Nav-Call-Id'?: string
+  http?: {
+    request?: {
+      method: string
+      path: string
+      host: string
+    }
+    response?: {
+      status_code: number
+      duration?: number
+    }
+  }
+}
+
+interface IInternalLogEntry extends ILogEntry {
+  '@timestamp': Date
+  message: string
   level: 'Info' | 'Warning' | 'Error' | 'Fatal'
-): void => {
-  const logEntry = {
+}
+const log = (entiry: ILogEntry, level: 'Info' | 'Warning' | 'Error' | 'Fatal'): void => {
+  const logEntry: IInternalLogEntry = {
     '@timestamp': new Date(),
-    ...fields,
-    message,
-    http: {
-      request: {
-        method: 'TEST',
-        status_code: 200,
-        duration: 92,
-        path: '/bla/bla',
-      },
-    },
+    ...entiry,
     level: level,
   }
   // eslint-disable-next-line no-console
   console.log(JSON.stringify(logEntry))
 }
 
-export const info = (message: string, fields: Record<string, string | number>) => {
-  log(message, fields, 'Info')
+export const info = (entry: ILogEntry) => {
+  log(entry, 'Info')
 }
 
-export const error = (message: string, fields: Record<string, string | number>) => {
-  log(message, fields, 'Error')
+export const error = (entry: ILogEntry) => {
+  log(entry, 'Error')
 }
 
-export const warning = (message: string, fields: Record<string, string | number>) => {
-  log(message, fields, 'Warning')
+export const warning = (entry: ILogEntry) => {
+  log(entry, 'Warning')
 }
 
-export const fatal = (message: string, fields: Record<string, string | number>) => {
-  log(message, fields, 'Fatal')
+export const fatal = (entry: ILogEntry) => {
+  log(entry, 'Fatal')
 }
 
 export default { info, error, warning, fatal }
