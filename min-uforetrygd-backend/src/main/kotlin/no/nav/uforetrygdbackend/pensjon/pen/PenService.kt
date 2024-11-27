@@ -10,7 +10,7 @@ import java.time.LocalDate
 class PenService(val penClient: PenClient) {
     fun getSaker(pid: String): List<Sak> {
         return penClient.getSaksammendrag(pid)
-            .map { mapSakSammendragToSak(it, pid) }
+            .map { mapSakSammendragToSak(it) }
             .filterNot { it.type == Sakstype.UKJENT || it.type == Sakstype.GENERELL ||
                     it.type == Sakstype.FAMILIEPLEIER_YTELSE || it.type == Sakstype.GAMMEL_YRKESSKADE ||
                     it.type == Sakstype.GRUNNBLANKETTER || it.type == Sakstype.KRIGSPENSJON}
@@ -21,30 +21,9 @@ class PenService(val penClient: PenClient) {
     fun getSumAvForventedeInntekter(pid: String): Long? =
         penClient.getForventedeInntekterResponse(pid).sumAvForventedeInntekter
 
-    private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag, pid: String): Sak {
+    private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag): Sak {
         val sakstype = mapSakstype(sakSammendrag.sakType)
-        val grad = when (sakstype) {
-            Sakstype.ALDERSPENSJON -> getGjeldendeUttaksgrad(pid)
-            Sakstype.UFORETRYGD -> getGjeldendeUforegrad(pid)
-            else -> null
-        }
-        return Sak(sakstype, grad, mapSakstatus(sakSammendrag.sakStatus))
-    }
-
-    private fun getGjeldendeUttaksgrad(pid: String): Int? {
-        return penClient.getUttaksgradHistorikk(pid)
-            .sortedByDescending { it.fomDato }
-            .filter { isVirkDateActive(it) }
-            .map { it.uttaksgrad}
-            .firstOrNull()
-    }
-
-    private fun isVirkDateActive(uttaksgrad: Uttaksgrad): Boolean =
-        uttaksgrad.fomDato != null && !uttaksgrad.fomDato.isAfter(LocalDate.now())
-                && (uttaksgrad.tomDato == null || !uttaksgrad.tomDato.isBefore(LocalDate.now()))
-
-    private fun getGjeldendeUforegrad(pid: String): Int? {
-        return penClient.getUforegrad(pid)
+        return Sak(type = sakstype, status = mapSakstatus(sakSammendrag.sakStatus))
     }
 
     private fun mapSakstatus(sakStatus: String): Sakstatus {

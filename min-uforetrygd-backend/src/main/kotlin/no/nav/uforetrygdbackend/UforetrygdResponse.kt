@@ -53,7 +53,7 @@ enum class Tilgangstype {
     OKONOMI
 }
 
-data class Sak(val type: Sakstype, val grad: Int?, val status: Sakstatus)
+data class Sak(val type: Sakstype, val status: Sakstatus)
 
 enum class Sakstatus {
     OPPRETTET,
