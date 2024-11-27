@@ -1,42 +1,33 @@
-import winston from 'winston'
-import { ecsFormat } from '@elastic/ecs-winston-format'
-import { randomUUID } from 'crypto'
-
-const logger = winston.createLogger({
-  format: ecsFormat({
-    convertReqRes: true,
-  }),
-  transports: [new winston.transports.Console()],
-})
-
-export const fetchLogger = (input: Request): Promise<Response> => {
-  const correlationIdName = 'Nav-Call-Id'
-  const correlationId = randomUUID()
-  const url = new URL(input.url)
-  const startTime = Date.now()
-
-  const log = (timedelta: number) => ({
-    method: input.method,
-    host: url.origin,
-    path: url.pathname,
-    correlationId: correlationId,
-    [correlationIdName]: correlationId,
-    duration: timedelta,
-  })
-
-  input.headers.set(correlationIdName, correlationId)
-
-  return fetch(input).then((response) => {
-    const endTime = Date.now()
-    const timeDelta = endTime - startTime // Timedelta in ms
-
-    if (response.ok) {
-      logger.info(log(timeDelta))
-    } else {
-      logger.error(log(timeDelta))
-    }
-    return response
-  })
+interface ILogger {
+  '@timestamp': Date
+  message: Record<string, string | number>
+  'log.level': 'info' | 'warning' | 'error' | 'fatal'
 }
 
-export default logger
+const log = (message: Record<string, string | number>, level: 'info' | 'warning' | 'error' | 'fatal'): void => {
+  const logEntry: ILogger = {
+    '@timestamp': new Date(),
+    message,
+    'log.level': level,
+  }
+  // eslint-disable-next-line no-console
+  console.log(JSON.stringify(logEntry))
+}
+
+export const info = (message: Record<string, string | number>) => {
+  log(message, 'info')
+}
+
+export const error = (message: Record<string, string | number>) => {
+  log(message, 'error')
+}
+
+export const warning = (message: Record<string, string | number>) => {
+  log(message, 'warning')
+}
+
+export const fatal = (message: Record<string, string | number>) => {
+  log(message, 'fatal')
+}
+
+export default { info, error, warning, fatal }
