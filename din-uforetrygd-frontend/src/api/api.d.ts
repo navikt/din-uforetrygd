@@ -43,8 +43,6 @@ export interface components {
         Sak: {
             /** @enum {string} */
             type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
-            /** Format: int32 */
-            grad?: number;
             /** @enum {string} */
             status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
         };
