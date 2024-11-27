@@ -4,7 +4,7 @@ import logger from './utils/logger'
 
 export function middleware(request: NextRequest) {
   const url = new URL(request.url)
-  logger.info({
+  logger.info(`Request ${url.pathname}`, {
     method: request.method,
     host: url.origin,
     path: url.pathname,
