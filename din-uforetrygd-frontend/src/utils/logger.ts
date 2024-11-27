@@ -1,18 +1,11 @@
-interface ILogger {
-  '@timestamp': Date
-  fields: Record<string, string | number>
-  severity: 'info' | 'warning' | 'error' | 'fatal'
-  message: string
-}
-
 const log = (
   message: string,
   fields: Record<string, string | number>,
   level: 'info' | 'warning' | 'error' | 'fatal'
 ): void => {
-  const logEntry: ILogger = {
+  const logEntry = {
     '@timestamp': new Date(),
-    fields,
+    ...fields,
     message,
     severity: level,
   }
