@@ -23,9 +23,9 @@ export const fetchLogger = (input: Request): Promise<Response> => {
     const timeDelta = endTime - startTime // Timedelta in ms
 
     if (response.ok) {
-      logger.info(log(timeDelta))
+      logger.info(`API request: ${url.pathname}`, log(timeDelta))
     } else {
-      logger.error(log(timeDelta))
+      logger.error(`API request ${url.pathname}`, log(timeDelta))
     }
     return response
   })
