@@ -38,9 +38,10 @@ spec:
       autoLogin: true
       autoLoginIgnorePaths:
         - /internal/ping
-  autoInstrumentation:
-    enabled: true
-    runtime: nodejs
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   tokenx:
     enabled: true
   accessPolicy:
