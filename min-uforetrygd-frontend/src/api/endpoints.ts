@@ -2,7 +2,7 @@ import type { paths } from '@/api/api'
 import createClient from 'openapi-fetch'
 import getOboToken from '@/api/getOboToken'
 import { getFullmaktCookie } from './getFullmaktCookie'
-import { fetchLogger } from '@/utils/logger'
+import fetchLogger from '@/utils/fetchLogger'
 
 const client = createClient<paths>({
   baseUrl: process.env.UFORETRYGD_BACKEND,
