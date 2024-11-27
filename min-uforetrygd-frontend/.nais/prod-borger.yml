@@ -40,9 +40,10 @@ spec:
         - /uforetrygd/selvbetjening/_next/static/**
   tokenx:
     enabled: true
-  autoInstrumentation:
-    enabled: true
-    runtime: nodejs
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   accessPolicy:
     outbound:
       rules:
