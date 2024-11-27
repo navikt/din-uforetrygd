@@ -36,7 +36,7 @@ describe('getUrl', () => {
     expect(actual).toBe('https://www.nav.no/soknad-gradert-uforetrygd?sub=digital')
   })
 
-  it('should return url with query sub=papir when user is fullmektig', async () => {
+  it('should return url with query sub=paper when user is fullmektig', async () => {
     vi.mock('@/utils/env', () => ({
       default: vi.fn((key) => {
         if (key === 'LINK_SOKNAD_GRADERT_UFORE') {
@@ -49,10 +49,10 @@ describe('getUrl', () => {
       }),
     }))
     const actual = await getUrl(inputFullmektig)
-    expect(actual).toBe('https://www.nav.no/soknad-gradert-uforetrygd?sub=papir')
+    expect(actual).toBe('https://www.nav.no/soknad-gradert-uforetrygd?sub=paper')
   })
 
-  it('should return url with query sub=papir when user is logged in with innloggingstype LEVEL3', async () => {
+  it('should return url with query sub=paper when user is logged in with innloggingstype LEVEL3', async () => {
     vi.mock('@/utils/env', () => ({
       default: vi.fn((key) => {
         if (key === 'LINK_SOKNAD_GRADERT_UFORE') {
@@ -68,7 +68,7 @@ describe('getUrl', () => {
       urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
       innloggingstype: 'LEVEL3',
     })
-    expect(actual).toBe('https://www.nav.no/soknad-gradert-uforetrygd?sub=papir')
+    expect(actual).toBe('https://www.nav.no/soknad-gradert-uforetrygd?sub=paper')
   })
 })
 // TODO: Fix reset av mocking mellom hver test

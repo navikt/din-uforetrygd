@@ -41,7 +41,7 @@ export const getUrl = async ({
   }
   if (getEnv('MODE') === 'borger' && urlFromEnv.startsWith('LINK_SOKNAD')) {
     return isFullmektig || innloggingstype === 'LEVEL3'
-      ? getEnv(urlFromEnv) + '?sub=papir'
+      ? getEnv(urlFromEnv) + '?sub=paper'
       : getEnv(urlFromEnv) + '?sub=digital'
   }
   return getEnv(urlFromEnv)
