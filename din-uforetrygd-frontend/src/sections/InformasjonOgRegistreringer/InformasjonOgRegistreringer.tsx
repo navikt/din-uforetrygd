@@ -16,9 +16,10 @@ import { getUrl } from '@/utils/getUrl'
 interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
+  bprofFullmakt: boolean
 }
 
-const getLinks = async (pid: string | undefined) => [
+const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
   {
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
     title: 'Utbetalinger',
@@ -62,7 +63,7 @@ const getLinks = async (pid: string | undefined) => [
     showFor: true,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_FULLMAKTER', pid: pid }),
+    href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
     icon: PersonGroupIcon,
@@ -78,7 +79,7 @@ const getLinks = async (pid: string | undefined) => [
 ]
 
 export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerProps> = async (props) => {
-  const links = await getLinks(props.pid)
+  const links = await getLinks(props.pid, props.bprofFullmakt)
   const relevantLinks = filterShowFor(props.visningskriterier, links)
   return (
     <section>

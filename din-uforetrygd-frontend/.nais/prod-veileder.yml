@@ -99,6 +99,8 @@ spec:
       value: https://pensjon-selvbetjening-familieforhold-frontend-veileder.intern.nav.no/pensjon/selvbetjening/familieforhold/?context=ut&pid=PID
     - name: LINK_FULLMAKTER
       value: https://www.nav.no/person/pdl-fullmakt-ui
+    - name: LINK_BPROF_FULLMAKTER
+      value: ""
     - name: LINK_ETTERSENDE
       value: https://www.nav.no/ettersende#uforetrygd
     - name: LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD
