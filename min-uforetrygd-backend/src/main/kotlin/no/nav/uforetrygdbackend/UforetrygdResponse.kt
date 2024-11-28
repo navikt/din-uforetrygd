@@ -8,7 +8,6 @@ data class UforetrygdResponse(
     val saker: List<Sak>,
     val hasIverksattVedtak: Boolean,
     val uforevedtak: DittUforevedtak?,
-    val tilgangstype: Tilgangstype,
     val innloggingstype: Innloggingstype,
     val harGammelFullmaktmottaker: Boolean
 )
@@ -30,27 +29,6 @@ enum class Innloggingstype {
     LEVEL3,
     NAV,
     SYSTEM
-}
-
-enum class Tilgangstype {
-    PERSONLIG,
-    FULLMAKT_LES,
-    FULLMAKT_KOMMUNISER,
-    FULLMAKT_SKRIV,
-    FULLMAKT_FULLSTENDIG,
-    FULLMAKT_BEGRENSET,
-    FULLMAKT_SAMHANDLER,
-    FULLMAKT_SAMHANDLER_ADMIN,
-    FULLMAKT_SUPER_ADMIN,
-    VERGE,
-    PENGEMOTTAKER,
-    VERGE_PENGEMOTTAKER,
-    SAKSBEHANDLER,
-    VEILEDER,
-    VEILEDER_BEGRENSET, //TODO: Skal denne også tas med?
-    BRUKERHJELPA,
-    KLAGEBEHANDLER,
-    OKONOMI
 }
 
 data class Sak(val type: Sakstype, val status: Sakstatus)
