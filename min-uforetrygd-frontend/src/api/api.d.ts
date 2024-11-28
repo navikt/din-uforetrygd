@@ -53,8 +53,6 @@ export interface components {
             hasIverksattVedtak?: boolean;
             uforevedtak?: components["schemas"]["DittUforevedtak"];
             /** @enum {string} */
-            tilgangstype?: "PERSONLIG" | "FULLMAKT_LES" | "FULLMAKT_KOMMUNISER" | "FULLMAKT_SKRIV" | "FULLMAKT_FULLSTENDIG" | "FULLMAKT_BEGRENSET" | "FULLMAKT_SAMHANDLER" | "FULLMAKT_SAMHANDLER_ADMIN" | "FULLMAKT_SUPER_ADMIN" | "VERGE" | "PENGEMOTTAKER" | "VERGE_PENGEMOTTAKER" | "SAKSBEHANDLER" | "VEILEDER" | "VEILEDER_BEGRENSET" | "BRUKERHJELPA" | "KLAGEBEHANDLER" | "OKONOMI";
-            /** @enum {string} */
             innloggingstype?: "LEVEL4" | "LEVEL3" | "NAV" | "SYSTEM";
             harGammelFullmaktmottaker?: boolean;
         };
