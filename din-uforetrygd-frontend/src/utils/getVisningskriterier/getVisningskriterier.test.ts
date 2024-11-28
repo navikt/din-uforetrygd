@@ -6,7 +6,6 @@ import { Visningskriterier } from '@/const'
 const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   pid: '81549300',
   loggetInnSom: '81549300',
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
   saker: [],
@@ -28,7 +27,6 @@ const uforevedtak: components['schemas']['DittUforevedtak'] = {
 
 const uforesak: components['schemas']['Sak'] = {
   type: 'UFORETRYGD',
-  grad: 100,
   status: 'LOPENDE',
 }
 
@@ -48,7 +46,7 @@ const uforeOgSakTilBehanndling: components['schemas']['UforetrygdResponse'] = {
 
 const gradertUfoereResponse: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
-  saker: [{ ...uforesak, grad: 50 }],
+  saker: [{ ...uforesak }],
   hasIverksattVedtak: true,
   uforevedtak: { ...uforevedtak, uforegrad: 50 },
 }
@@ -64,7 +62,7 @@ const ingenUforesakResponse: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
-  saker: [{ type: 'ALDERSPENSJON', grad: 50, status: 'LOPENDE' }],
+  saker: [{ type: 'ALDERSPENSJON', status: 'LOPENDE' }],
 }
 
 describe('getVisningskriterier', () => {
