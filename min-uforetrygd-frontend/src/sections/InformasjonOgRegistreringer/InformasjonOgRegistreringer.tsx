@@ -57,7 +57,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
-    title: 'Famileforhold',
+    title: 'Familieforhold',
     description: 'Samboerforhold, sivilstand, barn',
     icon: PersonPlusIcon,
     showFor: true,
