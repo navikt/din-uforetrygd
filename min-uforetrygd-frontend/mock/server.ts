@@ -19,7 +19,6 @@ const uforeMock = {
   saker: [
     {
       type: 'UFORETRYGD',
-      grad: 100,
       status: 'LOPENDE',
     },
   ],
@@ -35,7 +34,6 @@ const uforeMock = {
     hasGjenlevendeTillegg: false,
     hasVarigTilrettelagtArbeid: false,
   },
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
 }
@@ -46,7 +44,6 @@ const gradertUforeMock = {
   saker: [
     {
       type: 'UFORETRYGD',
-      grad: 50,
       status: 'LOPENDE',
     },
   ],
@@ -62,7 +59,6 @@ const gradertUforeMock = {
     hasGjenlevendeTillegg: false,
     hasVarigTilrettelagtArbeid: false,
   },
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
 }
@@ -73,7 +69,6 @@ const ingenUforesakMock = {
   saker: [],
   hasIverksattVedtak: false,
   uforevedtak: null,
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
 }
@@ -84,7 +79,6 @@ const harUforeOgSakTilBehandlingMock = {
   saker: [
     {
       type: 'UFORETRYGD',
-      grad: 100,
       status: 'TIL_BEHANDLING',
     },
   ],
@@ -100,7 +94,6 @@ const harUforeOgSakTilBehandlingMock = {
     hasGjenlevendeTillegg: false,
     hasVarigTilrettelagtArbeid: false,
   },
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
 }
@@ -111,13 +104,11 @@ const harSakTilBehandlingOgIngenUforeMock = {
   saker: [
     {
       type: 'UFORETRYGD',
-      grad: 50,
       status: 'TIL_BEHANDLING',
     },
   ],
   hasIverksattVedtak: false,
   uforevedtak: null,
-  tilgangstype: 'PERSONLIG',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
 }
