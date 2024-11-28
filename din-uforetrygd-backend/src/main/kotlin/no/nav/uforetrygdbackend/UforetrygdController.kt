@@ -15,8 +15,16 @@ class UforetrygdController(
 
     @GetMapping("initiate")
     fun initiateUforetrygd(): ResponseEntity<UforetrygdResponse> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(uforetrygdService.constructUforetrygdResponse(SecurityContextUtil.getPidFromContext()))
+        val pid = SecurityContextUtil.getPidFromContext()
+        return try {
+            ResponseEntity
+                .status(HttpStatus.OK)
+                .body(uforetrygdService.constructUforetrygdResponse(pid))
+        } catch (e: Exception) {
+            throw ErrorHandler.exceptionToErrorResponse(
+                exception = e,
+                pid = pid
+            )
+        }
     }
 }
