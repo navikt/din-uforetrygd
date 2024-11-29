@@ -10,10 +10,8 @@ Veileder/saksbehandler må være i en av følgende AD-grupper:
 
 * 0000-GA-Pensjon_VEILEDER
 * 0000-GA-PENSJON_SAKSBEHANDLER
-* 0000-GA-PENSJON_KLAGEBEH
+* 0000-GA-PENSJON_BRUKERHJELPA
 * 0000-GA-PENSJON_OKONOMI
-* 0000-GA-PENSJON_BRUKERHJELPA  ??
-* 0000-GA-PENSJON_NDU ??
 
 Det skilles ikke mellom lese og skrive tilgang.
 
