@@ -113,8 +113,23 @@ const harSakTilBehandlingOgIngenUforeMock = {
   harGammelFullmaktmottaker: false,
 }
 
+const harLopendeUforeSakOgIngenVedtakMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      status: 'LOPENDE',
+    },
+  ],
+  hasIverksattVedtak: false,
+  uforevedtak: null,
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
 app.get('/api/initiate', (req, res) => {
-  res.json(harSakTilBehandlingOgIngenUforeMock)
+  res.json(harUforeOgSakTilBehandlingMock)
 })
 
 app.listen(PORT, () => {
