@@ -11,6 +11,8 @@ export const getVisningskriterier = (init: components['schemas']['UforetrygdResp
           acc.push(Visningskriterier.GradertUfore)
         }
         acc.push(Visningskriterier.Uforetrygd)
+      } else if (sak.status === 'LOPENDE') {
+        acc.push(Visningskriterier.Uforetrygd)
       }
       if (sak.status === 'TIL_BEHANDLING') {
         acc.push(Visningskriterier.SakTilBehandling)
