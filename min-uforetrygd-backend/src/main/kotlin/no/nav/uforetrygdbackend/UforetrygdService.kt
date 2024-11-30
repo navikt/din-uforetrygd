@@ -5,6 +5,8 @@ import no.nav.uforetrygdbackend.pensjon.pen.PenService
 import no.nav.uforetrygdbackend.pensjon.pen.Vedtakssammendrag
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,18 +15,25 @@ class UforetrygdService(
     private val tokenService: TokenService,
     private val fullmaktClient: FullmaktClient,
 ) {
+    private val logger: Logger = LoggerFactory.getLogger(UforetrygdService::class.java)
+
     fun constructUforetrygdResponse(pid: String): UforetrygdResponse {
         val uforeSak = penService.getSaker(pid).filter { it.type == Sakstype.UFORETRYGD }
         if (uforeSak.isEmpty()) return constructUforetrygdResponse(pid, uforeSak)
 
-        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-        return constructUforetrygdResponse(
-            pid = pid,
-            saker = uforeSak,
-            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter)
-        )
+        try {
+            val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
+            val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+            return constructUforetrygdResponse(
+                pid = pid,
+                saker = uforeSak,
+                hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter)
+            )
+        } catch (e: Exception) {
+            logger.warn("Failed to get response from pen when SAK with type UFORETRYGD exists", e)
+            return constructUforetrygdResponse(pid, uforeSak)
+        }
     }
 
     private fun constructUforetrygdResponse(
