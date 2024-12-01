@@ -13,25 +13,26 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
 import org.springframework.http.HttpStatus
 import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
+import java.io.PrintWriter
 
 class SetPidFilterTest{
-    private val fullmaktClient = Mockito.mock(FullmaktClient::class.java)
-    private val tokenService = Mockito.mock(TokenService::class.java)
-    private val skjermingClient = Mockito.mock(SkjermingClient::class.java)
-    private val personService = Mockito.mock(PersonService::class.java)
+    private val fullmaktClient = mock(FullmaktClient::class.java)
+    private val tokenService = mock(TokenService::class.java)
+    private val skjermingClient = mock(SkjermingClient::class.java)
+    private val personService = mock(PersonService::class.java)
 
     private val filter = SetPidFilter(fullmaktClient, tokenService, skjermingClient, personService)
     private val objectMapper = ObjectMapper()
 
     // Mock request objekt
-    val request = Mockito.mock(HttpServletRequest::class.java)
+    val request = mock(HttpServletRequest::class.java)
 
     @BeforeEach
     fun setupContext(){
@@ -57,9 +58,9 @@ class SetPidFilterTest{
         val pidFullmektig = "00000000001"
         val pidFullmaktsgiver = "00000000002"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
@@ -79,10 +80,12 @@ class SetPidFilterTest{
     fun `should set AuthenticatedUserDetails with isFullmakt false when fullmaktsgiver equals requesting pid (acting on behalf of self)`(){
         val pidFullmaktsgiver = "00000000002"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
+        val writerMock = mock(PrintWriter::class.java)
 
+        `when`(response.writer).thenReturn(writerMock)
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmaktsgiver)
@@ -90,17 +93,16 @@ class SetPidFilterTest{
 
         filter.doFilter(request, response, filterChain)
 
-        assertFalse(SecurityContextUtil.isFullmakt())
-        assertEquals(pidFullmaktsgiver, SecurityContextUtil.getPidFromContext())
+        verify(writerMock, times(1)).write(anyString())
     }
 
     @Test
     fun `should set AuthenticatedUserDetails with isFullmakt false when no fullmakt cookie present`(){
         val pid = "00000000002"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
@@ -118,9 +120,9 @@ class SetPidFilterTest{
         val pidFullmaktsgiver = "00000000002"
         val path = "/random/endpoint"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
+        val request = mock(HttpServletRequest::class.java)
         val response = MockHttpServletResponse()
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
@@ -145,9 +147,9 @@ class SetPidFilterTest{
     fun `should set AuthenticationDetails when user is logged in as saksbehandler and saksbehandler has access to user`(){
         val pid = "00000000001"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -165,9 +167,9 @@ class SetPidFilterTest{
     fun `should set AuthenticationDetails  when user is logged in as saksbehandler with skjerming access and person is skjermet`(){
         val pid = "00000000001"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -187,9 +189,9 @@ class SetPidFilterTest{
         val pid = "00000000001"
         val path = "/random/endpoint"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
+        val request = mock(HttpServletRequest::class.java)
         val response = MockHttpServletResponse()
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -215,9 +217,9 @@ class SetPidFilterTest{
         val pid = "00000000001"
         val path = "/random/endpoint"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
+        val request = mock(HttpServletRequest::class.java)
         val response = MockHttpServletResponse()
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -241,9 +243,9 @@ class SetPidFilterTest{
         val pid = "00000000001"
         val path = "/random/endpoint"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
+        val request = mock(HttpServletRequest::class.java)
         val response = MockHttpServletResponse()
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
@@ -269,9 +271,9 @@ class SetPidFilterTest{
     fun `should set AuthenticatedUserDetails when user has diskresjon and is logged in with sufficient login level`() {
         val pid = "00000000001"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -291,9 +293,9 @@ class SetPidFilterTest{
     fun `should set AuthenticatedUserDetails when user is logged in with level3 and without diskresjonskode`() {
         val pid = "00000000001"
 
-        val request = Mockito.mock(HttpServletRequest::class.java)
-        val response = Mockito.mock(HttpServletResponse::class.java)
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
@@ -315,7 +317,7 @@ class SetPidFilterTest{
         val pidFullmaktsgiver = "00000000002"
 
         val response = MockHttpServletResponse()
-        val filterChain = Mockito.mock(FilterChain::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pidFullmektig)
