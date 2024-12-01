@@ -12,7 +12,6 @@ import no.nav.uforetrygdbackend.fullmakt.RepresentasjonsforholdValidity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.springframework.http.HttpStatus
 import org.springframework.mock.web.MockHttpServletResponse
@@ -61,12 +60,15 @@ class SetPidFilterTest{
         val request = mock(HttpServletRequest::class.java)
         val response = mock(HttpServletResponse::class.java)
         val filterChain = mock(FilterChain::class.java)
+        val writerMock = mock(PrintWriter::class.java)
 
+        `when`(response.writer).thenReturn(writerMock)
+        `when`(request.requestURI).thenReturn("/mocked/endpoint")
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
-        `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
-        `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
+        `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", "fnr_kryptert")))
+        `when`(fullmaktClient.hasValidRepresentasjonsforhold("fnr_kryptert", pidFullmektig)).thenReturn(
             RepresentasjonsforholdValidity(true, null, "fnr_kryptert", pidFullmaktsgiver)
         )
 
@@ -86,6 +88,7 @@ class SetPidFilterTest{
         val writerMock = mock(PrintWriter::class.java)
 
         `when`(response.writer).thenReturn(writerMock)
+        `when`(request.requestURI).thenReturn("/mocked/endpoint")
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmaktsgiver)
