@@ -66,7 +66,7 @@ class SetPidFilterTest{
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
         `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(true, null)
+            RepresentasjonsforholdValidity(true, null, "fnr_kryptert", pidFullmaktsgiver)
         )
 
         filter.doFilter(request, response, filterChain)
@@ -128,7 +128,7 @@ class SetPidFilterTest{
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
         `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(false, null)
+            RepresentasjonsforholdValidity(false, null, "fnr_kryptert", pidFullmaktsgiver)
         )
 
         filter.doFilter(request, response, filterChain)
@@ -324,7 +324,7 @@ class SetPidFilterTest{
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
         `when`(personService.hasAdressebeskyttelse(pidFullmaktsgiver)).thenReturn(true)
         `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(true, "En person")
+            RepresentasjonsforholdValidity(true, "En person", "fnr_kryptert", pidFullmaktsgiver)
         )
 
         filter.doFilter(request, response, filterChain)

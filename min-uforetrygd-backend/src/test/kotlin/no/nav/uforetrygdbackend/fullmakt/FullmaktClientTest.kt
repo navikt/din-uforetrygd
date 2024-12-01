@@ -29,7 +29,7 @@ class FullmaktClientTest : WebClientTest() {
     fun `should return RepresentasjonsforholdValidity when 200 response from hasValidRepresentasjonsforhold`() {
         prepare(hasValidRepresentasjonsforholdResponse200())
         assertEquals(
-            RepresentasjonsforholdValidity(true, "Navn Navnesen"),
+            RepresentasjonsforholdValidity(true, "Navn Navnesen", "fnr_kryptert", PID_FULLMAKTSGIVER),
             fullmaktClient.hasValidRepresentasjonsforhold(PID_FULLMAKTSGIVER, PID_FULLMEKTIG)
         )
         val request = takeRequest()
