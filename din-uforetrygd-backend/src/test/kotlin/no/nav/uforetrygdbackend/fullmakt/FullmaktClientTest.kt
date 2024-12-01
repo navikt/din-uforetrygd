@@ -69,8 +69,10 @@ class FullmaktClientTest : WebClientTest() {
             .setBody(
                 """
                     {
-                    "hasValidRepresentasjonsforhold": true,
-                    "fullmaktsgiverNavn": "Navn Navnesen"
+                        "hasValidRepresentasjonsforhold": true,
+                        "fullmaktsgiverNavn": "Navn Navnesen",
+                        "fullmaktsgiverFnrKryptert": "fnr_kryptert",
+                        "fullmaktsgiverFnr": $PID_FULLMAKTSGIVER
                     }
                 """.trimIndent()
             )
@@ -96,6 +98,6 @@ class FullmaktClientTest : WebClientTest() {
 
     companion object {
         const val PID_FULLMEKTIG = "00000000001"
-        const val PID_FULLMAKTSGIVER = "00000000000"
+        const val PID_FULLMAKTSGIVER = "10000000000"
     }
 }
