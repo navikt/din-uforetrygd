@@ -63,12 +63,10 @@ class SetPidFilter(
                 val navOnBehalfOfCookie = request.cookies?.firstOrNull { cookie -> cookie.name.equals("nav-obo") }
                 authenticatedUserDetails = if (navOnBehalfOfCookie != null) {
                     log.info("Cookie'en nav-obo er satt og det antyder fullmaktscenario")
-                    val fullmaktsgiverPid = navOnBehalfOfCookie.value
-                    if (requestingPid != "" && requestingPid != fullmaktsgiverPid) {
-                        haandterFullmakt(fullmaktsgiverPid, requestingPid)
-                        AuthenticatedUserDetails(
-                            fullmaktsgiverPid, true
-                        )
+                    val fullmaktsgiverPidKryptert = navOnBehalfOfCookie.value
+                    val fullmaktsforhold = haandterFullmakt(fullmaktsgiverPidKryptert, fullmaktsgiverPidKryptert)
+                    if (fullmaktsforhold.fullmaktsgiverFnr != requestingPid) {
+                        AuthenticatedUserDetails(fullmaktsforhold.fullmaktsgiverFnr, true)
                     } else {
                         checkAdressebeskyttelseAndLoginLevel(requestingPid)
                         AuthenticatedUserDetails(requestingPid, false)
@@ -116,15 +114,15 @@ class SetPidFilter(
         }
     }
 
-    private fun haandterFullmakt(fullmaktsgiverPid: String, requestingPid: String): RepresentasjonsforholdValidity {
+    private fun haandterFullmakt(fullmaktsgiverPidKryptert: String, requestingPid: String): RepresentasjonsforholdValidity {
         try {
-            val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPid, requestingPid)
+            val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPidKryptert, requestingPid)
             if (harGyldigFullmakt == null || !harGyldigFullmakt.hasValidRepresentasjonsforhold) {
                 log.info("Fullmaktsforhold er ikke funnet. Nekter adgang")
                 throw NoFullmaktPresentException()
             }
 
-            if(personService.hasAdressebeskyttelse(fullmaktsgiverPid)) {
+            if(personService.hasAdressebeskyttelse(harGyldigFullmakt.fullmaktsgiverFnr)) {
                 log.info("Fullmaktsforhold for bruker med diskresjon. Nekter adgang")
                 throw NoFullmaktPresentException()
             }
