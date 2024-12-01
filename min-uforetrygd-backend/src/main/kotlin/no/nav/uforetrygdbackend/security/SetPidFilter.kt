@@ -64,7 +64,7 @@ class SetPidFilter(
                 authenticatedUserDetails = if (navOnBehalfOfCookie != null) {
                     log.info("Cookie'en nav-obo er satt og det antyder fullmaktscenario")
                     val fullmaktsgiverPidKryptert = navOnBehalfOfCookie.value
-                    val fullmaktsforhold = haandterFullmakt(fullmaktsgiverPidKryptert, fullmaktsgiverPidKryptert)
+                    val fullmaktsforhold = haandterFullmakt(fullmaktsgiverPidKryptert, requestingPid)
                     if (fullmaktsforhold.fullmaktsgiverFnr != requestingPid) {
                         AuthenticatedUserDetails(fullmaktsforhold.fullmaktsgiverFnr, true)
                     } else {
