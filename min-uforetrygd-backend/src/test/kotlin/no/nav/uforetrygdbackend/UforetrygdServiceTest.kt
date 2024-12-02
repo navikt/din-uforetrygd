@@ -4,6 +4,7 @@ import io.mockk.every
 import no.nav.uforetrygdbackend.pensjon.pen.PenService
 import io.mockk.mockk
 import io.mockk.verify
+import no.nav.uforetrygdbackend.configuration.AppId
 import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
 import no.nav.uforetrygdbackend.fullmakt.HarBprofFullmaktmottakereResponse
 import no.nav.uforetrygdbackend.pensjon.pen.Vedtakssammendrag
@@ -148,5 +149,22 @@ class UforetrygdServiceTest {
         assertFalse(response.uforevedtak.hasBarnetilleggSaerkullsbarn)
         assertFalse(response.uforevedtak.hasGjenlevendeTillegg)
         assertFalse(response.uforevedtak.hasVarigTilrettelagtArbeid)
+    }
+
+    @Test
+    fun `should return a response with uforesak and noe vedtak when response from pen fails`() {
+        every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
+        every { penService.getVedtakssammendrag(any()) } throws ClientException(AppId.PEN.name, "/", null, null)
+        every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+
+        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
+        verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
+
+        assertTrue(response.saker.isNotEmpty())
+        assertEquals(Sakstype.UFORETRYGD, response.saker.first().type)
+        assertEquals(Sakstatus.LOPENDE, response.saker.first().status)
+        assertFalse(response.hasIverksattVedtak)
+        assertNull(response.uforevedtak)
     }
 }
