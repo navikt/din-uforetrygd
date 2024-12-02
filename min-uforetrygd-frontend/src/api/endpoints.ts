@@ -1,4 +1,4 @@
-import type { paths } from '@/api/api'
+import type { components, paths } from '@/api/api'
 import createClient from 'openapi-fetch'
 import getOboToken from '@/api/getOboToken'
 import { getFullmaktCookie } from './getFullmaktCookie'
@@ -9,9 +9,18 @@ const client = createClient<paths>({
   fetch: fetchLogger,
 })
 
+export type Response = {
+  uforetrygdResponse?: components['schemas']['UforetrygdResponse']
+  backendError?: BackendError
+}
+
+export type BackendError = {
+  message: string
+}
+
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getOboToken().catch((error) => {
-    console.error('Error:', error)
+    console.error('Error: ', error)
   })
 
   const fullmaktCookie = await getFullmaktCookie()
@@ -25,5 +34,10 @@ export const initate = async (pid: string | undefined) => {
       },
       cache: 'no-store',
     })
-    .then((response) => response.data)
+    .then((res) => {
+      if (!res.response.ok && res.response.status === 403) {
+        return { backendError: res.error! as BackendError }
+      }
+      return { uforetrygdResponse: res.data as components['schemas']['UforetrygdResponse'] }
+    })
 }
