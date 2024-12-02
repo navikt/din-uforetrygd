@@ -128,8 +128,16 @@ const harLopendeUforeSakOgIngenVedtakMock = {
   harGammelFullmaktmottaker: false,
 }
 
+const forbiddenMock = {
+  timestamp: '2024-09-09T13:26:24.519032',
+  status: 403,
+  error: 'FORBIDDEN',
+  message: 'LOGIN_LEVEL_TOO_LOW',
+  path: '/api/initiate',
+}
+
 app.get('/api/initiate', (req, res) => {
-  res.json(harUforeOgSakTilBehandlingMock)
+  res.status(403).json(forbiddenMock)
 })
 
 app.listen(PORT, () => {
