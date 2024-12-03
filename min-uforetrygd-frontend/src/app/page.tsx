@@ -10,6 +10,7 @@ import { DineSaker } from '@/sections/DineSaker'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
+import { resolveErrorText } from '@/utils/resolveErrorText'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -52,21 +53,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
       </>
     )
   } else {
-    switch (initResponse.backendError.message) {
-      case 'LOGIN_LEVEL_TOO_LOW':
-        return (
-          <Alert variant="error" role="alert">
-            Du må logge inn med et høyere sikkerhetsnivå for å få tilgang til denne siden. Du kan for eksempel bruke
-            BankID.
-          </Alert>
-        )
-      default:
-        return (
-          <Alert variant="error" role="alert">
-            Noe gikk galt. Prøv igjen senere
-          </Alert>
-        )
-    }
+    return (
+      <section className="main-content">
+        <Alert variant="error" role="alert">
+          {resolveErrorText(initResponse.backendError?.message)}
+        </Alert>
+      </section>
+    )
   }
 }
 

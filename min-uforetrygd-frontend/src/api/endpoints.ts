@@ -9,11 +9,6 @@ const client = createClient<paths>({
   fetch: fetchLogger,
 })
 
-export type Response = {
-  uforetrygdResponse?: components['schemas']['UforetrygdResponse']
-  backendError?: BackendError
-}
-
 export type BackendError = {
   message: string
 }
