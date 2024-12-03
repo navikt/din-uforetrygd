@@ -35,6 +35,12 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.papertrailapp</groupId>
+            <artifactId>logback-syslog4j</artifactId>
+            <version>1.0.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>tomcat</artifactId>
             <version>2.0.3</version>
@@ -102,11 +108,6 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
 
         <!-- Test dependencies-->
