@@ -136,6 +136,31 @@ const forbiddenMock = {
   path: '/api/initiate',
 }
 
+const uforeMockUtenDatoer = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      status: 'LOPENDE',
+    },
+  ],
+  hasIverksattVedtak: true,
+  uforevedtak: {
+    uforegrad: 100,
+    virkFom: undefined,
+    uforetidspunkt: undefined,
+    inntektsgrense: 49611,
+    sumAvForventedeInntekter: 150000,
+    hasBarnetilleggFellesBarn: false,
+    hasBarnetilleggSaerkullsbarn: false,
+    hasGjenlevendeTillegg: false,
+    hasVarigTilrettelagtArbeid: false,
+  },
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
 app.get('/api/initiate', (req, res) => {
   res.status(200).json(uforeMock)
 })

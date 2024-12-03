@@ -20,8 +20,9 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
   const uforegrad = dittUforevedtak?.uforegrad ?? 0
-  const uforetidspunkt = format(parseISO(dittUforevedtak?.uforetidspunkt ?? ''), 'dd.MM.yyyy')
-  const uforetrygdInnvilget = format(parseISO(dittUforevedtak?.virkFom ?? ''), 'dd.MM.yyyy')
+  const uforetidspunkt =
+    dittUforevedtak?.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
+  const uforetrygdInnvilget = dittUforevedtak?.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
   const inntektsgrense = formatInntekt(dittUforevedtak?.inntektsgrense) ?? 0
   const sumAvForventedeInntekter = formatInntekt(dittUforevedtak?.sumAvForventedeInntekter) ?? 0
   const hasVarigTilrettelagtArbeid = dittUforevedtak?.hasVarigTilrettelagtArbeid ?? false
@@ -48,8 +49,8 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
         >
           <List>
             <ListItem>Uføregrad {uforegrad} prosent</ListItem>
-            <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>
-            <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>
+            {uforetidspunkt && <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>}
+            {uforetrygdInnvilget && <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>}
             {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
           </List>
           {shouldShowTilleggTilUforetrygd && (
