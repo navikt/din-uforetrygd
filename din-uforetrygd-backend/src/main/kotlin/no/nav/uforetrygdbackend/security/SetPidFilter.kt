@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import no.nav.uforetrygdbackend.util.Masker
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -51,13 +50,11 @@ class SetPidFilter(
         if (authHeader != null) {
             val authenticatedUserDetails: AuthenticatedUserDetails
             if (tokenService.determineTokenType() == TokenService.TokenType.TOKEN_X) {
-                log.info("Borger context")
                 val navOnBehalfOfCookie = request.cookies?.firstOrNull { cookie -> cookie.name.equals("nav-obo") }
                 authenticatedUserDetails = authorizationService.checkBorgerTilgang(navOnBehalfOfCookie)
             } else {
                 val pid = request.getHeader("pid")
                     ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pid not specified!")
-                log.info("Veileder on behalf of ${Masker.maskPid(pid)}")
                 authorizationService.checkVeilederTilgangTilInnbygger(pid)
                 authenticatedUserDetails = AuthenticatedUserDetails(pid, false)
             }
