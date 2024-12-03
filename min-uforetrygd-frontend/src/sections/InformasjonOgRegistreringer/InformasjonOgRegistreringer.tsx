@@ -10,7 +10,7 @@ import {
   SackKronerIcon,
 } from '@navikt/aksel-icons'
 import { Visningskriterier } from '@/const'
-import filterShowFor, { matchSome } from '@/utils/filterShowFor'
+import filterShowFor, { matchAll, matchSome } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 
 interface IInformasjonOgRegistreringerProps {
@@ -39,7 +39,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
-    showFor: matchSome([Visningskriterier.Uforetrygd, Visningskriterier.SakTilBehandling]),
+    showFor: matchAll([Visningskriterier.Uforetrygd]),
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid }),
