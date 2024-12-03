@@ -137,7 +137,7 @@ const forbiddenMock = {
 }
 
 app.get('/api/initiate', (req, res) => {
-  res.status(403).json(forbiddenMock)
+  res.status(200).json(uforeMock)
 })
 
 app.listen(PORT, () => {
