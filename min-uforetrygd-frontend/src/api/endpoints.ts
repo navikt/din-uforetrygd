@@ -9,7 +9,7 @@ const client = createClient<paths>({
   fetch: fetchLogger,
 })
 
-export type BackendError = {
+type BackendError = {
   message: string
 }
 
