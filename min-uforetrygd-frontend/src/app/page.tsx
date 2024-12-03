@@ -10,6 +10,7 @@ import { DineSaker } from '@/sections/DineSaker'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
+import { resolveErrorText } from '@/utils/resolveErrorText'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -18,9 +19,10 @@ interface IHomeProps {
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
+  const uforetrygdResponse = initResponse.uforetrygdResponse
 
-  if (initResponse) {
-    const visningskriterier: Visningskriterier[] = getVisningskriterier(initResponse)
+  if (uforetrygdResponse) {
+    const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
 
     return (
       <>
@@ -33,25 +35,30 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
           <DittVedtak
             pid={params.pid}
-            hasIverksattVedtak={initResponse.hasIverksattVedtak!}
-            dittUforevedtak={initResponse.uforevedtak}
+            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
+            dittUforevedtak={uforetrygdResponse.uforevedtak}
           />
           <InformasjonOgRegistreringer
             visningskriterier={visningskriterier}
             pid={params.pid}
-            bprofFullmakt={initResponse.harGammelFullmaktmottaker!}
+            bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
           />
           <MeldeFra visningskriterier={visningskriterier} />
-          <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={initResponse.innloggingstype!} />
+          <RelevanteSoknader
+            visningskriterier={visningskriterier}
+            innloggingstype={uforetrygdResponse.innloggingstype!}
+          />
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
         </main>
       </>
     )
   } else {
     return (
-      <Alert variant="error" role="alert">
-        Noe gikk galt. Prøv igjen senere.
-      </Alert>
+      <section className="main-content">
+        <Alert variant="error" role="alert">
+          {resolveErrorText(initResponse.backendError?.message)}
+        </Alert>
+      </section>
     )
   }
 }
