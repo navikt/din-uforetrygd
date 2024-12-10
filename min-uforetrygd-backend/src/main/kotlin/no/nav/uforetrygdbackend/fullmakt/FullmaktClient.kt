@@ -128,14 +128,12 @@ class FullmaktClient(
         }
     }
 
-    private fun urlValidRepresentasjonsforhold(): String {
-        return UriComponentsBuilder.fromHttpUrl(baseUrl)
+    private fun urlValidRepresentasjonsforhold() = UriComponentsBuilder.fromHttpUrl(baseUrl)
             .path(PATH_HASREPRESENTASJONSFORHOLD)
             .queryParam(VALID_REPRESENTASJONSTYPER_KEY, VALID_REPRESENTASJONSTYPER)
             .queryParam(INCLUDE_NAVN_KEY, false)
             .build()
             .toUriString()
-    }
 
     private fun urlHarBprofFullmaktmottakere(): String {
         return UriComponentsBuilder.fromHttpUrl(baseUrl)
