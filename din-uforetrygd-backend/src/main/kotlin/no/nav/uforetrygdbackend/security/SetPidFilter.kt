@@ -4,12 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
-import no.nav.uforetrygdbackend.person.PersonService
-import no.nav.uforetrygdbackend.skjerming.SkjermingClient
-import no.nav.uforetrygdbackend.fullmakt.FullmaktException
-import no.nav.uforetrygdbackend.fullmakt.RepresentasjonsforholdValidity
-import no.nav.uforetrygdbackend.util.Masker
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -22,10 +16,8 @@ import java.time.LocalDateTime
 
 @Component
 class SetPidFilter(
-    private val fullmaktClient: FullmaktClient,
     private val tokenService: TokenService,
-    private val skjermingClient: SkjermingClient,
-    private val personService: PersonService
+    private val authorizationService: AuthorizationService
 ): OncePerRequestFilter() {
 
     private val log: Logger = LoggerFactory.getLogger(SetPidFilter::class.java)
@@ -58,29 +50,12 @@ class SetPidFilter(
         if (authHeader != null) {
             val authenticatedUserDetails: AuthenticatedUserDetails
             if (tokenService.determineTokenType() == TokenService.TokenType.TOKEN_X) {
-                val requestingPid = tokenService.determineRequestingPid()
-
                 val navOnBehalfOfCookie = request.cookies?.firstOrNull { cookie -> cookie.name.equals("nav-obo") }
-                authenticatedUserDetails = if (navOnBehalfOfCookie != null) {
-                    log.info("Cookie'en nav-obo er satt og det antyder fullmaktscenario")
-                    val fullmaktsgiverPidKryptert = navOnBehalfOfCookie.value
-                    val fullmaktsforhold = haandterFullmakt(fullmaktsgiverPidKryptert, requestingPid)
-                    if (fullmaktsforhold.fullmaktsgiverFnr != requestingPid) {
-                        AuthenticatedUserDetails(fullmaktsforhold.fullmaktsgiverFnr, true)
-                    } else {
-                        checkAdressebeskyttelseAndLoginLevel(requestingPid)
-                        AuthenticatedUserDetails(requestingPid, false)
-                    }
-                } else {
-                    checkAdressebeskyttelseAndLoginLevel(requestingPid)
-                    AuthenticatedUserDetails(requestingPid, false)
-                }
-
+                authenticatedUserDetails = authorizationService.checkBorgerTilgang(navOnBehalfOfCookie)
             } else {
                 val pid = request.getHeader("pid")
                     ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Pid not specified!")
-                checkVeilederAuthorization(pid)
-                log.info("Veileder on behalf of ${Masker.maskPid(pid)}")
+                authorizationService.checkVeilederTilgangTilInnbygger(pid)
                 authenticatedUserDetails = AuthenticatedUserDetails(pid, false)
             }
             (SecurityContextHolder.getContext().authentication as JwtAuthenticationToken).details =
@@ -107,42 +82,4 @@ class SetPidFilter(
         }
     }
 
-    private fun checkAdressebeskyttelseAndLoginLevel(requestingPid: String) {
-            if (!tokenService.isLoginLevelHigh() && personService.hasAdressebeskyttelse(requestingPid)) {
-                log.info("Bruker adressebeskyttet, innloggingsnivå for lavt. Nekter adgang")
-                throw LoginLevelTooLowException()
-        }
-    }
-
-    private fun haandterFullmakt(fullmaktsgiverPidKryptert: String, requestingPid: String): RepresentasjonsforholdValidity {
-        try {
-            val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPidKryptert, requestingPid)
-            if (harGyldigFullmakt == null || !harGyldigFullmakt.hasValidRepresentasjonsforhold) {
-                log.info("Fullmaktsforhold er ikke funnet. Nekter adgang")
-                throw NoFullmaktPresentException()
-            }
-
-            if(personService.hasAdressebeskyttelse(harGyldigFullmakt.fullmaktsgiverFnr)) {
-                log.info("Fullmaktsforhold for bruker med diskresjon. Nekter adgang")
-                throw NoFullmaktPresentException()
-            }
-
-            return harGyldigFullmakt
-        } catch (e: FullmaktException) {
-            log.error("Noe gikk galt ved kall til fullmakt. Nekter adgang")
-            log.warn("FullmaktException: ${e.message}")
-            throw NoFullmaktPresentException()
-        }
-    }
-
-    private fun checkVeilederAuthorization(pid: String) {
-        if (!tokenService.isUserInSkjermetGroup() && skjermingClient.isSkjermet(pid)) {
-            log.info("Bruker skjermet, saksbehandler mangler autorisering. Nekter tilgang.")
-            throw VeilederUnauthorizedException()
-        }
-        if (!personService.hasSaksbehandlerAccessToPid(pid)){
-            log.info("Bruker adressebeskyttet, saksbehandler mangler autorisering. Nekter tilgang.")
-            throw VeilederUnauthorizedException()
-        }
-    }
 }

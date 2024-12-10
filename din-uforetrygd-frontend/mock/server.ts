@@ -113,8 +113,56 @@ const harSakTilBehandlingOgIngenUforeMock = {
   harGammelFullmaktmottaker: false,
 }
 
+const harLopendeUforeSakOgIngenVedtakMock = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      status: 'LOPENDE',
+    },
+  ],
+  hasIverksattVedtak: false,
+  uforevedtak: null,
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
+const forbiddenMock = {
+  timestamp: '2024-09-09T13:26:24.519032',
+  status: 403,
+  error: 'FORBIDDEN',
+  message: 'LOGIN_LEVEL_TOO_LOW',
+  path: '/api/initiate',
+}
+
+const uforeMockUtenDatoer = {
+  pid: '81549300',
+  loggetInnSom: '81549300',
+  saker: [
+    {
+      type: 'UFORETRYGD',
+      status: 'LOPENDE',
+    },
+  ],
+  hasIverksattVedtak: true,
+  uforevedtak: {
+    uforegrad: 100,
+    virkFom: undefined,
+    uforetidspunkt: undefined,
+    inntektsgrense: 49611,
+    sumAvForventedeInntekter: 150000,
+    hasBarnetilleggFellesBarn: false,
+    hasBarnetilleggSaerkullsbarn: false,
+    hasGjenlevendeTillegg: false,
+    hasVarigTilrettelagtArbeid: false,
+  },
+  innloggingstype: 'LEVEL4',
+  harGammelFullmaktmottaker: false,
+}
+
 app.get('/api/initiate', (req, res) => {
-  res.json(harSakTilBehandlingOgIngenUforeMock)
+  res.status(200).json(uforeMock)
 })
 
 app.listen(PORT, () => {
