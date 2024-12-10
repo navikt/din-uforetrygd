@@ -5,10 +5,6 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
-import no.nav.uforetrygdbackend.person.PersonService
-import no.nav.uforetrygdbackend.skjerming.SkjermingClient
-import no.nav.uforetrygdbackend.fullmakt.RepresentasjonsforholdValidity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -22,12 +18,10 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import java.io.PrintWriter
 
 class SetPidFilterTest{
-    private val fullmaktClient = mock(FullmaktClient::class.java)
     private val tokenService = mock(TokenService::class.java)
-    private val skjermingClient = mock(SkjermingClient::class.java)
-    private val personService = mock(PersonService::class.java)
+    private val authorizationService = mock(AuthorizationService::class.java)
 
-    private val filter = SetPidFilter(fullmaktClient, tokenService, skjermingClient, personService)
+    private val filter = SetPidFilter(tokenService, authorizationService)
     private val objectMapper = ObjectMapper()
 
     // Mock request objekt
@@ -54,13 +48,15 @@ class SetPidFilterTest{
 
     @Test
     fun `should set AuthenticatedUserDetails with fullmakt data when user logged in on behalf of other person and has valid fullmakt`(){
-        val pidFullmektig = "00000000001"
         val pidFullmaktsgiver = "00000000002"
 
         val request = mock(HttpServletRequest::class.java)
         val response = mock(HttpServletResponse::class.java)
         val filterChain = mock(FilterChain::class.java)
         val writerMock = mock(PrintWriter::class.java)
+        val request = mock(HttpServletRequest::class.java)
+        val response = mock(HttpServletResponse::class.java)
+        val filterChain = mock(FilterChain::class.java)
 
         `when`(response.writer).thenReturn(writerMock)
         `when`(request.requestURI).thenReturn("/mocked/endpoint")
@@ -71,6 +67,8 @@ class SetPidFilterTest{
         `when`(fullmaktClient.hasValidRepresentasjonsforhold("fnr_kryptert", pidFullmektig)).thenReturn(
             RepresentasjonsforholdValidity(true, null, "fnr_kryptert", pidFullmaktsgiver)
         )
+        `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
+        `when`(authorizationService.checkBorgerTilgang(any())).thenReturn(AuthenticatedUserDetails(pidFullmaktsgiver, true))
 
         filter.doFilter(request, response, filterChain)
 
@@ -110,40 +108,12 @@ class SetPidFilterTest{
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
+        `when`(authorizationService.checkBorgerTilgang(any())).thenReturn(AuthenticatedUserDetails(pid, false))
 
         filter.doFilter(request, response, filterChain)
 
         assertFalse(SecurityContextUtil.isFullmakt())
         assertEquals(pid, SecurityContextUtil.getPidFromContext())
-    }
-
-    @Test
-    fun `should resolve to FORBIDDEN with VEILEDER_UNAUTHORIZED when user logged in on behalf of other person but lacks valid fullmakt`(){
-        val pidFullmektig = "00000000001"
-        val pidFullmaktsgiver = "00000000002"
-        val path = "/random/endpoint"
-
-        val request = mock(HttpServletRequest::class.java)
-        val response = MockHttpServletResponse()
-        val filterChain = mock(FilterChain::class.java)
-
-        `when`(request.getHeader("Authorization")).thenReturn("Test")
-        `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
-        `when`(request.requestURI).thenReturn(path)
-        `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
-        `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
-        `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(false, null, "fnr_kryptert", pidFullmaktsgiver)
-        )
-
-        filter.doFilter(request, response, filterChain)
-
-        val errorResponse = objectMapper.readValue(response.contentAsString, SetPidFilterErrorResponse::class.java)
-
-        assertEquals(ErrorCode.NO_FULLMAKT_PRESENT, errorResponse.message)
-        assertEquals(HttpStatus.FORBIDDEN.value(), response.status)
-        assertEquals(HttpStatus.FORBIDDEN.name, errorResponse.error)
-        assertEquals(path, errorResponse.path)
     }
 
     @Test
@@ -157,8 +127,6 @@ class SetPidFilterTest{
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.AZURE_AD_ON_BEHALF_OF)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
-        `when`(personService.hasSaksbehandlerAccessToPid(pid)).thenReturn(true)
 
         filter.doFilter(request, response, filterChain)
 
@@ -167,28 +135,7 @@ class SetPidFilterTest{
     }
 
     @Test
-    fun `should set AuthenticationDetails  when user is logged in as saksbehandler with skjerming access and person is skjermet`(){
-        val pid = "00000000001"
-
-        val request = mock(HttpServletRequest::class.java)
-        val response = mock(HttpServletResponse::class.java)
-        val filterChain = mock(FilterChain::class.java)
-
-        `when`(request.getHeader("Authorization")).thenReturn("Test")
-        `when`(request.getHeader("pid")).thenReturn(pid)
-        `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.AZURE_AD_ON_BEHALF_OF)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(true)
-        `when`(skjermingClient.isSkjermet(pid)).thenReturn(true)
-        `when`(personService.hasSaksbehandlerAccessToPid(pid)).thenReturn(true)
-
-        filter.doFilter(request, response, filterChain)
-
-        assertFalse(SecurityContextUtil.isFullmakt())
-        assertEquals(pid, SecurityContextUtil.getPidFromContext())
-    }
-
-    @Test
-    fun `should resolve to FORBIDDEN with VEILEDER_UNAUTHORIZED when user is logged in as saksbehandler and user lacks access to skjermet person`(){
+    fun `should set AuthenticationDetails when user is logged in as saksbehandler and saksbehandler has no access to user`(){
         val pid = "00000000001"
         val path = "/random/endpoint"
 
@@ -200,10 +147,7 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(request.requestURI).thenReturn(path)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.AZURE_AD_ON_BEHALF_OF)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
-        `when`(tokenService.isLoginLevelHigh()).thenReturn(false)
-        `when`(skjermingClient.isSkjermet(pid)).thenReturn(false)
-        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
+        `when`(authorizationService.checkVeilederTilgangTilInnbygger(pid)).thenThrow(VeilederUnauthorizedException())
 
         filter.doFilter(request, response, filterChain)
 
