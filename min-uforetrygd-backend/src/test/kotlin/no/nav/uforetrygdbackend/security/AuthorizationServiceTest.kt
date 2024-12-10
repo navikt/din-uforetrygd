@@ -269,7 +269,7 @@ class AuthorizationServiceTest {
         val resourcePid = "12345678905"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", "fnr_kryptert", ""))
+        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", "fnr_kryptert", resourcePid))
         `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(false)
         val authenticatedUserDetails = authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie)
         assertEquals(resourcePid,authenticatedUserDetails.pid)
