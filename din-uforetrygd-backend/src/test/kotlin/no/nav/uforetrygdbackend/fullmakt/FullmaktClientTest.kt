@@ -29,7 +29,7 @@ class FullmaktClientTest : WebClientTest() {
     fun `should return RepresentasjonsforholdValidity when 200 response from hasValidRepresentasjonsforhold`() {
         prepare(hasValidRepresentasjonsforholdResponse200())
         assertEquals(
-            RepresentasjonsforholdValidity(true, "Navn Navnesen"),
+            RepresentasjonsforholdValidity(true, "Navn Navnesen", "fnr_kryptert", PID_FULLMAKTSGIVER),
             fullmaktClient.hasValidRepresentasjonsforhold(PID_FULLMAKTSGIVER, PID_FULLMEKTIG)
         )
         val request = takeRequest()
@@ -69,8 +69,10 @@ class FullmaktClientTest : WebClientTest() {
             .setBody(
                 """
                     {
-                    "hasValidRepresentasjonsforhold": true,
-                    "fullmaktsgiverNavn": "Navn Navnesen"
+                        "hasValidRepresentasjonsforhold": true,
+                        "fullmaktsgiverNavn": "Navn Navnesen",
+                        "fullmaktsgiverFnrKryptert": "fnr_kryptert",
+                        "fullmaktsgiverFnr": $PID_FULLMAKTSGIVER
                     }
                 """.trimIndent()
             )
@@ -96,6 +98,6 @@ class FullmaktClientTest : WebClientTest() {
 
     companion object {
         const val PID_FULLMEKTIG = "00000000001"
-        const val PID_FULLMAKTSGIVER = "00000000000"
+        const val PID_FULLMAKTSGIVER = "10000000000"
     }
 }

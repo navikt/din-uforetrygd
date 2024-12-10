@@ -37,10 +37,10 @@ class AuthorizationService(
 
     fun checkBorgerTilgang(navOnBehalfOfCookie: Cookie?) : AuthenticatedUserDetails {
         val requestingPid = tokenService.determineRequestingPid()
-        if (isFullmaktsCase(navOnBehalfOfCookie, requestingPid)) {
-            val fullmaktsgiverPid = navOnBehalfOfCookie!!.value
-            haandterFullmakt(fullmaktsgiverPid, requestingPid)
-            return AuthenticatedUserDetails(fullmaktsgiverPid, true)
+        if (navOnBehalfOfCookie != null) {
+            val fullmaktsgiverKryptertPid = navOnBehalfOfCookie.value
+            val representasjonsforholdValidity = haandterFullmakt(fullmaktsgiverKryptertPid, requestingPid)
+            return AuthenticatedUserDetails(representasjonsforholdValidity.fullmaktsgiverFnr, representasjonsforholdValidity.hasValidRepresentasjonsforhold)
         }else {
             checkAdressebeskyttelseAndLoginLevel(requestingPid)
             return AuthenticatedUserDetails(requestingPid, false)
@@ -102,17 +102,6 @@ class AuthorizationService(
         }
     }
 
-    private fun isFullmaktsCase(navOnBehalfOfCookie: Cookie?, requestingPid: String): Boolean {
-        if (navOnBehalfOfCookie != null) {
-            log.info("Cookie'en nav-obo er satt og det antyder fullmaktscenario")
-            val fullmaktsgiverPid = navOnBehalfOfCookie.value
-            if (requestingPid != "" && requestingPid != fullmaktsgiverPid) {
-                return true
-            }
-        }
-        return false
-    }
-
     private fun haandterFullmakt(fullmaktsgiverPid: String, requestingPid: String): RepresentasjonsforholdValidity {
         try {
             val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPid, requestingPid)
@@ -121,7 +110,7 @@ class AuthorizationService(
                 throw NoFullmaktPresentException()
             }
 
-            if(personService.hasAdressebeskyttelse(fullmaktsgiverPid)) {
+            if(personService.hasAdressebeskyttelse(harGyldigFullmakt.fullmaktsgiverFnr)) {
                 log.info("Fullmaktsforhold for bruker med adressebeskyttelse. Nekter adgang")
                 throw NoFullmaktPresentException()
             }

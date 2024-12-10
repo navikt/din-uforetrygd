@@ -304,7 +304,7 @@ class AuthorizationServiceTest {
         val resourcePid = "12345678905"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum"))
+        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", "fnr_kryptert", resourcePid))
         `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(false)
         val authenticatedUserDetails = authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie)
         assertEquals(resourcePid,authenticatedUserDetails.pid)
@@ -315,10 +315,11 @@ class AuthorizationServiceTest {
     fun `should return Exception when borger with addressebekyttelse is accessed by fullmaktshaver med gyldig fullmakt`() {
         val subjectPid = "12345678901"
         val resourcePid = "12345678905"
-        val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
+        val respourcePidKryptert = "fnr_kryptert"
+        val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie", respourcePidKryptert)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum"))
-        `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(true)
+        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", respourcePidKryptert, resourcePid))
+        `when` (personService.hasAdressebeskyttelse(respourcePidKryptert)).thenReturn(true)
         assertThrows<NoFullmaktPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
     }
 
@@ -328,7 +329,7 @@ class AuthorizationServiceTest {
         val resourcePid = "12345678905"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(false,null))
+        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(false,null, "fnr_kryptert", ""))
         `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(false)
         assertThrows<NoFullmaktPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
     }
