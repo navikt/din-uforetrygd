@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import no.nav.uforetrygdbackend.fullmakt.RepresentasjonsforholdValidity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -50,9 +51,6 @@ class SetPidFilterTest{
     fun `should set AuthenticatedUserDetails with fullmakt data when user logged in on behalf of other person and has valid fullmakt`(){
         val pidFullmaktsgiver = "00000000002"
 
-        val request = mock(HttpServletRequest::class.java)
-        val response = mock(HttpServletResponse::class.java)
-        val filterChain = mock(FilterChain::class.java)
         val writerMock = mock(PrintWriter::class.java)
         val request = mock(HttpServletRequest::class.java)
         val response = mock(HttpServletResponse::class.java)
@@ -62,11 +60,8 @@ class SetPidFilterTest{
         `when`(request.requestURI).thenReturn("/mocked/endpoint")
         `when`(request.getHeader("Authorization")).thenReturn("Test")
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
-        `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
+        //`when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", "fnr_kryptert")))
-        `when`(fullmaktClient.hasValidRepresentasjonsforhold("fnr_kryptert", pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(true, null, "fnr_kryptert", pidFullmaktsgiver)
-        )
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
         `when`(authorizationService.checkBorgerTilgang(any())).thenReturn(AuthenticatedUserDetails(pidFullmaktsgiver, true))
 
@@ -172,8 +167,8 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(request.requestURI).thenReturn(path)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.AZURE_AD_ON_BEHALF_OF)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(true)
-        `when`(personService.hasSaksbehandlerAccessToPid(pid)).thenReturn(false)
+//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(true)
+//        `when`(personService.hasSaksbehandlerAccessToPid(pid)).thenReturn(false)
 
         filter.doFilter(request, response, filterChain)
 
@@ -200,9 +195,9 @@ class SetPidFilterTest{
         `when`(request.requestURI).thenReturn(path)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
+ //       `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(false)
-        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
+//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
 
         filter.doFilter(request, response, filterChain)
 
@@ -226,9 +221,9 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
+//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(true)
-        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
+//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
 
         filter.doFilter(request, response, filterChain)
 
@@ -248,9 +243,9 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
-        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
+//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(false)
-        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(false)
+//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(false)
 
         filter.doFilter(request, response, filterChain)
 
@@ -271,10 +266,7 @@ class SetPidFilterTest{
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
-        `when`(personService.hasAdressebeskyttelse(pidFullmaktsgiver)).thenReturn(true)
-        `when`(fullmaktClient.hasValidRepresentasjonsforhold(pidFullmaktsgiver, pidFullmektig)).thenReturn(
-            RepresentasjonsforholdValidity(true, "En person", "fnr_kryptert", pidFullmaktsgiver)
-        )
+//        `when`(personService.hasAdressebeskyttelse(pidFullmaktsgiver)).thenReturn(true)
 
         filter.doFilter(request, response, filterChain)
 
