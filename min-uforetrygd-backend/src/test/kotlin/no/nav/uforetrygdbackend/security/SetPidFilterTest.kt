@@ -5,7 +5,6 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import no.nav.uforetrygdbackend.fullmakt.RepresentasjonsforholdValidity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import java.io.PrintWriter
+
 
 class SetPidFilterTest{
     private val tokenService = mock(TokenService::class.java)
@@ -69,27 +69,6 @@ class SetPidFilterTest{
 
         assertTrue(SecurityContextUtil.isFullmakt())
         assertEquals(pidFullmaktsgiver, SecurityContextUtil.getPidFromContext())
-    }
-
-    @Test
-    fun `should set AuthenticatedUserDetails with isFullmakt false when fullmaktsgiver equals requesting pid (acting on behalf of self)`(){
-        val pidFullmaktsgiver = "00000000002"
-
-        val request = mock(HttpServletRequest::class.java)
-        val response = mock(HttpServletResponse::class.java)
-        val filterChain = mock(FilterChain::class.java)
-        val writerMock = mock(PrintWriter::class.java)
-
-        `when`(response.writer).thenReturn(writerMock)
-        `when`(request.requestURI).thenReturn("/mocked/endpoint")
-        `when`(request.getHeader("Authorization")).thenReturn("Test")
-        `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
-        `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmaktsgiver)
-        `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
-
-        filter.doFilter(request, response, filterChain)
-
-        verify(writerMock, times(1)).write(anyString())
     }
 
     @Test
@@ -167,11 +146,12 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(request.requestURI).thenReturn(path)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.AZURE_AD_ON_BEHALF_OF)
-//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(true)
-//        `when`(personService.hasSaksbehandlerAccessToPid(pid)).thenReturn(false)
+        `when`(tokenService.getGroups()).thenReturn(listOf(""))
+        `when`(authorizationService.checkVeilederTilgangTilInnbygger(pid)).thenThrow(VeilederUnauthorizedException())
 
         filter.doFilter(request, response, filterChain)
 
+        verify(authorizationService, times(1)).checkVeilederTilgangTilInnbygger(anyString())
         val errorResponse = objectMapper.readValue(response.contentAsString, SetPidFilterErrorResponse::class.java)
 
         assertEquals(ErrorCode.VEILEDER_UNAUTHORIZED, errorResponse.message)
@@ -195,9 +175,8 @@ class SetPidFilterTest{
         `when`(request.requestURI).thenReturn(path)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
- //       `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(false)
-//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
+        `when`(authorizationService.checkBorgerTilgang(any())).thenThrow(LoginLevelTooLowException())
 
         filter.doFilter(request, response, filterChain)
 
@@ -221,9 +200,8 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
-//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(true)
-//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(true)
+        `when`(authorizationService.checkBorgerTilgang(any())).thenReturn(AuthenticatedUserDetails(pid, false))
 
         filter.doFilter(request, response, filterChain)
 
@@ -243,9 +221,8 @@ class SetPidFilterTest{
         `when`(request.getHeader("pid")).thenReturn(pid)
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pid)
-//        `when`(tokenService.isUserInSkjermetGroup()).thenReturn(false)
         `when`(tokenService.isLoginLevelHigh()).thenReturn(false)
-//        `when`(personService.hasAdressebeskyttelse(pid)).thenReturn(false)
+        `when`(authorizationService.checkBorgerTilgang(any())).thenReturn(AuthenticatedUserDetails(pid, false))
 
         filter.doFilter(request, response, filterChain)
 
@@ -266,7 +243,7 @@ class SetPidFilterTest{
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
-//        `when`(personService.hasAdressebeskyttelse(pidFullmaktsgiver)).thenReturn(true)
+        `when`(authorizationService.checkBorgerTilgang(any())).thenThrow(NoFullmaktPresentException())
 
         filter.doFilter(request, response, filterChain)
 

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
@@ -19,8 +17,6 @@ class SetPidFilter(
     private val tokenService: TokenService,
     private val authorizationService: AuthorizationService
 ): OncePerRequestFilter() {
-
-    private val log: Logger = LoggerFactory.getLogger(SetPidFilter::class.java)
 
     override fun doFilterInternal(
         request: HttpServletRequest,
