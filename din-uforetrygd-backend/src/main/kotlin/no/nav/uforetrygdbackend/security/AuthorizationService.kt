@@ -101,17 +101,6 @@ class AuthorizationService(
         }
     }
 
-    private fun isFullmaktsCase(navOnBehalfOfCookie: Cookie?, requestingPid: String): Boolean {
-        if (navOnBehalfOfCookie != null) {
-            log.info("Cookie'en nav-obo er satt og det antyder fullmaktscenario")
-            val fullmaktsgiverPid = navOnBehalfOfCookie.value
-            if (requestingPid != "" && requestingPid != fullmaktsgiverPid) {
-                return true
-            }
-        }
-        return false
-    }
-
     private fun haandterFullmakt(fullmaktsgiverPid: String, requestingPid: String): RepresentasjonsforholdValidity {
         try {
             val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPid, requestingPid)
