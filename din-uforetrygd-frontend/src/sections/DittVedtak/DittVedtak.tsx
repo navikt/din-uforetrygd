@@ -79,11 +79,11 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
             </VStack>
             <VStack>
               <Heading level="3" size="small">
-                Din registrerte inntekt i {currentYear}: {sumAvForventedeInntekter}&nbsp;kr
+                Din registrerte forventede inntekt i {currentYear}: {sumAvForventedeInntekter}&nbsp;kr
               </Heading>
               <BodyShort>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger
-                vi har hentet. Du kan endre registrert inntekt i{' '}
+                vi har hentet. Du kan endre registrert forventet inntekt i{' '}
                 <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
               </BodyShort>
             </VStack>
