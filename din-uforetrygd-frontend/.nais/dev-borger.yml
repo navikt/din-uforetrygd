@@ -49,10 +49,8 @@ spec:
       rules:
         - application: tokenx-token-generator # only in dev
           namespace: aura
-          cluster: dev-gcp
         - application: azure-token-generator # only in dev
           namespace: aura
-          cluster: dev-gcp
         - application: wonderwalled-idporten # only in dev
           namespace: aura
     outbound:
@@ -60,7 +58,6 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
         - application: uforetrygd-backend
-          cluster: dev-gcp
           namespace: pensjonselvbetjening
   env:
     - name: MODE
