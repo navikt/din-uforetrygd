@@ -18,7 +18,7 @@
         <kotlin.version>2.0.21</kotlin.version>
         <jackson-version>2.18.1</jackson-version>
         <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
-        <spring-boot-starter-security.version>3.4.0</spring-boot-starter-security.version>
+        <spring-boot-starter-security.version>3.4.1</spring-boot-starter-security.version>
         <micrometer.version>1.14.1</micrometer.version>
         <!-- Test -->
         <mockk.version>1.13.14</mockk.version>
