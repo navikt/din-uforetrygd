@@ -18,21 +18,21 @@ class CheckVergemaalEllerFremitidsfullmaktAndLoginLevelFilter(
     private val personService: PersonService,
 ) : OncePerRequestFilter() {
 
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        val innloggingsniva = tokenService.getInnloggingstype()
-        val pid = SecurityContextUtil.getPidFromContext()
-        val vergemaalEllerFremtidsfullmakt = personService.getVergemaalEllerFremtidsfullmakt(pid)
-        logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt av type: $vergemaalEllerFremtidsfullmakt")
+        if (request.getHeader("Authorization") != null && tokenService.isUserLoggedInAsPerson()) {
+            val pid = SecurityContextUtil.getPidFromContext()
+            val innloggingsniva = tokenService.getInnloggingstype()
+            val vergemaalEllerFremtidsfullmakt = personService.getVergemaalEllerFremtidsfullmakt(pid)
+            logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt av type: $vergemaalEllerFremtidsfullmakt")
 
-        if (vergemaalEllerFremtidsfullmakt != null && innloggingsniva == Innloggingstype.LEVEL3) {
-            logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 3")
+            if (vergemaalEllerFremtidsfullmakt != null && innloggingsniva == Innloggingstype.LEVEL3) {
+                logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 3")
+            }
         }
-
         filterChain.doFilter(request, response)
     }
 }
