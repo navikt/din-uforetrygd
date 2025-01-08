@@ -63,16 +63,12 @@ spec:
       rules:
         - application: uforetrygd-frontend-veileder
           namespace: pensjonselvbetjening
-          cluster: dev-gcp
         - application: uforetrygd-frontend-borger
           namespace: pensjonselvbetjening
-          cluster: dev-gcp
         - application: tokenx-token-generator
           namespace: aura
-          cluster: dev-gcp
         - application: azure-token-generator
           namespace: aura
-          cluster: dev-gcp
     outbound:
       external:
         - host: pdl-api.dev-fss-pub.nais.io
@@ -121,3 +117,4 @@ spec:
       value: a3f91493-1ab8-4b64-a544-0a77cbba9240
     - name: KLAGEBEHANDLER_GROUP_ID
       value: 02505029-3f2e-48a9-b2a8-ff274dacca52
+
