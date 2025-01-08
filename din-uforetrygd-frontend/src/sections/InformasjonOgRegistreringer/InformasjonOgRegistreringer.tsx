@@ -26,6 +26,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Oversikt og detaljer',
     icon: SackKronerIcon,
     showFor: true,
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_BREV', pid: pid }),
@@ -33,6 +34,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Vedtak med mer',
     icon: EnvelopeClosedIcon,
     showFor: true,
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid }),
@@ -40,6 +42,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid }),
@@ -47,6 +50,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Status på søknader og vedtak',
     icon: FileTextIcon,
     showFor: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
@@ -54,6 +58,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Registrer tilleggstrekk',
     icon: ReceiptIcon,
     showFor: true,
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
@@ -61,6 +66,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Samboerforhold, sivilstand, barn',
     icon: PersonPlusIcon,
     showFor: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
@@ -68,6 +74,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Gi fullmakt og se dine fullmakter',
     icon: PersonGroupIcon,
     showFor: true,
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
@@ -75,6 +82,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Til uføresaken din',
     icon: FileExportIcon,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: true,
   },
 ]
 
@@ -95,6 +103,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
               description={link.description}
               href={link.href ?? ''}
               icon={link.icon}
+              showFullmaktWarning={link.showFullmaktWarning}
             />
           ))}
         </KortGrid>

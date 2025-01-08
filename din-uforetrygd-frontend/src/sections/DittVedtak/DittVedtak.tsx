@@ -47,25 +47,22 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
           headingSize="medium"
           headingLevel="2"
         >
-          <List>
-            <ListItem>Uføregrad {uforegrad} prosent</ListItem>
-            {uforetidspunkt && <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>}
-            {uforetrygdInnvilget && <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>}
-            {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
-          </List>
-          {shouldShowTilleggTilUforetrygd && (
-            <>
-              <Heading level="3" size="small">
-                Tillegg til uføretrygden
-              </Heading>
-              <List>
-                {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
-                {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
-                {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
-              </List>
-            </>
-          )}
           <VStack gap="6">
+            <List>
+              <ListItem>Uføregrad {uforegrad} prosent</ListItem>
+              {uforetidspunkt && <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>}
+              {uforetrygdInnvilget && <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>}
+              {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
+            </List>
+            {shouldShowTilleggTilUforetrygd && (
+              <div>
+                <List title="Tillegg til uføretrygden">
+                  {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
+                  {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
+                  {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
+                </List>
+              </div>
+            )}
             <VStack>
               <Heading level="3" size="small">
                 Din inntektsgrense: {inntektsgrense}&nbsp;kr
