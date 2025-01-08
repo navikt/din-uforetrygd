@@ -23,4 +23,9 @@ class PersonService(
             pdlClient.performQueryWithElevatedPriveleges(PdlQueryBuilder.getAdressebeskyttelseQuery(pid)).adressebeskyttelse
         return parallelleSannheterService.decideAdressebeskyttelse(adressebeskyttelse)?.gradering
     }
+
+    fun getVergemaalEllerFremtidsfullmakt(pid: String): PdlVergemaalEllerFremtidsfullmakt? {
+        val vergemaalEllerFremtidsfullmakt = pdlClient.performQuery(PdlQueryBuilder.getVergemaaalEllerFremtidsfullmaktQuery(pid)).vergemaalEllerFremtidsfullmakt
+        return vergemaalEllerFremtidsfullmakt?.firstOrNull()
+    }
 }
