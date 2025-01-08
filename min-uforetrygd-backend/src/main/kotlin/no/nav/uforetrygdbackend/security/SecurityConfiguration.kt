@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import org.springframework.core.Ordered
-import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -23,7 +21,6 @@ import java.time.Duration
 
 @Configuration
 @EnableWebSecurity
-@Order(Ordered.HIGHEST_PRECEDENCE)
 class SecurityConfiguration(
     @Value("\${oauth2.azureAd.issuer}") private val azureAdIssuer: String,
     @Value("\${oauth2.azureAd.jsonWebKeyUri}") private val azureAdJsonWebKeyUri: String,
