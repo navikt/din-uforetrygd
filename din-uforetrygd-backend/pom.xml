@@ -18,6 +18,7 @@
         <kotlin.version>2.0.21</kotlin.version>
         <jackson-version>2.18.1</jackson-version>
         <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
+        <logback.version>1.5.16</logback.version>
         <spring-boot-starter-security.version>3.4.1</spring-boot-starter-security.version>
         <micrometer.version>1.14.1</micrometer.version>
         <!-- Test -->
@@ -39,6 +40,18 @@
             <artifactId>logback-syslog4j</artifactId>
             <version>1.0.0</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
@@ -129,10 +142,6 @@
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
