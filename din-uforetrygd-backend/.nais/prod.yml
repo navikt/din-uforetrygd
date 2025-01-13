@@ -96,6 +96,12 @@ spec:
       value: api://prod-fss.pensjondeployer.pensjon-pen/.default
     - name: PEN_AUDIENCE
       value: prod-fss:pensjondeployer:pensjon-pen
+    - name: PERSONDATA_URL
+      value: https://pensjon-persondata.prod-fss-pub.nais.io
+    - name: PERSONDATA_SCOPE
+      value: api://prod-fss.pensjon-person.pensjon-persondata/.default
+    - name: PERSONDATA_AUDIENCE
+      value: prod-fss:pensjon-person:pensjon-persondata
     - name: SKJERMING_URL
       value: https://skjermede-personer-pip.intern.nav.no
     - name: SKJERMING_SCOPE
