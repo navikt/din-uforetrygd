@@ -3,5 +3,5 @@
 # Fungerer for mac.. (pga /private/tmp/)
 currentDir=$(pwd)
 cd /private/tmp/
-node $currentDir/../utils/fetch-secrets-to-env/dist/fetch-secrets.js pensjonselvbetjening uforetrygd-backend azure,tokenx uforetrygd.env
+env-fetch-secrets pensjonselvbetjening uforetrygd-backend azure,tokenx uforetrygd.env
 cd $currentDir

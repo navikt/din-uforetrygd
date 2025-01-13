@@ -2,10 +2,9 @@ package no.nav.uforetrygdbackend.person.pdl
 
 data class PdlPersonQuery(
         val query: String,
-        val variables: PdlPersonVariables
+        val variables: PdlPersonVariables,
 )
 
 data class PdlPersonVariables(
-        val ident: String,
-        val historisk: Boolean
+    val ident: String,
 )
