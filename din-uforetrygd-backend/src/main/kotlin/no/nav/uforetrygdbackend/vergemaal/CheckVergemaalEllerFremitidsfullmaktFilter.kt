@@ -37,33 +37,20 @@ class CheckVergemaalEllerFremitidsfullmaktAndLoginLevelFilter(
             val innloggingsniva = tokenService.getInnloggingstype()
             val vergemaalEllerFremtidsfullmakt = personService.getVergemaalEllerFremtidsfullmakt(pid)
 
-            if (vergemaalEllerFremtidsfullmakt != null) {
-                when (innloggingsniva) {
-                    Innloggingstype.LEVEL3 ->
-                        countLoginLevelWithOrWithoutLoginLevel("user_has_login_level3_vergemaal_eller_fremtidsfullmakt")
-                    Innloggingstype.LEVEL4 ->
-                        countLoginLevelWithOrWithoutLoginLevel("user_has_login_level4_vergemaal_eller_fremtidsfullmakt")
-                    else -> { /* do nothing */ }
-                }
-
-                countVergemaalOrFremtidsfullmaktType(vergemaalEllerFremtidsfullmakt.type!!.name)
-                countCountryArea(pid)
-            } else {
-                when (innloggingsniva) {
-                    Innloggingstype.LEVEL3 -> countLoginLevelWithOrWithoutLoginLevel("user_has_login_level3")
-                    Innloggingstype.LEVEL4 -> countLoginLevelWithOrWithoutLoginLevel("user_has_login_level4")
-                    else -> { /* do nothing */ }
-                }
-            }
+            countEvent(
+                "UT_${innloggingsniva}_" +
+                        if (vergemaalEllerFremtidsfullmakt != null) "HAR_VERGEMAAL_" else "HAR_IKKE_VERGEMAAL_" +
+                                findCountryArea(pid)
+            )
         }
     }
 
-    private fun countCountryArea(pid: String) {
-        when (val landkode = personService.getLandkodeFromBostedsland(pid)) {
-            "NOR" -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_norge")
-            "XUK" -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_ukjent")
-            EES_COUNTRIES.find { it == landkode } -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_ees")
-            else -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_utenfor_ees")
+    private fun findCountryArea(pid: String): String {
+        return when (val landkode = personService.getLandkodeFromBostedsland(pid)) {
+            "NOR" -> "BOSTEDSLAND_NORGE"
+            "XUK" -> "BOSTEDSLAND_UKJENT"
+            EES_COUNTRIES.find { it == landkode } -> "BOSTEDSLAND_EES"
+            else -> "BOSTEDSLAND_ANNET"
         }
     }
 
@@ -101,6 +88,6 @@ class CheckVergemaalEllerFremitidsfullmaktAndLoginLevelFilter(
             "DEU", // "Tyskland",
             "HUN", // "Ungarn",
             "AUT", // "Østerrike",
-            )
+        )
     }
 }
