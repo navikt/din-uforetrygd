@@ -35,7 +35,7 @@ class PdlClientTest: WebClientTest(){
     @Test
     fun `should return Person when performing pdl query`() {
         prepare(response200())
-        val person = pdlClient.performQuery(PdlPersonQuery("", PdlPersonVariables("", false)))
+        val person = pdlClient.performQuery(PdlPersonQuery("", PdlPersonVariables("")))
         assertEquals(PdlAdressebeskyttelsesgradering.STRENGT_FORTROLIG, person.adressebeskyttelse?.get(0)?.gradering)
     }
 
@@ -46,7 +46,7 @@ class PdlClientTest: WebClientTest(){
             pdlClient.performQuery(
                 PdlPersonQuery(
                     "",
-                    PdlPersonVariables("", false)
+                    PdlPersonVariables("")
                 )
             )
         }
@@ -59,7 +59,7 @@ class PdlClientTest: WebClientTest(){
             pdlClient.performQuery(
                 PdlPersonQuery(
                     "",
-                    PdlPersonVariables("", false)
+                    PdlPersonVariables("")
                 )
             )
         }
@@ -72,7 +72,7 @@ class PdlClientTest: WebClientTest(){
             pdlClient.performQuery(
                 PdlPersonQuery(
                     "",
-                    PdlPersonVariables("", false)
+                    PdlPersonVariables("")
                 )
             )
         }
@@ -85,7 +85,7 @@ class PdlClientTest: WebClientTest(){
             pdlClient.performQuery(
                 PdlPersonQuery(
                     "",
-                    PdlPersonVariables("", false)
+                    PdlPersonVariables("")
                 )
             )
         }
@@ -98,7 +98,7 @@ class PdlClientTest: WebClientTest(){
             pdlClient.performQuery(
                 PdlPersonQuery(
                     "",
-                    PdlPersonVariables("", false)
+                    PdlPersonVariables("")
                 )
             )
         }
