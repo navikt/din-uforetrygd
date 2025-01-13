@@ -23,36 +23,84 @@ class CheckVergemaalEllerFremitidsfullmaktAndLoginLevelFilter(
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
+        try {
+            countVergemaalAndInnloggingsnivaa(request)
+        } catch (e: Exception) {
+            logger.warn("Failed to count vergemaal and innloggingsnivaa", e)
+        }
+        filterChain.doFilter(request, response)
+    }
+
+    private fun countVergemaalAndInnloggingsnivaa(request: HttpServletRequest) {
         if (request.getHeader("Authorization") != null && tokenService.isUserLoggedInAsPerson()) {
             val pid = SecurityContextUtil.getPidFromContext()
             val innloggingsniva = tokenService.getInnloggingstype()
             val vergemaalEllerFremtidsfullmakt = personService.getVergemaalEllerFremtidsfullmakt(pid)
 
-            when (innloggingsniva) {
-                Innloggingstype.LEVEL3 -> {
-                    if (vergemaalEllerFremtidsfullmakt != null) {
-                        logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 3")
-                        countEvent("level3_vergemaal_eller_fremtidsfullmakt")
-                    } else {
-                        logger.info("Innlogget bruker har ikke vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 3")
-                        countEvent("level3_no_vergemaal_eller_fremtidsfullmakt")
-                    }
+            if (vergemaalEllerFremtidsfullmakt != null) {
+                when (innloggingsniva) {
+                    Innloggingstype.LEVEL3 ->
+                        countLoginLevelWithOrWithoutLoginLevel("user_has_login_level3_vergemaal_eller_fremtidsfullmakt")
+                    Innloggingstype.LEVEL4 ->
+                        countLoginLevelWithOrWithoutLoginLevel("user_has_login_level4_vergemaal_eller_fremtidsfullmakt")
+                    else -> { /* do nothing */ }
                 }
 
-                Innloggingstype.LEVEL4 -> {
-                    if (vergemaalEllerFremtidsfullmakt != null) {
-                        logger.info("Innlogget bruker har vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 4")
-                        countEvent("level4_vergemaal_eller_fremtidsfullmakt")
-                    } else {
-                        logger.info("Innlogget bruker har ikke vergemaal eller fremtidsfullmakt og er innlogget med innloggingsniva 4")
-                        countEvent("level4_no_vergemaal_eller_fremtidsfullmakt")
-                    }
-                }
-                else -> {
-                    // do nothing
+                countVergemaalOrFremtidsfullmaktType(vergemaalEllerFremtidsfullmakt.type!!.name)
+                countCountryArea(pid)
+            } else {
+                when (innloggingsniva) {
+                    Innloggingstype.LEVEL3 -> countLoginLevelWithOrWithoutLoginLevel("user_has_login_level3")
+                    Innloggingstype.LEVEL4 -> countLoginLevelWithOrWithoutLoginLevel("user_has_login_level4")
+                    else -> { /* do nothing */ }
                 }
             }
         }
-        filterChain.doFilter(request, response)
+    }
+
+    private fun countCountryArea(pid: String) {
+        when (val landkode = personService.getLandkodeFromBostedsland(pid)) {
+            "NOR" -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_norge")
+            "XUK" -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_ukjent")
+            EES_COUNTRIES.find { it == landkode } -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_ees")
+            else -> countCountryAreaWhenLoggedInWithVergemaal("user_bostedsland_utenfor_ees")
+        }
+    }
+
+    companion object {
+        // Liste hentet fra https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-utlandet/relatert-informasjon/eos-landene
+        private val EES_COUNTRIES = listOf(
+            "BEL", // "Belgia",
+            "BGR", // "Bulgaria",
+            "DNK", // "Danmark",
+            "EST", // "Estland",
+            "FIN", // "Finland",
+            "FRA", // "Frankrike",
+            "GRC", // "Hellas",
+            "IRL", // "Irland",
+            "ISL", // "Island",
+            "ITA", // "Italia",
+            "HRV", // "Kroatia",
+            "CYP", //"Kypros",
+            "LVA", // "Latvia",
+            "LIE", // "Liechtenstein",
+            "LTU", // "Litauen",
+            "LUX", // "Luxembourg",
+            "MLT", // "Malta",
+            "NLD", // "Nederland",
+            // Norge, // Egen regel for logging av Norge
+            "POL", // "Polen",
+            "PRT", // "Portugal",
+            "ROU", // "Romania",
+            "SVK", // "Slovakia",
+            "SVN", // "Slovenia",
+            "ESP", // "Spania",
+            "CHE", // "Sveits",
+            "SWE", // "Sverige",
+            "CZE", // "Tsjekkia",
+            "DEU", // "Tyskland",
+            "HUN", // "Ungarn",
+            "AUT", // "Østerrike",
+            )
     }
 }

@@ -2,6 +2,14 @@ package no.nav.uforetrygdbackend.vergemaal
 
 import io.micrometer.core.instrument.Metrics
 
-private const val EVENT_NAME = "vergemaal"
 
-fun countEvent(result: String) = Metrics.counter(EVENT_NAME, "result", result).increment()
+fun countLoginLevelWithOrWithoutLoginLevel(result: String) =
+    countEvent(result, "loginLevelWithOrWithoutLoginLevel")
+
+fun countCountryAreaWhenLoggedInWithVergemaal(result: String) =
+    countEvent(result, "countryAreaWhenLoggedInWithVergemaal")
+
+fun countVergemaalOrFremtidsfullmaktType(result: String) =
+    countEvent(result, "vergemaalOrFremtidsfullmaktType")
+
+private fun countEvent(result: String, eventName: String) = Metrics.counter(eventName, "result", result).increment()
