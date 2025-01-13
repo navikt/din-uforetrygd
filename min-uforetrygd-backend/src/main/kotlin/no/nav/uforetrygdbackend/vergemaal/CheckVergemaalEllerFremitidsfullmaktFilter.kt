@@ -39,7 +39,7 @@ class CheckVergemaalEllerFremitidsfullmaktAndLoginLevelFilter(
 
             countEvent(
                 "UT_${innloggingsniva}_" +
-                        if (vergemaalEllerFremtidsfullmakt != null) "HAR_VERGEMAAL_" else "HAR_IKKE_VERGEMAAL_" +
+                        (if (vergemaalEllerFremtidsfullmakt != null) "HAR_VERGEMAAL_" else "HAR_IKKE_VERGEMAAL_") +
                                 findCountryArea(pid)
             )
         }
