@@ -17,7 +17,7 @@ class PersondataClient(
     fun getBostedsland(pid: String): BostedslandResponse {
         return webClient
             .get()
-            .uri("$url/api/persondata/bostedsland/landkode")
+            .uri("$url/api/bostedsland/landkode")
             .header("pid", pid)
             .header("Authorization", "Bearer ${tokenService.getEgressToken(scope, audience, pid, AppId.PERSONDATA)}")
             .retrieve()
