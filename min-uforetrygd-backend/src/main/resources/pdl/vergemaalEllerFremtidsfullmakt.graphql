@@ -1,0 +1,22 @@
+query($ident: ID!){
+    hentPerson(ident: $ident) {
+        vergemaalEllerFremtidsfullmakt(historikk: false) {
+            type
+            folkeregistermetadata {
+                ajourholdstidspunkt
+                gyldighetstidspunkt
+            }
+            metadata {
+                master
+                endringer {
+                    registrert
+                    kilde
+                    registrertAv
+                    systemkilde
+                    type
+                }
+                historisk
+            }
+        }
+    }
+}
