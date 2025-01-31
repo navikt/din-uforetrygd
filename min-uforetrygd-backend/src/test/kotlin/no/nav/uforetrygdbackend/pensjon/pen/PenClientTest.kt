@@ -31,7 +31,7 @@ class PenClientTest : WebClientTest() {
     }
 
     @Test
-    fun `should return list of saksammendrag when 200 response from sammendragWonderful`() {
+    fun `should return list of saksammendrag when 200 response from sammendragv2`() {
         prepare(sakSammendragResponse200())
         assertEquals(
             listOf(
@@ -47,25 +47,25 @@ class PenClientTest : WebClientTest() {
         )
         val request = takeRequest()
 
-        assertEquals("/pen/api/selvbetjening/sak/sammendragWonderful", request.path)
+        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", request.path)
         assertEquals(PID, request.getHeader("fnr"))
     }
 
 
     @Test
-    fun `should throw ForbiddenException when 403 response from sammendragWonderful`() {
+    fun `should throw ForbiddenException when 403 response from sammendragv2`() {
         prepare(response403())
         val exception = assertThrows<ForbiddenException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendragWonderful", exception.service)
+        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test
-    fun `should throw ClientException when 500 response from sammendragWonderful`() {
+    fun `should throw ClientException when 500 response from sammendragv2`() {
         prepare(response500())
         val exception = assertThrows<ClientException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendragWonderful", exception.service)
+        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test
@@ -74,7 +74,7 @@ class PenClientTest : WebClientTest() {
         `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
         val exception = assertThrows<ClientException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendragWonderful", exception.service)
+        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test

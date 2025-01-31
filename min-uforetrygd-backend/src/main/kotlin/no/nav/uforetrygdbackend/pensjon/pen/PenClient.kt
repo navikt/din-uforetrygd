@@ -23,7 +23,7 @@ class PenClient(
     private val tokenService: TokenService
 ) {
     fun getSaksammendrag(pid: String): List<SakSammendrag> {
-        val path = "/pen/api/selvbetjening/sak/sammendragWonderful"
+        val path = "/pen/api/selvbetjening/sak/sammendrag/v2"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
