@@ -1,6 +1,5 @@
 package no.nav.uforetrygdbackend.pensjon.pen
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
 
 data class SakSammendrag(val sakId: Long,
