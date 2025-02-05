@@ -38,7 +38,7 @@
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "eslint": "^8",
-    "eslint-config-next": "15.0.3",
+    "eslint-config-next": "15.1.6",
     "eslint-config-prettier": "^9.1.0",
     "express": "^4.21.1",
     "openapi-typescript": "^7.5.2",
