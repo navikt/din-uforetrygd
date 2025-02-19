@@ -109,4 +109,4 @@ spec:
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: dev-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER
-      value: https://representasjon-banner-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/representasjon
+      value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
