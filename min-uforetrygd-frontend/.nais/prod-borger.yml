@@ -76,7 +76,7 @@ spec:
     - name: LINK_KLAGE
       value: https://www.nav.no/person/kontakt-oss/tilbakemeldinger
     - name: LINK_MELD_FRA_OM_ENDRINGER
-      value: https://www.nav.no/uforetrygd#melde
+      value: https://innboks.nav.no/s/beskjed-til-oss?category=Endring-uforetrygd
     - name: LINK_UTBETALINGER
       value: https://www.nav.no/utbetalingsoversikt
     - name: LINK_BREV
