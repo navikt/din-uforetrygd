@@ -84,7 +84,7 @@ spec:
     - name: LINK_KLAGE
       value: https://www.nav.no/person/kontakt-oss/tilbakemeldinger
     - name: LINK_MELD_FRA_OM_ENDRINGER
-      value: https://www.nav.no/uforetrygd#melde
+      value: https://innboks.nav.no/s/beskjed-til-oss?category=Endring-uforetrygd
     - name: LINK_UTBETALINGER
       value: https://pensjon-pselv.nais.adeo.no/pselv/publisering/mineutbetalinger.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_BREV
