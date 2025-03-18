@@ -23,7 +23,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "next": "15.2.3",
-    "openapi-fetch": "^0.13.4",
+    "openapi-fetch": "^0.13.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "winston": "^3.17.0"
