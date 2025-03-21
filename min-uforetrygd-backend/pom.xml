@@ -20,7 +20,7 @@
         <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
         <logback.version>1.5.17</logback.version>
         <logback-access.version>2.0.6</logback-access.version>
-        <spring-boot-starter-security.version>3.4.3</spring-boot-starter-security.version>
+        <spring-boot-starter-security.version>3.4.4</spring-boot-starter-security.version>
         <micrometer.version>1.14.5</micrometer.version>
         <!-- Test -->
         <mockk.version>1.13.17</mockk.version>
