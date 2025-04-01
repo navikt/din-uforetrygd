@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.13.15",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "bun": "^1.2.8",
