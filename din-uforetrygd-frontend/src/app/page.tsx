@@ -11,7 +11,8 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
 import { resolveErrorText } from '@/utils/resolveErrorText'
-import {useEffect} from "react";
+import { TaskAnalytics } from '../components/TaskAnalytics'
+import getEnv from '@/utils/env'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -22,23 +23,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
 
-  useEffect(() => {
-    // Task analytic Spørreundersøkelse for gammel og ny vedtaksbrev
-
-    setTimeout(() => {
-      //@ts-ignore Ukjent TA type
-      if (typeof window.TA === "function") {
-        //@ts-ignore Ukjent TA type
-        window.TA("start", "03419");
-      }
-    }, 1000);
-  });
-
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
+    const mode = getEnv('MODE')
 
     return (
       <>
+        <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={params.pid} />
         <main className="main-content" id="maincontent" tabIndex={-1}>
           <Heading size="xlarge" level="1">
