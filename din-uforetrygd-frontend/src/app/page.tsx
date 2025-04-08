@@ -11,6 +11,8 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
 import { resolveErrorText } from '@/utils/resolveErrorText'
+import { TaskAnalytics } from '../components/TaskAnalytics'
+import getEnv from '@/utils/env'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -23,9 +25,11 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
+    const mode = getEnv('MODE')
 
     return (
       <>
+        <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={params.pid} />
         <main className="main-content" id="maincontent" tabIndex={-1}>
           <Heading size="xlarge" level="1">
