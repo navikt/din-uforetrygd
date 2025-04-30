@@ -1,5 +1,5 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: nais.io/v1alpha1
+kind: Application
 metadata:
   name: uforetrygd-frontend-borger
   namespace: pensjonselvbetjening
@@ -82,7 +82,7 @@ spec:
     - name: LINK_BREV
       value: https://www.nav.no/pselv/publisering/dininnboks.jsf?context=ut&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://www.nav.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&simpleMode=true
+      value: https://nav.no/uforetrygd/selvbetjening/inntektsplanleggeren
     - name: LINK_SAKER
       value: https://www.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
     - name: LINK_SKATTETREKK
@@ -103,4 +103,3 @@ spec:
       value: prod-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
-
