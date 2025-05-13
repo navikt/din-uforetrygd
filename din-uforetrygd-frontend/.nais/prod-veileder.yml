@@ -90,7 +90,7 @@ spec:
     - name: LINK_BREV
       value: https://pensjon-pselv.nais.adeo.no/pselv/publisering/dininnboks.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://veileder.intern.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
+      value: https://pensjon-pselv.nais.adeo.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SAKER
       value: https://pensjon-pselv.nais.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SKATTETREKK
