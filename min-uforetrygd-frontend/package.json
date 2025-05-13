@@ -37,7 +37,7 @@
     "bun": "^1.2.10",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "eslint-config-next": "15.3.1",
     "eslint-config-prettier": "^10.1.2",
     "express": "^5.1.0",
