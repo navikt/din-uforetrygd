@@ -94,7 +94,7 @@ spec:
     - name: LINK_BREV
       value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/dininnboks.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+      value: https://veileder.ansatt.dev.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
     - name: LINK_SAKER
       value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SKATTETREKK
