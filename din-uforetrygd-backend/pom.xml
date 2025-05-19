@@ -21,7 +21,7 @@
         <logback.version>1.5.18</logback.version>
         <logback-access.version>2.0.6</logback-access.version>
         <spring-boot-starter-security.version>3.4.5</spring-boot-starter-security.version>
-        <micrometer.version>1.14.6</micrometer.version>
+        <micrometer.version>1.15.0</micrometer.version>
         <!-- Test -->
         <mockk.version>1.14.2</mockk.version>
         <mockwebserver.version>4.12.0</mockwebserver.version>
