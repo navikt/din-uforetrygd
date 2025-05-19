@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others-on-fail  \"next dev --turbopack\" \"bun mock/server.ts\"",
-    "build": "npm run test && next build",
+    "build": "npm run test && next build && npm run build:server",
+    "build:server": "tsc -p tsconfig.server.json",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
