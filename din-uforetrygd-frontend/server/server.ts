@@ -2,6 +2,7 @@ import express from 'express'
 import next from 'next'
 
 const isDev = process.env.NODE_ENV !== 'production'
+const PORT = process.env.PORT || 8080
 const app = next({ dev: isDev })
 const handle = app.getRequestHandler()
 const server = express()
@@ -13,8 +14,8 @@ app
       return handle(req, res)
     })
 
-    server.listen(8080, () => {
-      console.log('server ready on port 8080')
+    server.listen(PORT, () => {
+      console.log(`Server ready on port ${PORT}`)
     })
   })
   .catch((exception) => {
