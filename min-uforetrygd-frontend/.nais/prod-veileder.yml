@@ -60,6 +60,8 @@ spec:
         - application: uforetrygd-backend
           cluster: prod-gcp
           namespace: pensjonselvbetjening
+      external:
+        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: veileder
@@ -109,3 +111,5 @@ spec:
       value: https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: api://prod-gcp.pensjonselvbetjening.uforetrygd-backend/.default
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token
