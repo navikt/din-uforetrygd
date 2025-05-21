@@ -1,5 +1,6 @@
 import express from 'express'
 import next from 'next'
+import { stengForReguleringMiddleware } from '@navikt/steng-for-regulering/express'
 
 const isDev = process.env.NODE_ENV !== 'production'
 const PORT = process.env.PORT || 8080
@@ -10,6 +11,7 @@ const server = express()
 app
   .prepare()
   .then(() => {
+    server.use(stengForReguleringMiddleware({ env: isDev ? 'dev' : 'prod' }))
     server.get(/(.*)/, (req, res) => {
       return handle(req, res)
     })

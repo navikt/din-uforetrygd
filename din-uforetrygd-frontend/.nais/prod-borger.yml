@@ -52,6 +52,8 @@ spec:
         - application: uforetrygd-backend
           cluster: prod-gcp
           namespace: pensjonselvbetjening
+      external:
+        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: borger
@@ -103,3 +105,5 @@ spec:
       value: prod-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token
