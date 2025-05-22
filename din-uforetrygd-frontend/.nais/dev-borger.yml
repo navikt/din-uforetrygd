@@ -89,7 +89,7 @@ spec:
     - name: LINK_BREV
       value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/publisering/dininnboks.jsf?context=ut&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&simpleMode=true
+      value: https://borger.ansatt.dev.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren
     - name: LINK_SAKER
       value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
     - name: LINK_SKATTETREKK
