@@ -66,9 +66,9 @@ spec:
         - application: uforetrygd-frontend-borger
           namespace: pensjonselvbetjening
         - application: tokenx-token-generator
-          namespace: aura
+          namespace: nais
         - application: azure-token-generator
-          namespace: aura
+          namespace: nais
     outbound:
       external:
         - host: pdl-api.dev-fss-pub.nais.io
