@@ -55,7 +55,7 @@ spec:
     inbound:
       rules:
         - application: azure-token-generator # only in dev
-          namespace: aura
+          namespace: nais
           cluster: dev-gcp
     outbound:
       rules:
