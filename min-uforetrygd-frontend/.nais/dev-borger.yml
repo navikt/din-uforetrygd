@@ -48,11 +48,11 @@ spec:
     inbound:
       rules:
         - application: tokenx-token-generator # only in dev
-          namespace: aura
+          namespace: nais
         - application: azure-token-generator # only in dev
-          namespace: aura
+          namespace: nais
         - application: wonderwalled-idporten # only in dev
-          namespace: aura
+          namespace: nais
     outbound:
       rules:
         - application: nav-dekoratoren
