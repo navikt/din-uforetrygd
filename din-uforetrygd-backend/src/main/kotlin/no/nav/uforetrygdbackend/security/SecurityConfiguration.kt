@@ -36,7 +36,7 @@ class SecurityConfiguration(
                 authenticationManagerResolver = jwtIssuerAuthenticationManagerResolver
             }
 
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize("/actuator/**", permitAll)
                 authorize("/v3/api-docs", permitAll)
                 authorize(DispatcherTypeRequestMatcher(DispatcherType.ERROR), authenticated)
