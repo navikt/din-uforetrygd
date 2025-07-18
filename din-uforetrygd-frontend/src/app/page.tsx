@@ -13,6 +13,8 @@ import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjo
 import { resolveErrorText } from '@/utils/resolveErrorText'
 import { TaskAnalytics } from '../components/TaskAnalytics'
 import getEnv from '@/utils/env'
+import Hendelser from '@/sections/Hendelser'
+import { Dokumenter } from '@/sections/Dokumenter'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -42,6 +44,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
             dittUforevedtak={uforetrygdResponse.uforevedtak}
           />
+          <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype="UFOREP" />
+          <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
           <InformasjonOgRegistreringer
             visningskriterier={visningskriterier}
             pid={params.pid}
