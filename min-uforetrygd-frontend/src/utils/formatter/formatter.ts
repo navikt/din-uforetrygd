@@ -1,3 +1,5 @@
+import { format, parseISO } from 'date-fns'
+
 export const formatInntekt = (amount?: number | string | null): string => {
   if (amount === null || amount === undefined || amount === '') return ''
   const integerAmount = typeof amount === 'string' ? parseInt(amount.replace(/\D+/g, ''), 10) : amount
@@ -9,4 +11,8 @@ export const formatInntekt = (amount?: number | string | null): string => {
         maximumFractionDigits: 0,
       }).format(integerAmount)
     : ''
+}
+
+export const formatDate = (date?: string): string | undefined => {
+  return date ? format(parseISO(date), 'dd.MM.yyyy') : undefined
 }

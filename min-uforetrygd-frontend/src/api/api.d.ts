@@ -40,11 +40,33 @@ export interface components {
             hasGjenlevendeTillegg?: boolean;
             hasVarigTilrettelagtArbeid?: boolean;
         };
+        Dokument: {
+            tittel?: string;
+            dokumentInfoId?: string;
+            /** Format: int32 */
+            filstorrelse?: number;
+        };
+        Journalpost: {
+            id?: string;
+            tittel?: string;
+            opprettetAv?: string;
+            opprettetDato?: string;
+            dokumenter?: components["schemas"]["Dokument"][];
+        };
         Sak: {
             /** @enum {string} */
             type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
             /** @enum {string} */
             status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
+        };
+        SakHendelse: {
+            type?: string;
+            gjelder?: string;
+            arsak?: string;
+            status?: string;
+            /** Format: date-time */
+            endretDato?: string;
+            opprettetAv?: string;
         };
         UforetrygdResponse: {
             pid?: string;
@@ -55,6 +77,8 @@ export interface components {
             /** @enum {string} */
             innloggingstype?: "LEVEL4" | "LEVEL3" | "NAV" | "SYSTEM";
             harGammelFullmaktmottaker?: boolean;
+            hendelser?: components["schemas"]["SakHendelse"][];
+            journalposter?: components["schemas"]["Journalpost"][];
         };
     };
     responses: never;
