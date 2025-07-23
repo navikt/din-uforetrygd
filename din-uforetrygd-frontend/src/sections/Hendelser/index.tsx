@@ -23,17 +23,15 @@ const Hendelser: React.FC<IHendelserProps> = (props) => {
     const hasDescription = hendelse.gjelder && hendelse.arsak
     const hendelsestype = mapHendelseCode(hendelse.type!, props.sakstype)
     if (hendelsestype) {
-      return [
-        ...acc,
-        {
-          type: hendelsestype,
-          description: hasDescription && mapKravDescription(hendelse.gjelder!, hendelse.arsak!, props.sakstype),
-          createdBy: mapOpprettetAv(hendelse.opprettetAv),
-          formattedDate: formatDate(hendelse.endretDato),
-          sortDate: hendelse.endretDato,
-        },
-      ]
-    } else return acc
+      acc.push({
+        type: hendelsestype,
+        description: hasDescription ? mapKravDescription(hendelse.gjelder!, hendelse.arsak!, props.sakstype) : undefined,
+        createdBy: mapOpprettetAv(hendelse.opprettetAv),
+        formattedDate: formatDate(hendelse.endretDato),
+        sortDate: hendelse.endretDato!!,
+      })
+    }
+    return acc
   }, [])
 
   return <HendelserView hendelser={hendelser} />

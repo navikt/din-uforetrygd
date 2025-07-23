@@ -14,12 +14,20 @@ export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
     if (!formattedDate) throw Error('Invalid date')
 
     return {
-      tittel: journalpost.tittel,
+      tittel: journalpost.tittel ?? '',
       formattedDate: formattedDate,
       createdBy: mapOpprettetAv(journalpost.opprettetAv),
-      sortDate: journalpost.opprettetDato,
-      id: journalpost.id,
-      dokumenter: journalpost.dokumenter,
+      sortDate: journalpost.opprettetDato ?? '',
+      id: journalpost.id ?? '',
+      dokumenter: (journalpost.dokumenter ?? [])
+          .filter(
+              (d) => d.tittel !== undefined && d.dokumentInfoId !== undefined
+          )
+          .map((d) => ({
+            tittel: d.tittel as string,
+            dokumentInfoId: d.dokumentInfoId as string,
+            filstorrelse: d.filstorrelse,
+          })),
     }
   })
 
