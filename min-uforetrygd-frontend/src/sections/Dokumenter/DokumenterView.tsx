@@ -1,6 +1,6 @@
 'use client'
 
-import { BodyShort, Heading, VStack } from '@navikt/ds-react'
+import {BodyShort, ExpansionCard, Heading, VStack} from '@navikt/ds-react'
 import React from 'react'
 import { ReadMoreTile } from '@/components/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
@@ -27,9 +27,11 @@ interface IDokumenterProps {
 export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
   return (
     <section className="wide">
-      <Heading size="medium" level="2" spacing>
-        Dokumenter knyttet til saken din
-      </Heading>
+      <ExpansionCard aria-label="Dokumenter knyttet til saken din">
+          <ExpansionCard.Header>
+              <ExpansionCard.Title> Dokumenter knyttet til saken din </ExpansionCard.Title>
+          </ExpansionCard.Header>
+          <ExpansionCard.Content>
       <SortablePaginatedList
         items={props.journalposter}
         itemsPerPage={6}
@@ -75,8 +77,10 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
               </BodyShort>
             </ReadMoreTile>
           )
-        }}
-      />
+        }}>
+      </SortablePaginatedList>
+      </ExpansionCard.Content>
+      </ExpansionCard>
     </section>
   )
 }

@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import {Alert, Heading, VStack} from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
@@ -38,20 +38,24 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             Din uføretrygd
           </Heading>
           <UforestatusGuidePanel visningskriterier={visningskriterier} pid={params.pid} />
-          <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
           <DittVedtak
             pid={params.pid}
             hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
             dittUforevedtak={uforetrygdResponse.uforevedtak}
           />
-          <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype="UFOREP" />
-          <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
           <InformasjonOgRegistreringer
             visningskriterier={visningskriterier}
             pid={params.pid}
             bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
           />
           <MeldeFra visningskriterier={visningskriterier} />
+          <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
+          <section className="wide">
+            <VStack gap="6">
+              <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype="UFOREP" />
+              <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
+            </VStack>
+          </section>
           <RelevanteSoknader
             visningskriterier={visningskriterier}
             innloggingstype={uforetrygdResponse.innloggingstype!}

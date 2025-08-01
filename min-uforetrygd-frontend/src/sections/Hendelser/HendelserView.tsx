@@ -1,6 +1,6 @@
 'use client'
 
-import { BodyShort, Detail, Heading, VStack } from '@navikt/ds-react'
+import {BodyShort, Detail, ExpansionCard, Heading, VStack} from '@navikt/ds-react'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
 import styles from './hendelser.module.css'
 import React from 'react'
@@ -18,9 +18,14 @@ export interface IHendelserProps {
 export const HendelserView: React.FC<IHendelserProps> = (props) => {
   return (
     <section className="wide">
-      <Heading size="medium" level="2" spacing>
-        Dette har skjedd i saken din
-      </Heading>
+        <Heading size="medium" level="2" spacing>
+            Saksoversikt
+        </Heading>
+        <ExpansionCard aria-label="Hendelser i saken din">
+        <ExpansionCard.Header>
+            <ExpansionCard.Title> Dette har skjedd i saken din </ExpansionCard.Title>
+        </ExpansionCard.Header>
+        <ExpansionCard.Content>
       <SortablePaginatedList
         items={props.hendelser}
         itemsPerPage={6}
@@ -40,6 +45,8 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
           )
         }}
       />
+        </ExpansionCard.Content>
+        </ExpansionCard>
     </section>
   )
 }
