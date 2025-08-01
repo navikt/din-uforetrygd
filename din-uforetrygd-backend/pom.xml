@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>no.nav</groupId>
@@ -16,14 +16,14 @@
     <properties>
         <java.version>21</java.version>
         <kotlin.version>2.2.0</kotlin.version>
-        <jackson-version>2.19.1</jackson-version>
+        <jackson-version>2.19.2</jackson-version>
         <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
         <logback.version>1.5.18</logback.version>
         <logback-access.version>2.0.6</logback-access.version>
-        <spring-boot-starter-security.version>3.5.3</spring-boot-starter-security.version>
-        <micrometer.version>1.15.1</micrometer.version>
+        <spring-boot-starter-security.version>3.5.4</spring-boot-starter-security.version>
+        <micrometer.version>1.15.2</micrometer.version>
         <!-- Test -->
-        <mockk.version>1.14.4</mockk.version>
+        <mockk.version>1.14.5</mockk.version>
         <mockwebserver.version>5.1.0</mockwebserver.version>
     </properties>
     <dependencies>
