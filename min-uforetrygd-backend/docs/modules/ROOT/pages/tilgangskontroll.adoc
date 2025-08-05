@@ -22,7 +22,7 @@ Krever medlemskap i gruppe:
 * 0000-GA-Fortrolig_Adresse
 * 0000-GA-Strengt_Fortrolig_Adresse
 
-==== Skjermede NAV ansatte
+==== Skjermede Nav ansatte
 Krever medlemskap i gruppe:
 
 * 0000-GA-Egne_ansatte
