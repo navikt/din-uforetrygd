@@ -12,9 +12,9 @@ export const TaskAnalytics: React.FC<ITaskAnalytics> = (props) => {
     // Task analytic Spørreundersøkelse for gammel og ny vedtaksbrev
 
     setTimeout(() => {
-      //@ts-ignore Ukjent TA type
+      //@ts-expect-error Ukjent TA type
       if (typeof window.TA === 'function' && props.shouldRun) {
-        //@ts-ignore Ukjent TA type
+        //@ts-expect-error Ukjent TA type
         window.TA('start', props.id)
       }
     }, 1000)
