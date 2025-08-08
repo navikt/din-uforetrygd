@@ -25,7 +25,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
-    "form-data": "~3.0.4",
+    "form-data": "~4.0.4",
     "next": "15.3.5",
     "openapi-fetch": "^0.13.5",
     "react": "^18.3.1",
