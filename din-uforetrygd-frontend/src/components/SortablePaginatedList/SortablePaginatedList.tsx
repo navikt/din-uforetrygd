@@ -1,9 +1,9 @@
 'use client'
 
-import { Heading, HStack, Pagination, Select } from '@navikt/ds-react'
-import React, { useState } from 'react'
+import {Heading, Pagination, Select, VStack} from '@navikt/ds-react'
+import React, {useState} from 'react'
 import styles from './sortablepaginatedlist.module.css'
-import { compareSortDate, paginateItems } from '@/components/SortablePaginatedList/utils'
+import {compareSortDate, paginateItems} from '@/components/SortablePaginatedList/utils'
 
 export interface ISortableItem {
   sortDate: string
@@ -43,15 +43,17 @@ export const SortablePaginatedList = <T extends ISortableItem>({
   const SortablePaginatedListHeading: React.FC<ISortablePaginatedListHeadingProps> = (props) => {
     if (props.itemsLength > 0) {
       return (
-        <HStack justify="space-between">
-          <Heading size="xsmall" level="3">
-            Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
-          </Heading>
-          <Select label="Sorter etter" hideLabel size="small" onChange={props.handleSort}>
-            <option value="desc">Nyeste først</option>
-            <option value="asc">Eldste først</option>
-          </Select>
-        </HStack>
+        <>
+          <VStack gap={"4"}>
+            <Heading size="xsmall" level="3">
+              Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
+            </Heading>
+            <Select label="Sorter etter" hideLabel size="small" onChange={props.handleSort} style={{maxWidth: '150px'}}>
+              <option value="desc">Nyeste først</option>
+              <option value="asc">Eldste først</option>
+            </Select>
+          </VStack>
+        </>
       )
     }
 
