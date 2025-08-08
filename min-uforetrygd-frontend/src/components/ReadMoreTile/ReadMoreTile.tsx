@@ -26,7 +26,7 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
     <Box background={props.color} className={styles.tile} borderRadius="large">
       <Box
         as="button"
-        background={props.color}
+        background={isOpen ? props.color : "surface-default"}
         className={styles.tileHeader}
         onClick={handleOpen}
         borderRadius={isOpen ? 'large large 0 0' : 'large'}
