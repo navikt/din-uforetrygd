@@ -78,12 +78,12 @@ export const SortablePaginatedList = <T extends ISortableItem>({
       {showPagination && (
         <Pagination
           className={styles.pagination}
+          prevNextTexts={true}
           page={pageState}
           onPageChange={setPageState}
           count={Math.ceil(items.length / itemsPerPage)}
           boundaryCount={1}
           siblingCount={1}
-          size="small"
         />
       )}
     </>
