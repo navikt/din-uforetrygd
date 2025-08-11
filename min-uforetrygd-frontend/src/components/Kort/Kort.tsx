@@ -13,12 +13,13 @@ interface IKortProps {
 export const Kort: React.FC<IKortProps> = (props) => {
   return (
     <a href={props.href} className={styles.kort}>
-      <Box background="surface-neutral-subtle" borderRadius="large" padding="5" className={styles.kortBox}>
+      <Box borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
             <Box
-              background="surface-neutral-subtle"
+              background="blue-50"
               className={styles.kortIcon}
+              borderColor={"border-default"}
               borderRadius="xlarge"
               padding="3"
               aria-hidden

@@ -1,1 +1,3 @@
-export { DittVedtak } from './DittVedtak'
+import {DittVedtak} from "@/sections/DittVedtak/DittVedtak";
+
+export default DittVedtak

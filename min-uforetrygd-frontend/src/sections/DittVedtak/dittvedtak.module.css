@@ -3,11 +3,14 @@
 }
 
 .dittVedtak {
-  max-width: 600px;
+  width: 632px;
 }
 
 .dittVedtakWrapper {
   max-width: var(--content-width);
   width: 100%;
   padding-inline: 12px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
