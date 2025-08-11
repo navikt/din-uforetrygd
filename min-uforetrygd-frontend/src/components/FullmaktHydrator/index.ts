@@ -1,1 +1,1 @@
-export { FullmaktHydrator as default } from './FullmaktHydrator'
+export { FullmaktHydrator as default, getFullmaktProps } from './FullmaktHydrator'
