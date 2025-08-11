@@ -1,17 +1,9 @@
-import { Heading, VStack } from '@navikt/ds-react'
-import { Kort, KortGrid } from '@/components/Kort'
-import {
-  EnvelopeClosedIcon,
-  FileExportIcon,
-  FileTextIcon,
-  PersonGroupIcon,
-  PersonPlusIcon,
-  ReceiptIcon,
-  SackKronerIcon,
-} from '@navikt/aksel-icons'
-import { Visningskriterier } from '@/const'
-import filterShowFor, { matchAll, matchSome } from '@/utils/filterShowFor'
-import { getUrl } from '@/utils/getUrl'
+import {Heading, VStack} from '@navikt/ds-react'
+import {Kort, KortGrid} from '@/components/Kort'
+import {EnvelopeClosedIcon, FileExportIcon, FileTextIcon, PersonGroupIcon, PersonPlusIcon, ReceiptIcon, SackKronerIcon,} from '@navikt/aksel-icons'
+import {Visningskriterier} from '@/const'
+import filterShowFor, {matchAll, matchSome} from '@/utils/filterShowFor'
+import {getUrl} from '@/utils/getUrl'
 
 interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
@@ -25,7 +17,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: SackKronerIcon,
-    showFor: true,
+    showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.IngenUforesak]),
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_BREV', pid: pid }),

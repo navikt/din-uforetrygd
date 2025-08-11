@@ -1,11 +1,12 @@
-import { ShowMore } from '@/components/ShowMore'
-import { BodyShort, Heading, Link, List, VStack } from '@navikt/ds-react'
-import { ListItem } from '@navikt/ds-react/List'
-import { format, parseISO } from 'date-fns'
-import styles from './DittVedtak.module.css'
-import { formatInntekt } from '@/utils/formatter/formatter'
-import { getUrl } from '@/utils/getUrl'
-import { components } from '@/api/api'
+import {BodyLong, BodyShort, Heading, Link, List, ReadMore, VStack} from '@navikt/ds-react'
+import {ExpansionCard, ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle} from '@navikt/ds-react/ExpansionCard'
+import {ListItem} from '@navikt/ds-react/List'
+import {format, parseISO} from 'date-fns'
+import styles from './dittvedtak.module.css'
+import {formatInntekt} from '@/utils/formatter/formatter'
+import {getUrl} from '@/utils/getUrl'
+import {components} from '@/api/api'
+import showMore from "@/components/ShowMore/ShowMore";
 
 interface IDittVedtak {
   pid?: string
@@ -34,61 +35,69 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   const shouldShowTilleggTilUforetrygd =
     hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn || hasGjenlevendeTillegg
 
+
+  function getTilleggsoppsummeringTekst(): string {
+
+    let tilleggsoppsummering: string = ""
+
+    if (hasGjenlevendeTillegg) {
+      tilleggsoppsummering += "gjenlevendetillegg"
+    }
+
+    if (hasBarnetilleggSaerkullsbarn) {
+      if (tilleggsoppsummering.length === 0) {
+        tilleggsoppsummering += "barnetillegg for særkullsbarn"
+      } else {
+        tilleggsoppsummering += ", barnetillegg for særkullsbarn"
+      }
+    }
+
+    if (hasBarnetilleggFellesBarn) {
+      if (tilleggsoppsummering.length === 0) {
+        tilleggsoppsummering += "barnetillegg for fellesbarn"
+      } else {
+        tilleggsoppsummering += ", barnetillegg for fellesbarn"
+      }
+    }
+
+    return tilleggsoppsummering ? tilleggsoppsummering : "Ingen"
+  }
+
   return (
     <div className={styles.dittVedtakWrapper}>
       <section className={styles.dittVedtak}>
-        <ShowMore
-          heading="Ditt uførevedtak, registrert inntekt og inntektsgrenser"
-          aria-labelledby="info-heading"
-          collapsedHeight="10rem"
-          scrollBackOnCollapse={false}
-          variant="subtle"
-          as="section"
-          headingSize="medium"
-          headingLevel="2"
-        >
-          <List>
-            <ListItem>Uføregrad {uforegrad} prosent</ListItem>
-            {uforetidspunkt && <ListItem>Uføretidspunkt {uforetidspunkt}</ListItem>}
-            {uforetrygdInnvilget && <ListItem>Uføretrygd innvilget {uforetrygdInnvilget}</ListItem>}
-            {hasVarigTilrettelagtArbeid && <ListItem>Du har tiltaket Varig tilrettelagt arbeid</ListItem>}
-          </List>
-          {shouldShowTilleggTilUforetrygd && (
-            <>
-              <Heading level="3" size="small">
-                Tillegg til uføretrygden
-              </Heading>
-              <List>
-                {hasBarnetilleggFellesBarn && <ListItem>Barnetillegg for fellesbarn</ListItem>}
-                {hasBarnetilleggSaerkullsbarn && <ListItem>Barnetillegg for særkullsbarn</ListItem>}
-                {hasGjenlevendeTillegg && <ListItem>Gjenlevendetillegg</ListItem>}
-              </List>
-            </>
-          )}
-          <VStack gap="6">
-            <VStack>
-              <Heading level="3" size="small">
-                Din inntektsgrense: {inntektsgrense}&nbsp;kr
-              </Heading>
-              <BodyShort>
-                Tjener du mer enn dette, vil du få lavere utbetaling av uføretrygd. Vi reduserer uføretrygden din av
-                beløpet du tjener over inntektsgrensen. Beløpet opp til inntektsgrensen blir du aldri trukket for. Bruk
-                <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker
-                utbetalingen av uføretrygden din.
-              </BodyShort>
-            </VStack>
-            <VStack>
-              <Heading level="3" size="small">
-                Din registrerte forventede inntekt i {currentYear}: {sumAvForventedeInntekter}&nbsp;kr
-              </Heading>
-              <BodyShort>
-                Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger
-                vi har hentet. Du kan endre registrert forventet inntekt i{' '}
-                <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
-              </BodyShort>
-            </VStack>
-          </VStack>
-        </ShowMore>
+        <ExpansionCard aria-label={"Ditt vedtak"}>
+          <ExpansionCardHeader>
+            <ExpansionCardTitle> <Heading size={"medium"} level={"3"}> Kort om saken din </Heading></ExpansionCardTitle>
+          </ExpansionCardHeader>
+          <ExpansionCardContent>
+
+            <BodyLong> <strong> Saksnummer: </strong> {"Saksnummer placeholder"} </BodyLong>
+            {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {getTilleggsoppsummeringTekst()} </BodyLong>}
+            <BodyLong> <strong> Uføregrad: </strong> {uforegrad + " prosent"} </BodyLong>
+            {uforetidspunkt && <BodyLong> <strong> Uføretidspunkt: </strong> {uforetidspunkt} </BodyLong>}
+            {uforetrygdInnvilget && <BodyLong> <strong> Uføretrygd innvilget: </strong> {uforetrygdInnvilget} </BodyLong>}
+            {hasVarigTilrettelagtArbeid && <>Du har tiltaket Varig tilrettelagt arbeid</>}
+            <BodyLong> <strong> Forventet registrert inntekt: </strong> {sumAvForventedeInntekter + " kr"} </BodyLong>
+
+            <BodyLong> <strong> Inntekstgrense: </strong> {inntektsgrense}&nbsp;kr </BodyLong>
+
+            <ReadMore header={"Hva er inntektsgrense og forventet inntekt?"}>
+              <VStack gap={"6"}>
+              <BodyLong>
+                Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger 150 000 kroner.
+                Bruk <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+              </BodyLong>
+
+              <BodyLong>
+                Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har hentet.
+                Forventet inntekt inkluderer både arbeidsinntekt og andre ytelser du mottar.
+                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>
+              </BodyLong>
+              </VStack>
+            </ReadMore>
+          </ExpansionCardContent>
+        </ExpansionCard>
       </section>
     </div>
   )
