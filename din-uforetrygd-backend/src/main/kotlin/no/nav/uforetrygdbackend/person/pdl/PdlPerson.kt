@@ -9,7 +9,23 @@ import java.time.LocalDateTime
 
 data class PdlPerson(
     @JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<PdlAdressebskyttelse>?,
+    @JsonProperty("vergemaalEllerFremtidsfullmakt") val vergemaalEllerFremtidsfullmakt: List<PdlVergemaalEllerFremtidsfullmakt>?
 )
+
+data class PdlVergemaalEllerFremtidsfullmakt(
+    @JsonProperty("type") val type: PdlVergemaalEllerFremtidsfullmaktType?,
+)
+
+enum class PdlVergemaalEllerFremtidsfullmaktType {
+    @JsonProperty("ensligMindreårigAsylsøker") ENSLIG_MINDREARIG_ASYLSOKER,
+    @JsonProperty("ensligMindreårigFlyktning") ENSLIG_MINDREARIG_FLYKTNING,
+    @JsonProperty("voksen") VOKSEN,
+    @JsonProperty("midlertidigForVoksen") MIDLERITIDIG_FOR_VOKSEN,
+    @JsonProperty("mindreårig") MINDREARIG,
+    @JsonProperty("midlertidigForMindreårig") MIDLERITIDIG_FOR_MINDREARIG,
+    @JsonProperty("stadfestetFremtidsfullmakt") STADFESTET_FREMTIDSFULLMAKT,
+    @JsonProperty("forvaltningUtenforVergemål") FORVALTNING_UTENFOR_VERGEMAL,
+}
 
 data class PdlAdressebskyttelse(
     @JsonProperty("gradering") val gradering: PdlAdressebeskyttelsesgradering,

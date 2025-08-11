@@ -60,6 +60,8 @@ spec:
         - application: uforetrygd-backend
           cluster: prod-gcp
           namespace: pensjonselvbetjening
+      external:
+        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: veileder
@@ -90,7 +92,7 @@ spec:
     - name: LINK_BREV
       value: https://pensjon-pselv.nais.adeo.no/pselv/publisering/dininnboks.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://pensjon-pselv.nais.adeo.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+      value: https://veileder.intern.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
     - name: LINK_SAKER
       value: https://pensjon-pselv.nais.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SKATTETREKK
@@ -109,3 +111,5 @@ spec:
       value: https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: api://prod-gcp.pensjonselvbetjening.uforetrygd-backend/.default
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token

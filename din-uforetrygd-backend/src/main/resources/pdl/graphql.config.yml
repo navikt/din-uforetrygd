@@ -1,0 +1,8 @@
+schema: pdl-api-schema.graphql
+extensions:
+  endpoints:
+    Default GraphQL Endpoint:
+      url: https://pdl-api.dev-fss-pub.nais.io/graphql
+      headers:
+        user-agent: uforetrygd-backend
+      introspect: false

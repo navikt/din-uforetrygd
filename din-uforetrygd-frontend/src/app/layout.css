@@ -11,6 +11,17 @@ body {
   padding-inline: 12px;
 }
 
+.ux-signals-container {
+  display: flex;
+  justify-content: flex-start;
+  max-width: var(--content-width);
+  width: 100%;
+
+  & > div {
+    max-width: 620px;
+  }
+}
+
 .main-content > h1 {
   max-width: var(--content-width);
   width: 100%;
