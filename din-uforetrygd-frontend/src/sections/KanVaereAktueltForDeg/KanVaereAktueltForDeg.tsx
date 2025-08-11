@@ -13,26 +13,31 @@ const links = [
     href: await getUrl({ urlFromEnv: 'LINK_LES_MER_OM_UFORETRYGD' }),
     text: 'Les om uføretrygd',
     showFor: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_ENDRE_KONTONUMMER' }),
     text: 'Endre kontonummer',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_PERSONOPPLYSNINGER' }),
     text: 'Personopplysninger',
     showFor: true,
+    showFullmaktWarning: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_OKONOMISKE_TILLEGG' }),
     text: 'Økonomiske tillegg og andre ordninger',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_KLAGE' }),
     text: 'Klage',
     showFor: true,
+    showFullmaktWarning: false,
   },
 ]
 
@@ -45,7 +50,7 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       </Heading>
       <LinkList>
         {aktueltForDegLenker.map((link) => (
-          <Link key={link.href} href={link.href}>
+          <Link key={link.href} href={link.href} {...(link.showFullmaktWarning && { 'data-fullmakt-modal': true })}>
             {link.text}
           </Link>
         ))}
