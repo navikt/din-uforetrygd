@@ -1,9 +1,8 @@
-'use client'
 import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
-import React, { ForwardRefExoticComponent, RefAttributes, SVGProps, useRef } from 'react'
-import { getFullmaktProps } from '@/components/FullmaktHydrator'
+import React, { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
+import { getFullmaktProps } from '@/utils/fullmakt'
 
 interface IKortProps {
   title: string
