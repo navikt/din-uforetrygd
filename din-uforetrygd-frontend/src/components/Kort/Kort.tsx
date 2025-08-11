@@ -3,6 +3,7 @@ import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
 import React, { ForwardRefExoticComponent, RefAttributes, SVGProps, useRef } from 'react'
+import { getFullmaktProps } from '@/components/FullmaktHydrator'
 
 interface IKortProps {
   title: string
@@ -15,7 +16,7 @@ interface IKortProps {
 export const Kort: React.FC<IKortProps> = (props) => {
   return (
     <>
-      <a href={props.href} className={styles.kort} {...(props.showFullmaktWarning && { 'data-fullmakt-modal': true })}>
+      <a href={props.href} className={styles.kort} {...getFullmaktProps(props.showFullmaktWarning)}>
         <Box background="surface-neutral-subtle" borderRadius="large" padding="5" className={styles.kortBox}>
           <HStack align="center" justify="space-between" wrap={false}>
             <HStack gap="6" align="center" wrap={false}>

@@ -61,3 +61,8 @@ export function FullmaktHydrator() {
     </Modal>
   )
 }
+
+// Simple utility function to get fullmakt props
+export function getFullmaktProps(showWarning = false) {
+  return showWarning ? { 'data-fullmakt-modal': true } : {}
+}

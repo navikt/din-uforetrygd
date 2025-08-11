@@ -3,6 +3,7 @@ import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { Heading, Link } from '@navikt/ds-react'
 import { getUrl } from '@/utils/getUrl'
+import { getFullmaktProps } from '@/components/FullmaktHydrator'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]
@@ -43,6 +44,7 @@ const links = [
 
 export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (props) => {
   const aktueltForDegLenker = filterShowFor(props.visningskriterier, links)
+
   return (
     <section>
       <Heading level="2" size="medium">
@@ -50,7 +52,7 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       </Heading>
       <LinkList>
         {aktueltForDegLenker.map((link) => (
-          <Link key={link.href} href={link.href} {...(link.showFullmaktWarning && { 'data-fullmakt-modal': true })}>
+          <Link key={link.href} href={link.href} {...getFullmaktProps(link.showFullmaktWarning)}>
             {link.text}
           </Link>
         ))}
