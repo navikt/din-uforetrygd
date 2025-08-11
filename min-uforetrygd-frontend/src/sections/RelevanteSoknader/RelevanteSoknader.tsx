@@ -22,6 +22,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
+      showFullmaktWarning: false,
     },
     {
       href: await getUrl({
@@ -31,6 +32,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om uføretrygd',
       showFor: true,
+      showFullmaktWarning: false,
     },
     {
       href: await getUrl({
@@ -40,6 +42,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
+      showFullmaktWarning: false,
     },
   ]
 
@@ -57,7 +60,11 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       <div style={{ maxWidth: '450px' }}>
         <LinkList variant="divided">
           {relevanteLenker.map((lenke) => (
-            <Link key={lenke.href} href={lenke.href}>
+            <Link
+              key={lenke.href}
+              href={lenke.href}
+              {...(lenke.showFullmaktWarning && { 'data-fullmakt-modal': true })}
+            >
               {lenke.text}
             </Link>
           ))}

@@ -3,8 +3,6 @@ import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
 import React, { ForwardRefExoticComponent, RefAttributes, SVGProps, useRef } from 'react'
-import FullmaktModal from '../FullmaktModal'
-import checkClientFullmakt from '@/utils/checkClientFullmakt'
 
 interface IKortProps {
   title: string
@@ -15,26 +13,9 @@ interface IKortProps {
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
-  const modalRef = useRef<HTMLDialogElement>(null)
-
-  const isFullmakt = React.useMemo(checkClientFullmakt, [])
-
-  const openLink = () => {
-    window.open(props.href, '_self')
-  }
-
-  const handleOnClick = () => {
-    // Open modal if going to page with no fullmakt support
-    if (isFullmakt && props.showFullmaktWarning) {
-      modalRef?.current?.showModal()
-    } else {
-      openLink()
-    }
-  }
-
   return (
     <>
-      <a onClick={handleOnClick} href="javascript:void(0)" className={styles.kort}>
+      <a href={props.href} className={styles.kort} {...(props.showFullmaktWarning && { 'data-fullmakt-modal': true })}>
         <Box background="surface-neutral-subtle" borderRadius="large" padding="5" className={styles.kortBox}>
           <HStack align="center" justify="space-between" wrap={false}>
             <HStack gap="6" align="center" wrap={false}>
@@ -61,7 +42,6 @@ export const Kort: React.FC<IKortProps> = (props) => {
           </HStack>
         </Box>
       </a>
-      <FullmaktModal modalRef={modalRef} onAccept={openLink} />
     </>
   )
 }
