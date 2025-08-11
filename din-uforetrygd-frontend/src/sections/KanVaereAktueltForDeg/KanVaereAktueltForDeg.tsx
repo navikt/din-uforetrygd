@@ -3,7 +3,7 @@ import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { Heading, Link } from '@navikt/ds-react'
 import { getUrl } from '@/utils/getUrl'
-import { getFullmaktProps } from '@/components/FullmaktHydrator'
+import { getFullmaktProps } from '@/utils/fullmakt'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]

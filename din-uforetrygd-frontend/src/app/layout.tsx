@@ -8,7 +8,7 @@ import '../global.css'
 import './layout.css'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
-import FullmaktHydrator from '@/components/FullmaktHydrator'
+import FullmaktModal from '@/components/FullmaktModal'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -66,7 +66,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         <Decorator.Scripts loader={Script} />
         <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
         <script src="https://widget.uxsignals.com/embed.js" async></script>
-        <FullmaktHydrator />
+        <FullmaktModal />
       </body>
     </html>
   )

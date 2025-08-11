@@ -4,7 +4,7 @@ import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
-import { getFullmaktProps } from '@/components/FullmaktHydrator'
+import { getFullmaktProps } from '@/utils/fullmakt'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]

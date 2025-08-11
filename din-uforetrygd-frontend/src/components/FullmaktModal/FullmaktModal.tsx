@@ -5,7 +5,7 @@ import { Button, Modal } from '@navikt/ds-react'
 import { useRouter } from 'next/navigation'
 import useIsFullmakt from '@/hooks/useIsFullmakt'
 
-export function FullmaktHydrator() {
+export function FullmaktModal() {
   const modalRef = useRef<HTMLDialogElement>(null)
   const [pendingUrl, setPendingUrl] = useState<string | null>(null)
   const router = useRouter()
@@ -60,9 +60,4 @@ export function FullmaktHydrator() {
       </Modal.Footer>
     </Modal>
   )
-}
-
-// Simple utility function to get fullmakt props
-export function getFullmaktProps(showWarning = false) {
-  return showWarning ? { 'data-fullmakt-modal': true } : {}
 }
