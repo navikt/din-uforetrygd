@@ -48,17 +48,19 @@ spec:
     inbound:
       rules:
         - application: tokenx-token-generator # only in dev
-          namespace: aura
+          namespace: nais
         - application: azure-token-generator # only in dev
-          namespace: aura
+          namespace: nais
         - application: wonderwalled-idporten # only in dev
-          namespace: aura
+          namespace: nais
     outbound:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
         - application: uforetrygd-backend
           namespace: pensjonselvbetjening
+      external:
+        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: borger
@@ -89,11 +91,11 @@ spec:
     - name: LINK_BREV
       value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/publisering/dininnboks.jsf?context=ut&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
-      value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/inntektsplanlegger/innledning.jsf?context=ut&simpleMode=true
+      value: https://borger.ansatt.dev.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren
     - name: LINK_SAKER
       value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
     - name: LINK_SKATTETREKK
-      value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/transaksjon/inntektogskatt.jsf?context=ut&simpleMode=true
+      value: https://skattetrekk-frontend-q2.ansatt.dev.nav.no/utbetaling/skattetrekk
     - name: LINK_FAMILIEFORHOLD
       value: https://pensjon-selvbetjening-familieforhold-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
     - name: LINK_FULLMAKTER
@@ -109,4 +111,6 @@ spec:
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: dev-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER
-      value: https://representasjon-banner-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/representasjon
+      value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token

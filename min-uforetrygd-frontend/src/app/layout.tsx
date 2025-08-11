@@ -64,6 +64,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         <Decorator.Footer />
         <Decorator.Scripts loader={Script} />
         <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
+        <script src="https://widget.uxsignals.com/embed.js" async></script>
       </body>
     </html>
   )
