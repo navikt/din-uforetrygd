@@ -34,7 +34,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Vedtak med mer',
     icon: EnvelopeClosedIcon,
     showFor: true,
-    showFullmaktWarning: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid }),
@@ -42,7 +42,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid }),
@@ -58,7 +58,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Registrer tilleggstrekk',
     icon: ReceiptIcon,
     showFor: true,
-    showFullmaktWarning: true,
+    showFullmaktWarning: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
