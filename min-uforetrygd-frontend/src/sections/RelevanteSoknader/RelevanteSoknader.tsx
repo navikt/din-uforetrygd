@@ -4,6 +4,7 @@ import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
+import { getFullmaktProps } from '@/utils/fullmakt'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
@@ -22,6 +23,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
+      showFullmaktWarning: false,
     },
     {
       href: await getUrl({
@@ -31,6 +33,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om uføretrygd',
       showFor: true,
+      showFullmaktWarning: false,
     },
     {
       href: await getUrl({
@@ -40,6 +43,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
+      showFullmaktWarning: false,
     },
   ]
 
@@ -57,7 +61,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       <div style={{ maxWidth: '450px' }}>
         <LinkList variant="divided">
           {relevanteLenker.map((lenke) => (
-            <Link key={lenke.href} href={lenke.href}>
+            <Link key={lenke.href} href={lenke.href} {...getFullmaktProps(lenke.showFullmaktWarning)}>
               {lenke.text}
             </Link>
           ))}
