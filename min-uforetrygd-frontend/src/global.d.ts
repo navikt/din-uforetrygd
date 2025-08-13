@@ -1,9 +1,11 @@
-declare namespace JSX {
-  interface IntrinsicElements {
-    ['representasjon-banner']: CustomElement<{
-      representasjonstyper?: string
-      redirectTo: string
-      style: React.CSSProperties
-    }>
+declare namespace React {
+  namespace JSX {
+    interface IntrinsicElements {
+      'representasjon-banner': CustomElement<{
+        representasjonstyper?: string
+        redirectTo: string
+        style: React.CSSProperties
+      }>
+    }
   }
 }
