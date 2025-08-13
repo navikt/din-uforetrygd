@@ -5,7 +5,7 @@ import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
 import getEnv from '@/utils/env'
 import '../global.css'
-import './layout.css'
+import './module.layout.css'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 

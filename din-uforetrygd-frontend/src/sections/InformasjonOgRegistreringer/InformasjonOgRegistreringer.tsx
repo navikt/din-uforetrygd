@@ -1,6 +1,6 @@
 import {Heading, VStack} from '@navikt/ds-react'
 import {Kort, KortGrid} from '@/components/Kort'
-import {EnvelopeClosedIcon, FileExportIcon, FileTextIcon, PersonGroupIcon, PersonPlusIcon, ReceiptIcon, SackKronerIcon,} from '@navikt/aksel-icons'
+import {FileExportIcon, FileTextIcon, PersonGroupIcon, PersonPlusIcon, ReceiptIcon, WalletIcon} from '@navikt/aksel-icons'
 import {Visningskriterier} from '@/const'
 import filterShowFor, {matchAll, matchSome} from '@/utils/filterShowFor'
 import {getUrl} from '@/utils/getUrl'
@@ -16,14 +16,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
-    icon: SackKronerIcon,
-    showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.IngenUforesak]),
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_BREV', pid: pid }),
-    title: 'Brev',
-    description: 'Vedtak med mer',
-    icon: EnvelopeClosedIcon,
+    icon: WalletIcon,
     showFor: true,
   },
   {
@@ -32,13 +25,6 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     description: 'Meld fra om endring i inntekt',
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid }),
-    title: 'Sakene dine',
-    description: 'Status på søknader og vedtak',
-    icon: FileTextIcon,
-    showFor: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
@@ -77,7 +63,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
     <section>
       <VStack gap="5">
         <Heading level="2" size="medium">
-          Informasjon og registreringer
+          Snarveier
         </Heading>
         <KortGrid>
           {relevantLinks.map((link) => (

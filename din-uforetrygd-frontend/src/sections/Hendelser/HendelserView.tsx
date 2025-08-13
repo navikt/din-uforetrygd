@@ -16,6 +16,7 @@ export interface IHendelserProps {
 }
 
 export const HendelserView: React.FC<IHendelserProps> = (props) => {
+
   return (
     <section className="wide">
         <Heading size="medium" level="2" spacing>

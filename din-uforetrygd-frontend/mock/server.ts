@@ -271,6 +271,8 @@ const harSakTilBehandlingOgIngenUforeMock = {
   uforevedtak: null,
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
+  hendelser: [],
+  journalposter: []
 }
 
 const harLopendeUforeSakOgIngenVedtakMock = {

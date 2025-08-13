@@ -33,7 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--a-spacing-10);
+  gap: var(--a-spacing-16);
   margin-top: var(--a-spacing-6);
   margin-bottom: var(--a-spacing-18);
 }

@@ -17,14 +17,14 @@ export const Kort: React.FC<IKortProps> = (props) => {
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
             <Box
-              background="blue-50"
+              background={"surface-action-subtle"}
               className={styles.kortIcon}
               borderColor={"border-default"}
               borderRadius="xlarge"
               padding="3"
               aria-hidden
             >
-              {props.icon ? <props.icon fontSize="1.5rem" /> : <FileExportIcon />}
+              {props.icon ? <props.icon fontSize="3rem" /> : <FileExportIcon />}
             </Box>
             <VStack justify="center" gap="1">
               <Heading level="3" size="small" style={{ textDecoration: 'none' }}>
