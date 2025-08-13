@@ -1,12 +1,18 @@
+'use client'
+
 import { Visningskriterier } from '@/const'
 import {BodyLong, Button, GuidePanel, Heading, Link, VStack} from '@navikt/ds-react'
 import styles from './uforestatusGuidePanel.module.css'
+import {useContext} from "react";
+import {EventContext} from "@/utils/dataContextProvider/EventContextProvider";
 
 interface IUforeStatusGuidePanel {
   visningskriterier: Visningskriterier[]
 }
 
-export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ visningskriterier}) => {
+export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visningskriterier }) => {
+  const {setOpenHendelser} = useContext(EventContext)
+
   if (
     visningskriterier.includes(Visningskriterier.SakTilBehandling) &&
     !visningskriterier.includes(Visningskriterier.Uforetrygd)
@@ -26,8 +32,7 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = async ({ 
             </BodyLong>
             <Button
               variant="primary-neutral"
-              as="a"
-              href="#hendelser-expansion-card"
+              onClick={ () => setOpenHendelser(true)}
             >
               Se siste hendelser i saken
             </Button>

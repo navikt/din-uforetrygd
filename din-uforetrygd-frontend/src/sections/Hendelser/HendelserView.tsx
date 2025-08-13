@@ -1,9 +1,10 @@
 'use client'
 
 import {BodyShort, Detail, ExpansionCard, Heading, VStack} from '@navikt/ds-react'
-import { SortablePaginatedList } from '@/components/SortablePaginatedList'
+import {SortablePaginatedList} from '@/components/SortablePaginatedList'
 import styles from './hendelser.module.css'
-import React from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
+import {EventContext} from "@/utils/dataContextProvider/EventContextProvider";
 
 export interface IHendelserProps {
   hendelser: {
@@ -17,12 +18,42 @@ export interface IHendelserProps {
 
 export const HendelserView: React.FC<IHendelserProps> = (props) => {
 
+  const {openHendelser, setOpenHendelser} = useContext(EventContext)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const expansionCardRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (openHendelser) {
+      setIsExpanded(true)
+      setOpenHendelser(false)
+    }
+  }, [openHendelser, setOpenHendelser])
+
+  useEffect(() => {
+    if (isExpanded && expansionCardRef.current) {
+      // Focus after the component has expanded
+      setTimeout(() => {
+        expansionCardRef.current?.focus()
+      }, 10)
+    }
+  }, [isExpanded])
+
+
+
+
+
   return (
     <section className="wide">
         <Heading size="medium" level="2" spacing>
             Saksoversikt
         </Heading>
-        <ExpansionCard aria-label="Hendelser i saken din">
+      <ExpansionCard
+        aria-label="Hendelser i saken din"
+        open={isExpanded}
+        onToggle={setIsExpanded}
+        ref={expansionCardRef}
+        tabIndex={-1}
+      >
         <ExpansionCard.Header>
             <ExpansionCard.Title> Dette har skjedd i saken din </ExpansionCard.Title>
         </ExpansionCard.Header>
