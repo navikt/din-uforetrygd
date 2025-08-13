@@ -1,12 +1,10 @@
 import {BodyLong, BodyShort, Heading, Link, List, ReadMore, VStack} from '@navikt/ds-react'
 import {ExpansionCard, ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle} from '@navikt/ds-react/ExpansionCard'
-import {ListItem} from '@navikt/ds-react/List'
 import {format, parseISO} from 'date-fns'
 import styles from './dittvedtak.module.css'
 import {formatInntekt} from '@/utils/formatter/formatter'
 import {getUrl} from '@/utils/getUrl'
 import {components} from '@/api/api'
-import showMore from "@/components/ShowMore/ShowMore";
 
 interface IDittVedtak {
   pid?: string
@@ -30,7 +28,6 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   const hasBarnetilleggFellesBarn = dittUforevedtak?.hasBarnetilleggFellesBarn ?? false
   const hasBarnetilleggSaerkullsbarn = dittUforevedtak?.hasBarnetilleggSaerkullsbarn ?? false
   const hasGjenlevendeTillegg = dittUforevedtak?.hasGjenlevendeTillegg ?? false
-  const currentYear = new Date().getFullYear()
 
   const shouldShowTilleggTilUforetrygd =
     hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn || hasGjenlevendeTillegg
