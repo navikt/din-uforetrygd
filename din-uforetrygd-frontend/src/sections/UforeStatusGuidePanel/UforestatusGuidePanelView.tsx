@@ -6,11 +6,14 @@ import styles from './uforestatusGuidePanel.module.css'
 import {useContext} from "react";
 import {EventContext} from "@/utils/dataContextProvider/EventContextProvider";
 
-interface IUforeStatusGuidePanel {
-  visningskriterier: Visningskriterier[]
+interface IUforeStatusGuidePanelProps {
+  visningskriterier: Visningskriterier[],
+  dittLokaleNavKontorLenke: string | undefined,
+  saksbehandlingstiderLenke: string | undefined
 }
 
-export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visningskriterier }) => {
+export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
+  ({ visningskriterier, dittLokaleNavKontorLenke, saksbehandlingstiderLenke }) => {
   const {setOpenHendelser} = useContext(EventContext)
 
   if (
@@ -28,7 +31,7 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visnin
               Søknad tilknyttet din uføretrygd er til behandling.
             </BodyLong>
             <BodyLong>
-              <Link href={""}>Se saksbehandlingstider for uføretrygd</Link>
+              <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd</Link>
             </BodyLong>
             <Button
               variant="primary-neutral"
@@ -54,7 +57,7 @@ export const UforestatusGuidePanel: React.FC<IUforeStatusGuidePanel> = ({ visnin
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
                 kommer frem til dette i samarbeid med deg. Kontakt{' '}
-                <Link href={""}>ditt lokale Nav-kontor</Link> for veiledning.
+                <Link href={dittLokaleNavKontorLenke}>ditt lokale Nav-kontor</Link> for veiledning.
               </BodyLong>
             </VStack>
           </GuidePanel>

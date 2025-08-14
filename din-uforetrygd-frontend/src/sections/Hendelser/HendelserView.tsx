@@ -26,22 +26,10 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
     if (openHendelser) {
       setIsExpanded(true)
       setOpenHendelser(false)
+      expansionCardRef.current?.focus()
     }
   }, [openHendelser, setOpenHendelser])
-
-  useEffect(() => {
-    if (isExpanded && expansionCardRef.current) {
-      // Focus after the component has expanded
-      setTimeout(() => {
-        expansionCardRef.current?.focus()
-      }, 10)
-    }
-  }, [isExpanded])
-
-
-
-
-
+  
   return (
     <section className="wide">
         <Heading size="medium" level="2" spacing>
