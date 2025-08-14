@@ -288,6 +288,8 @@ const harLopendeUforeSakOgIngenVedtakMock = {
   uforevedtak: null,
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
+  hendelser: [],
+  journalposter: []
 }
 
 const forbiddenMock = {
