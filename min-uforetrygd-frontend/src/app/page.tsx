@@ -3,7 +3,6 @@ import {RelevanteSoknader} from '@/sections/RelevanteSoknader'
 import {Visningskriterier} from '@/const'
 import {KanVaereAktueltForDeg} from '@/sections/KanVaereAktueltForDeg'
 import {InformasjonOgRegistreringer} from '@/sections/InformasjonOgRegistreringer'
-import {UforestatusGuidePanel} from '@/sections/UforeStatusGuidePanel'
 import DittVedtak from '@/sections/DittVedtak/index'
 import {MeldeFra} from '@/sections/MeldeFra'
 import {DineSaker} from '@/sections/DineSaker'
@@ -17,6 +16,7 @@ import Hendelser from '@/sections/Hendelser'
 import {Dokumenter} from '@/sections/Dokumenter'
 import './module.layout.css'
 import EventProvider from "@/utils/dataContextProvider/EventContextProvider";
+import UforestatusGuidePanel from "@/sections/UforeStatusGuidePanel"
 
 
 interface IHomeProps {
