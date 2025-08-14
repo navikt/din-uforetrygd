@@ -34,6 +34,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
               <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd</Link>
             </BodyLong>
             <Button
+              className={styles.uforetrygdHendelserLinkButton}
               variant="primary-neutral"
               onClick={ () => setOpenHendelser(true)}
             >
