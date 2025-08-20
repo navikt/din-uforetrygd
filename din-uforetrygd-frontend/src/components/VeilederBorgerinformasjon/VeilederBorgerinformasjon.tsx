@@ -6,6 +6,7 @@ import getEnv from '@/utils/env'
 interface IVeilederBorgerInformasjonProps {
   pid?: string
 }
+
 const formatFnr = (fnr: string) => {
   return `${fnr.slice(0, 6)} ${fnr.slice(6)}`
 }

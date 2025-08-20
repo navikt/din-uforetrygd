@@ -2,17 +2,19 @@ import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
 import React, { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
+import { getFullmaktProps } from '@/utils/fullmakt'
 
 interface IKortProps {
   title: string
   description?: string
   href: string
   icon?: ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>>
+  showFullmaktWarning?: boolean
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
   return (
-    <a href={props.href} className={styles.kort}>
+    <a href={props.href} className={styles.kort} {...getFullmaktProps(props.showFullmaktWarning)}>>
       <Box borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
