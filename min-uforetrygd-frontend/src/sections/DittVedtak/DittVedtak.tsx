@@ -1,4 +1,4 @@
-import {BodyLong, Heading, Link, ReadMore} from '@navikt/ds-react'
+import {BodyLong, Heading, Link, ReadMore, VStack} from '@navikt/ds-react'
 import {ExpansionCard, ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle} from '@navikt/ds-react/ExpansionCard'
 import {format, parseISO} from 'date-fns'
 import styles from './dittvedtak.module.css'
@@ -19,6 +19,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
   const uforegrad = dittUforevedtak?.uforegrad ?? 0
+  const saksnummerUforevedtak = "UKJENT" //TODO: Sett opp i API
   const uforetidspunkt =
     dittUforevedtak?.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
   const uforetrygdInnvilget = dittUforevedtak?.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
@@ -63,11 +64,12 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   return (
     <div className={styles.dittVedtakWrapper}>
       <section className={styles.dittVedtak}>
-        <ExpansionCard aria-label={"Ditt vedtak"}>
+        <ExpansionCard aria-label={"Ditt vedtak"} defaultOpen={true} >
           <ExpansionCardHeader>
             <ExpansionCardTitle> <Heading size={"medium"} level={"3"}> Kort om saken din </Heading></ExpansionCardTitle>
           </ExpansionCardHeader>
           <ExpansionCardContent>
+
 
             <BodyLong> <strong> Saksnummer: </strong> {"Saksnummer placeholder"} </BodyLong>
             {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {getTilleggsoppsummeringTekst()} </BodyLong>}
@@ -77,14 +79,16 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
             {hasVarigTilrettelagtArbeid && <>Du har tiltaket Varig tilrettelagt arbeid</>}
             <BodyLong> <strong> Forventet registrert inntekt: </strong> {sumAvForventedeInntekter + " kr"} </BodyLong>
 
+            <VStack gap={"2"}>
             <BodyLong> <strong> Inntekstgrense: </strong> {inntektsgrense}&nbsp;kr </BodyLong>
 
-            <ReadMore header={"Hvor kommer forventet inntekt fra?"}>
+
+            <ReadMore header={"Hvor kommer forventet registrert inntekt fra?"}>
 
               <BodyLong>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har hentet.
                 Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og pensjoner du mottar.
-                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>
+                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
               </BodyLong>
             </ReadMore>
 
@@ -95,6 +99,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
               </BodyLong>
 
             </ReadMore>
+            </VStack>
           </ExpansionCardContent>
         </ExpansionCard>
       </section>
