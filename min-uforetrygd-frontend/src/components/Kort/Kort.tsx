@@ -14,7 +14,7 @@ interface IKortProps {
 
 export const Kort: React.FC<IKortProps> = (props) => {
   return (
-    <a href={props.href} className={styles.kort} {...getFullmaktProps(props.showFullmaktWarning)}>>
+    <a href={props.href} className={styles.kort} {...getFullmaktProps(props.showFullmaktWarning)}>
       <Box borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
