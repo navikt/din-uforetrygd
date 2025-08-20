@@ -19,7 +19,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
   const uforegrad = dittUforevedtak?.uforegrad ?? 0
-  const saksnummerUforevedtak = "UKJENT" //TODO: Sett opp i API
+  //const saksnummerUforevedtak = "UKJENT" //TODO: Sett opp i API
   const uforetidspunkt =
     dittUforevedtak?.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
   const uforetrygdInnvilget = dittUforevedtak?.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
@@ -71,7 +71,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
           <ExpansionCardContent>
 
 
-            <BodyLong> <strong> Saksnummer: </strong> {"Saksnummer placeholder"} </BodyLong>
+            {/* <BodyLong> <strong> Saksnummer: </strong> {"Saksnummer placeholder"} </BodyLong> */}
             {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {getTilleggsoppsummeringTekst()} </BodyLong>}
             <BodyLong> <strong> Uføregrad: </strong> {uforegrad + " prosent"} </BodyLong>
             {uforetidspunkt && <BodyLong> <strong> Uføretidspunkt: </strong> {uforetidspunkt} </BodyLong>}
