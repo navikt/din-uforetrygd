@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from 'next/cache'
 
-type Env =
+export type Env =
   | 'DECORATOR_ENV'
   | 'MODE'
   | 'UFORETRYGD_BACKEND'
@@ -21,6 +21,7 @@ type Env =
   | 'LINK_FULLMAKTER'
   | 'LINK_BPROF_FULLMAKTER'
   | 'LINK_ETTERSENDE'
+  | 'LINK_DOKUMENTOVERSIKT'
   | 'LINK_MELD_FRA_OM_ENDRINGER'
   | 'BACKEND_DIN_UFORETRYGD_SCOPE'
   | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
