@@ -1,6 +1,6 @@
 'use client'
 
-import {BodyShort, ExpansionCard, Heading, VStack} from '@navikt/ds-react'
+import {BodyShort, ExpansionCard, VStack} from '@navikt/ds-react'
 import React from 'react'
 import { ReadMoreTile } from '@/components/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
