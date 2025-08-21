@@ -23,7 +23,7 @@ class PenService(val penClient: PenClient) {
 
     private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag): Sak {
         val sakstype = mapSakstype(sakSammendrag.sakType)
-        return Sak(type = sakstype, status = mapSakstatus(sakSammendrag.sakStatus))
+        return Sak(type = sakstype, status = mapSakstatus(sakSammendrag.sakStatus), sakId = sakSammendrag.sakId)
     }
 
     private fun mapSakstatus(sakStatus: String): Sakstatus {

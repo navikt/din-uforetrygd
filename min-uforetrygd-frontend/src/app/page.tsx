@@ -31,6 +31,7 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
+    const uforesak = uforetrygdResponse.saker?.[0] ?? null
 
     return (
       <>
@@ -46,6 +47,7 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
               pid={params.pid}
               hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
               dittUforevedtak={uforetrygdResponse.uforevedtak}
+              sakId={uforesak?.sakId?.toString()}
             />
             <InformasjonOgRegistreringer
               visningskriterier={visningskriterier}

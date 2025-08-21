@@ -2,9 +2,11 @@ package no.nav.uforetrygdbackend.pensjon.pen
 
 import no.nav.uforetrygdbackend.ClientException
 import no.nav.uforetrygdbackend.ForbiddenException
+import no.nav.uforetrygdbackend.PersonNotFoundException
 import no.nav.uforetrygdbackend.configuration.AppId
 import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
+import no.nav.uforetrygdbackend.journalpost.model.Saksoversikt
 import no.nav.uforetrygdbackend.security.TokenService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
@@ -41,6 +43,34 @@ class PenClient(
         } catch (e: WebClientResponseException) {
             if (HttpStatus.FORBIDDEN == e.statusCode) {
                 throw ForbiddenException(AppId.PEN.name, path, e.message, e)
+            }
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        } catch (e: Exception) {
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        }
+    }
+
+    fun getSaksoversikt(pid: String, sakId: Long): Saksoversikt {
+        val path = "/pen/api/selvbetjening/saksoversikt/v2"
+        try {
+            return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
+                .let { accessToken ->
+                    webClient
+                        .get()
+                        .uri("$url$path?sakId=$sakId")
+                        .header("fnr", pid)
+                        .header("Authorization", "Bearer $accessToken")
+                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .bodyToMono(Saksoversikt::class.java)
+                        .block()!!
+                }
+        } catch (e: WebClientResponseException) {
+            if (HttpStatus.FORBIDDEN == e.statusCode) {
+                throw ForbiddenException(AppId.PEN.name, path, e.message, e)
+            } else if (HttpStatus.NOT_FOUND == e.statusCode) {
+                throw PersonNotFoundException(AppId.PEN.name, path, e.message, e)
             }
             throw ClientException(AppId.PEN.name, path, e.message, e)
         } catch (e: Exception) {

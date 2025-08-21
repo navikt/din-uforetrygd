@@ -108,6 +108,8 @@ spec:
       value: https://www.ansatt.dev.nav.no/saksbehandlingstider#uforetrygd
     - name: LINK_DITT_LOKALE_NAV_KONTOR
       value: https://www.ansatt.dev.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
+    - name: LINK_DOKUMENTOVERSIKT
+      value: https://www.ansatt.dev.nav.no/dokumentarkiv
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: dev-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER

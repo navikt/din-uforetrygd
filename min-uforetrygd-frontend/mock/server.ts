@@ -20,6 +20,7 @@ const uforeMock = {
     {
       type: 'UFORETRYGD',
       status: 'LOPENDE',
+      sakId: 519023581092,
     },
   ],
   hasIverksattVedtak: true,
