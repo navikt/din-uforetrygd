@@ -28,7 +28,7 @@ const Hendelser: React.FC<IHendelserProps> = (props) => {
         description: hasDescription ? mapKravDescription(hendelse.gjelder!, hendelse.arsak!, props.sakstype) : undefined,
         createdBy: mapOpprettetAv(hendelse.opprettetAv),
         formattedDate: formatDate(hendelse.endretDato),
-        sortDate: hendelse.endretDato!!,
+        sortDate: hendelse.endretDato!,
       })
     }
     return acc

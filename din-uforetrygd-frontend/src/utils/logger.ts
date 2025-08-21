@@ -46,4 +46,6 @@ export const fatal = (entry: ILogEntry) => {
   log(entry, 'Fatal')
 }
 
-export default { info, error, warning, fatal }
+const logger = { info, error, warning, fatal }
+
+export default logger
