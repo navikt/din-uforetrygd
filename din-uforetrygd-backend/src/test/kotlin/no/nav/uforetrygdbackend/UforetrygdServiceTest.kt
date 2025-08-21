@@ -7,6 +7,9 @@ import io.mockk.verify
 import no.nav.uforetrygdbackend.configuration.AppId
 import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
 import no.nav.uforetrygdbackend.fullmakt.HarBprofFullmaktmottakereResponse
+import no.nav.uforetrygdbackend.journalpost.Journalpost
+import no.nav.uforetrygdbackend.journalpost.JournalpostService
+import no.nav.uforetrygdbackend.journalpost.model.EndretAvKode
 import no.nav.uforetrygdbackend.pensjon.pen.Vedtakssammendrag
 import no.nav.uforetrygdbackend.pensjon.pen.VedtakssammendragResponse
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
@@ -23,10 +26,12 @@ class UforetrygdServiceTest {
     val penService = mockk<PenService>()
     val tokenService = mockk<TokenService>()
     val fullmaktClient = mockk<FullmaktClient>()
+    val journalpostService = mockk<JournalpostService>()
     val uforetrygdService = UforetrygdService(
         penService = penService,
         tokenService = tokenService,
-        fullmaktClient = fullmaktClient
+        fullmaktClient = fullmaktClient,
+        journalpostService = journalpostService
     )
 
     companion object {
@@ -49,6 +54,7 @@ class UforetrygdServiceTest {
     @Test
     fun `should return a response with no sak or vedtak when there is no sak`() {
         every { penService.getSaker(any()) } returns emptyList()
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
@@ -63,6 +69,7 @@ class UforetrygdServiceTest {
     @Test
     fun `should return a response with no sak or vedtak when there is no uforesak`() {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.ALDERSPENSJON, Sakstatus.LOPENDE))
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
@@ -79,6 +86,7 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
@@ -100,6 +108,7 @@ class UforetrygdServiceTest {
         )
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
 
@@ -133,6 +142,7 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
         every { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
@@ -146,9 +156,9 @@ class UforetrygdServiceTest {
         assertEquals(FORVENTET_INNTEKT, response.uforevedtak?.sumAvForventedeInntekter)
         assertEquals(inntektsgrense, response.uforevedtak?.inntektsgrense)
         assertFalse(response.uforevedtak!!.hasBarnetilleggFellesBarn)
-        assertFalse(response.uforevedtak.hasBarnetilleggSaerkullsbarn)
-        assertFalse(response.uforevedtak.hasGjenlevendeTillegg)
-        assertFalse(response.uforevedtak.hasVarigTilrettelagtArbeid)
+        assertFalse(response.uforevedtak!!.hasBarnetilleggSaerkullsbarn)
+        assertFalse(response.uforevedtak!!.hasGjenlevendeTillegg)
+        assertFalse(response.uforevedtak!!.hasVarigTilrettelagtArbeid)
     }
 
     @Test
@@ -156,6 +166,7 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
         every { penService.getVedtakssammendrag(any()) } throws ClientException(AppId.PEN.name, "/", null, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
@@ -166,5 +177,41 @@ class UforetrygdServiceTest {
         assertEquals(Sakstatus.LOPENDE, response.saker.first().status)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
+    }
+
+    fun mockJournalPostliste(): List<Journalpost> {
+        return listOf(
+            Journalpost(
+                id = "12345678",
+                tittel = "Søknad om uføretrygd",
+                opprettetAv = EndretAvKode.BRUKER,
+                opprettetDato = "2023-01-15",
+                dokumenter = listOf(
+                    Journalpost.Dokument(
+                        tittel = "Søknadsskjema uføretrygd",
+                        dokumentInfoId = "DOK123456",
+                        filstorrelse = 102400
+                    ),
+                    Journalpost.Dokument(
+                        tittel = "Legeerklæring",
+                        dokumentInfoId = "DOK789012",
+                        filstorrelse = 256000
+                    )
+                )
+            ),
+            Journalpost(
+                id = "87654321",
+                tittel = "Vedtak om uføretrygd",
+                opprettetAv = EndretAvKode.SAKSBEHANDLER,
+                opprettetDato = "2023-02-20",
+                dokumenter = listOf(
+                    Journalpost.Dokument(
+                        tittel = "Vedtaksbrev",
+                        dokumentInfoId = "DOK345678",
+                        filstorrelse = 51200
+                    )
+                )
+            )
+        )
     }
 }

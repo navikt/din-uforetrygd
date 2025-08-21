@@ -103,6 +103,8 @@ spec:
       value: https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: prod-gcp:pensjonselvbetjening:uforetrygd-backend
+    - name: LINK_DOKUMENTOVERSIKT
+      value: https://www.nav.no/dokumentarkiv
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
   envFrom:

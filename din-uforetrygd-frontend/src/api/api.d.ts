@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dokument/{journalpostId}/{dokumentInfoId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDokument"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -49,7 +65,8 @@ export interface components {
         Journalpost: {
             id?: string;
             tittel?: string;
-            opprettetAv?: string;
+            /** @enum {string} */
+            opprettetAv?: "BRUKER" | "FULLMEKTIG" | "SAKSBEHANDLER" | "AUTOMATISK_PROSESS" | "UKJENT" | "NAV";
             opprettetDato?: string;
             dokumenter?: components["schemas"]["Dokument"][];
         };
@@ -58,6 +75,8 @@ export interface components {
             type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
             /** @enum {string} */
             status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
+            /** Format: int64 */
+            sakId?: number;
         };
         SakHendelse: {
             type?: string;
@@ -66,7 +85,8 @@ export interface components {
             status?: string;
             /** Format: date-time */
             endretDato?: string;
-            opprettetAv?: string;
+            /** @enum {string} */
+            opprettetAv?: "BRUKER" | "FULLMEKTIG" | "SAKSBEHANDLER" | "AUTOMATISK_PROSESS" | "UKJENT" | "NAV";
         };
         UforetrygdResponse: {
             pid?: string;
@@ -105,6 +125,29 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["UforetrygdResponse"];
+                };
+            };
+        };
+    };
+    getDokument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                journalpostId: string;
+                dokumentInfoId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
                 };
             };
         };

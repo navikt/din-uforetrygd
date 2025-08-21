@@ -29,6 +29,14 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     showFullmaktWarning: false,
   },
   {
+    href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
+    title: 'Se alle dokumentene dine',
+    description: 'Gå til dokumenter',
+    icon: FileTextIcon,
+    showFor: true,
+    showFullmaktWarning: false,
+  },
+  {
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
