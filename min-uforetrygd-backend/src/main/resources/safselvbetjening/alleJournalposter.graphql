@@ -1,0 +1,28 @@
+query ($ident: String!, $tema: [Tema]!) {
+    dokumentoversiktSelvbetjening(ident: $ident, tema: $tema) {
+        journalposter {
+            tittel
+            journalpostId
+            tema
+            sak {
+                fagsakId
+            }
+            avsender {
+                id
+            }
+            mottaker {
+                id
+            }
+            datoSortering
+            dokumenter {
+                tittel
+                dokumentInfoId
+                dokumentvarianter{
+                    brukerHarTilgang
+                    filtype
+                    filstorrelse
+                }
+            }
+        }
+    }
+}
