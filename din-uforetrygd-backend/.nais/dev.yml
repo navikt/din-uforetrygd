@@ -103,6 +103,18 @@ spec:
       value: api://dev-fss.pensjon-person.pensjon-persondata-q2/.default
     - name: PERSONDATA_AUDIENCE
       value: dev-fss:pensjon-person:pensjon-persondata-q2
+    - name: SAF_URL
+      value: https://saf-q2.dev-fss-pub.nais.io
+    - name: SAF_SCOPE
+      value: api://dev-fss.teamdokumenthandtering.saf/.default
+    - name: SAF_AUDIENCE
+      value: dev-fss:teamdokumenthandtering:saf
+    - name: SAF_SELVBETJENING_URL
+      value: https://safselvbetjening.dev-fss-pub.nais.io
+    - name: SAF_SELVBETJENING_SCOPE
+      value: api://dev-fss.teamdokumenthandtering.safselvbetjening/.default
+    - name: SAF_SELVBETJENING_AUDIENCE
+      value: dev-fss:teamdokumenthandtering:safselvbetjening
     - name: SKJERMING_URL
       value: https://skjermede-personer-pip.intern.dev.nav.no
     - name: SKJERMING_SCOPE
