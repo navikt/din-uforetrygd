@@ -5,7 +5,6 @@ import {KanVaereAktueltForDeg} from '@/sections/KanVaereAktueltForDeg'
 import {InformasjonOgRegistreringer} from '@/sections/InformasjonOgRegistreringer'
 import DittVedtak from '@/sections/DittVedtak/index'
 import {MeldeFra} from '@/sections/MeldeFra'
-import {DineSaker} from '@/sections/DineSaker'
 import {getVisningskriterier} from '@/utils/getVisningskriterier'
 import {initate} from '@/api/endpoints'
 import {VeilederBorgerinformasjon} from '@/components/VeilederBorgerinformasjon'
@@ -55,7 +54,6 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
               bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
             />
             <MeldeFra visningskriterier={visningskriterier}/>
-            <DineSaker visningskriterier={visningskriterier} pid={params.pid}/>
             <section className="wide">
               <VStack gap="6">
                 <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype="UFOREP"/>

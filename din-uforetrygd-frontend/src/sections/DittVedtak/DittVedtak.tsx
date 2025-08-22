@@ -72,7 +72,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
           <ExpansionCardContent>
 
 
-            {uforesakId ?? <BodyLong> <strong> Saksnummer: </strong> {uforesakId} </BodyLong>}
+            {uforesakId && <BodyLong> <strong> Saksnummer: </strong> {uforesakId} </BodyLong>}
             {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {getTilleggsoppsummeringTekst()} </BodyLong>}
             <BodyLong> <strong> Uføregrad: </strong> {uforegrad + " prosent"} </BodyLong>
             {uforetidspunkt && <BodyLong> <strong> Uføretidspunkt: </strong> {uforetidspunkt} </BodyLong>}

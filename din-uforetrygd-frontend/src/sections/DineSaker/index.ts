@@ -1,1 +1,0 @@
-export { DineSaker } from './DineSaker'
