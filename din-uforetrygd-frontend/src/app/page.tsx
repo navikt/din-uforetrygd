@@ -16,6 +16,7 @@ import {Dokumenter} from '@/sections/Dokumenter'
 import './module.layout.css'
 import EventProvider from "@/utils/dataContextProvider/EventContextProvider";
 import UforestatusGuidePanel from "@/sections/UforeStatusGuidePanel"
+import {mapSakCodeToSak} from "@/utils/mapSakCodeToSak";
 
 
 interface IHomeProps {
@@ -31,6 +32,8 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
     const uforesak = uforetrygdResponse.saker?.[0] ?? null
+    const sakstype = uforesak?.type ? (mapSakCodeToSak(uforesak.type.toString()) ?? 'ukjent') : 'ukjent'
+
 
     return (
       <>
@@ -56,7 +59,7 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
             <MeldeFra visningskriterier={visningskriterier}/>
             <section className="wide">
               <VStack gap="6">
-                <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype="UFOREP"/>
+                <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype={sakstype}/>
                 <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!}/>
               </VStack>
             </section>
