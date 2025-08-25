@@ -20,7 +20,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/dokument/{journalpostId}/{dokumentInfoId}": {
+    "/api/dokument/{journalpostId}/{dokumentInfoId}/{variantFormat}": {
         parameters: {
             query?: never;
             header?: never;
@@ -61,6 +61,8 @@ export interface components {
             dokumentInfoId?: string;
             /** Format: int32 */
             filstorrelse?: number;
+            /** @enum {string} */
+            variant?: "ARKIV" | "SLADDET";
         };
         Journalpost: {
             id?: string;
@@ -136,6 +138,7 @@ export interface operations {
             path: {
                 journalpostId: string;
                 dokumentInfoId: string;
+                variantFormat: string;
             };
             cookie?: never;
         };
