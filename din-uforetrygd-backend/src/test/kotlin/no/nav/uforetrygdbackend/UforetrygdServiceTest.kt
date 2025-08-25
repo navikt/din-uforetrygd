@@ -190,12 +190,14 @@ class UforetrygdServiceTest {
                     Journalpost.Dokument(
                         tittel = "Søknadsskjema uføretrygd",
                         dokumentInfoId = "DOK123456",
-                        filstorrelse = 102400
+                        filstorrelse = 102400,
+                        variant = Journalpost.Dokument.DokumentVariant.ARKIV
                     ),
                     Journalpost.Dokument(
                         tittel = "Legeerklæring",
                         dokumentInfoId = "DOK789012",
-                        filstorrelse = 256000
+                        filstorrelse = 256000,
+                        variant = Journalpost.Dokument.DokumentVariant.ARKIV
                     )
                 )
             ),
@@ -208,7 +210,8 @@ class UforetrygdServiceTest {
                     Journalpost.Dokument(
                         tittel = "Vedtaksbrev",
                         dokumentInfoId = "DOK345678",
-                        filstorrelse = 51200
+                        filstorrelse = 51200,
+                        variant = Journalpost.Dokument.DokumentVariant.ARKIV
                     )
                 )
             )

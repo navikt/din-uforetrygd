@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 data class JournalpostSafDto(
     val tittel: String,
     val journalpostId: String,
+    val journalposttype: String,
     val tema: String?,
     val avsenderMottaker: AvsenderMottaker?,
     val sak: Sak,
@@ -24,8 +25,13 @@ data class JournalpostSafDto(
         val dokumentvarianter: List<DokumentVariant>,
     ) {
         data class DokumentVariant(
+            val variantformat: Variantformat,
             val brukerHarTilgang: Boolean,
             val filtype: String,
-        )
+        ) {
+            enum class Variantformat {
+                ARKIV, SLADDET, PRODUKSJON, PRODUKSJON_DLF, FULLVERSJON, ORIGINAL
+            }
+        }
     }
 }

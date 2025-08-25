@@ -3,6 +3,7 @@ query ($ident: String!, $tema: [Tema]!) {
         journalposter {
             tittel
             journalpostId
+            journalposttype
             tema
             sak {
                 fagsakId
@@ -18,6 +19,7 @@ query ($ident: String!, $tema: [Tema]!) {
                 tittel
                 dokumentInfoId
                 dokumentvarianter{
+                    variantformat
                     brukerHarTilgang
                     filtype
                     filstorrelse

@@ -21,10 +21,11 @@ class DokumentController(
 
     private val logger = LoggerFactory.getLogger(DokumentController::class.java)
 
-    @GetMapping("{journalpostId}/{dokumentInfoId}")
+    @GetMapping("{journalpostId}/{dokumentInfoId}/{variantFormat}")
     fun getDokument(
         @PathVariable("journalpostId") journalpostId: String,
         @PathVariable("dokumentInfoId") dokumentInfoId: String,
+        @PathVariable("variantFormat") variantFormat: String
     ): ResponseEntity<InputStreamResource> {
         try {
             if (!journalpostId.all { it.isDigit() } || !dokumentInfoId.all { it.isDigit() }) {
@@ -32,7 +33,12 @@ class DokumentController(
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, "BAD_REQUEST")
             }
 
-            val dokumentResponse = journalpostService.getDokument(journalpostId, dokumentInfoId)
+            if (!validateVariantFormat(variantFormat)) {
+                logger.error("Invalid variantformat=$variantFormat")
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "BAD_REQUEST")
+            }
+
+            val dokumentResponse = journalpostService.getDokument(journalpostId, dokumentInfoId, variantFormat)
             val responseBody = InputStreamResource(dokumentResponse.inputStream)
 
             return ResponseEntity
@@ -48,4 +54,6 @@ class DokumentController(
             throw ResponseStatusException(HttpStatus.NOT_FOUND, "NOT_FOUND")
         }
     }
+
+    private fun validateVariantFormat(variantFormat: String) = variantFormat == "ARKIV" || variantFormat == "SLADDET"
 }
