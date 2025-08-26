@@ -27,7 +27,6 @@ class DokumentController(
         @PathVariable("dokumentInfoId") dokumentInfoId: String,
         @PathVariable("variantFormat") variantFormat: String
     ): ResponseEntity<InputStreamResource> {
-        logger.info("Traff endepunkt")
         try {
             if (!journalpostId.all { it.isDigit() } || !dokumentInfoId.all { it.isDigit() }) {
                 logger.error("Invalid ID format: journalpostId=$journalpostId, dokumentInfoId=$dokumentInfoId")
