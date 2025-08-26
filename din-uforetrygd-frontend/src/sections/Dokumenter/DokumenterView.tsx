@@ -18,8 +18,9 @@ interface IDokumenterProps {
     id: string
     dokumenter: {
       tittel: string
-      dokumentInfoId: string
-      filstorrelse?: number
+      dokumentInfoId: string,
+      filstorrelse?: number,
+      variant: string
     }[]
   }[]
 }
@@ -45,7 +46,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
               content={
                 <VStack gap="4" className={styles.readMoreOpened}>
                   <DocumentLink
-                    href={getDocumentProxyLink(journalpost.id, hoveddokument.dokumentInfoId, props.pid)}
+                    href={getDocumentProxyLink(journalpost.id, hoveddokument.dokumentInfoId, hoveddokument.variant, props.pid)}
                     fileSize={hoveddokument.filstorrelse}
                   >
                     Åpne {hoveddokument.tittel.toLowerCase()}
@@ -59,7 +60,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
                     {vedlegg.map((vedlegg) => (
                       <DocumentLink
                         key={vedlegg.dokumentInfoId}
-                        href={getDocumentProxyLink(journalpost.id, vedlegg.dokumentInfoId, props.pid)}
+                        href={getDocumentProxyLink(journalpost.id, vedlegg.dokumentInfoId, vedlegg.variant,  props.pid)}
                         fileSize={vedlegg.filstorrelse}
                       >
                         {vedlegg.tittel}

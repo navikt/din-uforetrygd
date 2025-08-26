@@ -4,7 +4,7 @@ export const getDocumentProxyLink = (
   variantformat: string,
   pid?: string
 ) => {
-  const proxyLink = `/pensjon/selvbetjening/saksoversikt/api/${journalpostId}/${dokumentInfoId}/${variantformat}`
+  const proxyLink = `/uforetrygd/selvbetjening/api/${journalpostId}/${dokumentInfoId}/${variantformat}`
   if (pid) return `${proxyLink}?pid=${pid}`
   return proxyLink
 }
