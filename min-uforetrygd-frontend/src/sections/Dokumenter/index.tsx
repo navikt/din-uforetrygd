@@ -27,6 +27,7 @@ export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
             tittel: d.tittel as string,
             dokumentInfoId: d.dokumentInfoId as string,
             filstorrelse: d.filstorrelse,
+            variant: d.variant as string
           })),
     }
   })
