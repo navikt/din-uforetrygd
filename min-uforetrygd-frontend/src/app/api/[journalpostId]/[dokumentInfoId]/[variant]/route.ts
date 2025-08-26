@@ -1,6 +1,7 @@
-import { NextRequest } from 'next/server'
+import {NextRequest} from 'next/server'
 import getOboToken from '@/api/getOboToken'
-import { redirect } from 'next/navigation'
+import {redirect} from 'next/navigation'
+import logger from "@/utils/logger";
 
 export async function GET(
   request: NextRequest,
@@ -16,6 +17,18 @@ export async function GET(
     requestHeaders.pid = pid
   }
 
+  logger.info({
+    message: `Treffer NEXT GET`,
+    http: {
+    request: {
+      method: request.method,
+        host: "",
+        path: "",
+    },
+  },
+  })
+
+
   const response = await fetch(`${baseUrl}/api/dokument/${journalpostId}/${dokumentInfoId}/${variant}`, {
     headers: requestHeaders,
   })
@@ -25,6 +38,17 @@ export async function GET(
   }
 
   const blob = await response.blob()
+
+  logger.info({
+    message: blob.size.toString(),
+    http: {
+      request: {
+        method: request.method,
+        host: "",
+        path: "",
+      },
+    },
+  })
 
   return new Response(blob, {
     headers: { 'Content-Type': 'application/pdf', 'Content-Length': blob.size.toString() },
