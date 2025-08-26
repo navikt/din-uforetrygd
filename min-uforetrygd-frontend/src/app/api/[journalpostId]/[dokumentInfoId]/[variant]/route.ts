@@ -7,7 +7,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ journalpostId: string; dokumentInfoId: string; variant: string }> }
 ) {
-  const baseUrl = process.env.BACKEND_URL
+  const baseUrl = process.env.UFORETRYGD_BACKEND
   const { journalpostId, dokumentInfoId, variant: variant } = await params
   const token = await getOboToken()
   const pid = request.nextUrl.searchParams.get('pid')
