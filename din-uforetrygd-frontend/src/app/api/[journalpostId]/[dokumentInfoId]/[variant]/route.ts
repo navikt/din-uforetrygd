@@ -17,6 +17,8 @@ export async function GET(
     requestHeaders.pid = pid
   }
 
+  console.warn("Treffer next get")
+
   logger.info({
     message: `Treffer NEXT GET`,
     http: {
