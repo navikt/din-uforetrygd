@@ -22,3 +22,11 @@
 .uforetrygdHendelserLinkButton {
   margin-top: 1rem;
 }
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  cursor: pointer;
+}

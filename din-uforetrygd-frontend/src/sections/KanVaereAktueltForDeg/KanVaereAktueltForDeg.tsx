@@ -4,6 +4,7 @@ import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { Heading, Link } from '@navikt/ds-react'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktProps } from '@/utils/fullmakt'
+import styles from './kanVaereAktueltForDeg.module.css'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]
@@ -58,7 +59,7 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       </Heading>
       <LinkList>
         {aktueltForDegLenker.map((link) => (
-          <Link key={link.href} href={link.href} {...getFullmaktProps(link.showFullmaktWarning)}>
+          <Link className={styles.aktueltForDegLenker} key={link.href} href={link.href} {...getFullmaktProps(link.showFullmaktWarning)}>
             {link.text}
           </Link>
         ))}

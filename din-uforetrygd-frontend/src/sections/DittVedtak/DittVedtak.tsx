@@ -89,14 +89,14 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
               <BodyLong>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har hentet.
                 Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og pensjoner du mottar.
-                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link>.
+                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger} className={styles.link}>inntektsplanleggeren</Link>.
               </BodyLong>
             </ReadMore>
 
             <ReadMore header={"Hva er inntektsgrense?"}>
               <BodyLong>
                 Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger 150 000 kroner.
-                Bruk <Link href={linkInntektsplanlegger}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+                Bruk <Link href={linkInntektsplanlegger} className={styles.link}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
               </BodyLong>
 
             </ReadMore>
