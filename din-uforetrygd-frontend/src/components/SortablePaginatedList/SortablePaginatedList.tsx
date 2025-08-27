@@ -1,7 +1,7 @@
 'use client'
 
 import {Heading, Pagination, Select, VStack} from '@navikt/ds-react'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styles from './sortablepaginatedlist.module.css'
 import {compareSortDate, paginateItems} from '@/components/SortablePaginatedList/utils'
 
@@ -31,6 +31,24 @@ export const SortablePaginatedList = <T extends ISortableItem>({
 }: ISortablePaginatedListProps<T>) => {
   const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>('desc')
   const [pageState, setPageState] = useState(1)
+  const [paginatorSize, setPaginatorSize] = useState<undefined | 'small' | 'xsmall'>(undefined)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth
+      if (width <= 540) {
+        setPaginatorSize('xsmall')
+      } else if (width <= 768) {
+        setPaginatorSize('small')
+      } else {
+        setPaginatorSize(undefined)
+      }
+    }
+
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   const sortedItems = React.useMemo(() => [...items].sort(compareSortDate(sortDirection)), [items, sortDirection])
   const paginatedItems = paginateItems(pageState, itemsPerPage, sortedItems)
@@ -80,12 +98,13 @@ export const SortablePaginatedList = <T extends ISortableItem>({
       {showPagination && (
         <Pagination
           className={styles.pagination}
-          prevNextTexts={true}
+          prevNextTexts={paginatorSize != "xsmall"}
           page={pageState}
           onPageChange={setPageState}
           count={Math.ceil(items.length / itemsPerPage)}
           boundaryCount={1}
           siblingCount={1}
+          size={paginatorSize}
         />
       )}
     </>
