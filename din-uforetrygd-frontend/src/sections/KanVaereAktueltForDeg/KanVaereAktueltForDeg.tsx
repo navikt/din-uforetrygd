@@ -35,6 +35,12 @@ const links = [
     showFullmaktWarning: false,
   },
   {
+    href: await getUrl({ urlFromEnv: 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD' }),
+    text: 'Saksbehandlingstider',
+    showFor: true,
+    showFullmaktWarning: false,
+  },
+  {
     href: await getUrl({ urlFromEnv: 'LINK_KLAGE' }),
     text: 'Klage',
     showFor: true,
