@@ -27,6 +27,11 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
       setIsExpanded(true)
       setOpenHendelser(false)
       expansionCardRef.current?.focus()
+      expansionCardRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      })
     }
   }, [openHendelser, setOpenHendelser])
   

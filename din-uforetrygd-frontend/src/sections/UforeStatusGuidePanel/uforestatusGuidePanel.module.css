@@ -1,9 +1,9 @@
 .ingenUforetrygd {
-    max-width: 632px;
+    width: clamp(300px, 100vw - 36px, 632px);
 }
 
 .tilBehandling {
-    max-width: 632px;
+    width: clamp(300px, 100vw - 36px, 632px);
 }
 
 .guidepanelWrapper {
