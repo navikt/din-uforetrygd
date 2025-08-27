@@ -1,3 +1,7 @@
 .hendelser {
     border-bottom: 1px solid var(--a-border-divider);
 }
+
+.saksoversiktHeading {
+    margin-bottom: 1.5rem;
+}

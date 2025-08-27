@@ -1,14 +1,16 @@
 import {Heading, VStack} from '@navikt/ds-react'
 import {Kort, KortGrid} from '@/components/Kort'
 import {FileExportIcon, FileTextIcon, PersonGroupIcon, PersonPlusIcon, ReceiptIcon, WalletIcon} from '@navikt/aksel-icons'
-import {Visningskriterier} from '@/const'
+import {Innloggingstype, Visningskriterier} from '@/const'
 import filterShowFor, {matchAll, matchSome} from '@/utils/filterShowFor'
 import {getUrl} from '@/utils/getUrl'
+import {MinIdDokumentModal} from "@/components/MidIdDokumentModal/MinIdDokumentModal";
 
 interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  bprofFullmakt: boolean
+  bprofFullmakt: boolean,
+  innloggingstype: Innloggingstype
 }
 
 const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
@@ -19,6 +21,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: WalletIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid }),
@@ -27,6 +30,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
@@ -35,6 +39,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: FileTextIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
@@ -43,6 +48,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: ReceiptIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
@@ -51,6 +57,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: PersonPlusIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
@@ -59,14 +66,16 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: PersonGroupIcon,
     showFor: true,
     showFullmaktWarning: true,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
     title: 'Ettersend dokumentasjon',
-    description: 'Til uføresaken din',
+    description: 'Ettersend dokumenter om saken din',
     icon: FileExportIcon,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
+    visInnloggingsModal: false,
   },
 ]
 
@@ -88,8 +97,11 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
               href={link.href ?? ''}
               icon={link.icon}
               showFullmaktWarning={link.showFullmaktWarning}
+              visInnloggingsModal={link.visInnloggingsModal}
+              innloggingstype={props.innloggingstype}
             />
           ))}
+          <MinIdDokumentModal innloggingstype={props.innloggingstype}/>
         </KortGrid>
       </VStack>
     </section>

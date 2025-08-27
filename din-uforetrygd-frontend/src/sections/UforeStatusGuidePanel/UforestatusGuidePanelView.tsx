@@ -25,13 +25,13 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
         <section>
           <GuidePanel poster className={styles.tilBehandling}>
             <Heading level="2" size="medium" className={styles.uforetrygdHeading}>
-              Søknaden din om uføretrygd er under behandling
+              Søknad under behandling
             </Heading>
             <BodyLong>
-              Søknad tilknyttet din uføretrygd er til behandling.
+              Søknaden din om uføretrygd er til behandling.
             </BodyLong>
             <BodyLong>
-              <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd</Link>
+              <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd.</Link>
             </BodyLong>
             <Button
               className={styles.uforetrygdHendelserLinkButton}
