@@ -32,7 +32,7 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
   
   return (
     <section className="wide">
-        <Heading size="medium" level="2" spacing>
+        <Heading className={styles.saksoversiktHeading} size="medium" level="2">
             Saksoversikt
         </Heading>
       <ExpansionCard

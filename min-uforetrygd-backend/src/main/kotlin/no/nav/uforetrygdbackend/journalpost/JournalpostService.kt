@@ -39,7 +39,7 @@ class JournalpostService(
             DataBufferUtils.write(dataBufferFlux, pipedOutputStream)
                 .publishOn(Schedulers.boundedElastic())
                 .doOnComplete { pipedOutputStream.close() }
-                .subscribe()
+                .subscribe(DataBufferUtils.releaseConsumer())
         } ?: throw IllegalStateException("Unable to fetch document")
 
         return DokumentDto(pipedInputStream, contentLength)

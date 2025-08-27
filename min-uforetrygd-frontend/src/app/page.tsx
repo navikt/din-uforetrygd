@@ -1,6 +1,6 @@
 import {Alert, Heading, VStack} from '@navikt/ds-react'
 import {RelevanteSoknader} from '@/sections/RelevanteSoknader'
-import {Visningskriterier} from '@/const'
+import {Innloggingstype, Visningskriterier} from '@/const'
 import {KanVaereAktueltForDeg} from '@/sections/KanVaereAktueltForDeg'
 import {InformasjonOgRegistreringer} from '@/sections/InformasjonOgRegistreringer'
 import DittVedtak from '@/sections/DittVedtak/index'
@@ -55,6 +55,7 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
               visningskriterier={visningskriterier}
               pid={params.pid}
               bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
+              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
             />
             <MeldeFra visningskriterier={visningskriterier}/>
             <section className="wide">
