@@ -2,6 +2,7 @@ import { Detail, Link, VStack } from '@navikt/ds-react'
 import { ExternalLinkIcon } from '@navikt/aksel-icons'
 import React from 'react'
 import { readableFileSize } from '@/components/DocumentLink/utils'
+import styles from './documentLink.module.css'
 
 interface IDocumentLink {
   href: string
@@ -15,6 +16,7 @@ export const DocumentLink: React.FC<IDocumentLink> = (props) => {
       <Link
         href={props.href}
         target="_blank"
+        className={styles.link}
         onClick={(e) => {
           e.stopPropagation()
         }}

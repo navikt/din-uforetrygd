@@ -31,7 +31,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
               Søknaden din om uføretrygd er til behandling.
             </BodyLong>
             <BodyLong>
-              <Link href={saksbehandlingstiderLenke}>Se saksbehandlingstider for uføretrygd.</Link>
+              <Link href={saksbehandlingstiderLenke} className={styles.link}>Se saksbehandlingstider for uføretrygd.</Link>
             </BodyLong>
             <Button
               className={styles.uforetrygdHendelserLinkButton}
@@ -57,8 +57,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
               </Heading>
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-                kommer frem til dette i samarbeid med deg. Kontakt{' '}
-                <Link href={dittLokaleNavKontorLenke}>ditt lokale Nav-kontor</Link> for veiledning.
+                kommer frem til dette i samarbeid med deg. Kontakt <Link href={dittLokaleNavKontorLenke} className={styles.link}>ditt lokale Nav-kontor</Link> for veiledning.
               </BodyLong>
             </VStack>
           </GuidePanel>

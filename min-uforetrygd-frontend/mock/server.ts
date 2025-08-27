@@ -222,6 +222,8 @@ const gradertUforeMock = {
   },
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
+  hendelser: [],
+  journalposter: []
 }
 
 const ingenUforesakMock = {
@@ -232,6 +234,8 @@ const ingenUforesakMock = {
   uforevedtak: null,
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
+  hendelser: [],
+  journalposter: []
 }
 
 const harUforeOgSakTilBehandlingMock = {
@@ -257,6 +261,8 @@ const harUforeOgSakTilBehandlingMock = {
   },
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
+  hendelser: [],
+  journalposter: []
 }
 
 const harSakTilBehandlingOgIngenUforeMock = {

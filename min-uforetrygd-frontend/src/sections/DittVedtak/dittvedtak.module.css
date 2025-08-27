@@ -10,3 +10,11 @@
   justify-content: center;
   margin: 0 auto;
 }
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  cursor: pointer;
+}

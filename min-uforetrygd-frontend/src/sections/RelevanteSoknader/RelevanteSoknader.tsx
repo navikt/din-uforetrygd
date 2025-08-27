@@ -5,6 +5,7 @@ import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getFullmaktProps } from '@/utils/fullmakt'
+import styles from './relevanteSoknader.module.css'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
@@ -61,7 +62,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       <div style={{ maxWidth: '450px' }}>
         <LinkList variant="divided">
           {relevanteLenker.map((lenke) => (
-            <Link key={lenke.href} href={lenke.href} {...getFullmaktProps(lenke.showFullmaktWarning)}>
+            <Link key={lenke.href} href={lenke.href} className={styles.link} {...getFullmaktProps(lenke.showFullmaktWarning)}>
               {lenke.text}
             </Link>
           ))}
