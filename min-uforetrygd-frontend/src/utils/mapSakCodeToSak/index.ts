@@ -6,7 +6,7 @@ export const mapSakCodeToSak = (input: string): string | undefined => {
     OMSORG: 'omsorgsopptjening',
     GJENLEV: 'gjenlevendepensjon',
     KRIGSP: 'krigspensjon',
-    UFOREP: 'uføretrygd',
+    UFORETRYGD: 'uføretrygd',
     FAM_PL: 'familiepleierytelse',
     GAM_YRK: 'gammel yrkesskade',
   }
