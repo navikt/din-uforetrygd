@@ -35,7 +35,6 @@ export const mapHendelseCode = (input: string, sakstype: string): string | undef
     OMREGNET: 'Automatisk omregnet',
     OMREGNET_TIL_UT: 'Automatisk omregnet fra uførepensjon til uføretrygd',
     OMR_FAK_UT: 'Automatisk omregnet fra uførepensjon til uføretrygd',
-    OVERFORT_SAK: 'Overført sak til et annet Nav-kontor',
     OVERF_OMSGSP: 'Overføring av omsorgspoeng',
     REBEREGNET: 'Ny automatisk beregning ved aldersovergang',
     REBER_ANNEN_SAK: 'Beregnet på nytt på grunn av avhengighet til annen sak',
