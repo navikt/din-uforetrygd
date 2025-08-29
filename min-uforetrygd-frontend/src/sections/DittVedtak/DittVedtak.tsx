@@ -95,7 +95,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
             <ReadMore header={"Hva er inntektsgrense?"}>
               <BodyLong>
-                Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger 150 000 kroner.
+                Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}&nbsp;kroner.
                 Bruk <Link href={linkInntektsplanlegger} className={styles.link}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
               </BodyLong>
 
