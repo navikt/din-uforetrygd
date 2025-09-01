@@ -96,7 +96,7 @@ spec:
     - name: LINK_SAKER
       value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SKATTETREKK
-      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/transaksjon/inntektogskatt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
+      value: ""
     - name: LINK_FAMILIEFORHOLD
       value: https://pensjon-selvbetjening-familieforhold-frontend-veileder-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut&pid=PID
     - name: LINK_FULLMAKTER
