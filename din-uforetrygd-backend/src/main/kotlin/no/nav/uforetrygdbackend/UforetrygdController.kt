@@ -3,6 +3,7 @@ package no.nav.uforetrygdbackend
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
 import no.nav.uforetrygdbackend.audit.Auditor
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +17,8 @@ class UforetrygdController(
     private val tokenService: TokenService,
     private val auditor: Auditor
 ) {
+
+    private val logger = LoggerFactory.getLogger(UforetrygdController::class.java)
 
     @GetMapping("initiate")
     fun initiateUforetrygd(): ResponseEntity<UforetrygdResponse> {
@@ -32,6 +35,7 @@ class UforetrygdController(
             }
             return response
         } catch (e: Exception) {
+            logger.error(e.message, e)
             throw ErrorHandler.exceptionToErrorResponse(
                 exception = e,
                 pid = pid
