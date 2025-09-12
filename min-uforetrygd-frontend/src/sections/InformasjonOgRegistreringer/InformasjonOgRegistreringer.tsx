@@ -1,15 +1,22 @@
-import {Heading, VStack} from '@navikt/ds-react'
-import {Kort, KortGrid} from '@/components/Kort'
-import {FileExportIcon, FileTextIcon, PersonGroupIcon, PersonPlusIcon, ReceiptIcon, WalletIcon} from '@navikt/aksel-icons'
-import {Innloggingstype, Visningskriterier} from '@/const'
-import filterShowFor, {matchAll, matchSome} from '@/utils/filterShowFor'
-import {getUrl} from '@/utils/getUrl'
-import {MinIdDokumentModal} from "@/components/MidIdDokumentModal/MinIdDokumentModal";
+import { Heading, VStack } from '@navikt/ds-react'
+import { Kort, KortGrid } from '@/components/Kort'
+import {
+  FileExportIcon,
+  FileTextIcon,
+  PersonGroupIcon,
+  PersonPlusIcon,
+  ReceiptIcon,
+  WalletIcon,
+} from '@navikt/aksel-icons'
+import { Innloggingstype, Visningskriterier } from '@/const'
+import filterShowFor, { matchAll, matchSome } from '@/utils/filterShowFor'
+import { getUrl } from '@/utils/getUrl'
+import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
 interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  bprofFullmakt: boolean,
+  bprofFullmakt: boolean
   innloggingstype: Innloggingstype
 }
 
@@ -101,7 +108,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
               innloggingstype={props.innloggingstype}
             />
           ))}
-          <MinIdDokumentModal innloggingstype={props.innloggingstype}/>
+          <MinIdDokumentModal innloggingstype={props.innloggingstype} />
         </KortGrid>
       </VStack>
     </section>

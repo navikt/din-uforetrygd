@@ -30,9 +30,7 @@ export const initate = async (pid: string | undefined) => {
     headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
   }
 
-  const backendUrl = process.env.NODE_ENV === 'development'
-    ? `http://localhost:8080/api/initiate`
-    : '/api/initiate'
+  const backendUrl = process.env.NODE_ENV === 'development' ? `http://localhost:8080/api/initiate` : '/api/initiate'
 
   return await client
     .GET(backendUrl, {

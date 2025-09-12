@@ -1599,7 +1599,7 @@ const mockData = {
         status: null,
         endretDato: '2024-10-07T09:32:15',
         opprettetAv: 'UKJENT',
-      }
+      },
     ],
     journalposter: [
       {
@@ -1757,7 +1757,7 @@ const mockData = {
             dokumentInfoId: '454376705',
           },
         ],
-      }
+      },
     ],
   },
   avsluttet: {
@@ -1779,18 +1779,20 @@ const mockData = {
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     hendelser: [],
-    journalposter: [{
-      id: '45397299',
-      tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-      opprettetAv: 'NAV',
-      opprettetDato: '2025-03-14T11:36:39',
-      dokumenter: [
-        { tittel: 'Vedtak - innvilgelse av alderspensjon (auto)', dokumentInfoId: '454376702' },
-        { tittel: 'Dine rettigheter og plikter', dokumentInfoId: '454376703' },
-        { tittel: 'Opplysninger brukt i beregningen', dokumentInfoId: '454376704' },
-        { tittel: 'Dette er din månedlige pensjon før skatt', dokumentInfoId: '454376705' },
-      ],
-    }],
+    journalposter: [
+      {
+        id: '45397299',
+        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
+        opprettetAv: 'NAV',
+        opprettetDato: '2025-03-14T11:36:39',
+        dokumenter: [
+          { tittel: 'Vedtak - innvilgelse av alderspensjon (auto)', dokumentInfoId: '454376702' },
+          { tittel: 'Dine rettigheter og plikter', dokumentInfoId: '454376703' },
+          { tittel: 'Opplysninger brukt i beregningen', dokumentInfoId: '454376704' },
+          { tittel: 'Dette er din månedlige pensjon før skatt', dokumentInfoId: '454376705' },
+        ],
+      },
+    ],
   },
   forbidden: {
     timestamp: '2024-09-09T13:26:24.519032',
@@ -1829,7 +1831,7 @@ const mockData = {
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     hendelser: [],
-    journalposter: []
+    journalposter: [],
   },
   'sak-behandling': {
     pid: '81549300',
@@ -1893,7 +1895,7 @@ const mockData = {
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     hendelser: [],
-    journalposter: []
+    journalposter: [],
   },
 }
 

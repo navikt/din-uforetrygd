@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Har ufore og sak til behandling', () => {
-
-
   test('displays current active uføretrygd information', async ({ page }) => {
     await page.goto('')
 

@@ -1,8 +1,8 @@
-import {components} from '@/api/api'
-import {DokumenterView} from './DokumenterView'
-import {formatDate} from '@/utils/formatter/formatter'
-import {mapOpprettetAv} from '@/utils/mapOpprettetAv'
-import {Visningskriterier} from '@/const'
+import { components } from '@/api/api'
+import { DokumenterView } from './DokumenterView'
+import { formatDate } from '@/utils/formatter/formatter'
+import { mapOpprettetAv } from '@/utils/mapOpprettetAv'
+import { Visningskriterier } from '@/const'
 
 interface IDokumenterProps {
   pid?: string
@@ -11,8 +11,7 @@ interface IDokumenterProps {
 }
 
 export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
-
-  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)){
+  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)) {
     return <></>
   }
 
@@ -27,15 +26,13 @@ export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
       sortDate: journalpost.opprettetDato ?? '',
       id: journalpost.id ?? '',
       dokumenter: (journalpost.dokumenter ?? [])
-          .filter(
-              (d) => d.tittel !== undefined && d.dokumentInfoId !== undefined
-          )
-          .map((d) => ({
-            tittel: d.tittel as string,
-            dokumentInfoId: d.dokumentInfoId as string,
-            filstorrelse: d.filstorrelse,
-            variant: d.variant as string
-          })),
+        .filter((d) => d.tittel !== undefined && d.dokumentInfoId !== undefined)
+        .map((d) => ({
+          tittel: d.tittel as string,
+          dokumentInfoId: d.dokumentInfoId as string,
+          filstorrelse: d.filstorrelse,
+          variant: d.variant as string,
+        })),
     }
   })
 

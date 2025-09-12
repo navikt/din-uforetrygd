@@ -1,6 +1,6 @@
-import {NextRequest} from 'next/server'
+import { NextRequest } from 'next/server'
 import getOboToken from '@/api/getOboToken'
-import {redirect} from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 export async function GET(
   request: NextRequest,
@@ -21,7 +21,7 @@ export async function GET(
   })
 
   if (!response.ok) {
-    redirect("")
+    redirect('')
   }
 
   const blob = await response.blob()

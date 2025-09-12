@@ -1,6 +1,6 @@
 'use client'
 
-import React, {createContext, ReactNode, useState} from 'react'
+import React, { createContext, ReactNode, useState } from 'react'
 
 interface EventContextType {
   setOpenHendelser: (value: boolean) => void
@@ -9,7 +9,7 @@ interface EventContextType {
 
 const EventContextDefaultValue: EventContextType = {
   setOpenHendelser: () => undefined,
-  openHendelser: false
+  openHendelser: false,
 }
 
 export const EventContext = createContext(EventContextDefaultValue)
@@ -19,15 +19,15 @@ interface EventProviderProps {
 }
 
 export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
-
   const [openHendelser, setOpenHendelser] = useState(false)
 
-
   return (
-    <EventContext.Provider value={{
-      openHendelser,
-      setOpenHendelser
-    }}>
+    <EventContext.Provider
+      value={{
+        openHendelser,
+        setOpenHendelser,
+      }}
+    >
       {children}
     </EventContext.Provider>
   )

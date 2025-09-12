@@ -1,35 +1,32 @@
-import {expect, test} from '@playwright/test';
-
+import { expect, test } from '@playwright/test'
 
 test.describe('Uforetrygd Content and Status Display', () => {
+  test('should display main page content correctly', async ({ page }) => {
+    await page.goto('')
 
-  test('should display main page content correctly', async ({page}) => {
-    await page.goto('');
+    await expect(page).toHaveTitle('Din uføretrygd')
+    await expect(page.locator('body')).toBeVisible()
+  })
 
-    await expect(page).toHaveTitle("Din uføretrygd");
-    await expect(page.locator('body')).toBeVisible();
-  });
+  test('should have functioning sort controls for hendelser', async ({ page }) => {
+    await page.goto('')
 
+    const hendelserHeading = page.getByRole('heading', { name: 'Dette har skjedd i saken din' })
+    await expect(hendelserHeading).toBeVisible()
 
-  test('should have functioning sort controls for hendelser', async ({page}) => {
-    await page.goto('');
+    const hendelserSection = page.locator('section[aria-label="Hendelser i saken din"]')
 
-    const hendelserHeading = page.getByRole('heading', {name: 'Dette har skjedd i saken din'});
-    await expect(hendelserHeading).toBeVisible();
+    await hendelserSection.click()
+    const sortControl = page.getByRole('combobox', { name: 'Sorter etter' })
 
-    const hendelserSection = page.locator('section[aria-label="Hendelser i saken din"]');
+    await expect(sortControl).toBeVisible()
+    await sortControl.selectOption('asc')
 
-    await hendelserSection.click();
-    const sortControl = page.getByRole('combobox', {name: 'Sorter etter'});
+    await expect(page.getByText('SAK OPPRETTET')).toHaveCount(6)
+    await sortControl.selectOption('desc')
 
-    await expect(sortControl).toBeVisible();
-    await sortControl.selectOption('asc');
-
-    await expect(page.getByText('SAK OPPRETTET')).toHaveCount(6);
-    await sortControl.selectOption('desc');
-
-    await expect(page.getByText('Automatisk omregnet')).toHaveCount(3);
-  });
+    await expect(page.getByText('Automatisk omregnet')).toHaveCount(3)
+  })
 
   test('Bekreft at riktige lenker og paneler vises til bruker', async ({ page }) => {
     await page.goto('')

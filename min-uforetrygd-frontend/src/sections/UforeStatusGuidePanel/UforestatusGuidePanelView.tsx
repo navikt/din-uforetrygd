@@ -1,20 +1,23 @@
 'use client'
 
-import {Visningskriterier} from '@/const'
-import {BodyLong, Button, GuidePanel, Heading, Link, VStack} from '@navikt/ds-react'
+import { Visningskriterier } from '@/const'
+import { BodyLong, Button, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
 import styles from './uforestatusGuidePanel.module.css'
-import {useContext} from "react";
-import {EventContext} from "@/utils/dataContextProvider/EventContextProvider";
+import { useContext } from 'react'
+import { EventContext } from '@/utils/dataContextProvider/EventContextProvider'
 
 interface IUforeStatusGuidePanelProps {
-  visningskriterier: Visningskriterier[],
-  dittLokaleNavKontorLenke: string | undefined,
+  visningskriterier: Visningskriterier[]
+  dittLokaleNavKontorLenke: string | undefined
   saksbehandlingstiderLenke: string | undefined
 }
 
-export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
-  ({ visningskriterier, dittLokaleNavKontorLenke, saksbehandlingstiderLenke }) => {
-  const {setOpenHendelser} = useContext(EventContext)
+export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = ({
+  visningskriterier,
+  dittLokaleNavKontorLenke,
+  saksbehandlingstiderLenke,
+}) => {
+  const { setOpenHendelser } = useContext(EventContext)
 
   if (
     visningskriterier.includes(Visningskriterier.SakTilBehandling) &&
@@ -27,16 +30,16 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
             <Heading level="2" size="medium" className={styles.uforetrygdHeading}>
               Søknad under behandling
             </Heading>
+            <BodyLong>Søknaden din om uføretrygd er til behandling.</BodyLong>
             <BodyLong>
-              Søknaden din om uføretrygd er til behandling.
-            </BodyLong>
-            <BodyLong>
-              <Link href={saksbehandlingstiderLenke} className={styles.link}>Se saksbehandlingstider for uføretrygd.</Link>
+              <Link href={saksbehandlingstiderLenke} className={styles.link}>
+                Se saksbehandlingstider for uføretrygd.
+              </Link>
             </BodyLong>
             <Button
               className={styles.uforetrygdHendelserLinkButton}
               variant="primary-neutral"
-              onClick={ () => setOpenHendelser(true)}
+              onClick={() => setOpenHendelser(true)}
             >
               Se siste hendelser i saken
             </Button>
@@ -46,7 +49,10 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
     )
   }
 
-  if (visningskriterier.includes(Visningskriterier.IngenUforesak) || visningskriterier.includes(Visningskriterier.AvsluttetUforetrygdSak)) {
+  if (
+    visningskriterier.includes(Visningskriterier.IngenUforesak) ||
+    visningskriterier.includes(Visningskriterier.AvsluttetUforetrygdSak)
+  ) {
     return (
       <div className={styles.guidepanelWrapper}>
         <section>
@@ -57,7 +63,11 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
               </Heading>
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-                kommer frem til dette i samarbeid med deg. Kontakt <Link href={dittLokaleNavKontorLenke} className={styles.link}>ditt lokale Nav-kontor</Link> for veiledning.
+                kommer frem til dette i samarbeid med deg. Kontakt{' '}
+                <Link href={dittLokaleNavKontorLenke} className={styles.link}>
+                  ditt lokale Nav-kontor
+                </Link>{' '}
+                for veiledning.
               </BodyLong>
             </VStack>
           </GuidePanel>

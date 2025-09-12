@@ -59,7 +59,12 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       </Heading>
       <LinkList>
         {aktueltForDegLenker.map((link) => (
-          <Link className={styles.aktueltForDegLenker} key={link.href} href={link.href} {...getFullmaktProps(link.showFullmaktWarning)}>
+          <Link
+            className={styles.aktueltForDegLenker}
+            key={link.href}
+            href={link.href}
+            {...getFullmaktProps(link.showFullmaktWarning)}
+          >
             {link.text}
           </Link>
         ))}

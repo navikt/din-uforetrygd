@@ -19,8 +19,7 @@ test.describe('Sak til behandling ingen ufore', () => {
 
     await seHendelserISakenDinButton.click()
 
-    const focusedHendelserBoks =  page.locator('section[aria-label="Hendelser i saken din"]');
+    const focusedHendelserBoks = page.locator('section[aria-label="Hendelser i saken din"]')
     await expect(focusedHendelserBoks).toBeFocused()
   })
-
 })

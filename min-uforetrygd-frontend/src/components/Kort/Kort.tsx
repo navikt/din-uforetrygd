@@ -1,23 +1,21 @@
 import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
-import React, {ForwardRefExoticComponent, RefAttributes, SVGProps} from 'react'
+import React, { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import {Innloggingstype} from "@/const";
-
+import { Innloggingstype } from '@/const'
 
 interface IKortProps {
   title: string
   description?: string
   href: string
   icon?: ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>>
-  showFullmaktWarning?: boolean,
-  visInnloggingsModal?: boolean,
-  innloggingstype: Innloggingstype,
+  showFullmaktWarning?: boolean
+  visInnloggingsModal?: boolean
+  innloggingstype: Innloggingstype
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
-
   type InnloggingsnivaaProps = Record<string, true>
 
   function showModal(): InnloggingsnivaaProps {
@@ -34,9 +32,9 @@ export const Kort: React.FC<IKortProps> = (props) => {
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
             <Box
-              background={"surface-action-subtle"}
+              background={'surface-action-subtle'}
               className={styles.kortIcon}
-              borderColor={"border-default"}
+              borderColor={'border-default'}
               borderRadius="xlarge"
               padding="3"
               aria-hidden
