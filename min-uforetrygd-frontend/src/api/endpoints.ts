@@ -20,13 +20,23 @@ export const initate = async (pid: string | undefined) => {
 
   const fullmaktCookie = await getFullmaktCookie()
 
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${oboToken}`,
+    pid: pid || '',
+    Cookie: fullmaktCookie,
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
+  }
+
+  const backendUrl = process.env.NODE_ENV === 'development'
+    ? `http://localhost:8080/api/initiate`
+    : '/api/initiate'
+
   return await client
-    .GET('/api/initiate', {
-      headers: {
-        Authorization: `Bearer ${oboToken}`,
-        pid: pid,
-        Cookie: fullmaktCookie,
-      },
+    .GET(backendUrl, {
+      headers,
       cache: 'no-store',
     })
     .then((res) => {

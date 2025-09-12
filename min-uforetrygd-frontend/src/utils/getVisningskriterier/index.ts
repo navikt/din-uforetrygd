@@ -1,5 +1,5 @@
-import { Visningskriterier } from '@/const'
-import { components } from '@/api/api'
+import {Visningskriterier} from '@/const'
+import {components} from '@/api/api'
 
 export const getVisningskriterier = (init: components['schemas']['UforetrygdResponse']) => {
   const saker = init.saker!
@@ -16,6 +16,9 @@ export const getVisningskriterier = (init: components['schemas']['UforetrygdResp
       }
       if (sak.status === 'TIL_BEHANDLING') {
         acc.push(Visningskriterier.SakTilBehandling)
+      }
+      if (sak.status === 'AVSLUTTET') {
+        acc.push(Visningskriterier.AvsluttetUforetrygdSak)
       }
       return acc
     }, [])
