@@ -5,7 +5,7 @@ import { getFullmaktCookie } from './getFullmaktCookie'
 import fetchLogger from '@/utils/fetchLogger'
 
 const client = createClient<paths>({
-  baseUrl: process.env.UFORETRYGD_BACKEND,
+  baseUrl: process.env.NODE_ENV == 'development' ? process.env.UFORETRYGD_BACKEND : "localhost:8080",
   fetch: fetchLogger,
 })
 
@@ -20,7 +20,7 @@ export const initate = async (pid: string | undefined) => {
 
   const fullmaktCookie = await getFullmaktCookie()
 
-  const headers: Record<string, string> = {
+  const headers: Record<string, string | undefined > = {
     Authorization: `Bearer ${oboToken}`,
     pid: pid || '',
     Cookie: fullmaktCookie,
@@ -30,10 +30,8 @@ export const initate = async (pid: string | undefined) => {
     headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
   }
 
-  const backendUrl = process.env.NODE_ENV === 'development' ? `http://localhost:8080/api/initiate` : '/api/initiate'
-
   return await client
-    .GET(backendUrl, {
+    .GET("/api/initiate", {
       headers,
       cache: 'no-store',
     })
