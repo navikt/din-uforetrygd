@@ -52,7 +52,7 @@ export default defineConfig({
   },
   webServer: {
     command: 'npm run dev:all',
-    url: 'http://localhost:3000/uforetrygd/selvbetjening',
+    url: 'http://localhost:8080/uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
