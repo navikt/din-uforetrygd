@@ -19,6 +19,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
+    "test:playwright": "playwright test",
     "types:generate": "openapi-typescript https://uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api/api.d.ts",
     "prettier:check": "prettier --check '**/*.{cjs,js,jsx,ts,tsx,json}'",
     "prettier:fix": "prettier --write '**/*.{cjs,js,jsx,ts,tsx,json}'"
