@@ -50,7 +50,6 @@
     "@types/react-dom": "^19.1.9",
     "bun": "^1.2.21",
     "concurrently": "^9.2.1",
-    "@playwright/test": "^1.55.0",
     "cors": "^2.8.5",
     "eslint": "^9.34.0",
     "eslint-config-next": "15.5.2",
