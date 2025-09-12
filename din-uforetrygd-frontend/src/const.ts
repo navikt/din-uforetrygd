@@ -7,9 +7,9 @@ export enum Visningskriterier {
 }
 
 export enum Innloggingstype {
-  LEVEL4 = "LEVEL4",
-  LEVEL3 = "LEVEL3",
-  NAV = "NAV",
-  SYSTEM = "SYSTEM",
-  IKKE_INNLOGGET = "IKKE_INNLOGGET",
+  LEVEL4 = 'LEVEL4',
+  LEVEL3 = 'LEVEL3',
+  NAV = 'NAV',
+  SYSTEM = 'SYSTEM',
+  IKKE_INNLOGGET = 'IKKE_INNLOGGET',
 }

@@ -62,7 +62,12 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       <div style={{ maxWidth: '450px' }}>
         <LinkList variant="divided">
           {relevanteLenker.map((lenke) => (
-            <Link key={lenke.href} href={lenke.href} className={styles.link} {...getFullmaktProps(lenke.showFullmaktWarning)}>
+            <Link
+              key={lenke.href}
+              href={lenke.href}
+              className={styles.link}
+              {...getFullmaktProps(lenke.showFullmaktWarning)}
+            >
               {lenke.text}
             </Link>
           ))}

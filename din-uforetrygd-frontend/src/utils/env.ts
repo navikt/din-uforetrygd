@@ -28,7 +28,6 @@ export type Env =
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
   | 'REPRESENTASJON_BANNER'
 
-
 export default function getEnv(env: Env) {
   noStore()
   return process.env[env]

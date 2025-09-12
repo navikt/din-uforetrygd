@@ -6,7 +6,7 @@ test.describe('Lopende uforesak uten vedtak', () => {
     await expect(page.locator('body')).toBeVisible()
     await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
 
-    const dittVedtak = page.getByText("Kort om saken din")
-    await expect (dittVedtak).not.toBeVisible()
+    const dittVedtak = page.getByText('Kort om saken din')
+    await expect(dittVedtak).not.toBeVisible()
   })
 })

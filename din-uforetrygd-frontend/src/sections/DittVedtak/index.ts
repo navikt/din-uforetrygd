@@ -1,3 +1,3 @@
-import {DittVedtak} from "@/sections/DittVedtak/DittVedtak";
+import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 
 export default DittVedtak

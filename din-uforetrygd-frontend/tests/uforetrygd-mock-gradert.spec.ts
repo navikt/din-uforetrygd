@@ -17,7 +17,6 @@ test.describe('Gradert ufore scenario', () => {
     await expect(page.getByText('Inntektsgrense: 49 611 kr').first()).toBeVisible()
   })
 
-
   test('displays appropriate lenkekort for gradert ufore', async ({ page }) => {
     await page.goto('')
 

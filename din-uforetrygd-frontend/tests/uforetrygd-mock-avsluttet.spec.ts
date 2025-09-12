@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Avsluttet uforesak med dokumenter', () => {
-
   test('renders page for avsluttet sak', async ({ page }) => {
     await page.goto('')
     await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
@@ -36,8 +35,7 @@ test.describe('Avsluttet uforesak med dokumenter', () => {
   test('displays standard guidepanel for users without uforetrygd', async ({ page }) => {
     await page.goto('')
 
-    const guidepanel = page.getByText("Du har ikke uføretrygd")
+    const guidepanel = page.getByText('Du har ikke uføretrygd')
     await expect(guidepanel).toBeVisible()
- })
-
+  })
 })

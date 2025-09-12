@@ -1,10 +1,10 @@
-import {components} from '@/api/api'
-import {mapHendelseCode} from '@/utils/mapHendelseCodesToHendelse'
-import {formatDate} from '@/utils/formatter/formatter'
-import {HendelserView} from './HendelserView'
-import {mapOpprettetAv} from '@/utils/mapOpprettetAv'
-import {mapKravDescription} from '@/utils/mapKravDescription'
-import {Visningskriterier} from '@/const'
+import { components } from '@/api/api'
+import { mapHendelseCode } from '@/utils/mapHendelseCodesToHendelse'
+import { formatDate } from '@/utils/formatter/formatter'
+import { HendelserView } from './HendelserView'
+import { mapOpprettetAv } from '@/utils/mapOpprettetAv'
+import { mapKravDescription } from '@/utils/mapKravDescription'
+import { Visningskriterier } from '@/const'
 
 interface IHendelserProps {
   hendelser: components['schemas']['SakHendelse'][]
@@ -21,8 +21,7 @@ interface Hendelse {
 }
 
 export const Hendelser: React.FC<IHendelserProps> = (props) => {
-
-  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)){
+  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)) {
     return <></>
   }
 
@@ -32,7 +31,9 @@ export const Hendelser: React.FC<IHendelserProps> = (props) => {
     if (hendelsestype) {
       acc.push({
         type: hendelsestype,
-        description: hasDescription ? mapKravDescription(hendelse.gjelder!, hendelse.arsak!, props.sakstype) : undefined,
+        description: hasDescription
+          ? mapKravDescription(hendelse.gjelder!, hendelse.arsak!, props.sakstype)
+          : undefined,
         createdBy: mapOpprettetAv(hendelse.opprettetAv),
         formattedDate: formatDate(hendelse.endretDato),
         sortDate: hendelse.endretDato!,

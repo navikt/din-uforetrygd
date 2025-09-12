@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-
 test.describe('Forbidden login level scenario', () => {
-
   test('should not display main uføretrygd content', async ({ page }) => {
     await page.goto('')
 
