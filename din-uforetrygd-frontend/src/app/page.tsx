@@ -11,7 +11,7 @@ import {VeilederBorgerinformasjon} from '@/components/VeilederBorgerinformasjon'
 import {resolveErrorText} from '@/utils/resolveErrorText'
 import {TaskAnalytics} from '../components/TaskAnalytics'
 import getEnv from '@/utils/env'
-import Hendelser from '@/sections/Hendelser'
+import {Hendelser} from '@/sections/Hendelser'
 import {Dokumenter} from '@/sections/Dokumenter'
 import './module.layout.css'
 import EventProvider from "@/utils/dataContextProvider/EventContextProvider";
@@ -60,8 +60,8 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
             <MeldeFra visningskriterier={visningskriterier}/>
             <section className="wide">
               <VStack gap="6">
-                <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype={sakstype}/>
-                <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!}/>
+                <Hendelser hendelser={uforetrygdResponse.hendelser!} sakstype={sakstype} visningskriterier={visningskriterier}/>
+                <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} visningskriterier={visningskriterier}/>
               </VStack>
             </section>
             <RelevanteSoknader
@@ -69,7 +69,6 @@ const Home: React.FC<IHomeProps> = async ({searchParams}) => {
               innloggingstype={uforetrygdResponse.innloggingstype!}
             />
             <KanVaereAktueltForDeg visningskriterier={visningskriterier}/>
-
             <div className="ux-signals-container">
               <div data-uxsignals-embed="panel-u5y48zl9t7" className="ux-signals"></div>
             </div>

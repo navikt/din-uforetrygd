@@ -1,6 +1,6 @@
 'use client'
 
-import { Visningskriterier } from '@/const'
+import {Visningskriterier} from '@/const'
 import {BodyLong, Button, GuidePanel, Heading, Link, VStack} from '@navikt/ds-react'
 import styles from './uforestatusGuidePanel.module.css'
 import {useContext} from "react";
@@ -46,7 +46,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> =
     )
   }
 
-  if (visningskriterier.includes(Visningskriterier.IngenUforesak)) {
+  if (visningskriterier.includes(Visningskriterier.IngenUforesak) || visningskriterier.includes(Visningskriterier.AvsluttetUforetrygdSak)) {
     return (
       <div className={styles.guidepanelWrapper}>
         <section>

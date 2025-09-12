@@ -76,15 +76,15 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
             {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {getTilleggsoppsummeringTekst()} </BodyLong>}
             <BodyLong> <strong> Uføregrad: </strong> {uforegrad + " prosent"} </BodyLong>
             {uforetidspunkt && <BodyLong> <strong> Uføretidspunkt: </strong> {uforetidspunkt} </BodyLong>}
-            {uforetrygdInnvilget && <BodyLong> <strong> Uføretrygd innvilget: </strong> {uforetrygdInnvilget} </BodyLong>}
+            {uforetrygdInnvilget && <BodyLong> <strong> Uføretrygd innvilget fra: </strong> {uforetrygdInnvilget} </BodyLong>}
             {hasVarigTilrettelagtArbeid && <>Du har tiltaket Varig tilrettelagt arbeid</>}
-            <BodyLong> <strong> Forventet registrert inntekt: </strong> {sumAvForventedeInntekter + " kr"} </BodyLong>
+            <BodyLong> <strong> Registrert forventet inntekt: </strong> {sumAvForventedeInntekter + " kr"} </BodyLong>
 
             <VStack gap={"2"}>
-            <BodyLong> <strong> Inntekstgrense: </strong> {inntektsgrense}&nbsp;kr </BodyLong>
+            <BodyLong> <strong> Inntektsgrense: </strong> {inntektsgrense}&nbsp;kr </BodyLong>
 
 
-            <ReadMore header={"Hvor kommer forventet registrert inntekt fra?"}>
+            <ReadMore header={"Hvor kommer registrert forventet inntekt fra?"}>
 
               <BodyLong>
                 Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har hentet.
