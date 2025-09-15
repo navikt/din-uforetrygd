@@ -33,10 +33,10 @@ const projects = scenarios.flatMap((scenario) =>
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: false,
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 3,
-  workers: 3,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
