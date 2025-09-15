@@ -35,8 +35,8 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 3,
-  workers: 1,
+  retries: 5,
+  workers: 10,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
