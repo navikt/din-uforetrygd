@@ -13,7 +13,6 @@ app.use(
   })
 )
 
-// Mock data for different scenarios
 const mockData = {
   default: {
     pid: '81549300',

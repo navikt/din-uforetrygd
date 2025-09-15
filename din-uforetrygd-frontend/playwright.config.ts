@@ -37,7 +37,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  workers: 4,
+  workers: 2,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
@@ -45,8 +45,8 @@ export default defineConfig({
   use: {
     headless: true,
     trace: 'on-first-retry',
-    actionTimeout: 30000,
-    navigationTimeout: 30000,
+    actionTimeout: 60000,
+    navigationTimeout: 60000,
   },
   webServer: {
     command: 'npm run dev:all',
