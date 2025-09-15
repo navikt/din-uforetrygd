@@ -18,6 +18,9 @@ const scenarios = [
 
 const browsers = [
   { name: 'chromium', device: devices['Desktop Chrome'] },
+  { name: 'firefox', device: devices['Desktop Firefox'] },
+  { name: 'webkit', device: devices['Desktop Safari'] },
+  { name: 'mobile', device: devices['iPhone 12'] },
 ]
 
 const projects = scenarios.flatMap((scenario) =>
@@ -33,10 +36,10 @@ const projects = scenarios.flatMap((scenario) =>
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 5,
-  workers: 10,
+  workers: 3,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
@@ -44,8 +47,8 @@ export default defineConfig({
   use: {
     headless: true,
     trace: 'on-first-retry',
-    actionTimeout: 10000,
-    navigationTimeout: 15000,
+    actionTimeout: 30000,
+    navigationTimeout: 30000,
   },
   webServer: {
     command: 'npm run dev:all',
