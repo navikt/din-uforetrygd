@@ -19,11 +19,13 @@ export const initate = async (pid: string | undefined) => {
   })
 
   const fullmaktCookie = await getFullmaktCookie()
+  console.log("Node env: " + process.env.NODE_ENV)
+  console.log("Uforecheck: " + process.env.UFORETRYGD_BACKEND)
 
-  const headers: Record<string, string | undefined > = {
+  const headers: Record<string, string> = {
     Authorization: `Bearer ${oboToken}`,
     pid: pid || '',
-    Cookie: fullmaktCookie,
+    Cookie: fullmaktCookie as string,
   }
 
   if (process.env.NODE_ENV === 'development') {
