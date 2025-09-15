@@ -25,6 +25,11 @@
     "prettier:fix": "prettier --write '**/*.{cjs,js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
+    "@elastic/ecs-winston-format": "^1.5.3",
+    "@navikt/aksel-icons": "^7.30.0",
+    "@navikt/ds-css": "^7.30.0",
+    "@navikt/ds-react": "^7.30.0",
+    "@navikt/nav-dekoratoren-moduler": "~3.4.0",
     "@navikt/oasis": "^3.4.0",
     "@navikt/steng-for-regulering": "^0.0.7",
     "clsx": "^2.1.1",
@@ -33,16 +38,11 @@
     "form-data": "~4.0.4",
     "next": "15.5.3",
     "openapi-fetch": "^0.14.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@elastic/ecs-winston-format": "^1.5.3",
-    "@navikt/aksel-icons": "^7.30.0",
-    "@navikt/ds-css": "^7.30.0",
-    "@navikt/ds-react": "^7.30.0",
-    "@navikt/nav-dekoratoren-moduler": "~3.4.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^24.3.1",
