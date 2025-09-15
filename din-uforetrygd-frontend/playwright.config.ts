@@ -39,7 +39,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 3,
+  workers: 4,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
@@ -54,7 +54,7 @@ export default defineConfig({
     command: 'npm run dev:all',
     url: 'http://localhost:3000/uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
-    timeout: 300000,
+    timeout: 120000,
   },
   projects,
 })
