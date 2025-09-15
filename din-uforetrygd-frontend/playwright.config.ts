@@ -54,7 +54,7 @@ export default defineConfig({
     command: 'npm run dev:all',
     url: 'http://localhost:3000/uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    timeout: 300000,
   },
   projects,
 })
