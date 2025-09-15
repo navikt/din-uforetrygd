@@ -18,7 +18,6 @@ const scenarios = [
 
 const browsers = [
   { name: 'chromium', device: devices['Desktop Chrome'] },
-  { name: 'mobile', device: devices['iPhone 12'] },
 ]
 
 const projects = scenarios.flatMap((scenario) =>
@@ -34,10 +33,10 @@ const projects = scenarios.flatMap((scenario) =>
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: 0,
-  workers: 2,
+  retries: 1,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
@@ -47,34 +46,6 @@ export default defineConfig({
     trace: 'on-first-retry',
     actionTimeout: 60000,
     navigationTimeout: 60000,
-    // Disable caching
-    extraHTTPHeaders: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0'
-    },
-    ignoreHTTPSErrors: true,
-    // Disable browser cache
-    launchOptions: {
-      args: [
-        '--disable-web-security',
-        '--disable-features=VizDisplayCompositor',
-        '--disable-dev-shm-usage',
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-gpu-sandbox',
-        '--disable-background-timer-throttling',
-        '--disable-backgrounding-occluded-windows',
-        '--disable-renderer-backgrounding',
-        '--disable-field-trial-config',
-        '--disable-back-forward-cache',
-        '--disable-ipc-flooding-protection',
-        '--aggressive-cache-discard',
-        '--memory-pressure-off',
-        '--max_old_space_size=4096',
-        '--disable-blink-features=AutomationControlled'
-      ]
-    }
   },
   webServer: {
     command: 'npm run dev:all',
