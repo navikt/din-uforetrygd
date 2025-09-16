@@ -37,7 +37,6 @@ class SafSelvbetjeningClient(
     fun hentDokument(
         journalpostId: String,
         dokumentInfoId: String,
-        variantFormat: String,
     ): ResponseEntity<Flux<DataBuffer>>? = tokenService.getEgressToken(
         scope,
         audience,
@@ -48,7 +47,7 @@ class SafSelvbetjeningClient(
         try {
             webClient
                 .get()
-                .uri("$baseUrl/$path/${journalpostId}/${dokumentInfoId}/${variantFormat}")
+                .uri("$baseUrl/$path/${journalpostId}/${dokumentInfoId}")
                 .header("Authorization", "Bearer $it")
                 .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
                 .accept(MediaType.APPLICATION_PDF)

@@ -4,11 +4,12 @@ import { redirect } from 'next/navigation'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ journalpostId: string; dokumentInfoId: string; variant: string }> }
+  { params }: { params: Promise<{ journalpostId: string; dokumentInfoId: string}> }
 ) {
   const baseUrl = process.env.UFORETRYGD_BACKEND
-  const { journalpostId, dokumentInfoId, variant: variant } = await params
+  const { journalpostId, dokumentInfoId} = await params
   const token = await getOboToken()
+  const variantformat = request.nextUrl.searchParams.get('variantformat')
   const pid = request.nextUrl.searchParams.get('pid')
   const requestHeaders: Record<string, string> = { Authorization: `Bearer ${token}` }
 
@@ -16,9 +17,12 @@ export async function GET(
     requestHeaders.pid = pid
   }
 
-  const response = await fetch(`${baseUrl}/api/dokument/${journalpostId}/${dokumentInfoId}/${variant}`, {
-    headers: requestHeaders,
-  })
+  const response = await fetch(
+    `${baseUrl}/api/dokument/${journalpostId}/${dokumentInfoId}${variantformat ? `?variantformat=${variantformat}` : ''}`,
+    {
+      headers: requestHeaders,
+    }
+  )
 
   if (!response.ok) {
     redirect('')
