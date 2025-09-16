@@ -20,7 +20,7 @@ interface IDokumenterProps {
       tittel: string
       dokumentInfoId: string
       filstorrelse?: number
-      variant: string
+      variant?: string
     }[]
   }[]
 }

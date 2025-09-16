@@ -36,7 +36,6 @@ class JournalpostServiceTest {
             filtype = "PDF",
             filstorrelse = 1024,
             brukerHarTilgang = true,
-            variantformat = JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat.ARKIV
         )
 
         val dokument = JournalpostSafSelvbetjeningDto.Dokument(
@@ -126,7 +125,7 @@ class JournalpostServiceTest {
         val emptyDocsJournalpost = JournalpostSafSelvbetjeningDto(
             journalpostId = "JP456",
             tittel = "Empty docs",
-            tema = "UFO",
+            tema = "PEN",
             journalposttype = "I",
             datoSortering = LocalDate.parse("2023-01-01").atStartOfDay(),
             avsender = null,
@@ -156,7 +155,7 @@ class JournalpostServiceTest {
         val journalpost = JournalpostSafDto(
             journalpostId = "JP123",
             tittel = "Journalpost tittel",
-            tema = "UFO",
+            tema = "PEN",
             journalposttype = "I",
             datoOpprettet = LocalDate.parse("2023-01-01").atStartOfDay(),
             sak = JournalpostSafDto.Sak(fagsakId = sakId),
@@ -252,38 +251,6 @@ class JournalpostServiceTest {
     }
 
     @Test
-    fun `plukker ut sladdet variant ved flere forekomster av varianter`() {
-        val pid = "12345678"
-        val sakId = "123456"
-        val dokumentInfoId = "123123"
-
-        val dokument = JournalpostSafSelvbetjeningDto.Dokument(
-            dokumentInfoId = dokumentInfoId,
-            tittel = "Dokument tittel",
-            dokumentvarianter = listOf(
-                dokumentVariant(
-                    true,
-                    JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat.ARKIV
-                ), dokumentVariant(true, JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat.SLADDET)
-            )
-        )
-
-        val journalpost = createJournalpostSelvbetjening("JP123", "UFO", sakId, "I", listOf(dokument))
-
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid)).thenReturn(
-            listOf(
-                journalpost
-            )
-        )
-
-        val result = journalpostService.getJournalPostliste(pid, sakId)
-
-        assertEquals(1, result.first().dokumenter.size)
-        assertEquals("SLADDET", result.first().dokumenter.first().variant.name)
-    }
-
-    @Test
     fun `saksbehandler mottar liste der irrelevant journalpost er filtrert vekk med SafClient`() {
         // Arrange
         val pid = "12345678901"
@@ -292,8 +259,8 @@ class JournalpostServiceTest {
         val relevantJournalpost = createJournalpostSaf("JP123", "UFO", sakId, "I")
         val wrongTemaJournalpost = createJournalpostSaf("JP456", "SYK", sakId, "I")
         val wrongSakIdJournalpost = createJournalpostSaf("JP789", "UFO", "654321", "I")
-        val emptyDocsJournalpost = createJournalpostSafWithNoDocs("JP101", "UFO", sakId, "I")
-        val typeNJournalpost = createJournalpostSaf("JP102", "UFO", sakId, "N")
+        val emptyDocsJournalpost = createJournalpostSafWithNoDocs("JP101", "PEN", sakId, "I")
+        val typeNJournalpost = createJournalpostSaf("JP102", "PEN", sakId, "N")
 
         Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
         Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
@@ -336,7 +303,7 @@ class JournalpostServiceTest {
         val journalpost = JournalpostSafDto(
             journalpostId = "JP123",
             tittel = "Journalpost tittel",
-            tema = "UFO",
+            tema = "PEN",
             journalposttype = "I",
             datoOpprettet = LocalDate.parse("2023-01-01").atStartOfDay(),
             sak = JournalpostSafDto.Sak(fagsakId = sakId),
@@ -387,7 +354,7 @@ class JournalpostServiceTest {
         val journalpost = JournalpostSafDto(
             journalpostId = "JP123",
             tittel = "Journalpost tittel",
-            tema = "UFO",
+            tema = "PEN",
             journalposttype = "I",
             datoOpprettet = LocalDate.parse("2023-01-01").atStartOfDay(),
             sak = JournalpostSafDto.Sak(fagsakId = sakId),
@@ -405,17 +372,175 @@ class JournalpostServiceTest {
         // Assert
         assertEquals(1, result.size)
         assertEquals(1, result[0].dokumenter.size)
-        assertEquals("SLADDET", result[0].dokumenter[0].variant.name)
+        assertEquals("SLADDET", result[0].dokumenter[0].variant!!.name)
+    }
+
+    @Test
+    fun `filtrerer vekk journalpost med null sak for SafSelvbetjening`() {
+        // Arrange
+        val pid = "12345678901"
+        val sakId = "123456"
+
+        val relevantJournalpost = createJournalpostSelvbetjening("JP123", "PEN", sakId, "I")
+        val journalpostWithNullSak = JournalpostSafSelvbetjeningDto(
+            journalpostId = "JP456",
+            tittel = "Journalpost with null sak",
+            tema = "UFO",
+            journalposttype = "I",
+            datoSortering = LocalDate.parse("2023-01-01").atStartOfDay(),
+            avsender = null,
+            mottaker = null,
+            sak = JournalpostSafSelvbetjeningDto.Sak("1234567"),
+            dokumenter = listOf(
+                JournalpostSafSelvbetjeningDto.Dokument(
+                    dokumentInfoId = "DOK456",
+                    tittel = "Dokument",
+                    dokumentvarianter = listOf(dokumentVariant(true))
+                )
+            )
+        )
+
+        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
+        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
+            .thenReturn(listOf(relevantJournalpost, journalpostWithNullSak))
+
+        // Act
+        val result = journalpostService.getJournalPostliste(pid, sakId)
+
+        // Assert
+        assertEquals(1, result.size)
+        assertEquals("JP123", result[0].id)
+    }
+
+    @Test
+    fun `filtrerer vekk journalpost med null fagsakId for SafSelvbetjening`() {
+        // Arrange
+        val pid = "12345678901"
+        val sakId = "123456"
+
+        val relevantJournalpost = createJournalpostSelvbetjening("JP123", "UFO", sakId, "I")
+        val journalpostWithNullFagsakId = JournalpostSafSelvbetjeningDto(
+            journalpostId = "JP456",
+            tittel = "Journalpost with null fagsakId",
+            tema = "UFO",
+            journalposttype = "I",
+            datoSortering = LocalDate.parse("2023-01-01").atStartOfDay(),
+            avsender = null,
+            mottaker = null,
+            sak = JournalpostSafSelvbetjeningDto.Sak(fagsakId = "1234567"),
+            dokumenter = listOf(
+                JournalpostSafSelvbetjeningDto.Dokument(
+                    dokumentInfoId = "DOK456",
+                    tittel = "Dokument",
+                    dokumentvarianter = listOf(dokumentVariant(true))
+                )
+            )
+        )
+
+        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
+        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
+            .thenReturn(listOf(relevantJournalpost, journalpostWithNullFagsakId))
+
+        // Act
+        val result = journalpostService.getJournalPostliste(pid, sakId)
+
+        // Assert
+        assertEquals(1, result.size)
+        assertEquals("JP123", result[0].id)
+    }
+
+    @Test
+    fun `filtrerer vekk journalpost med null sak for SafClient`() {
+        // Arrange
+        val pid = "12345678901"
+        val sakId = "123456"
+
+        val relevantJournalpost = createJournalpostSaf("JP123", "UFO", sakId, "I")
+        val journalpostWithNullSak = JournalpostSafDto(
+            journalpostId = "JP456",
+            tittel = "Journalpost with null sak",
+            tema = "UFO",
+            journalposttype = "I",
+            datoOpprettet = LocalDate.parse("2023-01-01").atStartOfDay(),
+            sak = JournalpostSafDto.Sak("1234567"),
+            dokumenter = listOf(
+                JournalpostSafDto.Dokument(
+                    dokumentInfoId = "DOK456",
+                    tittel = "Dokument",
+                    dokumentvarianter = listOf(
+                        JournalpostSafDto.Dokument.DokumentVariant(
+                            filtype = "PDF",
+                            brukerHarTilgang = true,
+                            variantformat = JournalpostSafDto.Dokument.DokumentVariant.Variantformat.ARKIV
+                        )
+                    )
+                )
+            ),
+            avsenderMottaker = null
+        )
+
+        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
+        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
+        Mockito.`when`(safClient.performGraphQLQuery(sakId))
+            .thenReturn(listOf(relevantJournalpost, journalpostWithNullSak))
+
+        // Act
+        val result = journalpostService.getJournalPostliste(pid, sakId)
+
+        // Assert
+        assertEquals(1, result.size)
+        assertEquals("JP123", result[0].id)
+    }
+
+    @Test
+    fun `filtrerer vekk journalpost med null fagsakId for SafClient`() {
+        // Arrange
+        val pid = "12345678901"
+        val sakId = "123456"
+
+        val relevantJournalpost = createJournalpostSaf("JP123", "UFO", sakId, "I")
+        val journalpostWithNullFagsakId = JournalpostSafDto(
+            journalpostId = "JP456",
+            tittel = "Journalpost with null fagsakId",
+            tema = "UFO",
+            journalposttype = "I",
+            datoOpprettet = LocalDate.parse("2023-01-01").atStartOfDay(),
+            sak = JournalpostSafDto.Sak("1234567"),
+            dokumenter = listOf(
+                JournalpostSafDto.Dokument(
+                    dokumentInfoId = "DOK456",
+                    tittel = "Dokument",
+                    dokumentvarianter = listOf(
+                        JournalpostSafDto.Dokument.DokumentVariant(
+                            filtype = "PDF",
+                            brukerHarTilgang = true,
+                            variantformat = JournalpostSafDto.Dokument.DokumentVariant.Variantformat.ARKIV
+                        )
+                    )
+                )
+            ),
+            avsenderMottaker = null
+        )
+
+        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
+        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
+        Mockito.`when`(safClient.performGraphQLQuery(sakId))
+            .thenReturn(listOf(relevantJournalpost, journalpostWithNullFagsakId))
+
+        // Act
+        val result = journalpostService.getJournalPostliste(pid, sakId)
+
+        // Assert
+        assertEquals(1, result.size)
+        assertEquals("JP123", result[0].id)
     }
 
     private fun dokumentVariant(
         brukerHarTilgang: Boolean,
-        variantFormat: JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat = JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat.ARKIV,
     ) = JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant(
         filtype = "PDF",
         filstorrelse = 1024,
         brukerHarTilgang = brukerHarTilgang,
-        variantformat = variantFormat
     )
 
     private fun createJournalpostSelvbetjening(
@@ -444,7 +569,6 @@ class JournalpostServiceTest {
                                 filtype = "PDF",
                                 filstorrelse = 1024,
                                 brukerHarTilgang = true,
-                                variantformat = JournalpostSafSelvbetjeningDto.Dokument.DokumentVariant.Variantformat.ARKIV
                             )
                         )
                     )

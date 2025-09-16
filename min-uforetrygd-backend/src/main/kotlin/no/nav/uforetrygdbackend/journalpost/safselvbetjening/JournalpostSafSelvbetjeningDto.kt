@@ -25,14 +25,9 @@ data class JournalpostSafSelvbetjeningDto(
         val dokumentvarianter: List<DokumentVariant>,
     ) {
         data class DokumentVariant(
-            val variantformat: Variantformat,
             val brukerHarTilgang: Boolean,
             val filtype: String,
             val filstorrelse: Int,
-        ) {
-            enum class Variantformat {
-                SLADDET, ARKIV
-            }
-        }
+        )
     }
 }

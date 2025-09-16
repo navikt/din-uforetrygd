@@ -13,7 +13,7 @@ data class Journalpost(
         val tittel: String,
         val dokumentInfoId: String,
         val filstorrelse: Int? = null,
-        val variant: DokumentVariant
+        val variant: DokumentVariant? = null
     ) {
         enum class DokumentVariant {
             ARKIV, SLADDET
