@@ -6,7 +6,7 @@ import { ReadMoreTile } from '@/components/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
 import { DocumentLink } from '@/components/DocumentLink'
 import styles from './dokumenterview.module.css'
-import {getDocumentProxyLink} from "@/components/Dokumenter/utils";
+import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 
 interface IDokumenterProps {
   pid?: string
@@ -27,7 +27,7 @@ interface IDokumenterProps {
 
 export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
   return (
-    <section className="wide">
+    <section>
       <ExpansionCard aria-label="Dokumenter knyttet til saken din">
         <ExpansionCard.Header>
           <ExpansionCard.Title> Dokumenter knyttet til saken din </ExpansionCard.Title>

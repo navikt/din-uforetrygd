@@ -4,12 +4,10 @@ import { formatDate } from '@/utils/formatter/formatter'
 import { HendelserView } from './HendelserView'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv'
 import { mapKravDescription } from '@/utils/mapKravDescription'
-import { Visningskriterier } from '@/const'
 
 interface IHendelserProps {
   hendelser: components['schemas']['SakHendelse'][]
   sakstype: string
-  visningskriterier: Visningskriterier[]
 }
 
 interface Hendelse {
@@ -21,10 +19,6 @@ interface Hendelse {
 }
 
 export const Hendelser: React.FC<IHendelserProps> = (props) => {
-  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)) {
-    return <></>
-  }
-
   const hendelser = props.hendelser.reduce<Hendelse[]>((acc, hendelse) => {
     const hasDescription = hendelse.gjelder && hendelse.arsak
     const hendelsestype = mapHendelseCode(hendelse.type!, props.sakstype)
