@@ -1,9 +1,8 @@
-package no.nav.uforetrygdbackend
+package no.nav.uforetrygdbackend.uforetrygd
 
 import no.nav.uforetrygdbackend.fullmakt.FullmaktClient
 import no.nav.uforetrygdbackend.journalpost.JournalpostService
 import no.nav.uforetrygdbackend.journalpost.model.EndretAvKode
-import no.nav.uforetrygdbackend.journalpost.model.HendelseData
 import no.nav.uforetrygdbackend.pensjon.pen.PenService
 import no.nav.uforetrygdbackend.pensjon.pen.Vedtakssammendrag
 import no.nav.uforetrygdbackend.security.SecurityContextUtil

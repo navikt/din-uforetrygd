@@ -1,4 +1,4 @@
-package no.nav.uforetrygdbackend
+package no.nav.uforetrygdbackend.uforetrygd
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import no.nav.uforetrygdbackend.journalpost.Journalpost

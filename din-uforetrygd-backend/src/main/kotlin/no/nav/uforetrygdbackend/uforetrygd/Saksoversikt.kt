@@ -1,4 +1,4 @@
-package no.nav.uforetrygdbackend.journalpost.model
+package no.nav.uforetrygdbackend.uforetrygd
 
 import java.time.LocalDate
 import java.time.LocalDateTime

@@ -1,10 +1,9 @@
 package no.nav.uforetrygdbackend.pensjon.pen
 
-import no.nav.uforetrygdbackend.Sak
-import no.nav.uforetrygdbackend.Sakstatus
-import no.nav.uforetrygdbackend.Sakstype
+import no.nav.uforetrygdbackend.uforetrygd.Sak
+import no.nav.uforetrygdbackend.uforetrygd.Sakstatus
+import no.nav.uforetrygdbackend.uforetrygd.Sakstype
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class PenService(val penClient: PenClient) {

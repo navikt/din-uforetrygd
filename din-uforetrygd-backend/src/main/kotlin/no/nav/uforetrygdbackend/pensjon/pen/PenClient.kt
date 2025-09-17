@@ -6,7 +6,7 @@ import no.nav.uforetrygdbackend.PersonNotFoundException
 import no.nav.uforetrygdbackend.configuration.AppId
 import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
-import no.nav.uforetrygdbackend.journalpost.model.Saksoversikt
+import no.nav.uforetrygdbackend.uforetrygd.Saksoversikt
 import no.nav.uforetrygdbackend.security.TokenService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
