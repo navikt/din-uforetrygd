@@ -17,7 +17,7 @@ data class JournalpostSafSelvbetjeningDto(
         val fagsakId: String,
     )
     data class Aktoer (
-        val id: String,
+        val id: String?,
     )
     data class Dokument(
         val tittel: String,

@@ -14,6 +14,7 @@ import no.nav.uforetrygdbackend.pensjon.pen.Vedtakssammendrag
 import no.nav.uforetrygdbackend.pensjon.pen.VedtakssammendragResponse
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
+import no.nav.uforetrygdbackend.uforetrygd.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -4,6 +4,7 @@ import styles from './kort.module.css'
 import React, { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import { Innloggingstype } from '@/const'
+import { showModal } from '@/utils/showMinIdModal'
 
 interface IKortProps {
   title: string
@@ -11,23 +12,18 @@ interface IKortProps {
   href: string
   icon?: ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>>
   showFullmaktWarning?: boolean
-  visInnloggingsModal?: boolean
+  visInnloggingsModal: boolean
   innloggingstype: Innloggingstype
 }
 
 export const Kort: React.FC<IKortProps> = (props) => {
-  type InnloggingsnivaaProps = Record<string, true>
-
-  function showModal(): InnloggingsnivaaProps {
-    const modalProperties: InnloggingsnivaaProps = {}
-    if ((props.innloggingstype as Innloggingstype) === Innloggingstype.LEVEL3 && props.visInnloggingsModal) {
-      modalProperties['data-innloggingstype'] = true
-    }
-    return modalProperties
-  }
-
   return (
-    <a href={props.href} className={styles.kort} {...getFullmaktProps(props.showFullmaktWarning)} {...showModal()}>
+    <a
+      href={props.href}
+      className={styles.kort}
+      {...getFullmaktProps(props.showFullmaktWarning)}
+      {...showModal(props.innloggingstype, props.visInnloggingsModal)}
+    >
       <Box borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>

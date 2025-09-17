@@ -113,7 +113,7 @@ class JournalpostService(
         avsender: JournalpostSafSelvbetjeningDto.Aktoer?,
         mottaker: JournalpostSafSelvbetjeningDto.Aktoer?,
     ): EndretAvKode {
-        if (avsender != null) {
+        if (avsender?.id != null) {
             if (avsender.id == pid) return EndretAvKode.BRUKER
             if (isFodselsnummer(avsender.id)) return EndretAvKode.FULLMEKTIG
         }
