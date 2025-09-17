@@ -11,10 +11,6 @@ interface IDokumenterProps {
 }
 
 export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
-  if (props.visningskriterier.includes(Visningskriterier.IngenUforesak)) {
-    return <></>
-  }
-
   const journalposter = props.journalposter.map((journalpost) => {
     const formattedDate = formatDate(journalpost.opprettetDato)
     if (!formattedDate) throw Error('Invalid date')

@@ -6,7 +6,7 @@ import { ReadMoreTile } from '@/components/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
 import { DocumentLink } from '@/components/DocumentLink'
 import styles from './dokumenterview.module.css'
-import { getDocumentProxyLink } from '@/sections/Dokumenter/utils'
+import {getDocumentProxyLink} from "@/components/Dokumenter/utils";
 
 interface IDokumenterProps {
   pid?: string

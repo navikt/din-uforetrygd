@@ -11,12 +11,11 @@ import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjo
 import { resolveErrorText } from '@/utils/resolveErrorText'
 import { TaskAnalytics } from '../components/TaskAnalytics'
 import getEnv from '@/utils/env'
-import { Hendelser } from '@/sections/Hendelser'
-import { Dokumenter } from '@/sections/Dokumenter'
-import './module.layout.css'
+import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
 import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
+import {Saksoversikt} from "@/sections/Saksoversikt";
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -56,20 +55,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
             />
             <MeldeFra visningskriterier={visningskriterier} />
-            <section className="wide">
-              <VStack gap="6">
-                <Hendelser
-                  hendelser={uforetrygdResponse.hendelser!}
-                  sakstype={sakstype}
-                  visningskriterier={visningskriterier}
-                />
-                <Dokumenter
-                  pid={params.pid}
-                  journalposter={uforetrygdResponse.journalposter!}
-                  visningskriterier={visningskriterier}
-                />
-              </VStack>
-            </section>
+            <Saksoversikt
+              visningskriterier={visningskriterier}
+              pid={params.pid}
+              journalposter={uforetrygdResponse.journalposter!}
+              hendelser={uforetrygdResponse.hendelser!}
+              sakstype={sakstype}>
+            </Saksoversikt>
             <RelevanteSoknader
               visningskriterier={visningskriterier}
               innloggingstype={uforetrygdResponse.innloggingstype!}
