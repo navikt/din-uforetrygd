@@ -2,12 +2,10 @@ import { components } from '@/api/api'
 import { DokumenterView } from './DokumenterView'
 import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv'
-import { Visningskriterier } from '@/const'
 
 interface IDokumenterProps {
   pid?: string
   journalposter: components['schemas']['Journalpost'][]
-  visningskriterier: Visningskriterier[]
 }
 
 export const Dokumenter: React.FC<IDokumenterProps> = (props) => {

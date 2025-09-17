@@ -35,7 +35,7 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
   }, [openHendelser, setOpenHendelser])
 
   return (
-    <section className="wide">
+    <section>
       <Heading className={styles.saksoversiktHeading} size="medium" level="2">
         Saksoversikt
       </Heading>
