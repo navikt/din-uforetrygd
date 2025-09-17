@@ -24,8 +24,9 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
     !visningskriterier.includes(Visningskriterier.Uforetrygd)
   ) {
     return (
-      <div className={styles.guidepanelWrapper}>
-        <section>
+      <section>
+        <div className={styles.guidepanelWrapper}>
+
           <GuidePanel poster className={styles.tilBehandling}>
             <Heading level="2" size="medium" className={styles.uforetrygdHeading}>
               Søknad under behandling
@@ -44,8 +45,8 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
               Se siste hendelser i saken
             </Button>
           </GuidePanel>
-        </section>
-      </div>
+        </div>
+      </section>
     )
   }
 
@@ -63,10 +64,10 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
               </Heading>
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-                kommer frem til dette i samarbeid med deg. Kontakt{' '}
+                kommer frem til dette i samarbeid med deg. Kontakt
                 <Link href={dittLokaleNavKontorLenke} className={styles.link}>
                   ditt lokale Nav-kontor
-                </Link>{' '}
+                </Link>
                 for veiledning.
               </BodyLong>
             </VStack>
