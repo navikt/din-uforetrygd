@@ -34,7 +34,7 @@ class SafClient(
         tokenService.getEgressToken(scope, audience, SecurityContextUtil.getPidFromContext(), AppId.SAF).let {
             webClient
                 .get()
-                .uri("$baseUrl/rest/hentdokument/${journalpostId}/${dokumentInfoId}")
+                .uri("$baseUrl/rest/hentdokument/${journalpostId}/${dokumentInfoId}/${variantFormat}")
                 .header("Authorization", "Bearer $it")
                 .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
                 .header("Nav-User-Id", tokenService.determineLoggedInUserId())
