@@ -88,7 +88,7 @@ spec:
     - name: LINK_SAKER
       value: https://www.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
     - name: LINK_SKATTETREKK
-      value: https://www.nav.no/utbetaling/skattetrekk
+      value: https://www.nav.no/utbetaling/frivillig-skattetrekk
     - name: LINK_FAMILIEFORHOLD
       value: https://www.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
     - name: LINK_FULLMAKTER
