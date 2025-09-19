@@ -95,7 +95,7 @@ spec:
     - name: LINK_SAKER
       value: https://pensjon-pselv-q2-gcp.ansatt.dev.nav.no/pselv/publisering/saksoversikt.jsf?context=ut&simpleMode=true
     - name: LINK_SKATTETREKK
-      value: https://sokos-frivillig-skattetrekk-frontend-q2.ansatt.dev.nav.no/utbetaling/frivillig-skattetrekk
+      value: https://sokos-frivillig-skattetrekk-frontend-q2.intern.dev.nav.no/utbetaling/frivillig-skattetrekk
     - name: LINK_FAMILIEFORHOLD
       value: https://pensjon-selvbetjening-familieforhold-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
     - name: LINK_FULLMAKTER
