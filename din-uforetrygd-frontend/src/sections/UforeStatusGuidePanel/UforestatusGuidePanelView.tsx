@@ -26,7 +26,6 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
     return (
       <section>
         <div className={styles.guidepanelWrapper}>
-
           <GuidePanel poster className={styles.tilBehandling}>
             <Heading level="2" size="medium" className={styles.uforetrygdHeading}>
               Søknad under behandling
@@ -37,6 +36,8 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
                 Se saksbehandlingstider for uføretrygd.
               </Link>
             </BodyLong>
+
+            {/*
             <Button
               className={styles.uforetrygdHendelserLinkButton}
               variant="primary-neutral"
@@ -44,6 +45,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
             >
               Se siste hendelser i saken
             </Button>
+            */}
           </GuidePanel>
         </div>
       </section>

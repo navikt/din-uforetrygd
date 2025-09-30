@@ -36,9 +36,6 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
 
   return (
     <section>
-      <Heading className={styles.saksoversiktHeading} size="medium" level="2">
-        Saksoversikt
-      </Heading>
       <ExpansionCard
         aria-label="Hendelser i saken din"
         open={isExpanded}

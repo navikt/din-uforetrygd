@@ -1,9 +1,9 @@
 import { Visningskriterier } from '@/const'
 
 import { components } from '@/api/api'
-import { VStack } from '@navikt/ds-react'
-import { Hendelser } from '@/components/Hendelser'
+import { Heading, VStack } from '@navikt/ds-react'
 import { Dokumenter } from '@/components/Dokumenter'
+import React from 'react'
 
 interface Saksoversikt {
   visningskriterier: Visningskriterier[]
@@ -27,7 +27,10 @@ export const Saksoversikt: React.FC<Saksoversikt> = async ({
   return (
     <section>
       <VStack gap="6">
-        <Hendelser hendelser={hendelser!} sakstype={sakstype} />
+        <Heading size="medium" level="2">
+          Saksoversikt
+        </Heading>
+        {/* <Hendelser hendelser={hendelser!} sakstype={sakstype} /> */}
         <Dokumenter pid={pid} journalposter={journalposter!} />
       </VStack>
     </section>
