@@ -8,6 +8,8 @@ test.describe('Uforetrygd Content and Status Display', () => {
     await expect(page.locator('body')).toBeVisible()
   })
 
+  //TODO: Lanser hendelseskomponenten
+  /*
   test('should have functioning sort controls for hendelser', async ({ page }) => {
     await page.goto('')
 
@@ -27,6 +29,7 @@ test.describe('Uforetrygd Content and Status Display', () => {
 
     await expect(page.getByText('Automatisk omregnet')).toHaveCount(3)
   })
+  */
 
   test('Bekreft at riktige lenker og paneler vises til bruker', async ({ page }) => {
     await page.goto('')

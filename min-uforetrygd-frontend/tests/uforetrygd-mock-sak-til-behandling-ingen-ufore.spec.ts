@@ -12,6 +12,8 @@ test.describe('Sak til behandling ingen ufore', () => {
     await expect(sakTilBehandlingBoks).toBeVisible()
   })
 
+  //TODO: Lanser hendelseskomponenten
+  /*
   test('knapp endrer fokus', async ({ page }) => {
     await page.goto('')
     const seHendelserISakenDinButton = page.getByText('Se siste hendelser i saken')
@@ -22,4 +24,5 @@ test.describe('Sak til behandling ingen ufore', () => {
     const focusedHendelserBoks = page.locator('section[aria-label="Hendelser i saken din"]')
     await expect(focusedHendelserBoks).toBeFocused()
   })
+  */
 })
