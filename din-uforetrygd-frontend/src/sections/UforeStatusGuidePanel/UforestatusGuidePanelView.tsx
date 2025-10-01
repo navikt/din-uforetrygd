@@ -66,11 +66,8 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
               </Heading>
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-                kommer frem til dette i samarbeid med deg. Kontakt
-                <Link href={dittLokaleNavKontorLenke} className={styles.link}>
-                  ditt lokale Nav-kontor
-                </Link>
-                for veiledning.
+                kommer frem til dette i samarbeid med deg.
+                Kontakt <Link href={dittLokaleNavKontorLenke} className={styles.link}> ditt lokale Nav-kontor </Link> for veiledning.
               </BodyLong>
             </VStack>
           </GuidePanel>
