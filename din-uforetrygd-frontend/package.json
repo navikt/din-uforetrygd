@@ -38,7 +38,7 @@
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "bun": "^1.2.22",
+    "bun": "^1.2.23",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "eslint": "^9.36.0",
