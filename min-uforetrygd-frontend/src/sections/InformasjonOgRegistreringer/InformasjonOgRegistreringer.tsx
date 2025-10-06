@@ -1,22 +1,23 @@
 import { Heading, VStack } from '@navikt/ds-react'
 import { Kort, KortGrid } from '@/components/Kort'
 import {
-  EnvelopeClosedIcon,
   FileExportIcon,
   FileTextIcon,
   PersonGroupIcon,
   PersonPlusIcon,
   ReceiptIcon,
-  SackKronerIcon,
+  WalletIcon,
 } from '@navikt/aksel-icons'
-import { Visningskriterier } from '@/const'
+import { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor, { matchAll, matchSome } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
+import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
 interface IInformasjonOgRegistreringerProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
   bprofFullmakt: boolean
+  innloggingstype: Innloggingstype
 }
 
 const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
@@ -24,17 +25,10 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
-    icon: SackKronerIcon,
-    showFor: true,
-    showFullmaktWarning: true,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_BREV', pid: pid }),
-    title: 'Brev',
-    description: 'Vedtak med mer',
-    icon: EnvelopeClosedIcon,
+    icon: WalletIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid }),
@@ -43,14 +37,16 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: FileTextIcon,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_SAKER', pid: pid }),
-    title: 'Sakene dine',
-    description: 'Status på søknader og vedtak',
+    href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
+    title: 'Se alle dokumentene dine',
+    description: 'Gå til dokumenter',
     icon: FileTextIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: true,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
@@ -59,6 +55,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: ReceiptIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
@@ -67,6 +64,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: PersonPlusIcon,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
@@ -75,14 +73,16 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: PersonGroupIcon,
     showFor: true,
     showFullmaktWarning: true,
+    visInnloggingsModal: false,
   },
   {
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
     title: 'Ettersend dokumentasjon',
-    description: 'Til uføresaken din',
+    description: 'Ettersend dokumenter om saken din',
     icon: FileExportIcon,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
+    visInnloggingsModal: false,
   },
 ]
 
@@ -93,7 +93,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
     <section>
       <VStack gap="5">
         <Heading level="2" size="medium">
-          Informasjon og registreringer
+          Snarveier
         </Heading>
         <KortGrid>
           {relevantLinks.map((link) => (
@@ -104,8 +104,11 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
               href={link.href ?? ''}
               icon={link.icon}
               showFullmaktWarning={link.showFullmaktWarning}
+              visInnloggingsModal={link.visInnloggingsModal}
+              innloggingstype={props.innloggingstype}
             />
           ))}
+          <MinIdDokumentModal innloggingstype={props.innloggingstype} />
         </KortGrid>
       </VStack>
     </section>

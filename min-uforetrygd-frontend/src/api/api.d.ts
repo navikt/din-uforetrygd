@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dokument/{journalpostId}/{dokumentInfoId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDokument"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -40,11 +56,39 @@ export interface components {
             hasGjenlevendeTillegg?: boolean;
             hasVarigTilrettelagtArbeid?: boolean;
         };
+        Dokument: {
+            tittel?: string;
+            dokumentInfoId?: string;
+            /** Format: int32 */
+            filstorrelse?: number;
+            /** @enum {string} */
+            variant?: "ARKIV" | "SLADDET";
+        };
+        Journalpost: {
+            id?: string;
+            tittel?: string;
+            /** @enum {string} */
+            opprettetAv?: "BRUKER" | "FULLMEKTIG" | "SAKSBEHANDLER" | "AUTOMATISK_PROSESS" | "UKJENT" | "NAV";
+            opprettetDato?: string;
+            dokumenter?: components["schemas"]["Dokument"][];
+        };
         Sak: {
             /** @enum {string} */
             type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
             /** @enum {string} */
             status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
+            /** Format: int64 */
+            sakId?: number;
+        };
+        SakHendelse: {
+            type?: string;
+            gjelder?: string;
+            arsak?: string;
+            status?: string;
+            /** Format: date-time */
+            endretDato?: string;
+            /** @enum {string} */
+            opprettetAv?: "BRUKER" | "FULLMEKTIG" | "SAKSBEHANDLER" | "AUTOMATISK_PROSESS" | "UKJENT" | "NAV";
         };
         UforetrygdResponse: {
             pid?: string;
@@ -55,6 +99,8 @@ export interface components {
             /** @enum {string} */
             innloggingstype?: "LEVEL4" | "LEVEL3" | "NAV" | "SYSTEM";
             harGammelFullmaktmottaker?: boolean;
+            hendelser?: components["schemas"]["SakHendelse"][];
+            journalposter?: components["schemas"]["Journalpost"][];
         };
     };
     responses: never;
@@ -81,6 +127,31 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["UforetrygdResponse"];
+                };
+            };
+        };
+    };
+    getDokument: {
+        parameters: {
+            query?: {
+                variantformat?: string;
+            };
+            header?: never;
+            path: {
+                journalpostId: string;
+                dokumentInfoId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
                 };
             };
         };

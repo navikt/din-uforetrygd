@@ -1,0 +1,9 @@
+.sortableList {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+}
+
+.pagination {
+    margin-top: 18px;
+}
