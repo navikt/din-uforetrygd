@@ -1,0 +1,28 @@
+query dokumentoversiktFagsak($fagsak: FagsakInput!, $foerste: Int!) {
+    dokumentoversiktFagsak(fagsak: $fagsak, foerste:$foerste) {
+        journalposter {
+            sak {
+                fagsakId
+            }
+            tittel
+            journalpostId
+            journalposttype
+            tema
+            avsenderMottaker {
+                id
+                erLikBruker
+            }
+            datoOpprettet
+            brukerHarTilgang
+            dokumenter {
+                tittel
+                dokumentInfoId
+                dokumentvarianter {
+                    variantformat
+                    brukerHarTilgang
+                    filtype
+                }
+            }
+        }
+    }
+}

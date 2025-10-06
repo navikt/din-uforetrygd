@@ -3,7 +3,6 @@ package no.nav.uforetrygdbackend.vergemaal
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import no.nav.uforetrygdbackend.Innloggingstype
 import no.nav.uforetrygdbackend.person.PersonService
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService

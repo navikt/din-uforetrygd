@@ -1,18 +1,21 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, Heading, VStack } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
-import { Visningskriterier } from '@/const'
+import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
 import { InformasjonOgRegistreringer } from '@/sections/InformasjonOgRegistreringer'
-import { UforestatusGuidePanel } from '@/sections/UforeStatusGuidePanel'
-import { DittVedtak } from '@/sections/DittVedtak'
+import DittVedtak from '@/sections/DittVedtak/index'
 import { MeldeFra } from '@/sections/MeldeFra'
-import { DineSaker } from '@/sections/DineSaker'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
 import { initate } from '@/api/endpoints'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon'
 import { resolveErrorText } from '@/utils/resolveErrorText'
 import { TaskAnalytics } from '../components/TaskAnalytics'
 import getEnv from '@/utils/env'
+import './layout.css'
+import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
+import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
+import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
+import {Saksoversikt} from "@/sections/Saksoversikt";
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -26,37 +29,49 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
+    const uforesak = uforetrygdResponse.saker?.[0] ?? null
+    const sakstype = uforesak?.type ? (mapSakCodeToSak(uforesak.type.toString()) ?? 'ukjent') : 'ukjent'
 
     return (
       <>
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={params.pid} />
-        <main className="main-content" id="maincontent" tabIndex={-1}>
-          <Heading size="xlarge" level="1">
-            Din uføretrygd
-          </Heading>
-          <UforestatusGuidePanel visningskriterier={visningskriterier} pid={params.pid} />
-          <DineSaker visningskriterier={visningskriterier} pid={params.pid} />
-          <DittVedtak
-            pid={params.pid}
-            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
-            dittUforevedtak={uforetrygdResponse.uforevedtak}
-          />
-          <InformasjonOgRegistreringer
-            visningskriterier={visningskriterier}
-            pid={params.pid}
-            bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
-          />
-          <MeldeFra visningskriterier={visningskriterier} />
-          <RelevanteSoknader
-            visningskriterier={visningskriterier}
-            innloggingstype={uforetrygdResponse.innloggingstype!}
-          />
-          <div className="ux-signals-container">
-            <div data-uxsignals-embed="panel-u5y48zl9t7" className="ux-signals"></div>
-          </div>
-          <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
-        </main>
+        <EventProvider>
+          <main className="main-content" id="maincontent" tabIndex={-1}>
+            <Heading size="xlarge" level="1">
+              Din uføretrygd
+            </Heading>
+            <UforestatusGuidePanel visningskriterier={visningskriterier} />
+            <DittVedtak
+              pid={params.pid}
+              hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
+              dittUforevedtak={uforetrygdResponse.uforevedtak}
+              sakId={uforesak?.sakId?.toString()}
+            />
+            <InformasjonOgRegistreringer
+              visningskriterier={visningskriterier}
+              pid={params.pid}
+              bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
+              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+            />
+            <MeldeFra visningskriterier={visningskriterier} />
+            <Saksoversikt
+              visningskriterier={visningskriterier}
+              pid={params.pid}
+              journalposter={uforetrygdResponse.journalposter!}
+              hendelser={uforetrygdResponse.hendelser!}
+              sakstype={sakstype}>
+            </Saksoversikt>
+            <RelevanteSoknader
+              visningskriterier={visningskriterier}
+              innloggingstype={uforetrygdResponse.innloggingstype!}
+            />
+            <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
+            <div className="ux-signals-container">
+              <div data-uxsignals-embed="panel-u5y48zl9t7" className="ux-signals"></div>
+            </div>
+          </main>
+        </EventProvider>
       </>
     )
   } else {

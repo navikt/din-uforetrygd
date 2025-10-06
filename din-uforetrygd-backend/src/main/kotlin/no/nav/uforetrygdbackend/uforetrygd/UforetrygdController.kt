@@ -1,5 +1,6 @@
-package no.nav.uforetrygdbackend
+package no.nav.uforetrygdbackend.uforetrygd
 
+import no.nav.uforetrygdbackend.ErrorHandler
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
 import no.nav.uforetrygdbackend.audit.Auditor

@@ -1,6 +1,6 @@
 package no.nav.uforetrygdbackend.security
 
-import no.nav.uforetrygdbackend.Innloggingstype
+import no.nav.uforetrygdbackend.uforetrygd.Innloggingstype
 import no.nav.uforetrygdbackend.configuration.AppId
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder

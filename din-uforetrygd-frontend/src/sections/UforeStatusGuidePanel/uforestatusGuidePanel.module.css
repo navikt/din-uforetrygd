@@ -1,7 +1,32 @@
 .ingenUforetrygd {
-    max-width: 468px;
+    width: clamp(300px, 100vw - 36px, 632px);
 }
 
 .tilBehandling {
-    max-width: 714px;
+    width: clamp(300px, 100vw - 36px, 632px);
+}
+
+.guidepanelWrapper {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: 12px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.uforetrygdHeading {
+  padding-bottom: 1rem;
+}
+
+.uforetrygdHendelserLinkButton {
+  margin-top: 1rem;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  cursor: pointer;
 }
