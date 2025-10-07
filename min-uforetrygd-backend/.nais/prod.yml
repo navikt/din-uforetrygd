@@ -114,3 +114,15 @@ spec:
       value: 0af3955f-df85-4eb0-b5b2-45bf2c8aeb9e
     - name: VEILEDER_GROUP_ID
       value: 959ead5b-99b5-466b-a0ff-5fdbc687517b
+    - name: SAF_URL
+      value: https://saf.prod-fss-pub.nais.io
+    - name: SAF_SCOPE
+      value: api://prod-fss.teamdokumenthandtering.saf/.default
+    - name: SAF_AUDIENCE
+      value: prod-fss:teamdokumenthandtering:saf
+    - name: SAF_SELVBETJENING_URL
+      value: https://safselvbetjening.prod-fss-pub.nais.io
+    - name: SAF_SELVBETJENING_SCOPE
+      value: api://prod-fss.teamdokumenthandtering.safselvbetjening/.default
+    - name: SAF_SELVBETJENING_AUDIENCE
+      value: prod-fss:teamdokumenthandtering:safselvbetjening
