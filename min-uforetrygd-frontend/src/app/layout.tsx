@@ -41,6 +41,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
           <title>Din uføretrygd - Veileder</title>
         </head>
         <body>
+          {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
           <InternalHeader>
             <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
             <Spacer />
