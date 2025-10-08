@@ -21,8 +21,9 @@ import java.io.PrintWriter
 class SetPidFilterTest{
     private val tokenService = mock(TokenService::class.java)
     private val authorizationService = mock(AuthorizationService::class.java)
+    private val pidEncryptionClient = mock(PidEncryptionClient::class.java)
 
-    private val filter = SetPidFilter(tokenService, authorizationService)
+    private val filter = SetPidFilter(tokenService, authorizationService, pidEncryptionClient)
     private val objectMapper = ObjectMapper()
 
     // Mock request objekt

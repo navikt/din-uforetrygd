@@ -35,7 +35,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
     return (
       <>
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
-        <VeilederBorgerinformasjon pid={params.pid} />
+        <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
             <Heading size="xlarge" level="1">
