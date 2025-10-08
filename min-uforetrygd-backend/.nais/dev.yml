@@ -67,6 +67,9 @@ spec:
         - application: azure-token-generator
           namespace: nais
     outbound:
+      rules:
+        - application: pensjon-pid-encryption
+          namespace: pensjon-person
       external:
         - host: pdl-api.dev-fss-pub.nais.io
         - host: pensjon-pen-q2.dev-fss-pub.nais.io
@@ -130,4 +133,7 @@ spec:
       value: 8bb9b8d1-f46a-4ade-8ee8-5895eccdf8cf
     - name: VEILEDER_GROUP_ID
       value: a3f91493-1ab8-4b64-a544-0a77cbba9240
-
+    - name: PID_ENCRYPTION_URL
+      value: http://pensjon-pid-encryption.pensjon-person
+    - name: PID_ENCRYPTION_SCOPE
+      value: api://dev-gcp.pensjon-person.pensjon-pid-encryption/.default

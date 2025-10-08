@@ -63,6 +63,9 @@ spec:
           namespace: pensjonselvbetjening
           cluster: prod-gcp
     outbound:
+      rules:
+        - application: pensjon-pid-encryption
+          namespace: pensjon-person
       external:
         - host: pdl-api.prod-fss-pub.nais.io
         - host: pensjon-pen.prod-fss-pub.nais.io
@@ -126,3 +129,7 @@ spec:
       value: api://prod-fss.teamdokumenthandtering.safselvbetjening/.default
     - name: SAF_SELVBETJENING_AUDIENCE
       value: prod-fss:teamdokumenthandtering:safselvbetjening
+    - name: PID_ENCRYPTION_URL
+      value: http://pensjon-pid-encryption.pensjon-person
+    - name: PID_ENCRYPTION_SCOPE
+      value: api://prod-gcp.pensjon-person.pensjon-pid-encryption/.default
