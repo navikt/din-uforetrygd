@@ -9,6 +9,7 @@ import './layout.css'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import FullmaktModal from '@/components/FullmaktModal'
+import UndersøkelseEtteroppgjør2025 from '@/analyse/UndersøkelseEtteroppgjør2025'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -59,6 +60,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         <Decorator.HeadAssets />
       </head>
       <body>
+        {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
         <Decorator.Header />
         <RepresentasjonBanner />
         {children}
