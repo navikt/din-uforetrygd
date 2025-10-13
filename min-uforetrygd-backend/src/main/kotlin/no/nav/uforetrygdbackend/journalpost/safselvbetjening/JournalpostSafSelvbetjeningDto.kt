@@ -14,7 +14,7 @@ data class JournalpostSafSelvbetjeningDto(
     val dokumenter: List<Dokument>,
 ) {
     data class Sak (
-        val fagsakId: String,
+        val fagsakId: String?,
     )
     data class Aktoer (
         val id: String?,
