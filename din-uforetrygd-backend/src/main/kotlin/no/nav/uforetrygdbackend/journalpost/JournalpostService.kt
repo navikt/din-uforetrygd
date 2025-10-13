@@ -48,7 +48,7 @@ class JournalpostService(
     fun getJournalPostliste(pid: String, sakId: String): List<Journalpost> {
         if (tokenService.isUserLoggedInAsPerson()) {
             val journalpostResponse = safSelvbetjeningClient.performGraphQLQuery(pid)
-            return journalpostResponse?.filter { (it.tema == "UFO" || it.tema == "PEN") && it.sak.fagsakId == sakId && it.dokumenter.isNotEmpty() && it.journalposttype != "N" }
+            return journalpostResponse?.filter { (it.tema == "UFO" || it.tema == "PEN") && it.sak?.fagsakId == sakId && it.dokumenter.isNotEmpty() && it.journalposttype != "N" }
                 ?.map {
                     Journalpost(
                         id = it.journalpostId,

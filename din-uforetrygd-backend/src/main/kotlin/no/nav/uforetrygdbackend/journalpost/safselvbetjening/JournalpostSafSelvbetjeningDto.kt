@@ -9,7 +9,7 @@ data class JournalpostSafSelvbetjeningDto(
     val tema: String?,
     val avsender: Aktoer?,
     val mottaker: Aktoer?,
-    val sak: Sak,
+    val sak: Sak?,
     val datoSortering: LocalDateTime,
     val dokumenter: List<Dokument>,
 ) {
