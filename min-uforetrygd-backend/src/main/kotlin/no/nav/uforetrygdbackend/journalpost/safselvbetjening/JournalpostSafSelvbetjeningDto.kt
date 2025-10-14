@@ -9,12 +9,12 @@ data class JournalpostSafSelvbetjeningDto(
     val tema: String?,
     val avsender: Aktoer?,
     val mottaker: Aktoer?,
-    val sak: Sak,
+    val sak: Sak?,
     val datoSortering: LocalDateTime,
     val dokumenter: List<Dokument>,
 ) {
     data class Sak (
-        val fagsakId: String,
+        val fagsakId: String?,
     )
     data class Aktoer (
         val id: String?,
