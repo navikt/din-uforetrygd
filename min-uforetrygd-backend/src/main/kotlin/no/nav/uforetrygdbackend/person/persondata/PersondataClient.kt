@@ -12,6 +12,7 @@ class PersondataClient(
     private val webClient: WebClient,
     @Value("\${persondata.scope}") private val scope: String,
     @Value("\${persondata.audience}") private val audience: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val tokenService: TokenService
 ) {
     fun getBostedsland(pid: String): BostedslandResponse {
@@ -22,6 +23,7 @@ class PersondataClient(
             .header("Authorization", "Bearer ${tokenService.getEgressToken(scope, audience, pid, AppId.PERSONDATA)}")
             .retrieve()
             .bodyToMono(BostedslandResponse::class.java)
+            .retry(numberOfRetries)
             .block() ?: throw RuntimeException("Failed calling persondata for /api/persondata/bostedsland/landkode")
     }
 }

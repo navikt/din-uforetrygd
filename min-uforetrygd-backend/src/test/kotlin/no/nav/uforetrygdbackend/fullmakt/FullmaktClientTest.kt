@@ -20,7 +20,12 @@ class FullmaktClientTest : WebClientTest() {
     override fun setup() {
         super.setup()
         fullmaktClient = FullmaktClient(
-            baseUrl = baseUrl, webClient = WebClient.create(), scope = "", audience = "", tokenService = tokenService
+            baseUrl = baseUrl,
+            webClient = WebClient.create(),
+            scope = "",
+            audience = "",
+            tokenService = tokenService,
+            numberOfRetries = 0
         )
         `when`(tokenService.getEgressToken("", "", PID_FULLMEKTIG, AppId.PENSJON_FULLMAKT)).thenReturn("")
     }
