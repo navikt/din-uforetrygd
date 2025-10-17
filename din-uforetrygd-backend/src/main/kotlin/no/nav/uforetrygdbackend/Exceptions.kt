@@ -1,7 +1,6 @@
 package no.nav.uforetrygdbackend
 
 
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
 import no.nav.uforetrygdbackend.util.Masker
 import org.slf4j.Logger
@@ -69,7 +68,7 @@ class ErrorHandler {
             val failedResponseMessage =
                 "Request failed with status: $statusCode ${message?.let { "and message: \"$it\" " } ?: ""}for pid ${
                     Masker.maskPid(pid)
-                }. NAV-Call-ID: ${CallIdUtil.getCallIdFromMdc()}"
+                }. NAV-Call-ID: ${getCallIdFromMdc()}"
             when (statusCode) {
                 HttpStatus.INTERNAL_SERVER_ERROR -> logger.error(failedResponseMessage, e)
                 else -> logger.warn(failedResponseMessage, e)

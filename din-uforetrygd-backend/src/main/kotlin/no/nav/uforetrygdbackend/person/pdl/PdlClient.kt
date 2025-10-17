@@ -4,14 +4,10 @@ import no.nav.uforetrygdbackend.ClientException
 import no.nav.uforetrygdbackend.ForbiddenException
 import no.nav.uforetrygdbackend.PersonNotFoundException
 import no.nav.uforetrygdbackend.configuration.AppId
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
-import no.nav.uforetrygdbackend.configuration.CallIdUtil.Companion.NAV_CALL_ID_NAME
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
-import no.nav.uforetrygdbackend.person.pdl.PdlErrorCodes
-import no.nav.uforetrygdbackend.person.pdl.PdlPerson
-import no.nav.uforetrygdbackend.person.pdl.PdlPersonQuery
 import no.nav.uforetrygdbackend.security.AzureAdService
 import no.nav.uforetrygdbackend.security.TokenService
+import no.nav.uforetrygdbackend.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -45,7 +41,7 @@ class PdlClient(
                 .post()
                 .uri(url)
                 .header("Authorization", "Bearer $it")
-                .header(NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                 .header(PDL_BEHANDLINGSNUMMER_KEY, PDL_BEHANDLINGSNUMMER_VALUE)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(query)
