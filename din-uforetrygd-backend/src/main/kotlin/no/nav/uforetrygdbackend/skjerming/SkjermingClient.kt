@@ -14,8 +14,9 @@ import org.springframework.web.reactive.function.client.WebClient
 @Component
 class SkjermingClient(
     @Value("\${skjerming.endpoint.url}") private val url: String,
-    private val webClient: WebClient,
     @Value("\${skjerming.scope}") private val scope: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
+    private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
     fun isSkjermet(pid: String): Boolean {
@@ -29,6 +30,7 @@ class SkjermingClient(
                 .bodyValue(SkjermingRequest(pid))
                 .retrieve()
                 .bodyToMono(Boolean::class.java)
+                .retry(numberOfRetries)
                 .block() ?: false
         }
     }

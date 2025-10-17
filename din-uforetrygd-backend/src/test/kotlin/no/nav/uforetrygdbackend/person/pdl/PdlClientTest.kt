@@ -28,7 +28,8 @@ class PdlClientTest: WebClientTest(){
             scope = "",
             audience = "",
             tokenService = tokenService,
-            azureAdService = azureAdService
+            azureAdService = azureAdService,
+            numberOfRetries = 0
         )
     }
 

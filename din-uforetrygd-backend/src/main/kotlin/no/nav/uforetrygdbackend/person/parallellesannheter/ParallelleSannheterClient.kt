@@ -13,8 +13,11 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 
 @Component
-class ParallelleSannheterClient(private val webClient: WebClient,
-                                @Value("\${parallellesannheter.endpoint.url}") private val url: String) {
+class ParallelleSannheterClient(
+    private val webClient: WebClient,
+    @Value("\${parallellesannheter.endpoint.url}") private val url: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
+    ) {
 
     private val logger: Logger = LoggerFactory.getLogger(ParallelleSannheterClient::class.java)
 
@@ -28,8 +31,9 @@ class ParallelleSannheterClient(private val webClient: WebClient,
                 .bodyValue(adressebeskyttelseSannheter)
                 .retrieve()
                 .bodyToMono(AdressebeskyttelseParallelleSannheterContainer::class.java)
+                .retry(numberOfRetries)
                 .block()
-                ?.lockDecision()?: AdressebeskyttelseParallelleSannheterContainer(null)
+                ?.lockDecision() ?: AdressebeskyttelseParallelleSannheterContainer(null)
         } catch (e: WebClientResponseException) {
             handleErrorResponse(e, path)
         } catch (e: Exception) {
@@ -38,8 +42,6 @@ class ParallelleSannheterClient(private val webClient: WebClient,
 
         return AdressebeskyttelseParallelleSannheterContainer(null)
     }
-
-
 
 
     private fun handleErrorResponse(e: WebClientResponseException, service: String) {
@@ -60,7 +62,7 @@ class ParallelleSannheterClient(private val webClient: WebClient,
         throw ClientException(APP_ID, service, message, e)
     }
 
-    companion object{
+    companion object {
         private const val APP_ID = "parallelle-sannheter"
     }
 

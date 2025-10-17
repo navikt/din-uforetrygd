@@ -21,6 +21,7 @@ class FullmaktClient(
     @Value("\${fullmakt.endpoint.url}") private val baseUrl: String,
     @Value("\${fullmakt.scope}") private val scope: String,
     @Value("\${fullmakt.audience}") private val audience: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
@@ -39,6 +40,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(HarBprofFullmaktmottakereResponse::class.java)
+                    .retry(numberOfRetries)
                     .block()
             }
 
@@ -74,6 +76,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(RepresentasjonsforholdValidity::class.java)
+                    .retry(numberOfRetries)
                     .block()
             }
 
@@ -108,6 +111,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(object : ParameterizedTypeReference<List<Representasjonsforhold>>() {})
+                    .retry(numberOfRetries)
                     .block() ?: emptyList()
             }
 
