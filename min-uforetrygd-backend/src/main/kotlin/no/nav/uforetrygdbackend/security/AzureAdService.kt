@@ -13,6 +13,7 @@ class AzureAdService(
     @Value("\${oauth2.azureAd.clientId}") private val clientId: String,
     @Value("\${oauth2.azureAd.clientSecret}") private val clientSecret: String,
     @Value("\${oauth2.azureAd.tokenEndpoint}") private val endpoint: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient
 ) {
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -37,6 +38,7 @@ class AzureAdService(
             })
             .retrieve()
             .bodyToMono(OnBehalfOfTokenResponse::class.java)
+            .retry(numberOfRetries)
             .block()
             ?.accessToken
 
@@ -52,6 +54,7 @@ class AzureAdService(
         })
         .retrieve()
         .bodyToMono(ClientCredentialsTokenResponse::class.java)
+        .retry(numberOfRetries)
         .block()
         ?.accessToken
 }

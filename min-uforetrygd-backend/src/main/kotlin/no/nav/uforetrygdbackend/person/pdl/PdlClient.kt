@@ -26,6 +26,7 @@ class PdlClient(
     private val webClient: WebClient,
     @Value("\${pdl.scope}") private val scope: String,
     @Value("\${pdl.audience}") private val audience: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val tokenService: TokenService,
     private val azureAdService: AzureAdService
 ) {
@@ -50,6 +51,7 @@ class PdlClient(
                 .bodyValue(query)
                 .retrieve()
                 .bodyToMono(HentPersonResponse::class.java)
+                .retry(numberOfRetries)
                 .block()
         }
 

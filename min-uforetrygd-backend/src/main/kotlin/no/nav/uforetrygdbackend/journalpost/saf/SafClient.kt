@@ -20,6 +20,7 @@ class SafClient(
     @Value("\${saf.endpoint.url}") private val baseUrl: String,
     @Value("\${saf.audience}") private val audience: String,
     @Value("\${saf.scope}") private val scope: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val tokenService: TokenService,
     private val webClient: WebClient,
 ) {
@@ -58,6 +59,7 @@ class SafClient(
                     .bodyValue(query)
                     .retrieve()
                     .bodyToMono(HentDokumentoversiktFagsakResponse::class.java)
+                    .retry(numberOfRetries)
                     .block()
             }
 
