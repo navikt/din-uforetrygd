@@ -12,7 +12,7 @@ export default function UndersøkelseEtteroppgjør2025() {
       </Script>
       <Script src="https://survey.skyra.no/skyra-survey.js" defer strategy="afterInteractive" />
       {/* @ts-expect-error ikke typet */}
-      <skyra-survey slug="arbeids-og-velferdsetaten-nav/ufore-etteroppgjor-2025"></skyra-survey>
+      <skyra-survey slug="arbeids-og-velferdsetaten-nav/ufore-etteroppgjor-2025-ver2"></skyra-survey>
     </>
   )
 }
