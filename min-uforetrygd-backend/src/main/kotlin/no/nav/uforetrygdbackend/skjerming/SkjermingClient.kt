@@ -2,10 +2,9 @@ package no.nav.uforetrygdbackend.skjerming
 
 
 import no.nav.uforetrygdbackend.configuration.AppId
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
-import no.nav.uforetrygdbackend.configuration.CallIdUtil.Companion.NAV_CALL_ID_NAME
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
 import no.nav.uforetrygdbackend.security.TokenService
+import no.nav.uforetrygdbackend.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -25,7 +24,7 @@ class SkjermingClient(
                 .post()
                 .uri("$url/skjermet")
                 .header("Authorization", "Bearer $accessToken")
-                .header(NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(SkjermingRequest(pid))
                 .retrieve()

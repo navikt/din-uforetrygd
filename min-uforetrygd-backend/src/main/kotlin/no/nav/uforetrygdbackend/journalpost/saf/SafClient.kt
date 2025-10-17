@@ -2,7 +2,6 @@ package no.nav.uforetrygdbackend.journalpost.saf
 
 import no.nav.uforetrygdbackend.common.handleGraphQLErrorResponse
 import no.nav.uforetrygdbackend.configuration.AppId
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
@@ -37,7 +36,7 @@ class SafClient(
                 .get()
                 .uri("$baseUrl/rest/hentdokument/${journalpostId}/${dokumentInfoId}/${variantFormat}")
                 .header("Authorization", "Bearer $it")
-                .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
+                .header("Nav-Callid", getCallIdFromMdc())
                 .header("Nav-User-Id", tokenService.determineLoggedInUserId())
                 .accept(MediaType.APPLICATION_PDF)
                 .retrieve()
@@ -53,7 +52,7 @@ class SafClient(
                     .post()
                     .uri("$baseUrl/graphql")
                     .header("Authorization", "Bearer $it")
-                    .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
+                    .header("Nav-Callid", getCallIdFromMdc())
                     .header("Nav-User-Id", tokenService.determineLoggedInUserId())
                     .accept(MediaType.APPLICATION_JSON)
                     .bodyValue(query)

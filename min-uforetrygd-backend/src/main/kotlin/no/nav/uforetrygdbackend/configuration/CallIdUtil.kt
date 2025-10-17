@@ -1,11 +1,6 @@
 package no.nav.uforetrygdbackend.configuration
 
+import no.nav.uforetrygdbackend.util.NAV_CALL_ID_MDC
 import org.slf4j.MDC
 
-class CallIdUtil {
-    companion object {
-        const val NAV_CALL_ID_NAME = "Nav-Call-Id"
-    }
-}
-
-fun CallIdUtil.Companion.getCallIdFromMdc() = MDC.get(NAV_CALL_ID_NAME)
+fun getCallIdFromMdc() = MDC.get(NAV_CALL_ID_MDC)

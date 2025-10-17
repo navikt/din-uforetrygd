@@ -5,7 +5,6 @@ import no.nav.uforetrygdbackend.ForbiddenException
 import no.nav.uforetrygdbackend.PersonNotFoundException
 import no.nav.uforetrygdbackend.common.handleGraphQLErrorResponse
 import no.nav.uforetrygdbackend.configuration.AppId
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
 import no.nav.uforetrygdbackend.security.SecurityContextUtil
 import no.nav.uforetrygdbackend.security.TokenService
@@ -50,7 +49,7 @@ class SafSelvbetjeningClient(
                 .get()
                 .uri("$baseUrl/$path/${journalpostId}/${dokumentInfoId}")
                 .header("Authorization", "Bearer $it")
-                .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
+                .header("Nav-Callid", getCallIdFromMdc())
                 .accept(MediaType.APPLICATION_PDF)
                 .retrieve()
                 .toEntityFlux(DataBuffer::class.java)
@@ -78,7 +77,7 @@ class SafSelvbetjeningClient(
                 .post()
                 .uri("$baseUrl/graphql")
                 .header("Authorization", "Bearer $it")
-                .header("Nav-Callid", CallIdUtil.getCallIdFromMdc())
+                .header("Nav-Callid", getCallIdFromMdc())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(query)
                 .retrieve()
