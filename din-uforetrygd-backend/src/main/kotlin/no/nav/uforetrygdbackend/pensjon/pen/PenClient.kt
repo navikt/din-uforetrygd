@@ -21,6 +21,7 @@ class PenClient(
     @Value("\${pen.endpoint.url}") private val url: String,
     @Value("\${pen.scope}") private val scope: String,
     @Value("\${pen.audience}") private val audience: String,
+    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
@@ -38,6 +39,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<SakSammendrag>>() {})
+                        .retry(numberOfRetries)
                         .block() ?: emptyList()
                 }
         } catch (e: WebClientResponseException) {
@@ -64,6 +66,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(Saksoversikt::class.java)
+                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -92,6 +95,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(VedtakssammendragResponse::class.java)
+                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -118,6 +122,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(ForventedeInntekterResponse::class.java)
+                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {

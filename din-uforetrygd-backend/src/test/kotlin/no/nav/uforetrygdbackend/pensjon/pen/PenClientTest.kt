@@ -7,16 +7,14 @@ import no.nav.uforetrygdbackend.configuration.AppId
 import no.nav.uforetrygdbackend.security.TokenService
 import okhttp3.mockwebserver.MockResponse
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 
 class PenClientTest : WebClientTest() {
     val tokenService = Mockito.mock(TokenService::class.java)
@@ -26,7 +24,12 @@ class PenClientTest : WebClientTest() {
     override fun setup() {
         super.setup()
         penClient = PenClient(
-            url = baseUrl, webClient = WebClient.create(), scope = "", audience = "", tokenService = tokenService
+            url = baseUrl,
+            webClient = WebClient.create(),
+            scope = "",
+            audience = "",
+            tokenService = tokenService,
+            numberOfRetries = 0
         )
     }
 
