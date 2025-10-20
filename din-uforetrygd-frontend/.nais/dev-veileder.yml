@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: uforetrygd-frontend-veileder
-  namespace: pensjonselvbetjening
+  namespace: ufore
   labels:
-    team: pensjonselvbetjening
+    team: ufore
   annotations:
     nais.io/run-as-user: "101" # nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
@@ -59,9 +59,7 @@ spec:
           namespace: personbruker
         - application: uforetrygd-backend
           cluster: dev-gcp
-          namespace: pensjonselvbetjening
-      external:
-        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
+          namespace: ufore
   env:
     - name: MODE
       value: veileder
@@ -113,5 +111,3 @@ spec:
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
     - name: BACKEND_DIN_UFORETRYGD_SCOPE
       value: api://dev-gcp.pensjonselvbetjening.uforetrygd-backend/.default
-  envFrom:
-    - secret: uforetrygd-frontend-unleash-api-token

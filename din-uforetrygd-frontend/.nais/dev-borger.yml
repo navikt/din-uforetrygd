@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: uforetrygd-frontend-borger
-  namespace: pensjonselvbetjening
+  namespace: ufore
   labels:
-    team: pensjonselvbetjening
+    team: ufore
   annotations:
     nais.io/run-as-user: "101" # nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
@@ -58,9 +58,7 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
         - application: uforetrygd-backend
-          namespace: pensjonselvbetjening
-      external:
-        - host: pensjonselvbetjening-unleash-api.nav.cloud.nais.io
+          namespace: ufore
   env:
     - name: MODE
       value: borger
@@ -114,5 +112,4 @@ spec:
       value: dev-gcp:pensjonselvbetjening:uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
-  envFrom:
-    - secret: uforetrygd-frontend-unleash-api-token
+
