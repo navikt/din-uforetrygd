@@ -4,10 +4,10 @@ import no.nav.uforetrygdbackend.ClientException
 import no.nav.uforetrygdbackend.ForbiddenException
 import no.nav.uforetrygdbackend.PersonNotFoundException
 import no.nav.uforetrygdbackend.configuration.AppId
-import no.nav.uforetrygdbackend.configuration.CallIdUtil
 import no.nav.uforetrygdbackend.configuration.getCallIdFromMdc
 import no.nav.uforetrygdbackend.uforetrygd.Saksoversikt
 import no.nav.uforetrygdbackend.security.TokenService
+import no.nav.uforetrygdbackend.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
@@ -35,7 +35,7 @@ class PenClient(
                         .uri("$url$path")
                         .header("fnr", pid)
                         .header("Authorization", "Bearer $accessToken")
-                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<SakSammendrag>>() {})
@@ -62,7 +62,7 @@ class PenClient(
                         .uri("$url$path?sakId=$sakId")
                         .header("fnr", pid)
                         .header("Authorization", "Bearer $accessToken")
-                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(Saksoversikt::class.java)
@@ -91,7 +91,7 @@ class PenClient(
                         .uri("$url$path")
                         .header("fnr", pid)
                         .header("Authorization", "Bearer $accessToken")
-                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(VedtakssammendragResponse::class.java)
@@ -118,7 +118,7 @@ class PenClient(
                         .uri("$url$path")
                         .header("fnr", pid)
                         .header("Authorization", "Bearer $accessToken")
-                        .header(CallIdUtil.NAV_CALL_ID_NAME, CallIdUtil.getCallIdFromMdc())
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(ForventedeInntekterResponse::class.java)

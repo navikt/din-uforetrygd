@@ -52,11 +52,7 @@ class FullmaktClient(
                 "Failed to call service: " + e.responseBodyAsString,
                 e
             )
-        } catch (e: ResponseStatusException) {
-            logger.error("Kall til fullmaktstjenesten feilet med statuskode ${e.statusCode}: ${e.message}")
-            throw FullmaktException(SERVICE, "harBprofFullmaktmottager", "Failed to call service", e)
         } catch (e: RuntimeException) { // e.g. when connection broken
-            logger.error("Kall til fullmaktstjenesten feilet: ${e.message}")
             throw FullmaktException(SERVICE, "harBprofFullmaktmottager", "Failed to call service", e)
         }
     }
