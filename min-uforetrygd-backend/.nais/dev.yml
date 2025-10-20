@@ -1,10 +1,10 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: uforetrygd-backend
-  namespace: pensjonselvbetjening
+  name: din-uforetrygd-backend
+  namespace: ufore
   labels:
-    team: pensjonselvbetjening
+    team: ufore
 spec:
   image: "{{ image }}"
   port: 8080
@@ -63,9 +63,9 @@ spec:
     inbound:
       rules:
         - application: uforetrygd-frontend-veileder
-          namespace: pensjonselvbetjening
+          namespace: ufore
         - application: uforetrygd-frontend-borger
-          namespace: pensjonselvbetjening
+          namespace: ufore
         - application: tokenx-token-generator
           namespace: nais
         - application: azure-token-generator
