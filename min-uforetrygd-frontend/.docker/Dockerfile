@@ -3,10 +3,10 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY ./uforetrygd-frontend/next.config.mjs ./
-COPY ./uforetrygd-frontend/.next ./.next
-COPY ./uforetrygd-frontend/node_modules ./node_modules
-COPY ./uforetrygd-frontend/dist ./server
+COPY ./din-uforetrygd-frontend/next.config.mjs ./
+COPY ./din-uforetrygd-frontend/.next ./.next
+COPY ./din-uforetrygd-frontend/node_modules ./node_modules
+COPY ./din-uforetrygd-frontend/dist ./server
 
 ENV PORT=8080
 

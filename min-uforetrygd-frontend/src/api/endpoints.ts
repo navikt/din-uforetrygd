@@ -5,7 +5,7 @@ import { getFullmaktCookie } from './getFullmaktCookie'
 import fetchLogger from '@/utils/fetchLogger'
 
 const client = createClient<paths>({
-  baseUrl: process.env.NODE_ENV !== 'development' ? process.env.UFORETRYGD_BACKEND : "http://localhost:8080",
+  baseUrl: process.env.NODE_ENV !== 'development' ? process.env.DIN_UFORETRYGD_BACKEND : "http://localhost:8080",
   fetch: fetchLogger,
 })
 

@@ -18,7 +18,7 @@
         <syslogConfig class="org.productivity.java.syslog4j.impl.net.tcp.TCPNetSyslogConfig">
             <host>audit.nais</host>
             <port>6514</port>
-            <ident>uforetrygd-backend</ident>
+            <ident>din-uforetrygd-backend</ident>
             <maxMessageLength>128000</maxMessageLength>
         </syslogConfig>
     </appender>
@@ -31,5 +31,5 @@
     <root level="INFO">
         <appender-ref ref="JSON_CONSOLE"/>
     </root>
-    <logger name="no.nav.uforetrygdbackend" level="INFO"/>
+    <logger name="no.nav.dinuforetrygd" level="INFO"/>
 </configuration>

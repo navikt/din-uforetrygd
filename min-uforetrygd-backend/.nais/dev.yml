@@ -62,9 +62,9 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: uforetrygd-frontend-veileder
+        - application: din-uforetrygd-frontend-veileder
           namespace: ufore
-        - application: uforetrygd-frontend-borger
+        - application: din-uforetrygd-frontend-borger
           namespace: ufore
         - application: tokenx-token-generator
           namespace: nais

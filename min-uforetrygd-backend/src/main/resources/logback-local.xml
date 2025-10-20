@@ -12,7 +12,7 @@
         <appender-ref ref="CONSOLE_PLAIN" />
     </logger>
 
-    <logger name="no.nav.pensjon.selvbetjening.uforetrygdbackend" level="INFO">
+    <logger name="no.nav.dinuforetrygd" level="INFO">
         <appender-ref ref="CONSOLE_PLAIN" />
     </logger>
 
