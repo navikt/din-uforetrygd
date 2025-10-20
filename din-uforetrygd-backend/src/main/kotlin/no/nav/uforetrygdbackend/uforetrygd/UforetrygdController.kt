@@ -37,10 +37,7 @@ class UforetrygdController(
             return response
         } catch (e: Exception) {
             logger.error(e.message, e)
-            throw ErrorHandler.exceptionToErrorResponse(
-                exception = e,
-                pid = pid
-            )
+            throw ErrorHandler.exceptionToErrorResponse(e)
         }
     }
 }
