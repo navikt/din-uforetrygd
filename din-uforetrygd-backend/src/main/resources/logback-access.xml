@@ -25,7 +25,7 @@
                         }
                     </pattern>
                 </pattern>
-                <provider class="no.nav.uforetrygdbackend.logging.AuthorizationJsonProvider"/>
+                <provider class="no.nav.dinuforetrygd.logging.AuthorizationJsonProvider"/>
             </providers>
         </encoder>
 

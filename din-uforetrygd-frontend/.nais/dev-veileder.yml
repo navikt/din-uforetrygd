@@ -1,7 +1,7 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: uforetrygd-frontend-veileder
+  name: din-uforetrygd-frontend-veileder
   namespace: ufore
   labels:
     team: ufore
@@ -57,7 +57,7 @@ spec:
       rules:
         - application: nav-dekoratoren
           namespace: personbruker
-        - application: uforetrygd-backend
+        - application: din-uforetrygd-backend
           cluster: dev-gcp
           namespace: ufore
   env:
@@ -65,8 +65,8 @@ spec:
       value: veileder
     - name: DECORATOR_ENV
       value: dev
-    - name: UFORETRYGD_BACKEND
-      value: http://uforetrygd-backend
+    - name: DIN_UFORETRYGD_BACKEND
+      value: http://din-uforetrygd-backend
     - name: LINK_SOKNAD_GRADERT_UFORE
       value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120901?sub=paper
     - name: LINK_SOKNAD_UFORE
@@ -109,5 +109,5 @@ spec:
       value: https://www.ansatt.dev.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: LINK_DOKUMENTOVERSIKT
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
-    - name: BACKEND_DIN_UFORETRYGD_SCOPE
-      value: api://dev-gcp.pensjonselvbetjening.uforetrygd-backend/.default
+    - name: DIN_UFORETRYGD_BACKEND_SCOPE
+      value: api://dev-gcp.ufore.din-uforetrygd-backend/.default

@@ -16,7 +16,7 @@ const getOboToken = async () => {
     if (!validation.ok) {
       return reject(`Validation failed: ${validation.error}`)
     }
-    const obo = await requestOboToken(token, getEnv('BACKEND_DIN_UFORETRYGD_SCOPE')!)
+    const obo = await requestOboToken(token, getEnv('DIN_UFORETRYGD_BACKEND_SCOPE')!)
 
     if (!obo.ok) {
       return reject(`OBO Exchange failed: ${obo.error}`)
