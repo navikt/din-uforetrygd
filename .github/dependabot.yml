@@ -1,0 +1,36 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directories:
+      - /din-uforetrygd-backend/
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    open-pull-requests-limit: 50
+
+  - package-ecosystem: npm
+    directories:
+      - /din-uforetrygd-frontend/
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    open-pull-requests-limit: 50
+    groups:
+      designsystemet:
+        patterns:
+          - '@navikt/ds*'
+          - '@navikt/aksel*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    open-pull-requests-limit: 10
