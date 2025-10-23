@@ -31,4 +31,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Bygg
-        run: cd ./uforetrygd-backend && mvn -B package --file pom.xml
+        run: cd ./din-uforetrygd-backend && mvn -B package --file pom.xml
