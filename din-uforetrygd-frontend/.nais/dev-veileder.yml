@@ -11,21 +11,21 @@ metadata:
 spec:
   image: "{{ image }}"
   ingresses:
-    - https://uforetrygd-selvbetjening-frontend-veileder.intern.dev.nav.no/uforetrygd/selvbetjening
-    - https://uforetrygd-selvbetjening-frontend-veileder.ansatt.dev.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-veileder.intern.dev.nav.no/din-uforetrygd/selvbetjening
+    - https://uforetrygd-veileder.ansatt.dev.nav.no/din-uforetrygd/selvbetjening
 
   port: 8080
   replicas:
     min: 1
     max: 1
   liveness:
-    path: /uforetrygd/selvbetjening/health
+    path: /din-uforetrygd/selvbetjening/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
   readiness:
-    path: /uforetrygd/selvbetjening/health
+    path: /din-uforetrygd/selvbetjening/health
     initialDelay: 20
     periodSeconds: 20
     failureThreshold: 5

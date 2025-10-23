@@ -1,0 +1,49 @@
+name: Bygg din-uforetrygd-frontend
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - din-uforetrygd-frontend/**
+    branches-ignore:
+      - main  # Bygges allerede av deploy-workflow
+
+jobs:
+  build-frontend:
+    name: Bygg med node
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://npm.pkg.github.com'
+          cache: npm
+          cache-dependency-path: din-uforetrygd-frontend/package-lock.json
+
+      - name: Cache node modules
+        id: cache-node
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Installer avhengigheter
+        if: steps.cache-node.outputs.cache-hit != 'true'
+        run: cd din-uforetrygd-frontend && npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Bygg med node
+        run: cd din-uforetrygd-frontend && npm ci && npm run build
+        env:
+          FARO_TELEMETRY_URL: 'https://telemetry.ekstern.dev.nav.no/collect'
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
