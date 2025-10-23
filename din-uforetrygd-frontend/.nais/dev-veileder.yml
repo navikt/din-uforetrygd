@@ -60,6 +60,8 @@ spec:
         - application: din-uforetrygd-backend
           cluster: dev-gcp
           namespace: ufore
+      external:
+        - host: ufore-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: veileder
@@ -111,3 +113,5 @@ spec:
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: api://dev-gcp.ufore.din-uforetrygd-backend/.default
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token

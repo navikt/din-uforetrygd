@@ -63,7 +63,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: din-uforetrygd-frontend/.nais/dev-borger.yml
+          RESOURCE: din-uforetrygd-frontend/.nais/dev-borger.yml,din-uforetrygd-frontend/.nais/unleash-dev.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore
 
@@ -82,6 +82,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: din-uforetrygd-frontend/.nais/dev-veileder.yml
+          RESOURCE: din-uforetrygd-frontend/.nais/dev-veileder.yml,din-uforetrygd-frontend/.nais/unleash-dev.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore

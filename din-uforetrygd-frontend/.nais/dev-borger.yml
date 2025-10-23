@@ -59,6 +59,8 @@ spec:
           namespace: personbruker
         - application: din-uforetrygd-backend
           namespace: ufore
+      external:
+        - host: ufore-unleash-api.nav.cloud.nais.io
   env:
     - name: MODE
       value: borger
@@ -112,4 +114,5 @@ spec:
       value: dev-gcp:ufore:din-uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
-
+  envFrom:
+    - secret: uforetrygd-frontend-unleash-api-token
