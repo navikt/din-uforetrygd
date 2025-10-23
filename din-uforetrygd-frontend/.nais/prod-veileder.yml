@@ -106,3 +106,5 @@ spec:
       value: https://www.nav.no/dokumentarkiv
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: api://prod-gcp.ufore.din-uforetrygd-backend/.default
+  envFrom:
+    - secret: din-uforetrygd-frontend-unleash-api-token

@@ -107,3 +107,5 @@ spec:
       value: https://www.nav.no/dokumentarkiv
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
+  envFrom:
+    - secret: din-uforetrygd-frontend-unleash-api-token

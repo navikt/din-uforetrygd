@@ -115,4 +115,4 @@ spec:
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
   envFrom:
-    - secret: uforetrygd-frontend-unleash-api-token
+    - secret: din-uforetrygd-frontend-unleash-api-token
