@@ -29,7 +29,7 @@ const projects = scenarios.flatMap((scenario) =>
     testMatch: scenario.testFile,
     use: {
       ...browser.device,
-      baseURL: `http://localhost:${scenario.port}/uforetrygd/selvbetjening`,
+      baseURL: `http://localhost:${scenario.port}/din-uforetrygd/selvbetjening`,
     },
   }))
 )
@@ -52,7 +52,7 @@ export default defineConfig({
   },
   webServer: {
     command: 'npm run dev:all',
-    url: 'http://localhost:3000/uforetrygd/selvbetjening',
+    url: 'http://localhost:3000/din-uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
