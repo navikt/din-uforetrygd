@@ -13,7 +13,8 @@ spec:
   ingresses:
     - https://uforetrygd-borger.intern.dev.nav.no/din-uforetrygd/selvbetjening
     - https://uforetrygd-borger.ansatt.dev.nav.no/din-uforetrygd/selvbetjening
-
+    - https://uforetrygd-selvbetjening-frontend-borger.intern.dev.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-selvbetjening-frontend-borger.ansatt.dev.nav.no/uforetrygd/selvbetjening
   port: 8080
   replicas:
     min: 1
