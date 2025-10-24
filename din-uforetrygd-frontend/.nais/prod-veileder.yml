@@ -11,7 +11,7 @@ metadata:
 spec:
   image: "{{ image }}"
   ingresses:
-    - https://uforetrygd-selvbetjening-frontend-veileder.intern.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-selvbetjening-frontend-veileder-temp.intern.nav.no/uforetrygd/selvbetjening
   port: 8080
   replicas:
     min: 2
@@ -49,7 +49,6 @@ spec:
           - id: "70ef8e7f-7456-4298-95e0-b13c0ef2422b" #OKONOMI
       enabled: true
       tenant: nav.no
-
   accessPolicy:
     outbound:
       rules:
