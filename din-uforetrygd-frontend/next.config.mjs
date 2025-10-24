@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "/din-uforetrygd/selvbetjening"
+    basePath: "/uforetrygd/selvbetjening"
 };
 
 export default nextConfig;
