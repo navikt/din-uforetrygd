@@ -30,6 +30,11 @@ spec:
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   azure:
     sidecar:
       autoLogin: true
@@ -46,7 +51,6 @@ spec:
           - id: "a3f91493-1ab8-4b64-a544-0a77cbba9240" # 0000-GA-Pensjon_VEILEDER
       enabled: true
       tenant: trygdeetaten.no
-
   accessPolicy:
     inbound:
       rules:

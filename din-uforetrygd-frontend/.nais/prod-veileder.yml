@@ -28,6 +28,11 @@ spec:
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   azure:
     sidecar:
       autoLogin: true

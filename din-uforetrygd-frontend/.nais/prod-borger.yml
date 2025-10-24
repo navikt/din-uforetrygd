@@ -44,6 +44,10 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   accessPolicy:
     outbound:
       rules:
