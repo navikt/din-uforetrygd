@@ -2,8 +2,6 @@ name: "Dev: Din uforetrygd frontend deploy"
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 4 * * SUN"
 
 jobs:
   build-frontend-and-publish-docker:
@@ -48,8 +46,33 @@ jobs:
           dockerfile: ./din-uforetrygd-frontend/.docker/Dockerfile
           image_suffix: din-uforetrygd-frontend
 
+  trivy-docker:
+    needs: build-frontend-and-publish-docker
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+      security-events: write
+    steps:
+      - uses: nais/login@v0
+        with:
+          team: ufore
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
+          format: 'sarif'
+          output: 'trivy.sarif'
+          severity: 'HIGH,CRITICAL'
+          limit-severities-for-sarif: true
+      - name: Upload results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy.sarif'
 
-  deploy-frontend-borger-dev:
+  deploy-frontend-borger-prod:
+    if: github.ref == 'refs/heads/main'
     needs: build-frontend-and-publish-docker
     runs-on: ubuntu-latest
     permissions:
@@ -62,13 +85,14 @@ jobs:
       - name: Deploy
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: dev-gcp
-          RESOURCE: din-uforetrygd-frontend/.nais/dev-borger.yml,din-uforetrygd-frontend/.nais/unleash-dev.yml
+          CLUSTER: prod-gcp
+          RESOURCE: din-uforetrygd-frontend/.nais/prod-borger.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore
 
 
-  deploy-frontend-veileder-dev:
+  deploy-frontend-veileder-prod:
+    if: github.ref == 'refs/heads/main'
     needs: build-frontend-and-publish-docker
     runs-on: ubuntu-latest
     permissions:
@@ -81,7 +105,7 @@ jobs:
       - name: Deploy
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: dev-gcp
-          RESOURCE: din-uforetrygd-frontend/.nais/dev-veileder.yml,din-uforetrygd-frontend/.nais/unleash-dev.yml
+          CLUSTER: prod-gcp
+          RESOURCE: din-uforetrygd-frontend/.nais/prod-veileder.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore

@@ -1,9 +1,7 @@
-name: "Dev: Din uforetrygd backend deploy"
+name: "Prod: Din uforetrygd backend deploy"
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 4 * * SUN'
 
 jobs:
   build-backend-and-publish-docker:
@@ -43,7 +41,33 @@ jobs:
           dockerfile: ./din-uforetrygd-backend/Dockerfile
           image_suffix: din-uforetrygd-backend
 
-  deploy-to-dev:
+  trivy-docker:
+    needs: build-backend-and-publish-docker
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+      security-events: write
+    steps:
+      - uses: nais/login@v0
+        with:
+          team: ufore
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ needs.build-backend-and-publish-docker.outputs.image }}
+          format: 'sarif'
+          output: 'trivy.sarif'
+          severity: 'HIGH,CRITICAL'
+          limit-severities-for-sarif: true
+      - name: Upload results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy.sarif'
+
+  deploy-to-prod:
+    if: github.ref == 'refs/heads/main'
     needs: build-backend-and-publish-docker
     runs-on: ubuntu-latest
     permissions:
@@ -56,7 +80,7 @@ jobs:
       - name: Deploy
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: dev-gcp
-          RESOURCE: din-uforetrygd-backend/.nais/dev.yml
+          CLUSTER: prod-gcp
+          RESOURCE: din-uforetrygd-backend/.nais/prod.yml
           IMAGE: ${{ needs.build-backend-and-publish-docker.outputs.image }}
           TEAM: ufore
