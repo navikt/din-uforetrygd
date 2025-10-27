@@ -12,6 +12,7 @@ spec:
   image: "{{ image }}"
   ingresses:
     - https://uforetrygd-selvbetjening-frontend-veileder-temp.intern.nav.no/uforetrygd/selvbetjening
+    - https://uforetrygd-selvbetjening-frontend-veileder.intern.nav.no/uforetrygd/selvbetjening
   port: 8080
   replicas:
     min: 2
