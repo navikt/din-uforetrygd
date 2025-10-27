@@ -38,7 +38,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
-            <Alert variant="info" style={{ width: '992px' }}>Din uføretrygd kan være utilgjengelig mellom klokken 15:00 og 15:30 pga vedlikehold</Alert>
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
