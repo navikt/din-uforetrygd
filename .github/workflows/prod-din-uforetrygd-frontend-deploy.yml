@@ -1,4 +1,4 @@
-name: "Dev: Din uforetrygd frontend deploy"
+name: "Prod: Din uforetrygd frontend deploy"
 
 on:
   workflow_dispatch:
