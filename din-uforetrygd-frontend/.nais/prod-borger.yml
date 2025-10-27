@@ -11,7 +11,7 @@ metadata:
 spec:
   image: "{{ image }}"
   ingresses:
-    - https://www.nav.no/temp/uforetrygd/selvbetjening
+    - https://uforetrygd.nav.no/uforetrygd/selvbetjening
   port: 8080
   replicas:
     min: 2
