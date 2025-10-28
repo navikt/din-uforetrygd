@@ -4,6 +4,8 @@ import no.nav.dinuforetrygd.WebClientTest
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.security.TokenService
 import okhttp3.mockwebserver.MockResponse
+import org.jboss.logging.MDC
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,6 +30,12 @@ class FullmaktClientTest : WebClientTest() {
             numberOfRetries = 0
         )
         `when`(tokenService.getEgressToken("", "", PID_FULLMEKTIG, AppId.PENSJON_FULLMAKT)).thenReturn("")
+        MDC.put("x", "y")
+    }
+
+    @AfterEach
+    override fun tearDown() {
+        MDC.clear()
     }
 
     @Test

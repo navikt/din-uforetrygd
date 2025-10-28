@@ -3,6 +3,7 @@ package no.nav.dinuforetrygd.journalpost.saf
 import no.nav.dinuforetrygd.common.handleGraphQLErrorResponse
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.LoggerFactory
@@ -41,6 +42,7 @@ class SafClient(
                 .accept(MediaType.APPLICATION_PDF)
                 .retrieve()
                 .toEntityFlux(DataBuffer::class.java)
+                .withMdcContext()
                 .block()
         }
 
@@ -58,6 +60,7 @@ class SafClient(
                     .bodyValue(query)
                     .retrieve()
                     .bodyToMono(HentDokumentoversiktFagsakResponse::class.java)
+                    .withMdcContext()
                     .retry(numberOfRetries)
                     .block()
             }

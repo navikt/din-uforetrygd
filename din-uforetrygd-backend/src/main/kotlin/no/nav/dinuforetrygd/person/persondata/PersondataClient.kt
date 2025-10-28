@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.person.persondata
 
 import no.nav.dinuforetrygd.configuration.AppId
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.TokenService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -23,6 +24,7 @@ class PersondataClient(
             .header("Authorization", "Bearer ${tokenService.getEgressToken(scope, audience, pid, AppId.PERSONDATA)}")
             .retrieve()
             .bodyToMono(BostedslandResponse::class.java)
+            .withMdcContext()
             .retry(numberOfRetries)
             .block() ?: throw RuntimeException("Failed calling persondata for /api/persondata/bostedsland/landkode")
     }

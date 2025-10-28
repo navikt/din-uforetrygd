@@ -3,6 +3,7 @@ package no.nav.dinuforetrygd.fullmakt
 
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.configuration.AppId
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -40,6 +41,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(HarBprofFullmaktmottakereResponse::class.java)
+                    .withMdcContext()
                     .retry(numberOfRetries)
                     .block()
             }
@@ -72,6 +74,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(RepresentasjonsforholdValidity::class.java)
+                    .withMdcContext()
                     .retry(numberOfRetries)
                     .block()
             }
@@ -107,6 +110,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(object : ParameterizedTypeReference<List<Representasjonsforhold>>() {})
+                    .withMdcContext()
                     .retry(numberOfRetries)
                     .block() ?: emptyList()
             }

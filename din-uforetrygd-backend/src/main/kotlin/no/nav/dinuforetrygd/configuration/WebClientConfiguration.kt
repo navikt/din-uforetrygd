@@ -21,20 +21,12 @@ class WebClientConfiguration {
     fun webClient(): WebClient = WebClient.builder()
         .clientConnector(ReactorClientHttpConnector(httpClient))
         .exchangeStrategies(ExchangeStrategies.builder().codecs { it.defaultCodecs().maxInMemorySize(16 * 1024 * 1024) }.build())
-        .filter(putMdcOnContext())
         .filter(logRequest())
         .build()
 
     private val httpClient = HttpClient.create()
         .responseTimeout(Duration.ofSeconds(5)) // Response timeout
         .option(io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000) // Connection timeout
-
-    private fun putMdcOnContext() = ExchangeFilterFunction { request, next ->
-        logger.info("Tråd i webclient filter: " + Thread.currentThread().name)
-        val mdc = MDC.getCopyOfContextMap()
-        next.exchange(request)
-            .contextWrite { ctx -> ctx.put("mdc", mdc) }
-    }
 
     private fun logRequest() = ExchangeFilterFunction.ofResponseProcessor { response ->
         Mono.deferContextual { ctx ->
@@ -48,4 +40,9 @@ class WebClientConfiguration {
             Mono.just(response)
         }
     }
+}
+
+fun <T> Mono<T>.withMdcContext(): Mono<T> {
+    val mdc = MDC.getCopyOfContextMap()
+    return this.contextWrite { ctx -> ctx.put("mdc", mdc) }
 }

@@ -3,6 +3,7 @@ package no.nav.dinuforetrygd.skjerming
 
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
@@ -29,6 +30,7 @@ class SkjermingClient(
                 .bodyValue(SkjermingRequest(pid))
                 .retrieve()
                 .bodyToMono(Boolean::class.java)
+                .withMdcContext()
                 .retry(numberOfRetries)
                 .block() ?: false
         }

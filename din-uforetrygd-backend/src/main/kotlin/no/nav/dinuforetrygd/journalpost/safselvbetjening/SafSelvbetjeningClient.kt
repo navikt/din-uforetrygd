@@ -6,6 +6,7 @@ import no.nav.dinuforetrygd.PersonNotFoundException
 import no.nav.dinuforetrygd.common.handleGraphQLErrorResponse
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.LoggerFactory
@@ -53,6 +54,7 @@ class SafSelvbetjeningClient(
                 .accept(MediaType.APPLICATION_PDF)
                 .retrieve()
                 .toEntityFlux(DataBuffer::class.java)
+                .withMdcContext()
                 .block()
         } catch (e: WebClientResponseException) {
             when (e.statusCode) {
@@ -82,6 +84,7 @@ class SafSelvbetjeningClient(
                 .bodyValue(query)
                 .retrieve()
                 .bodyToMono(HentJournalposterResponse::class.java)
+                .withMdcContext()
                 .retry(numberOfRetries)
                 .block()
         }

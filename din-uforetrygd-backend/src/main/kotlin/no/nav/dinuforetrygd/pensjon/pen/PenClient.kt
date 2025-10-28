@@ -5,6 +5,7 @@ import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.uforetrygd.Saksoversikt
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
@@ -39,6 +40,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<SakSammendrag>>() {})
+                        .withMdcContext()
                         .retry(numberOfRetries)
                         .block() ?: emptyList()
                 }
@@ -66,6 +68,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(Saksoversikt::class.java)
+                        .withMdcContext()
                         .retry(numberOfRetries)
                         .block()!!
                 }
@@ -95,6 +98,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(VedtakssammendragResponse::class.java)
+                        .withMdcContext()
                         .retry(numberOfRetries)
                         .block()!!
                 }
@@ -122,6 +126,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(ForventedeInntekterResponse::class.java)
+                        .withMdcContext()
                         .retry(numberOfRetries)
                         .block()!!
                 }
