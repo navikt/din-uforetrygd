@@ -30,6 +30,7 @@ class WebClientConfiguration {
         .option(io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000) // Connection timeout
 
     private fun putMdcOnContext() = ExchangeFilterFunction { request, next ->
+        logger.info("Tråd i webclient filter: " + Thread.currentThread().name)
         val mdc = MDC.getCopyOfContextMap()
         next.exchange(request)
             .contextWrite { ctx -> ctx.put("mdc", mdc) }
