@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.person.parallellesannheter
 
 import no.nav.dinuforetrygd.ClientException
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.person.parallellesannheter.dto.AdressebeskyttelseParallelleSannheterContainer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -31,6 +32,7 @@ class ParallelleSannheterClient(
                 .bodyValue(adressebeskyttelseSannheter)
                 .retrieve()
                 .bodyToMono(AdressebeskyttelseParallelleSannheterContainer::class.java)
+                .withMdcContext()
                 .retry(numberOfRetries)
                 .block()
                 ?.lockDecision() ?: AdressebeskyttelseParallelleSannheterContainer(null)

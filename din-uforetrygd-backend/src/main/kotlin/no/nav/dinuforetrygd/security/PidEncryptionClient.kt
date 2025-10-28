@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.security
 
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
@@ -25,6 +26,7 @@ class PidEncryptionClient(
                 .bodyValue(encryptedPid)
                 .retrieve()
                 .bodyToMono(String::class.java)
+                .withMdcContext()
                 .block()
         }
 }

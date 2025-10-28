@@ -5,6 +5,7 @@ import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.AzureAdService
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
@@ -47,6 +48,7 @@ class PdlClient(
                 .bodyValue(query)
                 .retrieve()
                 .bodyToMono(HentPersonResponse::class.java)
+                .withMdcContext()
                 .retry(numberOfRetries)
                 .block()
         }

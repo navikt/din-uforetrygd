@@ -27,7 +27,6 @@ class MdcFilter(val tokenService: TokenService) : OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        logger.info("Tråd i mdc filter: " + Thread.currentThread().name)
         MDC.put(NAV_CALL_ID_MDC, request.getHeader(NAV_CALL_ID_HEADER) ?: UUID.randomUUID().toString())
         if(SecurityContextHolder.getContext().authentication is JwtAuthenticationToken) {
             if (tokenService.isUserLoggedInAsSaksbehandler()) {

@@ -2,6 +2,7 @@ package no.nav.dinuforetrygd.security
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -38,6 +39,7 @@ class AzureAdService(
             })
             .retrieve()
             .bodyToMono(OnBehalfOfTokenResponse::class.java)
+            .withMdcContext()
             .retry(numberOfRetries)
             .block()
             ?.accessToken
@@ -54,6 +56,7 @@ class AzureAdService(
         })
         .retrieve()
         .bodyToMono(ClientCredentialsTokenResponse::class.java)
+        .withMdcContext()
         .retry(numberOfRetries)
         .block()
         ?.accessToken
