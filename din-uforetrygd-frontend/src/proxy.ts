@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import logger from './utils/logger'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const url = new URL(request.url)
   logger.info({
     message: `Request ${url.pathname}`,

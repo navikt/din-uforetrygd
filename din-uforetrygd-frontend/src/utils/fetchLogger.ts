@@ -1,9 +1,8 @@
-import { randomUUID } from 'crypto'
 import logger, { ILogEntry } from './logger'
 
 export const fetchLogger = (input: Request): Promise<Response> => {
   const correlationIdName = 'Nav-Call-Id'
-  const correlationId = randomUUID()
+  const correlationId = crypto.randomUUID()
   const url = new URL(input.url)
   const startTime = Date.now()
 
