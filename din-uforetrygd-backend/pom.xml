@@ -19,7 +19,7 @@
         <jackson-version>2.20.0</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <logback.version>1.5.20</logback.version>
-        <logback-access.version>2.0.6</logback-access.version>
+        <logback-access.version>2.0.7</logback-access.version>
         <spring-boot-starter-security.version>3.5.7</spring-boot-starter-security.version>
         <micrometer.version>1.15.5</micrometer.version>
         <!-- Test -->
