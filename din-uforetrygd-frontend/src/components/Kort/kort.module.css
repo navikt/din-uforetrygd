@@ -1,11 +1,11 @@
 .kort {
   min-width: 10em;
-  color: var(--a-gray-900);
+  color: var(--ax-neutral-1000);
   text-decoration: none;
 }
 
 .kort:hover .kortBox {
-  background-color: var(--a-grayalpha-200);
+  background-color: var(--ax-neutral-300A);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
 }
 
@@ -26,5 +26,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--a-deepblue-500)
+  color: var(--ax-brand-blue-600)
 }
