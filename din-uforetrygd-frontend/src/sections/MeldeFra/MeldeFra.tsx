@@ -1,7 +1,9 @@
 import { Visningskriterier } from '@/const'
-import { Box, Link, Heading, VStack } from '@navikt/ds-react'
 import styles from './MeldeFra.module.css'
 import { getUrl } from '@/utils/getUrl'
+import '@navikt/ds-tokens'
+import '@navikt/ds-css/darkside'
+import { BoxNew, Heading, Link, VStack } from '@navikt/ds-react'
 
 interface IMeldeFra {
   visningskriterier: Visningskriterier[]
@@ -12,14 +14,14 @@ export const MeldeFra: React.FC<IMeldeFra> = async ({ visningskriterier }) => {
     const link = await getUrl({ urlFromEnv: 'LINK_MELD_FRA_OM_ENDRINGER' })
     return (
       <section className={styles.meldeFra}>
-        <Box background="surface-action-subtle" paddingBlock="8" paddingInline="6" borderRadius="xlarge">
+        <BoxNew background="accent-moderate" paddingBlock="8" paddingInline="6" borderRadius="xlarge">
           <VStack gap="2">
             <Heading level="2" size="medium">
               Husk å gi oss beskjed om endringer i din situasjon
             </Heading>
             <Link href={link}>Se hvilke endringer du må si fra om og hvordan du sier fra.</Link>
           </VStack>
-        </Box>
+        </BoxNew>
       </section>
     )
   }

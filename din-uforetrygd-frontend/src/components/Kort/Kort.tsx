@@ -1,4 +1,4 @@
-import { BodyShort, Box, Heading, HStack, VStack } from '@navikt/ds-react'
+import { BodyShort, BoxNew, Heading, HStack, VStack } from '@navikt/ds-react'
 import { ChevronRightIcon, FileExportIcon } from '@navikt/aksel-icons'
 import styles from './kort.module.css'
 import React, { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react'
@@ -24,19 +24,18 @@ export const Kort: React.FC<IKortProps> = (props) => {
       {...getFullmaktProps(props.showFullmaktWarning)}
       {...showModal(props.innloggingstype, props.visInnloggingsModal)}
     >
-      <Box borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
+      <BoxNew borderRadius="large" borderWidth="1" padding="5" className={styles.kortBox}>
         <HStack align="center" justify="space-between" wrap={false}>
           <HStack gap="6" align="center" wrap={false}>
-            <Box
-              background={'surface-action-subtle'}
+            <BoxNew
+              background='accent-soft'
               className={styles.kortIcon}
-              borderColor={'border-default'}
               borderRadius="xlarge"
               padding="3"
               aria-hidden
             >
               {props.icon ? <props.icon fontSize="3rem" /> : <FileExportIcon />}
-            </Box>
+            </BoxNew>
             <VStack justify="center" gap="1">
               <Heading level="3" size="small" style={{ textDecoration: 'none' }}>
                 {props.title}
@@ -49,7 +48,7 @@ export const Kort: React.FC<IKortProps> = (props) => {
             <ChevronRightIcon fontSize="1.5rem" />
           </span>
         </HStack>
-      </Box>
+      </BoxNew>
     </a>
   )
 }

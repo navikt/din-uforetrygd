@@ -1,4 +1,4 @@
-import { Alert, Heading, VStack } from '@navikt/ds-react'
+import { Alert, Heading } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
@@ -15,7 +15,7 @@ import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
 import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
-import {Saksoversikt} from "@/sections/Saksoversikt";
+import { Saksoversikt } from '@/sections/Saksoversikt'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -60,8 +60,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               pid={params.pid}
               journalposter={uforetrygdResponse.journalposter!}
               hendelser={uforetrygdResponse.hendelser!}
-              sakstype={sakstype}>
-            </Saksoversikt>
+              sakstype={sakstype}
+            ></Saksoversikt>
             <RelevanteSoknader
               visningskriterier={visningskriterier}
               innloggingstype={uforetrygdResponse.innloggingstype!}

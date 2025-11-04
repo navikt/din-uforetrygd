@@ -8,7 +8,6 @@ import styles from './readmoretile.module.css'
 interface IReadMoreTileProps {
   children: React.ReactNode
   content: React.ReactNode
-  color: 'surface-default' | 'surface-subtle'
 }
 
 export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
@@ -23,11 +22,10 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
   }
 
   return (
-    <Box background={props.color} className={styles.tile} borderRadius="large">
-      <Box
+    <Box.New className={styles.tile + " " + (isOpen && styles.tileOpenColour)} borderRadius="large">
+      <Box.New
         as="button"
-        background={isOpen ? props.color : 'surface-default'}
-        className={styles.tileHeader}
+        className={styles.tileHeader + " " + (isOpen && styles.tileOpenColour)}
         onClick={handleOpen}
         borderRadius={isOpen ? 'large large 0 0' : 'large'}
         padding="4"
@@ -36,13 +34,13 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
         <div className={`${styles.tileChevron} ${isOpen ? styles.tileChevronOpen : styles.tileChevronClosed}`}>
           {isOpen ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />}
         </div>
-      </Box>
+      </Box.New>
 
       {isOpen && (
-        <Box paddingBlock="0 4" paddingInline="4 0" width="100%" borderRadius="large">
+        <Box.New paddingBlock="0 4" paddingInline="4 0" width="100%" borderRadius="large">
           {props.content}
-        </Box>
+        </Box.New>
       )}
-    </Box>
+    </Box.New>
   )
 }

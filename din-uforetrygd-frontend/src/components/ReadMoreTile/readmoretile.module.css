@@ -11,9 +11,12 @@
     z-index: 1;
 }
 
+.tileOpenColour {
+    background-color: var(--ax-neutral-200);
+}
 
 .tileHeader:hover {
-    background-color: var(--ax-neutral-300A);
+    background-color: var(--ax-neutral-300);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
     cursor: pointer;
 }
@@ -35,6 +38,7 @@
     margin: 0;
     z-index: 1;
     border: none;
+    background-color: transparent;
 }
 
 .tileChevron {
