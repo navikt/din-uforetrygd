@@ -1,11 +1,16 @@
-import {BodyLong, Heading, Link, ReadMore, VStack} from '@navikt/ds-react'
-import {ExpansionCard, ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle,} from '@navikt/ds-react/ExpansionCard'
-import {format, parseISO} from 'date-fns'
+import { BodyLong, Link, ReadMore, VStack } from '@navikt/ds-react'
+import {
+  ExpansionCard,
+  ExpansionCardContent,
+  ExpansionCardHeader,
+  ExpansionCardTitle,
+} from '@navikt/ds-react/ExpansionCard'
+import { format, parseISO } from 'date-fns'
 import styles from './dittvedtak.module.css'
-import {formatInntekt} from '@/utils/formatter/formatter'
-import {getUrl} from '@/utils/getUrl'
-import {components} from '@/api/api'
-import {getTilleggsoppsummeringTekst} from "@/sections/DittVedtak/utils";
+import { formatInntekt } from '@/utils/formatter/formatter'
+import { getUrl } from '@/utils/getUrl'
+import { components } from '@/api/api'
+import { getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 
 interface IDittVedtak {
   pid?: string
@@ -38,42 +43,72 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   return (
     <div className={styles.dittVedtakWrapper}>
       <section className={styles.dittVedtak}>
-        <ExpansionCard aria-label={"Ditt vedtak"} defaultOpen={true} >
+        <ExpansionCard aria-label='Ditt vedtak' defaultOpen={true}>
           <ExpansionCardHeader>
-            <ExpansionCardTitle> <Heading size={"medium"} level={"3"}> Kort om saken din </Heading></ExpansionCardTitle>
+            <ExpansionCardTitle>Kort om saken din</ExpansionCardTitle>
           </ExpansionCardHeader>
           <ExpansionCardContent>
-
-
-            {uforesakId && <BodyLong> <strong> Saksnummer: </strong> {uforesakId} </BodyLong>}
-            {shouldShowTilleggTilUforetrygd && <BodyLong> <strong> Tillegg: </strong> {
-              getTilleggsoppsummeringTekst(hasGjenlevendeTillegg, hasBarnetilleggFellesBarn, hasBarnetilleggSaerkullsbarn)} </BodyLong>}
-            <BodyLong> <strong> Uføregrad: </strong> {uforegrad + " prosent"} </BodyLong>
-            {uforetidspunkt && <BodyLong> <strong> Uføretidspunkt: </strong> {uforetidspunkt} </BodyLong>}
-            {uforetrygdInnvilget && <BodyLong> <strong> Uføretrygd innvilget fra: </strong> {uforetrygdInnvilget} </BodyLong>}
+            {uforesakId && (
+              <BodyLong>
+                <strong> Saksnummer: </strong> {uforesakId}{' '}
+              </BodyLong>
+            )}
+            {shouldShowTilleggTilUforetrygd && (
+              <BodyLong>
+                <strong> Tillegg: </strong>{' '}
+                {getTilleggsoppsummeringTekst(
+                  hasGjenlevendeTillegg,
+                  hasBarnetilleggFellesBarn,
+                  hasBarnetilleggSaerkullsbarn
+                )}{' '}
+              </BodyLong>
+            )}
+            <BodyLong>
+              <strong> Uføregrad: </strong> {uforegrad + ' prosent'}{' '}
+            </BodyLong>
+            {uforetidspunkt && (
+              <BodyLong>
+                {' '}
+                <strong> Uføretidspunkt: </strong> {uforetidspunkt}{' '}
+              </BodyLong>
+            )}
+            {uforetrygdInnvilget && (
+              <BodyLong>
+                <strong> Uføretrygd innvilget fra: </strong> {uforetrygdInnvilget}{' '}
+              </BodyLong>
+            )}
             {hasVarigTilrettelagtArbeid && <>Du har tiltaket Varig tilrettelagt arbeid</>}
-            <BodyLong> <strong> Registrert forventet inntekt: </strong> {sumAvForventedeInntekter + " kr"} </BodyLong>
+            <BodyLong>
+              <strong> Registrert forventet inntekt: </strong> {sumAvForventedeInntekter + ' kr'}{' '}
+            </BodyLong>
 
-            <VStack gap={"2"}>
-            <BodyLong> <strong> Inntektsgrense: </strong> {inntektsgrense}&nbsp;kr </BodyLong>
-
-
-            <ReadMore header={"Hvor kommer registrert forventet inntekt fra?"}>
-
+            <VStack gap={'2'}>
               <BodyLong>
-                Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har hentet.
-                Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og pensjoner du mottar.
-                Du kan endre registrert forventet inntekt i <Link href={linkInntektsplanlegger} className={styles.link}>inntektsplanleggeren</Link>.
-              </BodyLong>
-            </ReadMore>
-
-            <ReadMore header={"Hva er inntektsgrense?"}>
-              <BodyLong>
-                Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}&nbsp;kroner.
-                Bruk <Link href={linkInntektsplanlegger} className={styles.link}>inntektsplanleggeren</Link> for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+                <strong> Inntektsgrense: </strong> {inntektsgrense}&nbsp;kr{' '}
               </BodyLong>
 
-            </ReadMore>
+              <ReadMore header={'Hvor kommer registrert forventet inntekt fra?'}>
+                <BodyLong>
+                  Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger
+                  vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og pensjoner du mottar. Du
+                  kan endre registrert forventet inntekt i{' '}
+                  <Link href={linkInntektsplanlegger} className={styles.link}>
+                    inntektsplanleggeren
+                  </Link>
+                  .
+                </BodyLong>
+              </ReadMore>
+
+              <ReadMore header={'Hva er inntektsgrense?'}>
+                <BodyLong>
+                  Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
+                  &nbsp;kroner. Bruk{' '}
+                  <Link href={linkInntektsplanlegger} className={styles.link}>
+                    inntektsplanleggeren
+                  </Link>{' '}
+                  for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+                </BodyLong>
+              </ReadMore>
             </VStack>
           </ExpansionCardContent>
         </ExpansionCard>
