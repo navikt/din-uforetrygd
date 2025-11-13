@@ -14,8 +14,9 @@ jobs:
       contents: write
     steps:
       - name: Automerge Dependabot PRs
-        uses: navikt/automerge-dependabot@v1.2.2
+        uses: navikt/automerge-dependabot@v1.2.3
         with:
           token: ${{ github.token }}
           blackout-periods: 'Sat,Sun,Dec 24-Jan 2'
           semver-filter: 'patch,minor'
+          always-allow-labels: 'java'
