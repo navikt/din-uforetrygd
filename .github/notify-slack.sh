@@ -21,6 +21,7 @@ function notify() {
             IFS="," read -r github slack slack_id team <<< "${res}"
             slack_id="<@$slack_id>"
     else
+            echo "Debug: Bruker '${USER}' ikke funnet i brukernavnoversikt.csv"
             slack_id=${USER}
             team=unknown
     fi
