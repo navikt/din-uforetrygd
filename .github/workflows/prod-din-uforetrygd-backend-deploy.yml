@@ -57,7 +57,7 @@ jobs:
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:
           SSH_KEY: ${{ secrets.SSH_KEY_NOTIFY_TO_SLACK }}
-          AUTHOR: ${{ github.event.pusher.username }}
+          AUTHOR: ${{ github.actor }}
           WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 
   trivy-docker:

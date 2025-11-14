@@ -12,7 +12,6 @@ interface IReadMoreTileProps {
 
 export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const handleOpen = () => {
     if (isOpen) {
       setIsOpen(false)
