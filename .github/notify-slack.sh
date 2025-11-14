@@ -12,7 +12,6 @@ function notify() {
 
     cat <<< "${PRIVATE_KEY}" > "${keyfile}"
 
-    chmod 600 ${keyfile}
     GIT_SSH_COMMAND="ssh -i ${keyfile} -o IdentitiesOnly=yes -o StrictHostKeyChecking=no" git clone git@github.com:navikt/pensjon-github-to-slack-username.git
     rm ${keyfile}
     res=$(grep ${USER} pensjon-github-to-slack-username/brukernavnoversikt.csv)
