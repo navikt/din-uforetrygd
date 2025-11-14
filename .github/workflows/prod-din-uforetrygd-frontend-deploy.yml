@@ -54,12 +54,12 @@ jobs:
       - name: "Send slack-notifikasjon om bygget feiler"
         if: ${{ failure() }}
         run: |
-          PAYLOAD="payload={ \"attachments\": [{ \"pretext\": \"Deploy av *din-uforetrygd-frontend:${{ needs.build.outputs.version }}* til prod feilet :bomb:\", \"color\": \"danger\", \"fields\": [ { \"title\": \"Ansvarlig: \${slack_id}\", \"value\": \"Commit: <https://github.com/navikt/pesys/commit/$GITHUB_SHA|$GITHUB_SHA>\", \"short\": false } ] }] }"
+          PAYLOAD="payload={ \"attachments\": [{ \"pretext\": \"Deploy av *din-uforetrygd-frontend* til prod feilet :bomb:\", \"color\": \"danger\", \"fields\": [ { \"title\": \"Ansvarlig: \${slack_id}\", \"value\": \"Commit: <https://github.com/navikt/pesys/commit/$GITHUB_SHA|$GITHUB_SHA>\", \"short\": false } ] }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:
           SSH_KEY: ${{ secrets.SSH_KEY_NOTIFY_TO_SLACK }}
-          AUTHOR: ${{ github.event.pusher.name }}
+          AUTHOR: ${{ github.event.pusher.username }}
           WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 
   trivy-docker:
