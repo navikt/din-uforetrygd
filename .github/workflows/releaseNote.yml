@@ -32,7 +32,7 @@ jobs:
             USER=${MERGED_BY:-$USER}
           fi
           
-          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Din uføretrygd*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
+          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Ny versjon av Din uføretrygd prodsatt*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${USER}" "${PAYLOAD}" "${WEBHOOK_URL}"
 
