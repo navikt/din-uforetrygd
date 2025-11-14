@@ -2,6 +2,11 @@ name: "Prod: Din uforetrygd backend deploy"
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - din-uforetrygd-backend/**
 
 jobs:
   build-backend-and-publish-docker:
