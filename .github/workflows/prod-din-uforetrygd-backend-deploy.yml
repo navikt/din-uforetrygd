@@ -52,7 +52,7 @@ jobs:
       - name: "Send slack-notifikasjon om bygget feiler"
         if: ${{ failure() }}
         run: |
-          PAYLOAD="payload={ \"attachments\": [{ \"pretext\": \"Deploy av *din-uforetrygd-backend* til prod feilet :bomb:\", \"color\": \"danger\", \"fields\": [ { \"title\": \"Ansvarlig: \${slack_id}\", \"value\": \"Commit: <https://github.com/navikt/pesys/commit/$GITHUB_SHA|$GITHUB_SHA>\", \"short\": false } ] }] }"
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-backend til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/pesys/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:

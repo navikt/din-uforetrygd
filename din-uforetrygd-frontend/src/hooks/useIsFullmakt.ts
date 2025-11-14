@@ -14,7 +14,6 @@ const useIsFullmakt = () => {
     )
     setFullmakt(Object.keys(cookies).includes('nav-obo'))
   }, [])
-
   return fullmakt
 }
 
