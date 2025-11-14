@@ -2,6 +2,11 @@ name: "Prod: Din uforetrygd frontend deploy"
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - din-uforetrygd-frontend/**
 
 jobs:
   build-frontend-and-publish-docker:
@@ -32,6 +37,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
+      - name: Test failure notification
+        run: exit 1
+
       - name: Bygg med node
         run: npm run build
 
@@ -45,6 +53,17 @@ jobs:
           team: ufore
           dockerfile: ./din-uforetrygd-frontend/.docker/Dockerfile
           image_suffix: din-uforetrygd-frontend
+
+      - name: "Send slack-notifikasjon om bygget feiler"
+        if: ${{ failure() }}
+        run: |
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-frontend til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/pesys/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
+          "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY_NOTIFY_TO_SLACK }}
+          AUTHOR: ${{ github.actor }}
+          WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 
   trivy-docker:
     needs: build-frontend-and-publish-docker

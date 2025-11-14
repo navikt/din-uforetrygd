@@ -1,11 +1,12 @@
-import '@navikt/ds-css'
-import { InternalHeader, Spacer } from '@navikt/ds-react'
+import { InternalHeader, Spacer, Theme } from '@navikt/ds-react'
 import { InternalHeaderTitle, InternalHeaderUser } from '@navikt/ds-react/InternalHeader'
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
 import getEnv from '@/utils/env'
 import '../global.css'
 import './layout.css'
+import '@navikt/ds-tokens'
+import '@navikt/ds-css/darkside'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import FullmaktModal from '@/components/FullmaktModal'
@@ -41,13 +42,15 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
           <title>Din uføretrygd - Veileder</title>
         </head>
         <body>
-          {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
-          <InternalHeader>
-            <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
-            <Spacer />
-            <InternalHeaderUser name={veileder.name} />
-          </InternalHeader>
-          {children}
+          <Theme>
+            {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
+            <InternalHeader>
+              <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
+              <Spacer />
+              <InternalHeaderUser name={veileder.name} />
+            </InternalHeader>
+            {children}
+          </Theme>
         </body>
       </html>
     )
@@ -61,15 +64,17 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         <Decorator.HeadAssets />
       </head>
       <body>
-        {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
-        <Decorator.Header />
-        <RepresentasjonBanner />
-        {children}
-        <Decorator.Footer />
-        <Decorator.Scripts loader={Script} />
-        <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
-        <script src="https://widget.uxsignals.com/embed.js" async></script>
-        <FullmaktModal />
+        <Theme>
+          {decoratorEnv === 'dev' && <UndersøkelseEtteroppgjør2025 />}
+          <Decorator.Header />
+          <RepresentasjonBanner />
+          {children}
+          <Decorator.Footer />
+          <Decorator.Scripts loader={Script} />
+          <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
+          <script src="https://widget.uxsignals.com/embed.js" async></script>
+          <FullmaktModal />
+        </Theme>
       </body>
     </html>
   )

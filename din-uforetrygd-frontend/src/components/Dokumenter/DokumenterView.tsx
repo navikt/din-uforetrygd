@@ -42,7 +42,6 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
               return (
                 <ReadMoreTile
                   key={journalpost.sortDate}
-                  color="surface-subtle"
                   content={
                     <VStack gap="4" className={styles.readMoreOpened}>
                       <DocumentLink
