@@ -30,7 +30,6 @@ open class ForbiddenException(
 ) :
     RuntimeException("Access denied when calling service $service in $system. DetailMessage:  $message", cause)
 
-
 class ErrorHandler {
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(ErrorHandler::class.java)
