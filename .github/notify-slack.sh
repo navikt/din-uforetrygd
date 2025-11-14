@@ -10,7 +10,7 @@ function notify() {
     cd ${tempfolder}
     keyfile=$(mktemp)
 
-    cat <<< "${PRIVATE_KEY}" > "${keyfile}"
+    echo -e "${PRIVATE_KEY}" > "${keyfile}"
     chmod 600 "${keyfile}"
 
     GIT_SSH_COMMAND="ssh -i ${keyfile} -o IdentitiesOnly=yes -o StrictHostKeyChecking=no" git clone git@github.com:navikt/pensjon-github-to-slack-username.git
