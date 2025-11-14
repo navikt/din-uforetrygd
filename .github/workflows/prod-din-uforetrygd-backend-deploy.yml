@@ -35,6 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Test failure notification
+        run: exit 1
+
       - name: Build
         run: cd ./din-uforetrygd-backend && mvn -B package --file pom.xml
 
