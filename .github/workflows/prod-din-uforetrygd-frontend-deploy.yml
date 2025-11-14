@@ -37,9 +37,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-      - name: Test failure notification
-        run: exit 1
-
       - name: Bygg med node
         run: npm run build
 
