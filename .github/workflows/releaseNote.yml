@@ -33,6 +33,7 @@ jobs:
           fi
           
           PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Din uføretrygd*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
+          chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${USER}" "${PAYLOAD}" "${WEBHOOK_URL}"
 
         env:
