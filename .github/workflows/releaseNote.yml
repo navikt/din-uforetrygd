@@ -12,7 +12,7 @@ jobs:
     name: "Poster release note til Slack"
     if: |
       (github.event.pull_request.merged && github.base_ref == 'main') || 
-      (github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.head_commit.committer.username != 'web-flow')
+      (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -26,13 +26,8 @@ jobs:
 
           # Escape quotation marks ( " -> \" )
           MESSAGE=$(echo "$MESSAGE" | sed -r 's/"/\\\"/g')
-          
-          # Use the user who merged if the pull request is made by dependabot 
-          if [ "$USER" == "dependabot[bot]" ]; then
-            USER=${MERGED_BY:-$USER}
-          fi
-          
-          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Ny versjon av Din uføretrygd prodsatt*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
+                    
+          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Ny versjon av Din uføretrygd*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${USER}" "${PAYLOAD}" "${WEBHOOK_URL}"
 
