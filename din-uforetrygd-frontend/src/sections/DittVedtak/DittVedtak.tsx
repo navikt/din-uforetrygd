@@ -43,7 +43,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   return (
     <div className={styles.dittVedtakWrapper}>
       <section className={styles.dittVedtak}>
-        <ExpansionCard aria-label='Ditt vedtak' defaultOpen={true}>
+        <ExpansionCard aria-label='Saken din' defaultOpen={true} >
           <ExpansionCardHeader>
             <ExpansionCardTitle>Kort om saken din</ExpansionCardTitle>
           </ExpansionCardHeader>

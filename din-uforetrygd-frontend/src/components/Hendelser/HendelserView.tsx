@@ -35,39 +35,37 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
   }, [openHendelser, setOpenHendelser])
 
   return (
-    <section>
-      <ExpansionCard
-        aria-label="Hendelser i saken din"
-        open={isExpanded}
-        onToggle={setIsExpanded}
-        ref={expansionCardRef}
-        tabIndex={-1}
-      >
-        <ExpansionCard.Header>
-          <ExpansionCard.Title> Dette har skjedd i saken din </ExpansionCard.Title>
-        </ExpansionCard.Header>
-        <ExpansionCard.Content>
-          <SortablePaginatedList
-            items={props.hendelser}
-            itemsPerPage={6}
-            itemTypeName="hendelser"
-            renderItemAction={(hendelse) => {
-              return (
-                <VStack gap="05" className={styles.hendelser} padding="2">
-                  <Detail>
-                    {hendelse.formattedDate}
-                    {hendelse.createdBy && ` - Fra ${hendelse.createdBy}`}
-                  </Detail>
-                  <Heading size="xsmall" level="3">
-                    {hendelse.type}
-                  </Heading>
-                  {hendelse.description && <BodyShort>{hendelse.description}</BodyShort>}
-                </VStack>
-              )
-            }}
-          />
-        </ExpansionCard.Content>
-      </ExpansionCard>
-    </section>
+    <ExpansionCard
+      aria-label="Hendelser i saken din"
+      open={isExpanded}
+      onToggle={setIsExpanded}
+      ref={expansionCardRef}
+      tabIndex={-1}
+    >
+      <ExpansionCard.Header>
+        <ExpansionCard.Title> Dette har skjedd i saken din </ExpansionCard.Title>
+      </ExpansionCard.Header>
+      <ExpansionCard.Content>
+        <SortablePaginatedList
+          items={props.hendelser}
+          itemsPerPage={6}
+          itemTypeName="hendelser"
+          renderItemAction={(hendelse) => {
+            return (
+              <VStack gap="05" className={styles.hendelser} padding="2">
+                <Detail>
+                  {hendelse.formattedDate}
+                  {hendelse.createdBy && ` - Fra ${hendelse.createdBy}`}
+                </Detail>
+                <Heading size="xsmall" level="3">
+                  {hendelse.type}
+                </Heading>
+                {hendelse.description && <BodyShort>{hendelse.description}</BodyShort>}
+              </VStack>
+            )
+          }}
+        />
+      </ExpansionCard.Content>
+    </ExpansionCard>
   )
 }
