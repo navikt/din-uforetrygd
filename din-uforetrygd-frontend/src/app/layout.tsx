@@ -60,7 +60,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   return (
     <html lang="no">
       <head>
-        <title>Din uføretrygd</title>
+        <title>Din uføretrygd - nav.no</title>
         <Decorator.HeadAssets />
       </head>
       <body>
