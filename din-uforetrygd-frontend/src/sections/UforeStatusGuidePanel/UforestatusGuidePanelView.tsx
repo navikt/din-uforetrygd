@@ -24,7 +24,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
     !visningskriterier.includes(Visningskriterier.Uforetrygd)
   ) {
     return (
-      <section>
+      <section aria-label="Saken din">
         <div className={styles.guidepanelWrapper}>
           <GuidePanel poster className={styles.tilBehandling}>
             <Heading level="2" size="medium" className={styles.uforetrygdHeading}>
@@ -58,7 +58,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
   ) {
     return (
       <div className={styles.guidepanelWrapper}>
-        <section>
+        <section aria-label="Saken din">
           <GuidePanel poster className={styles.ingenUforetrygd}>
             <VStack gap="3">
               <Heading level="2" size="medium">

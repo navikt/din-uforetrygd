@@ -93,7 +93,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
   const links = await getLinks(props.pid, props.bprofFullmakt)
   const relevantLinks = filterShowFor(props.visningskriterier, links)
   return (
-    <section>
+    <section aria-label="Snarveier">
       <VStack gap="5">
         <Heading level="2" size="medium">
           Snarveier

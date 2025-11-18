@@ -53,7 +53,7 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
   const aktueltForDegLenker = filterShowFor(props.visningskriterier, links)
 
   return (
-    <section>
+    <section aria-label="Aktuelt for deg">
       <Heading level="2" size="medium">
         Kan være aktuelt for deg
       </Heading>

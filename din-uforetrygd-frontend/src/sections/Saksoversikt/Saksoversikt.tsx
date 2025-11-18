@@ -25,7 +25,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = async ({
   }
 
   return (
-    <section>
+    <section aria-label="Saksoversikt">
       <VStack gap="6">
         <Heading size="medium" level="2">
           Saksoversikt

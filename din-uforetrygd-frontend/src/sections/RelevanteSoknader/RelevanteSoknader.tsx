@@ -55,7 +55,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
   }
 
   return (
-    <section>
+    <section aria-label="Relevante søknader">
       <Heading level="2" size="medium">
         Relevante søknader
       </Heading>
