@@ -22,7 +22,7 @@ jobs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Bruk node
         uses: actions/setup-node@v6
@@ -96,7 +96,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Deploy
         uses: nais/deploy/actions/deploy@v2
@@ -116,7 +116,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Deploy
         uses: nais/deploy/actions/deploy@v2
