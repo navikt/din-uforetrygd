@@ -19,4 +19,4 @@ jobs:
           token: ${{ github.token }}
           blackout-periods: 'Sat,Sun,Dec 24-Jan 2'
           semver-filter: 'patch,minor'
-          always-allow-labels: 'java,github_actions'
+          # always-allow-labels: 'java,github_actions'
