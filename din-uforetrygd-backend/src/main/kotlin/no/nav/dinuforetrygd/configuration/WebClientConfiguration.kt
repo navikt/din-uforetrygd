@@ -20,7 +20,8 @@ class WebClientConfiguration {
     @Bean
     fun webClient(): WebClient = WebClient.builder()
         .clientConnector(ReactorClientHttpConnector(httpClient))
-        .exchangeStrategies(ExchangeStrategies.builder().codecs { it.defaultCodecs().maxInMemorySize(16 * 1024 * 1024) }.build())
+        .exchangeStrategies(ExchangeStrategies.builder().codecs { it.defaultCodecs().maxInMemorySize(16 * 1024 * 1024) }
+            .build())
         .filter(logRequest())
         .build()
 
@@ -42,7 +43,7 @@ class WebClientConfiguration {
     }
 }
 
-fun <T> Mono<T>.withMdcContext(): Mono<T> {
+fun <T : Any> Mono<T>.withMdcContext(): Mono<T> {
     val mdc = MDC.getCopyOfContextMap()
     return this.contextWrite { ctx -> ctx.put("mdc", mdc) }
 }

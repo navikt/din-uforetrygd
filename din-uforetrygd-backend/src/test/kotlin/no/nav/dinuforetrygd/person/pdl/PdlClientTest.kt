@@ -6,13 +6,13 @@ import no.nav.dinuforetrygd.WebClientTest
 import no.nav.dinuforetrygd.security.AzureAdService
 import no.nav.dinuforetrygd.security.TokenService
 import okhttp3.mockwebserver.MockResponse
-import org.jboss.logging.MDC
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.mock
+import org.slf4j.MDC
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -147,7 +147,7 @@ class PdlClientTest: WebClientTest(){
                 """{
     "data": null,
     "errors": [{"message": "En feil",
-                "locations": [{"line":1, "columns":9}],
+                "locations": [{"line":1, "column":9}],
                 "path": ["/path/p"],
                 "extensions":{"code": "$errorCode", "classification":"CRITICAL"}}
                ]
