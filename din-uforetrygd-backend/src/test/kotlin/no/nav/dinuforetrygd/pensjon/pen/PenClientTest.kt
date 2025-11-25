@@ -6,7 +6,6 @@ import no.nav.dinuforetrygd.WebClientTest
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.security.TokenService
 import okhttp3.mockwebserver.MockResponse
-import org.jboss.logging.MDC
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -14,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.slf4j.MDC
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate

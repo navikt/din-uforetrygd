@@ -33,11 +33,11 @@ class FullmaktClient(
                 webClient
                     .get()
                     .uri(urlHarBprofFullmaktmottakere())
-                    .headers { headers: HttpHeaders ->
-                        headers.setBearerAuth(it!!)
-                        headers[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
-                        headers[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
-                        headers[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
+                    .headers { header ->
+                        header.setBearerAuth(it!!)
+                        header[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
+                        header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
+                        header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
                     }
                     .retrieve()
                     .bodyToMono(HarBprofFullmaktmottakereResponse::class.java)
@@ -65,12 +65,12 @@ class FullmaktClient(
                 webClient
                     .get()
                     .uri(urlValidRepresentasjonsforhold())
-                    .headers { headers: HttpHeaders ->
-                        headers.setBearerAuth(it!!)
-                        headers[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
-                        headers[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
-                        headers[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
-                        headers[FULLMAKTSGIVER_PID] = fullmaktsgiverPid
+                    .headers { header ->
+                        header.setBearerAuth(it!!)
+                        header[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
+                        header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
+                        header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
+                        header[FULLMAKTSGIVER_PID] = fullmaktsgiverPid
                     }
                     .retrieve()
                     .bodyToMono(RepresentasjonsforholdValidity::class.java)
@@ -102,11 +102,11 @@ class FullmaktClient(
                 webClient
                     .get()
                     .uri(urlFindRepresentasjonsforhold())
-                    .headers { headers: HttpHeaders ->
-                        headers.setBearerAuth(it!!)
-                        headers[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
-                        headers[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
-                        headers[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
+                    .headers { header ->
+                        header.setBearerAuth(it!!)
+                        header[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
+                        header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
+                        header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
                     }
                     .retrieve()
                     .bodyToMono(object : ParameterizedTypeReference<List<Representasjonsforhold>>() {})
@@ -132,7 +132,7 @@ class FullmaktClient(
         }
     }
 
-    private fun urlValidRepresentasjonsforhold() = UriComponentsBuilder.fromHttpUrl(baseUrl)
+    private fun urlValidRepresentasjonsforhold() = UriComponentsBuilder.fromUriString(baseUrl)
             .path(PATH_HASREPRESENTASJONSFORHOLD)
             .queryParam(VALID_REPRESENTASJONSTYPER_KEY, VALID_REPRESENTASJONSTYPER)
             .queryParam(INCLUDE_NAVN_KEY, false)
@@ -140,14 +140,14 @@ class FullmaktClient(
             .toUriString()
 
     private fun urlHarBprofFullmaktmottakere(): String {
-        return UriComponentsBuilder.fromHttpUrl(baseUrl)
+        return UriComponentsBuilder.fromUriString(baseUrl)
             .path(PATH_HASBPROFFULLMAKTMOTTAKERE)
             .build()
             .toUriString()
     }
 
     private fun urlFindRepresentasjonsforhold(): String {
-        return UriComponentsBuilder.fromHttpUrl(baseUrl)
+        return UriComponentsBuilder.fromUriString(baseUrl)
             .path(PATH_FINDREPRESENTASJONSFORHOLD)
             .build()
             .toUriString()

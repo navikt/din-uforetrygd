@@ -20,7 +20,6 @@
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <logback.version>1.5.21</logback.version>
         <logback-access.version>2.0.7</logback-access.version>
-        <spring-boot-starter-security.version>4.0.0</spring-boot-starter-security.version>
         <micrometer.version>1.16.0</micrometer.version>
         <!-- Test -->
         <mockk.version>1.14.6</mockk.version>
@@ -88,7 +87,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>${spring-boot-starter-security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -98,11 +96,6 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${micrometer.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
