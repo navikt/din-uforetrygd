@@ -1,10 +1,11 @@
 import { BoxNew, Heading, HGrid, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import {
-  FileExportIcon,
-  FileTextIcon,
-  PersonGroupIcon,
-  PersonPlusIcon,
-  ReceiptIcon,
+  BulletListIcon,
+  CalculatorIcon,
+  EnvelopeClosedIcon,
+  FolderFileIcon,
+  PersonTallShortIcon,
+  PlusMinusSlashIcon,
   WalletIcon,
 } from '@navikt/aksel-icons'
 import { Innloggingstype, Visningskriterier } from '@/const'
@@ -37,7 +38,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid }),
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
-    icon: <FileTextIcon fontSize="2rem" />,
+    icon: <CalculatorIcon fontSize="2rem" />,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
@@ -46,7 +47,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
     title: 'Se alle dokumentene dine',
     description: 'Gå til dokumenter',
-    icon: <FileTextIcon fontSize="2rem" />,
+    icon: <FolderFileIcon fontSize="2rem" />,
     showFor: true,
     showFullmaktWarning: false,
     visInnloggingsModal: true,
@@ -55,7 +56,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
-    icon: <ReceiptIcon fontSize="2rem" />,
+    icon: <PlusMinusSlashIcon fontSize="2rem" />,
     showFor: true,
     showFullmaktWarning: false,
     visInnloggingsModal: false,
@@ -64,7 +65,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
     title: 'Familieforhold',
     description: 'Samboerforhold, sivilstand, barn',
-    icon: <PersonPlusIcon fontSize="2rem" />,
+    icon: <PersonTallShortIcon fontSize="2rem" />,
     showFor: true,
     showFullmaktWarning: false,
     visInnloggingsModal: false,
@@ -73,7 +74,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
-    icon: <PersonGroupIcon fontSize="2rem" />,
+    icon: <BulletListIcon fontSize="2rem" />,
     showFor: true,
     showFullmaktWarning: true,
     visInnloggingsModal: false,
@@ -82,7 +83,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
     title: 'Ettersend dokumentasjon',
     description: 'Ettersend dokumenter om saken din',
-    icon: <FileExportIcon fontSize="2rem" />,
+    icon: <EnvelopeClosedIcon fontSize="2rem" />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
     visInnloggingsModal: false,
@@ -102,7 +103,7 @@ export const InformasjonOgRegistreringer: React.FC<IInformasjonOgRegistreringerP
           {relevantLinks.map((link) => (
             <LinkCard key={link.title}>
               <Hide below="md" asChild>
-                <BoxNew asChild borderRadius="8" padding="space-8" background="neutral-moderateA">
+                <BoxNew asChild borderRadius="8" padding="space-8" background="accent-moderateA">
                   <LinkCardIcon>{link.icon}</LinkCardIcon>
                 </BoxNew>
               </Hide>
