@@ -41,12 +41,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
-            <Alert variant="info" contentMaxWidth={false} style={{maxWidth:'992px'}}>
-                <Heading spacing size="small" level="3">
-                    Inntektsplanleggeren er midlertidig stengt
-                </Heading>
-                Inntektsplanleggeren er ikke tilgjengelig fra tirsdag 2. desember kl. 15:30 til onsdag 3. desember kl. 09:00 på grunn av vedlikehold. Vi beklager for ulempen.
-            </Alert>
             <UforestatusGuidePanel visningskriterier={visningskriterier} />
             <DittVedtak
               pid={params.pid}
