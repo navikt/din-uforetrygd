@@ -10,8 +10,8 @@ on:
     - cron: "0 7 * * 1"
 
 jobs:
-  analyze:
-    name: Analyze
+  analyze-java:
+    name: Analyze Java (Kotlin)
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -48,3 +48,27 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:java-kotlin"
+
+  analyze-javascript:
+    name: Analyze Javascript (Typescript)
+    runs-on:
+      labels: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: javascript
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
