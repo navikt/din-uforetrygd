@@ -45,7 +45,7 @@ jobs:
         run: cd ./din-uforetrygd-backend && mvn -B package --file pom.xml
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:java-kotlin"
 
