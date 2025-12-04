@@ -3,11 +3,12 @@ package no.nav.dinuforetrygd.pensjon.pen
 import no.nav.dinuforetrygd.ClientException
 import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
+import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
 import no.nav.dinuforetrygd.configuration.withMdcContext
-import no.nav.dinuforetrygd.uforetrygd.Saksoversikt
 import no.nav.dinuforetrygd.security.TokenService
+import no.nav.dinuforetrygd.uforetrygd.Saksoversikt
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
+import org.springframework.web.util.UriComponentsBuilder
 
 @Component
 class PenClient(
@@ -139,4 +141,42 @@ class PenClient(
             throw ClientException(AppId.PEN.name, path, e.message, e)
         }
     }
+
+
+    fun getDenBesteSaksoversikten(pid: String, sakId: Long): List<Krav> {
+        val path = "/pen/api/uforetrygd/din-uforetrygd/krav"
+        try {
+            return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
+                .let { accessToken ->
+                    webClient
+                        .get()
+                        .uri(
+                            UriComponentsBuilder.fromUriString(url)
+                                .path(path)
+                                .queryParam("sakId", sakId)
+                                .build()
+                                .toUri()
+                        )
+                        .header("Authorization", "Bearer $accessToken")
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .bodyToMono(KravResponse::class.java)
+                        .withMdcContext()
+                        .retry(numberOfRetries)
+                        .block()!!
+                        .krav
+                }
+        } catch (e: WebClientResponseException) {
+            if (HttpStatus.FORBIDDEN == e.statusCode) {
+                throw ForbiddenException(AppId.PEN.name, path, e.message, e)
+            } else if (HttpStatus.NOT_FOUND == e.statusCode) {
+                throw SakNotFoundException()
+            }
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        } catch (e: Exception) {
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        }
+    }
+
 }

@@ -14,6 +14,8 @@ open class PersonNotFoundException(
     override val cause: Throwable?
 ) : ClientException(system, service, message, cause)
 
+class SakNotFoundException() : Exception()
+
 open class ClientException(
     open val system: String,
     open val service: String,

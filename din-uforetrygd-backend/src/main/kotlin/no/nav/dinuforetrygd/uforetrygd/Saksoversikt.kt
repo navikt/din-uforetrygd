@@ -27,3 +27,24 @@ data class HendelseData(
     val endretDato: LocalDateTime,
     val opprettetAv: String?,
 )
+
+data class SaksoversiktResponse(
+    // TODO får vi problmemer ved evt flere åpne krav?
+    val aktivBehandling: Behandling?,
+    val avsluttedeBehandlinger: List<Behandling>
+)
+
+data class Behandling(
+    val visningstittel: String,
+    val status: BehandlingStatus,
+    val mottattDato: LocalDate,
+    val ferdigstiltDato: LocalDate?
+)
+
+enum class BehandlingStatus {
+    // TODO verifiser
+    FERDIGSTILT,
+    INNVILGET,
+    AVSLATT,
+    UNDER_BEHANDLING
+}
