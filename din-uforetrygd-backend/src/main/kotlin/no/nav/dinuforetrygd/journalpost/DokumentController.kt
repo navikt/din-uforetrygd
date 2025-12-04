@@ -28,7 +28,7 @@ class DokumentController(
     ): ResponseEntity<InputStreamResource> {
         try {
             if (!journalpostId.all { it.isDigit() } || !dokumentInfoId.all { it.isDigit() }) {
-                logger.error("Invalid ID format: journalpostId=$journalpostId, dokumentInfoId=$dokumentInfoId")
+                logger.error("Invalid ID format")
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, "BAD_REQUEST")
             }
 
@@ -38,7 +38,7 @@ class DokumentController(
                     logger.warn(reason)
                     throw ResponseStatusException(HttpStatus.BAD_REQUEST, reason)
                 } else if (!validateVariantFormat(variantformat)) {
-                    logger.error("Invalid variantformat=$variantformat")
+                    logger.error("Invalid variantformat")
                     throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid variantformat")
                 }
 
