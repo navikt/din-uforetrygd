@@ -2,13 +2,11 @@ export const mockData = {
   default: {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [
-      {
+    sak: {
         type: 'UFORETRYGD',
         status: 'LOPENDE',
         sakId: 519023581092,
       },
-    ],
     hasIverksattVedtak: true,
     uforevedtak: {
       uforegrad: 100,
@@ -1747,7 +1745,7 @@ export const mockData = {
   avsluttet: {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'AVSLUTTET' }],
+    sak: { status: 'AVSLUTTET' },
     hasIverksattVedtak: false,
     uforevedtak: {
       uforegrad: 100,
@@ -1788,7 +1786,7 @@ export const mockData = {
   gradert: {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'LOPENDE' }],
+    sak: { status: 'LOPENDE' },
     hasIverksattVedtak: true,
     uforevedtak: {
       uforegrad: 50,
@@ -1809,7 +1807,7 @@ export const mockData = {
   'har-lopende': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'LOPENDE' }],
+    sak: { status: 'LOPENDE' },
     hasIverksattVedtak: false,
     uforevedtak: null,
     innloggingstype: 'LEVEL4',
@@ -1820,7 +1818,7 @@ export const mockData = {
   'sak-behandling': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'TIL_BEHANDLING' }],
+    sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: false,
     uforevedtak: null,
     innloggingstype: 'LEVEL4',
@@ -1831,7 +1829,7 @@ export const mockData = {
   'ufore-behandling': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'TIL_BEHANDLING' }],
+    sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: true,
     uforevedtak: {
       uforegrad: 100,
@@ -1852,7 +1850,7 @@ export const mockData = {
   'ingen-uforesak': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [],
+    sak: null,
     hasIverksattVedtak: false,
     uforevedtak: null,
     innloggingstype: 'LEVEL4',
@@ -1863,7 +1861,7 @@ export const mockData = {
   'ufore-uten-datoer': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    saker: [{ type: 'UFORETRYGD', status: 'LOPENDE' }],
+    sak: { status: 'LOPENDE' },
     hasIverksattVedtak: true,
     uforevedtak: {
       uforegrad: 100,

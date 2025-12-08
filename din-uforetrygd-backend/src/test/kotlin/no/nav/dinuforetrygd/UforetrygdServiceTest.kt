@@ -1,7 +1,6 @@
 package no.nav.dinuforetrygd
 
 import io.mockk.every
-import no.nav.dinuforetrygd.pensjon.pen.PenService
 import io.mockk.mockk
 import io.mockk.verify
 import no.nav.dinuforetrygd.configuration.AppId
@@ -10,6 +9,7 @@ import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
+import no.nav.dinuforetrygd.pensjon.pen.PenService
 import no.nav.dinuforetrygd.pensjon.pen.Vedtakssammendrag
 import no.nav.dinuforetrygd.pensjon.pen.VedtakssammendragResponse
 import no.nav.dinuforetrygd.security.SecurityContextUtil
@@ -62,14 +62,14 @@ class UforetrygdServiceTest {
         verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
         assertEquals(PID, response.pid)
-        assertTrue(response.saker.isEmpty())
+        assertNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
     }
 
     @Test
     fun `should return a response with no sak or vedtak when there is no uforesak`() {
-        every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.ALDERSPENSJON, Sakstatus.LOPENDE))
+        every { penService.getSaker(any()) } returns emptyList()
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
@@ -77,25 +77,24 @@ class UforetrygdServiceTest {
         verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
         assertEquals(PID, response.pid)
-        assertTrue(response.saker.isEmpty())
+        assertNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
     }
 
     @Test
     fun `should return a response with uforesak and no vedtak, when there is no vedtakssammendrag`() {
-        every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
+        every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
-        assertTrue(response.saker.isNotEmpty())
-        assertEquals(1, response.saker.size)
-        assertEquals(Sakstype.UFORETRYGD, response.saker.first().type)
+        assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
     }
@@ -103,9 +102,9 @@ class UforetrygdServiceTest {
     @Test
     fun `should return a response with only one sak when there are multiple saker`() {
         every { penService.getSaker(any()) } returns listOf(
-            Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE),
-            Sak(Sakstype.ALDERSPENSJON, Sakstatus.LOPENDE),
-            Sak(Sakstype.GAMMEL_YRKESSKADE, Sakstatus.AVSLUTTET)
+            Sak(Sakstatus.LOPENDE, 1L),
+            Sak(Sakstatus.LOPENDE, 1L),
+            Sak(Sakstatus.AVSLUTTET, 1L)
         )
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
@@ -113,9 +112,7 @@ class UforetrygdServiceTest {
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
 
-        assertTrue(response.saker.isNotEmpty())
-        assertEquals(1, response.saker.size)
-        assertEquals(Sakstype.UFORETRYGD, response.saker.first().type)
+        assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
     }
@@ -140,16 +137,17 @@ class UforetrygdServiceTest {
             )
         )
 
-        every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
+        every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         every { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
-        assertTrue(response.saker.isNotEmpty())
+        assertNotNull(response.sak)
         assertTrue(response.hasIverksattVedtak)
         assertEquals(uforegrad, response.uforevedtak?.uforegrad)
         assertEquals(virkFom, response.uforevedtak?.virkFom)
@@ -163,9 +161,10 @@ class UforetrygdServiceTest {
     }
 
     @Test
-    fun `should return a response with uforesak and noe vedtak when response from pen fails`() {
-        every { penService.getSaker(any()) } returns listOf(Sak(Sakstype.UFORETRYGD, Sakstatus.LOPENDE))
+    fun `should return a response with uforesak and no vedtak when response from pen fails`() {
+        every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         every { penService.getVedtakssammendrag(any()) } throws ClientException(AppId.PEN.name, "/", null, null)
+        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
@@ -173,9 +172,8 @@ class UforetrygdServiceTest {
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
-        assertTrue(response.saker.isNotEmpty())
-        assertEquals(Sakstype.UFORETRYGD, response.saker.first().type)
-        assertEquals(Sakstatus.LOPENDE, response.saker.first().status)
+        assertNotNull(response.sak)
+        assertEquals(Sakstatus.LOPENDE, response.sak!!.status)
         assertFalse(response.hasIverksattVedtak)
         assertNull(response.uforevedtak)
     }

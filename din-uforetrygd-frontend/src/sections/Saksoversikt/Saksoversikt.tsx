@@ -10,14 +10,12 @@ interface Saksoversikt {
   pid?: string
   journalposter: components['schemas']['Journalpost'][]
   hendelser: components['schemas']['SakHendelse'][]
-  sakstype: string
 }
 
 export const Saksoversikt: React.FC<Saksoversikt> = async ({
   visningskriterier,
   hendelser,
   pid,
-  sakstype,
   journalposter,
 }) => {
   if (visningskriterier.includes(Visningskriterier.IngenUforesak)) {

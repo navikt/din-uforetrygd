@@ -29,8 +29,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
-    const uforesak = uforetrygdResponse.saker?.[0] ?? null
-    const sakstype = uforesak?.type ? (mapSakCodeToSak(uforesak.type.toString()) ?? 'ukjent') : 'ukjent'
+    const uforesak = uforetrygdResponse.sak
 
     return (
       <>
@@ -60,7 +59,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               pid={params.pid}
               journalposter={uforetrygdResponse.journalposter!}
               hendelser={uforetrygdResponse.hendelser!}
-              sakstype={sakstype}
             ></Saksoversikt>
             <RelevanteSoknader
               visningskriterier={visningskriterier}
