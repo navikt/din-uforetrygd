@@ -55,7 +55,7 @@
     "eslint-config-next": "16.0.5",
     "eslint-config-prettier": "^10.1.8",
     "openapi-typescript": "^7.10.1",
-    "prettier": "^3.7.1",
+    "prettier": "^3.7.3",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.14"
