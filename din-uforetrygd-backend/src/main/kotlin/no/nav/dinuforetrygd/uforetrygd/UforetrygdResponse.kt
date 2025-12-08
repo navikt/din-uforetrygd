@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 data class UforetrygdResponse(
     val pid: String,
     val loggetInnSom: String,
-    val saker: List<Sak>,
+    val sak: Sak?,
     val hasIverksattVedtak: Boolean,
     val uforevedtak: DittUforevedtak?,
     val innloggingstype: Innloggingstype,
@@ -49,16 +49,15 @@ enum class Innloggingstype {
 }
 
 data class Sak(
-    val type: Sakstype,
     val status: Sakstatus,
-    val sakId: Long? = null)
+    val sakId: Long
+)
 
-enum class Sakstatus {
-    OPPRETTET,
-    TIL_BEHANDLING,
-    AVSLUTTET,
-    LOPENDE,
-    UKJENT
+enum class Sakstatus (val prioritet: Int){
+    OPPRETTET (3),
+    TIL_BEHANDLING (2),
+    AVSLUTTET (4),
+    LOPENDE(1),
 }
 
 enum class Sakstype {

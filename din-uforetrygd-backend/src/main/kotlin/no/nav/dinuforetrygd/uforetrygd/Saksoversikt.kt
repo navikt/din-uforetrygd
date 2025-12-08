@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 
 data class Saksoversikt(
     val sakId: Long,
-    val sakType: String,
     val forsteVirkFomDato: LocalDate?,
     val gjeldendeVedtak: Vedtaksdata?,
     val avslaattVedtak: Vedtaksdata?,

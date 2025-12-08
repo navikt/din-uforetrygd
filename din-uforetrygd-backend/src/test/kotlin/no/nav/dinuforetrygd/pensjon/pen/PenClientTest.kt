@@ -48,7 +48,7 @@ class PenClientTest : WebClientTest() {
             listOf(
                 SakSammendrag(
                     98798L,
-                    "ALDER",
+                    "UFOREP",
                     "LOPENDE",
                     LocalDate.of(2008, 9, 12),
                     LocalDate.of(2018, 11, 15),
@@ -144,7 +144,7 @@ class PenClientTest : WebClientTest() {
                 [
                     {
                     "sakId": 98798,
-                     "sakType": "ALDER",
+                     "sakType": "UFOREP",
                      "sakStatus": "LOPENDE",
                      "fomDato": "2008-09-12T10:56:01",
                      "tomDato": "2018-11-15T10:56:01",

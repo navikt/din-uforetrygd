@@ -8,7 +8,7 @@ const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   loggetInnSom: '81549300',
   innloggingstype: 'LEVEL4',
   harGammelFullmaktmottaker: false,
-  saker: [],
+  sak: undefined,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
 }
@@ -26,34 +26,33 @@ const uforevedtak: components['schemas']['DittUforevedtak'] = {
 }
 
 const uforesak: components['schemas']['Sak'] = {
-  type: 'UFORETRYGD',
   status: 'LOPENDE',
 }
 
 const uforeResponse: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
-  saker: [uforesak],
+  sak: uforesak,
   hasIverksattVedtak: true,
   uforevedtak: uforevedtak,
 }
 
 const uforeOgSakTilBehanndling: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
-  saker: [{ ...uforesak, status: 'TIL_BEHANDLING' }],
+  sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: true,
   uforevedtak: uforevedtak,
 }
 
 const gradertUfoereResponse: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
-  saker: [{ ...uforesak }],
+  sak: { ...uforesak },
   hasIverksattVedtak: true,
   uforevedtak: { ...uforevedtak, uforegrad: 50 },
 }
 
 const sakTilbehandlingAndIngenVedtak: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
-  saker: [{ ...uforesak, status: 'TIL_BEHANDLING' }],
+  sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: false,
   uforevedtak: undefined,
 }
@@ -62,7 +61,7 @@ const ingenUforesakResponse: components['schemas']['UforetrygdResponse'] = {
   ...defaultUforeResponse,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
-  saker: [{ type: 'ALDERSPENSJON', status: 'LOPENDE' }],
+  sak: undefined,
 }
 
 describe('getVisningskriterier', () => {

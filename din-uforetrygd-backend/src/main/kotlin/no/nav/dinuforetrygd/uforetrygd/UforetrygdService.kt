@@ -21,16 +21,16 @@ class UforetrygdService(
     private val logger: Logger = LoggerFactory.getLogger(UforetrygdService::class.java)
 
     fun constructUforetrygdResponse(pid: String): UforetrygdResponse {
-        val uforeSak = penService.getSaker(pid).filter { it.type == Sakstype.UFORETRYGD }
-        if (uforeSak.isEmpty()) return constructUforetrygdResponse(pid, uforeSak)
+        val uforeSak = penService.getSaker(pid).velgSak()
+        if (uforeSak == null) return constructUforetrygdResponse(pid, uforeSak)
 
         try {
-            val uforeSakshendelser = uforeSak.first().sakId?.let { penService.penClient.getSaksoversikt(pid, it) }?.hendelser
+            val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser
             val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
             val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
             return constructUforetrygdResponse(
                 pid = pid,
-                saker = uforeSak,
+                sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter),
                 hendelser = uforeSakshendelser
@@ -41,25 +41,28 @@ class UforetrygdService(
         }
     }
 
+    private fun List<Sak>.velgSak() = this.minByOrNull { it.status.prioritet }
+
+
     private fun constructUforetrygdResponse(
         pid: String,
-        saker: List<Sak>,
+        sak: Sak?,
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
         hendelser: List<HendelseData>? = null
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
-        saker = saker,
+        sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
         harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()),
         hasIverksattVedtak = hasIverksattVedtak,
         uforevedtak = uforevedtak,
-        journalposter = saker.firstOrNull()
-            ?.let { sak -> journalpostService.getJournalPostliste(pid, sak.sakId.toString())
-                .filter { journalpost -> journalpost.dokumenter.isNotEmpty()}}
-            ?: listOf(),
-        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) }} ?: listOf(),
+        journalposter = sak?.let {
+            journalpostService.getJournalPostliste(pid, it.sakId.toString())
+                .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
+        } ?: emptyList(),
+        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
     )
 
     private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?): DittUforevedtak =

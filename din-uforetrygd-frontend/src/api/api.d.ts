@@ -74,9 +74,7 @@ export interface components {
         };
         Sak: {
             /** @enum {string} */
-            type?: "ALDERSPENSJON" | "AFP" | "AFP_PRIVAT" | "BARNEPENSJON" | "FAMILIEPLEIER_YTELSE" | "GAMMEL_YRKESSKADE" | "GENERELL" | "GJENLEVENDE_YTELSE" | "GRUNNBLANKETTER" | "KRIGSPENSJON" | "OMSORGSOPPTJENING" | "UFORETRYGD" | "UKJENT";
-            /** @enum {string} */
-            status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE" | "UKJENT";
+            status?: "OPPRETTET" | "TIL_BEHANDLING" | "AVSLUTTET" | "LOPENDE";
             /** Format: int64 */
             sakId?: number;
         };
@@ -93,7 +91,7 @@ export interface components {
         UforetrygdResponse: {
             pid?: string;
             loggetInnSom?: string;
-            saker?: components["schemas"]["Sak"][];
+            sak?: components["schemas"]["Sak"];
             hasIverksattVedtak?: boolean;
             uforevedtak?: components["schemas"]["DittUforevedtak"];
             /** @enum {string} */
