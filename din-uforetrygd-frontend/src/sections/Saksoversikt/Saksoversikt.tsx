@@ -12,25 +12,18 @@ interface Saksoversikt {
   hendelser: components['schemas']['SakHendelse'][]
 }
 
-export const Saksoversikt: React.FC<Saksoversikt> = async ({
-  visningskriterier,
-  hendelser,
-  pid,
-  journalposter,
-}) => {
+export const Saksoversikt: React.FC<Saksoversikt> = async ({ visningskriterier, hendelser, pid, journalposter }) => {
   if (visningskriterier.includes(Visningskriterier.IngenUforesak)) {
     return null
   }
 
   return (
-    <section aria-label="Saksoversikt">
-      <VStack gap="6">
-        <Heading size="medium" level="2">
-          Saksoversikt
-        </Heading>
-        {/* <Hendelser hendelser={hendelser!} sakstype={sakstype} /> */}
-        <Dokumenter pid={pid} journalposter={journalposter!} />
-      </VStack>
-    </section>
+    <VStack gap="6">
+      <Heading size="medium" level="2">
+        Saksoversikt
+      </Heading>
+      {/* <Hendelser hendelser={hendelser!} sakstype={sakstype} /> */}
+      <Dokumenter pid={pid} journalposter={journalposter!} />
+    </VStack>
   )
 }
