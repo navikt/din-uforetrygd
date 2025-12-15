@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "local": "concurrently --kill-others-on-fail \"node server/server.ts \"",
     "dev": "concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts\" \"next dev\"",
     "dev:avsluttet": "MOCK_SCENARIO=avsluttet concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts avsluttet\" \"next dev --port 3001\"",
     "dev:forbidden": "MOCK_SCENARIO=forbidden concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts forbidden\" \"next dev --port 3002\"",
