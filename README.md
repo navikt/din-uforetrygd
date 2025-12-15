@@ -4,9 +4,9 @@ Landingsside for innlogga sider om uføretrygd.
 
 ## Komme i gang
 
-Se [uforetrygd-frontend](../uforetrygd-frontend/README.md) for informasjon om lokal utvikling av frontenden.
+Se [din-uforetrygd-frontend](din-uforetrygd-frontend/README.md) for informasjon om lokal utvikling av frontenden.
 
-Se [uforetrygd-backend](../uforetrygd-backend/README.md) for informasjon om lokal utvikling av backenden.
+Se [din-uforetrygd-backend](din-uforetrygd-backend/README.md) for informasjon om lokal utvikling av backenden.
 
 ---
 
