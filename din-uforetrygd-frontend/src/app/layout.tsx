@@ -19,16 +19,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     env: decoratorEnv,
     params: {
       context: 'privatperson',
-      breadcrumbs: [
-        {
-          title: 'Min side',
-          url: 'https://www.nav.no/minside',
-        },
-        {
-          title: 'Din uføretrygd',
-          url: 'https://www.nav.no/uføretrygd',
-        },
-      ],
     },
   })
 
@@ -47,7 +37,9 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <Spacer />
               <InternalHeaderUser name={veileder.name} />
             </InternalHeader>
-            {children}
+            <main className="main-content" id="maincontent" tabIndex={-1}>
+              {children}
+            </main>
           </Theme>
         </body>
       </html>
@@ -65,7 +57,9 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         <Theme>
           <Decorator.Header />
           <RepresentasjonBanner />
-          {children}
+          <main className="main-content" id="maincontent" tabIndex={-1}>
+            {children}
+          </main>
           <Decorator.Footer />
           <Decorator.Scripts loader={Script} />
           <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>

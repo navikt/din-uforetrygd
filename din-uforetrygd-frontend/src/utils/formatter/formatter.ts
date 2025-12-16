@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns'
+import { nb } from 'date-fns/locale'
 
 export const formatInntekt = (amount?: number | string | null): string => {
   if (amount === null || amount === undefined || amount === '') return ''
@@ -15,4 +16,9 @@ export const formatInntekt = (amount?: number | string | null): string => {
 
 export const formatDate = (date?: string): string | undefined => {
   return date ? format(parseISO(date), 'dd.MM.yyyy') : undefined
+}
+
+export const formatterDatoTekst = (dateString?: string): string | undefined => {
+  if (!dateString) return undefined
+  return format(parseISO(dateString), 'd. MMM yyyy', { locale: nb })
 }

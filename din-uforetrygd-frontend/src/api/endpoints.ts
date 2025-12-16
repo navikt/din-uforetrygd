@@ -42,3 +42,38 @@ export const initate = async (pid: string | undefined) => {
       return { uforetrygdResponse: res.data as components['schemas']['UforetrygdResponse'] }
     })
 }
+
+
+export const hentSaksoversikt = async (saksid: number) => {
+    const oboToken = await getOboToken().catch((error) => {
+        console.error('Error: ', error)
+        return
+    })
+
+    const fullmaktCookie = await getFullmaktCookie()
+
+    const headers: Record<string, string> = {
+        Authorization: `Bearer ${oboToken}`,
+        Cookie: fullmaktCookie as string,
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+        headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
+    }
+
+    return await client
+        .GET("/api/saksoversikt", {
+            headers,
+            cache: 'no-store',
+            params: {
+                query: { saksid }
+            }
+        })
+        .then((res) => {
+            if (!res.response.ok && res.response.status === 403) {
+                return { backendError: res.error! as BackendError }
+            }
+            return { saksoversiktResponse: res.data as components['schemas']['SaksoversiktResponse'] }
+        })
+}
+

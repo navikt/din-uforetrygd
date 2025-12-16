@@ -20,6 +20,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/saksoversikt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["hentSaksoversikt"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dokument/{journalpostId}/{dokumentInfoId}": {
         parameters: {
             query?: never;
@@ -40,6 +56,16 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        SaksoversiktResponse: {
+            aktivBehandling?: components["schemas"]["Behandling"];
+            avsluttedeBehandlinger: components["schemas"]["Behandling"][];
+        };
+        Behandling: {
+            visningstittel: string;
+            status: "TIL_BEHANDLING";
+            mottattDato: string;
+            ferdigstiltDato?: string;
+        };
         DittUforevedtak: {
             /** Format: int32 */
             uforegrad?: number;

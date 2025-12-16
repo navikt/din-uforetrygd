@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, Heading, LinkCard } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
@@ -16,6 +16,9 @@ import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
 import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
 import { Saksoversikt } from '@/sections/Saksoversikt'
+import { Dokumenter } from '@/components/Dokumenter'
+import React from 'react'
+import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -48,6 +51,14 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               dittUforevedtak={uforetrygdResponse.uforevedtak}
               sakId={uforesak?.sakId?.toString()}
             />
+            <LinkCard>
+              <LinkCardTitle>
+                <LinkCardAnchor href={'/uforetrygd/selvbetjening/saksoversikt?saksid=25080346'}>
+                  Saksoversikt
+                </LinkCardAnchor>
+              </LinkCardTitle>
+              <LinkCardDescription>Hendelser knyttet til saken din</LinkCardDescription>
+            </LinkCard>
             <InformasjonOgRegistreringer
               visningskriterier={visningskriterier}
               pid={params.pid}
@@ -55,12 +66,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
             />
             <MeldeFra visningskriterier={visningskriterier} />
-            <Saksoversikt
-              visningskriterier={visningskriterier}
-              pid={params.pid}
-              journalposter={uforetrygdResponse.journalposter!}
-              hendelser={uforetrygdResponse.hendelser!}
-            ></Saksoversikt>
+
+            {/*<Saksoversikt*/}
+            {/*  visningskriterier={visningskriterier}*/}
+            {/*  pid={params.pid}*/}
+            {/*  saksid={uforesak?.sakId ?? 0}*/}
+            {/*></Saksoversikt>*/}
+            <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
             <RelevanteSoknader
               visningskriterier={visningskriterier}
               innloggingstype={uforetrygdResponse.innloggingstype!}

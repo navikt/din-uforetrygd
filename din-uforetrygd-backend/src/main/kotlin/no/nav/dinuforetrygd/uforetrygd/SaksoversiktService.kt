@@ -12,7 +12,7 @@ class SaksoversiktService(
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val krav: List<Krav> = penClient.getDenBesteSaksoversikten(pid, saksid)
         return SaksoversiktResponse(
-            aktivBehandling = krav.firstOrNull { it.status == "UNDER_BEHANDLING" }?.toBehandling(),//TODO: flere krav under behandling?
+            aktivBehandling = krav.firstOrNull { it.status == "TIL_BEHANDLING" }?.toBehandling(),//TODO: flere krav under behandling?
             avsluttedeBehandlinger = krav
                 .filter { it.erRelevant() }
                 .map { it.toBehandling() }
@@ -26,6 +26,7 @@ private fun Krav.toBehandling() = Behandling(
     visningstittel = this.kravGjelder,
     status = when (this.status) {
         //TODO: riktige mappinger - hvilke statuser?
+        "TIL_BEHANDLING" -> BehandlingStatus.UNDER_BEHANDLING
         else -> BehandlingStatus.UNDER_BEHANDLING
     },
     mottattDato = this.mottattDato,
