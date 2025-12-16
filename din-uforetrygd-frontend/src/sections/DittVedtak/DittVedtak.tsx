@@ -43,7 +43,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   return (
     <div className={styles.dittVedtakWrapper}>
       <section className={styles.dittVedtak}>
-        <ExpansionCard aria-label='Saken din' defaultOpen={true} >
+        <ExpansionCard aria-label={'Saken din'} defaultOpen={true}>
           <ExpansionCardHeader>
             <ExpansionCardTitle>Kort om saken din</ExpansionCardTitle>
           </ExpansionCardHeader>
@@ -77,7 +77,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
                 <strong> Uføretrygd innvilget fra: </strong> {uforetrygdInnvilget}{' '}
               </BodyLong>
             )}
-            {hasVarigTilrettelagtArbeid && <>Du har tiltaket Varig tilrettelagt arbeid</>}
+            {hasVarigTilrettelagtArbeid && <BodyLong><strong>Tiltak: </strong> Varig tilrettelagt arbeid</BodyLong>}
             <BodyLong>
               <strong> Registrert forventet inntekt: </strong> {sumAvForventedeInntekter + ' kr'}{' '}
             </BodyLong>
