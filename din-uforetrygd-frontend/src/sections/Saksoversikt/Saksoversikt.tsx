@@ -18,12 +18,14 @@ export const Saksoversikt: React.FC<Saksoversikt> = async ({ visningskriterier, 
   }
 
   return (
-    <VStack gap="6">
-      <Heading size="medium" level="2">
-        Saksoversikt
-      </Heading>
-      {/* <Hendelser hendelser={hendelser!} sakstype={sakstype} /> */}
-      <Dokumenter pid={pid} journalposter={journalposter!} />
-    </VStack>
+    <section>
+      <VStack gap="6">
+        <Heading size="medium" level="2">
+          Saksoversikt
+        </Heading>
+        {/* <Hendelser hendelser={hendelser!} sakstype={sakstype} /> */}
+        <Dokumenter pid={pid} journalposter={journalposter!} />
+      </VStack>
+    </section>
   )
 }
