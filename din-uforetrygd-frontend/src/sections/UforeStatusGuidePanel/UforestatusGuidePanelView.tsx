@@ -1,10 +1,8 @@
 'use client'
 
 import { Visningskriterier } from '@/const'
-import { BodyLong, Button, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
+import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
 import styles from './uforestatusGuidePanel.module.css'
-import { useContext } from 'react'
-import { EventContext } from '@/utils/dataContextProvider/EventContextProvider'
 
 interface IUforeStatusGuidePanelProps {
   visningskriterier: Visningskriterier[]
@@ -17,8 +15,6 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
   dittLokaleNavKontorLenke,
   saksbehandlingstiderLenke,
 }) => {
-  const { setOpenHendelser } = useContext(EventContext)
-
   if (
     visningskriterier.includes(Visningskriterier.SakTilBehandling) &&
     !visningskriterier.includes(Visningskriterier.Uforetrygd)
@@ -36,16 +32,6 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
                 Se saksbehandlingstider for uføretrygd.
               </Link>
             </BodyLong>
-
-            {/*
-            <Button
-              className={styles.uforetrygdHendelserLinkButton}
-              variant="primary-neutral"
-              onClick={() => setOpenHendelser(true)}
-            >
-              Se siste hendelser i saken
-            </Button>
-            */}
           </GuidePanel>
         </div>
       </section>
@@ -66,8 +52,11 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
               </Heading>
               <BodyLong>
                 Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
-                kommer frem til dette i samarbeid med deg.
-                Kontakt <Link href={dittLokaleNavKontorLenke} className={styles.link}> ditt lokale Nav-kontor </Link> for veiledning.
+                kommer frem til dette i samarbeid med deg. Kontakt{' '}
+                <Link href={dittLokaleNavKontorLenke} className={styles.link}>
+                  ditt lokale Nav-kontor
+                </Link>{' '}
+                for veiledning.
               </BodyLong>
             </VStack>
           </GuidePanel>
