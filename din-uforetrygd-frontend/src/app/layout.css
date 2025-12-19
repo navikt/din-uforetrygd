@@ -22,10 +22,14 @@ body {
   }
 }
 
-.main-content > h1 {
+.main-content > h1, .main-content > .tittel-wrapper {
   max-width: var(--content-width);
   width: 100%;
   padding-inline: 12px;
+}
+
+.tittel-wrapper {
+    margin-top: var(--ax-space-40);
 }
 
 .main-content {

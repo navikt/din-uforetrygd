@@ -19,16 +19,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     env: decoratorEnv,
     params: {
       context: 'privatperson',
-      breadcrumbs: [
-        {
-          title: 'Min side',
-          url: 'https://www.nav.no/minside',
-        },
-        {
-          title: 'Din uføretrygd',
-          url: 'https://www.nav.no/uføretrygd',
-        },
-      ],
     },
   })
 
