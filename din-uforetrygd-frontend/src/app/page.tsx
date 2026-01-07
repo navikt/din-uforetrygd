@@ -37,6 +37,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
+            {mode === 'borger' && <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her 2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.</Alert>}
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
