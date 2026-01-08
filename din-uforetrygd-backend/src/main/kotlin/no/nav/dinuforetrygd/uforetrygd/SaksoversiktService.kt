@@ -5,7 +5,6 @@ import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 import kotlin.math.abs
 
 @Service
@@ -56,7 +55,8 @@ private fun Vedtak.toBehandling() = Behandling(
     tekster = lagTekster(
         krav = this.krav,
         reguleringsvedtak = this.vedtakstype == "REGULERING",
-        avslag = this.avslag
+        avslag = this.avslag,
+        eoÅrstall = this.etteroppgjor?.arstall
     )
 )
 
@@ -106,7 +106,7 @@ private val relevanteKravMap = mapOf(
     "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
 )
 
-private fun lagTekster(krav: Krav, reguleringsvedtak: Boolean, avslag: Boolean? = null): Tekster {
+private fun lagTekster(krav: Krav, reguleringsvedtak: Boolean, avslag: Boolean? = null, eoÅrstall: Int? = null): Tekster {
     var tittel: String
     var mottatt = "Søknad er mottatt og ligger i behandlingskø"
     var ferdigBehandlet = "Søknad er ferdig behandlet"
@@ -144,7 +144,7 @@ private fun lagTekster(krav: Krav, reguleringsvedtak: Boolean, avslag: Boolean? 
         "SOK_UU" -> tittel = "Søknad om ung ufør"
         "SOK_YS" -> tittel = "Søknad om yrkesskade"
         "UT_EO" -> {
-            tittel = "Etteroppgjør"
+            tittel = "Etteroppgjør" + (eoÅrstall?.let { " for $eoÅrstall" } ?: "")
             mottatt = "Etteroppgjør er igangsatt"
             ferdigBehandlet = "Etteroppgjør er ferdig behandlet"
             ferdigBehandletUndertekst = null

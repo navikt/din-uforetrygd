@@ -45,6 +45,7 @@ data class Krav(
 )
 
 data class Etteroppgjør(
+    val arstall: Int,
     val avviksbelop: Int,
     val type: String
 )
