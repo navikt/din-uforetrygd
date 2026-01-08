@@ -13,10 +13,8 @@ class SaksoversiktService(
 ) {
     //TODO: trenger vi noe kall mot fullmakt her?
 
-    //TODO: ettergivelse /revurdering? Ikke ettergivelse. Revurdering med de to årsakene
-    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de?
+    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de? Må se mer på denne.
     //TODO: skal alle ha standard tekst "Søknad er mottatt og ligger i behandlingskø" og "Søknad er ferdig behandlet"? Regulering feks gir lite mening
-      //-> Førstegangsbehandling også for utland. Bruk kravårsak på revurdering.
     //TODO: kan vi utlede denne fristen, eller er det bare skatt som har denne? Hør med mette
     //TODO: undertekster: spiss disse - innvilget og avslag for søknader. Ellers trenger vi de antageligvis ikke, så lenge teksten over er grei
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
@@ -35,7 +33,7 @@ private fun Krav.erRelevant() = relevanteKravMap.get(this.kravGjelder)?.contains
 private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
 
 private fun Krav.toBehandling() = Behandling(
-    visningstittel = lagVisningstittel(this.kravGjelder, false),
+    visningstittel = lagVisningstittel(this, false),
     mottattDato = this.mottattDato,
     ferdigstiltDato = null,
     avslag = false,
@@ -43,7 +41,7 @@ private fun Krav.toBehandling() = Behandling(
 )
 
 private fun Vedtak.toBehandling() = Behandling(
-    visningstittel = lagVisningstittel(this.krav.kravGjelder, this.vedtakstype == "REGULERING"),
+    visningstittel = lagVisningstittel(this.krav, this.vedtakstype == "REGULERING"),
     mottattDato = this.krav.mottattDato,
     ferdigstiltDato = this.iverksattDato,
     avslag = this.avslag,
@@ -94,15 +92,16 @@ private val relevanteKravMap = mapOf(
         "OMGJ_ETTER_FVL_P35_C"
     ),
     "UT_EO" to listOf("UT_EO", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+    "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
 )
 
-private fun lagVisningstittel(kravGjelder: String, reguleringsvedtak: Boolean): String {
+private fun lagVisningstittel(krav: Krav, reguleringsvedtak: Boolean): String {
     if (reguleringsvedtak) return "Regulering"
-    return when (kravGjelder) {
+    return when (krav.kravGjelder) {
         "EKSPORT" -> "Eksport"
         "FORSTEG_BH" -> "Førstegangsbehandling"
-        "F_BH_BO_UTL" -> "Førstegangsbehandling bosatt utland"
-        "F_BH_MED_UTL" -> "Førstegangsbehandling Norge/utland"
+        "F_BH_BO_UTL" -> "Førstegangsbehandling"
+        "F_BH_MED_UTL" -> "Førstegangsbehandling"
         "INNT_E" -> "Inntektsendring"
         "MELLOMBH" -> "Mellombehandling"
         "REGULERING" -> "Regulering"
@@ -112,6 +111,7 @@ private fun lagVisningstittel(kravGjelder: String, reguleringsvedtak: Boolean): 
         "SOK_UU" -> "Søknad om ung ufør"
         "SOK_YS" -> "Søknad om yrkesskade"
         "UT_EO" -> "Etteroppgjør"
-        else -> "-"
+        "REVURD" -> if(krav.arsak == "ENDRING_IFU") "Endring av inntekt før uførhet" else if(krav.arsak == "SOKNAD_BT") "Søknad om barnetillegg" else throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+        else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
     }
 }
