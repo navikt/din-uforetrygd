@@ -1,52 +1,117 @@
 package no.nav.dinuforetrygd.uforetrygd
 
+import no.nav.dinuforetrygd.pensjon.pen.Etteroppgjør
 import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.PenClient
+import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class SaksoversiktService(
     private val penClient: PenClient,
 ) {
     //TODO: trenger vi noe kall mot fullmakt her?
+
+    //TODO: ettergivelse /revurdering? Ikke ettergivelse. Revurdering med de to årsakene
+    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de?
+    //TODO: skal alle ha standard tekst "Søknad er mottatt og ligger i behandlingskø" og "Søknad er ferdig behandlet"? Regulering feks gir lite mening
+      //-> Førstegangsbehandling også for utland. Bruk kravårsak på revurdering.
+    //TODO: kan vi utlede denne fristen, eller er det bare skatt som har denne? Hør med mette
+    //TODO: undertekster: spiss disse - innvilget og avslag for søknader. Ellers trenger vi de antageligvis ikke, så lenge teksten over er grei
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
-        val krav: List<Krav> = penClient.getDenBesteSaksoversikten(pid, saksid)
+        val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
-            aktivBehandling = krav.firstOrNull { it.status == "TIL_BEHANDLING" }?.toBehandling(),//TODO: flere krav under behandling?
-            avsluttedeBehandlinger = krav
+            aktivBehandling = krav?.takeIf { it.erRelevant() }?.toBehandling(),
+            avsluttedeBehandlinger = vedtak
                 .filter { it.erRelevant() }
                 .map { it.toBehandling() }
+                .sortedByDescending { it.ferdigstiltDato }
         )
     }
 }
 
 private fun Krav.erRelevant() = relevanteKravMap.get(this.kravGjelder)?.contains(this.arsak) ?: false
+private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
 
 private fun Krav.toBehandling() = Behandling(
-    visningstittel = this.kravGjelder,
-    status = when (this.status) {
-        //TODO: riktige mappinger - hvilke statuser?
-        "TIL_BEHANDLING" -> BehandlingStatus.UNDER_BEHANDLING
-        else -> BehandlingStatus.UNDER_BEHANDLING
-    },
+    visningstittel = lagVisningstittel(this.kravGjelder, false),
     mottattDato = this.mottattDato,
-    ferdigstiltDato = this.iverksattDato
+    ferdigstiltDato = null,
+    avslag = false,
+    etteroppgjor = null
 )
 
+private fun Vedtak.toBehandling() = Behandling(
+    visningstittel = lagVisningstittel(this.krav.kravGjelder, this.vedtakstype == "REGULERING"),
+    mottattDato = this.krav.mottattDato,
+    ferdigstiltDato = this.iverksattDato,
+    avslag = this.avslag,
+    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(this.iverksattDato)
+)
+
+private fun Etteroppgjør.toEtteroppgjør(iverksattDato: LocalDate) =
+    Etteroppgjør(
+        tilbakekreving = if (this.type == "TILBAKEKR") this.avviksbelop else 0,
+        etterbetaling = if (this.type == "ETTERBET") this.avviksbelop else 0,
+        frist = iverksattDato.plusWeeks(3)
+    )
+
+//TODO: kanskje ta en ny runde på disse: hadde skrevet ETTEROPPGJOR istedetfor UT_EO(de har samme decode)
 private val relevanteKravMap = mapOf(
     "EKSPORT" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "UTVANDRET"),
-    // TODO: Hva med ettergivelse
     "FORSTEG_BH" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
     "F_BH_BO_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
     "F_BH_MED_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "INNT_E" to listOf("ANNEN_FOR_END_IN", "ANNEN_ARSAK_END_IN", "BEGGE_FOR_END_IN", "BARN_ENDRET_INNTEKT", "ENDRET_INNTEKT", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+    "INNT_E" to listOf(
+        "ANNEN_FOR_END_IN",
+        "ANNEN_ARSAK_END_IN",
+        "BEGGE_FOR_END_IN",
+        "BARN_ENDRET_INNTEKT",
+        "ENDRET_INNTEKT",
+        "OMGJ_ETTER_ANKE",
+        "OMGJ_ETTER_KLAGE"
+    ),
     "MELLOMBH" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
     "REGULERING" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    // TODO: revurdering
     "SLUTT_BH_UTL" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
     "SOK_RED_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
     "SOK_OKN_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "SOK_UU" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OMGJ_ETTER_FVL_P35_A", "OMGJ_ETTER_FVL_P35_B", "OMGJ_ETTER_FVL_P35_C"),
-    "SOK_YS" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OMGJ_ETTER_FVL_P35_A", "OMGJ_ETTER_FVL_P35_B", "OMGJ_ETTER_FVL_P35_C"),
-    "UT_EO" to listOf("ETTEROPPGJOR", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+    "SOK_UU" to listOf(
+        "NY_SOKNAD",
+        "OMGJ_ETTER_ANKE",
+        "OMGJ_ETTER_KLAGE",
+        "OMGJ_ETTER_FVL_P35_A",
+        "OMGJ_ETTER_FVL_P35_B",
+        "OMGJ_ETTER_FVL_P35_C"
+    ),
+    "SOK_YS" to listOf(
+        "NY_SOKNAD",
+        "OMGJ_ETTER_ANKE",
+        "OMGJ_ETTER_KLAGE",
+        "OMGJ_ETTER_FVL_P35_A",
+        "OMGJ_ETTER_FVL_P35_B",
+        "OMGJ_ETTER_FVL_P35_C"
+    ),
+    "UT_EO" to listOf("UT_EO", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
 )
+
+private fun lagVisningstittel(kravGjelder: String, reguleringsvedtak: Boolean): String {
+    if (reguleringsvedtak) return "Regulering"
+    return when (kravGjelder) {
+        "EKSPORT" -> "Eksport"
+        "FORSTEG_BH" -> "Førstegangsbehandling"
+        "F_BH_BO_UTL" -> "Førstegangsbehandling bosatt utland"
+        "F_BH_MED_UTL" -> "Førstegangsbehandling Norge/utland"
+        "INNT_E" -> "Inntektsendring"
+        "MELLOMBH" -> "Mellombehandling"
+        "REGULERING" -> "Regulering"
+        "SLUTT_BH_UTL" -> "Sluttbehandling Norge/utland"
+        "SOK_RED_UG" -> "Søknad om reduksjon av uføregrad"
+        "SOK_OKN_UG" -> "Søknad om økning av uføregrad"
+        "SOK_UU" -> "Søknad om ung ufør"
+        "SOK_YS" -> "Søknad om yrkesskade"
+        "UT_EO" -> "Etteroppgjør"
+        else -> "-"
+    }
+}

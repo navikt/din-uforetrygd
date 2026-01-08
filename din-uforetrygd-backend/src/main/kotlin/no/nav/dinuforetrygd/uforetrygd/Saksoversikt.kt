@@ -36,15 +36,14 @@ data class SaksoversiktResponse(
 
 data class Behandling(
     val visningstittel: String,
-    val status: BehandlingStatus,
     val mottattDato: LocalDate,
-    val ferdigstiltDato: LocalDate?
+    val ferdigstiltDato: LocalDate?,
+    val avslag: Boolean,
+    val etteroppgjor: Etteroppgjør?
 )
 
-enum class BehandlingStatus {
-    // TODO verifiser
-    FERDIGSTILT,
-    INNVILGET,
-    AVSLATT,
-    UNDER_BEHANDLING
-}
+data class Etteroppgjør(
+    val etterbetaling: Int,
+    val tilbakekreving: Int,
+    val frist: LocalDate
+)

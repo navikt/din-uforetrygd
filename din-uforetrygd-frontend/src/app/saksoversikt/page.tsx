@@ -17,7 +17,7 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
     console.log(saksoversikt)
     if (saksoversikt) {
       return <Saksoversikt saksoversikt={saksoversikt} />
-    } else return <div>Laster</div>
+    } else return <div>Laster</div>//TODO havner her hvis det feiler mot backend
   }
 }
 

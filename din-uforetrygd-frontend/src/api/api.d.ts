@@ -62,9 +62,15 @@ export interface components {
     }
     Behandling: {
       visningstittel: string
-      status: 'TIL_BEHANDLING'
       mottattDato: string
       ferdigstiltDato?: string
+      avslag: boolean
+      etteroppgjor?: components['schemas']['Etteroppgjor']
+    }
+    Etteroppgjor: {
+      etterbetaling: number
+      tilbakekreving: number
+      frist: string
     }
     DittUforevedtak: {
       /** Format: int32 */

@@ -21,10 +21,10 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @Component
 class PenClient(
-    @Value("\${pen.endpoint.url}") private val url: String,
-    @Value("\${pen.scope}") private val scope: String,
-    @Value("\${pen.audience}") private val audience: String,
-    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
+    @param:Value("\${pen.endpoint.url}") private val url: String,
+    @param:Value("\${pen.scope}") private val scope: String,
+    @param:Value("\${pen.audience}") private val audience: String,
+    @param:Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
@@ -143,8 +143,8 @@ class PenClient(
     }
 
 
-    fun getDenBesteSaksoversikten(pid: String, sakId: Long): List<Krav> {
-        val path = "/pen/api/uforetrygd/din-uforetrygd/krav"
+    fun hentBehandlinger(pid: String, sakId: Long): KravResponse {
+        val path = "/pen/api/uforetrygd/din-uforetrygd/behandlinger"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -165,7 +165,6 @@ class PenClient(
                         .withMdcContext()
                         .retry(numberOfRetries)
                         .block()!!
-                        .krav
                 }
         } catch (e: WebClientResponseException) {
             if (HttpStatus.FORBIDDEN == e.statusCode) {

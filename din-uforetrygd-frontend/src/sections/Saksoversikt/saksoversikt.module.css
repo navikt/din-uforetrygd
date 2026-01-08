@@ -17,13 +17,14 @@
     line-height: 28px; /* 155.556% */
 }
 
-.ingenSaker {
+.ingenBehandlinger {
+    display: grid;
     margin: 80px 0;
     justify-items: center;
     gap: 24px;
 }
 
-.ingenSaker > svg {
+.ingenBehandlinger > svg {
     height: 65px;
     width: 65px;
     color: var(--ax-bg-neutral-strong-hover);

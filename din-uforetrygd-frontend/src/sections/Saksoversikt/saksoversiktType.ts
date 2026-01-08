@@ -7,17 +7,16 @@ export interface SaksoversiktType {
 
 export interface BehandlingType {
   visningstittel: string
-  status: BehandlingStatus
   mottattDato: string
   ferdigstiltDato?: string | null
+  avslag: boolean
+  etteroppgjor?: EtteroppgjorType | null
 }
 
-enum BehandlingStatus {
-  // TODO verifiser
-  FERDIGSTILT = 'FERDIGSTILT',
-  INNVILGET = 'INNVILGET',
-  AVSLATT = 'AVSLATT',
-  UNDER_BEHANDLING = 'UNDER_BEHANDLING',
+export interface EtteroppgjorType {
+  etterbetaling: number
+  tilbakekreving: number
+  frist: string
 }
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
@@ -30,8 +29,9 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
 const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
   return {
     visningstittel: fra.visningstittel,
-    status: fra.status as BehandlingStatus,
     mottattDato: fra.mottattDato,
     ferdigstiltDato: fra.ferdigstiltDato,
+    avslag: fra.avslag,
+    etteroppgjor: fra.etteroppgjor,
   }
 }

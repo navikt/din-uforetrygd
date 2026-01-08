@@ -23,12 +23,28 @@ data class Vedtakssammendrag(
     val hasVarigTilrettelagtArbeid: Boolean
 )
 
-data class KravResponse(val krav: List<Krav>)
+data class KravResponse(
+    val apentKrav: Krav?,
+    val vedtak: List<Vedtak>
+)
+
+data class Vedtak(
+    val vedtakId: Long,
+    val vedtakstype: String,
+    val iverksattDato: LocalDate,
+    val avslag: Boolean,
+    val krav: Krav,
+    val etteroppgjor: Etteroppgjør? = null
+)
 
 data class Krav(
     val kravGjelder: String,
     val status: String,
     val arsak: String,
     val mottattDato: LocalDate,
-    val iverksattDato: LocalDate?
+)
+
+data class Etteroppgjør(
+    val avviksbelop: Int,
+    val type: String
 )
