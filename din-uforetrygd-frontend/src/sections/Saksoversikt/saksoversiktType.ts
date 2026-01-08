@@ -16,7 +16,6 @@ export interface BehandlingType {
 export interface EtteroppgjorType {
   etterbetaling: number
   tilbakekreving: number
-  frist: string
 }
 
 export interface Tekster {
@@ -33,6 +32,7 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
   }
 }
 
+//TODO: trenger vi mappingen, feks etteroppgjor mappes auto
 const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
   return {
     mottattDato: fra.mottattDato,

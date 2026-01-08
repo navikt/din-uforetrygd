@@ -70,7 +70,6 @@ export interface components {
     Etteroppgjor: {
       etterbetaling: number
       tilbakekreving: number
-      frist: string
     }
     Tekster: {
       tittel: string,

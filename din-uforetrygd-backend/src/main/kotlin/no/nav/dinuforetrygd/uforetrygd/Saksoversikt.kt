@@ -52,5 +52,4 @@ data class Tekster(
 data class Etteroppgjør(
     val etterbetaling: Int,
     val tilbakekreving: Int,
-    val frist: LocalDate
 )

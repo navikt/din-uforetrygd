@@ -23,10 +23,6 @@ export function Etteroppgjor({ etteroppgjor }: Props) {
           <BodyShort>Du får tilbake fra oss:</BodyShort>
           <BodyShort><strong>{etteroppgjor.etterbetaling}</strong></BodyShort>
         </HStack>
-        <HStack justify="space-between">
-          <BodyShort>Frist for å betale tilbake:</BodyShort>
-          <BodyShort><strong>{etteroppgjor.frist}</strong></BodyShort>
-        </HStack>
         <Link>Her finner du informasjon om etteroppgjøret og hvordan du kan betale tilbake (åpnes i ny fane)</Link>
       </VStack>
     </VStack>

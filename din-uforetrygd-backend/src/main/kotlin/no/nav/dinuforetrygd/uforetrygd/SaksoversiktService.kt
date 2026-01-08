@@ -52,7 +52,7 @@ private fun Vedtak.toBehandling() = Behandling(
     mottattDato = this.krav.mottattDato,
     ferdigstiltDato = this.iverksattDato,
     avslag = this.avslag,
-    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(this.iverksattDato),
+    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(),
     tekster = lagTekster(
         krav = this.krav,
         reguleringsvedtak = this.vedtakstype == "REGULERING",
@@ -60,11 +60,10 @@ private fun Vedtak.toBehandling() = Behandling(
     )
 )
 
-private fun Etteroppgjør.toEtteroppgjør(iverksattDato: LocalDate) =
+private fun Etteroppgjør.toEtteroppgjør() =
     Etteroppgjør(
         tilbakekreving = if (this.type == "TILBAKEKR") abs(this.avviksbelop) else 0,
         etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
-        frist = iverksattDato.plusWeeks(3)
     )
 
 //TODO: kanskje ta en ny runde på disse: hadde skrevet ETTEROPPGJOR istedetfor UT_EO(de har samme decode)
