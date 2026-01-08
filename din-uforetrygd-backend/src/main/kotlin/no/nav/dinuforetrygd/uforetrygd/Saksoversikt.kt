@@ -35,11 +35,18 @@ data class SaksoversiktResponse(
 )
 
 data class Behandling(
-    val visningstittel: String,
     val mottattDato: LocalDate,
     val ferdigstiltDato: LocalDate?,
     val avslag: Boolean,
-    val etteroppgjor: Etteroppgjør?
+    val etteroppgjor: Etteroppgjør?,
+    val tekster: Tekster
+)
+
+data class Tekster(
+    val tittel: String,
+    val mottatt: String?,
+    val ferdigBehandlet: String?,
+    val ferdigBehandletUndertekst: String?
 )
 
 data class Etteroppgjør(

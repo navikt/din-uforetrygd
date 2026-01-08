@@ -6,6 +6,7 @@ import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import kotlin.math.abs
 
 @Service
 class SaksoversiktService(
@@ -13,10 +14,14 @@ class SaksoversiktService(
 ) {
     //TODO: trenger vi noe kall mot fullmakt her?
 
-    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de? Må se mer på denne.
-    //TODO: skal alle ha standard tekst "Søknad er mottatt og ligger i behandlingskø" og "Søknad er ferdig behandlet"? Regulering feks gir lite mening
-    //TODO: kan vi utlede denne fristen, eller er det bare skatt som har denne? Hør med mette
-    //TODO: undertekster: spiss disse - innvilget og avslag for søknader. Ellers trenger vi de antageligvis ikke, så lenge teksten over er grei
+    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de? Og burde det vises som flere behandlinger eller en?
+    // - Anne Sofie ser mer på denne.
+
+    //TODO: etteroppgjør
+    // - frist kan vi ikke ha med. Vi har ikke datoen, det kan være oppdelte betalinger etc
+    // - Det kan komme flere etteroppgjør over kort tid. Hvordan ønsker vi å håndtere det?
+    // - Få inn årstall for etteroppgjør
+
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
@@ -29,29 +34,36 @@ class SaksoversiktService(
     }
 }
 
-private fun Krav.erRelevant() = relevanteKravMap.get(this.kravGjelder)?.contains(this.arsak) ?: false
+private fun Krav.erRelevant() = relevanteKravMap[this.kravGjelder]?.contains(this.arsak) ?: false
 private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
 
 private fun Krav.toBehandling() = Behandling(
-    visningstittel = lagVisningstittel(this, false),
     mottattDato = this.mottattDato,
     ferdigstiltDato = null,
     avslag = false,
-    etteroppgjor = null
+    etteroppgjor = null,
+    tekster = lagTekster(
+        krav = this,
+        reguleringsvedtak = false
+    )
 )
 
 private fun Vedtak.toBehandling() = Behandling(
-    visningstittel = lagVisningstittel(this.krav, this.vedtakstype == "REGULERING"),
     mottattDato = this.krav.mottattDato,
     ferdigstiltDato = this.iverksattDato,
     avslag = this.avslag,
-    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(this.iverksattDato)
+    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(this.iverksattDato),
+    tekster = lagTekster(
+        krav = this.krav,
+        reguleringsvedtak = this.vedtakstype == "REGULERING",
+        avslag = this.avslag
+    )
 )
 
 private fun Etteroppgjør.toEtteroppgjør(iverksattDato: LocalDate) =
     Etteroppgjør(
-        tilbakekreving = if (this.type == "TILBAKEKR") this.avviksbelop else 0,
-        etterbetaling = if (this.type == "ETTERBET") this.avviksbelop else 0,
+        tilbakekreving = if (this.type == "TILBAKEKR") abs(this.avviksbelop) else 0,
+        etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
         frist = iverksattDato.plusWeeks(3)
     )
 
@@ -95,23 +107,69 @@ private val relevanteKravMap = mapOf(
     "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
 )
 
-private fun lagVisningstittel(krav: Krav, reguleringsvedtak: Boolean): String {
-    if (reguleringsvedtak) return "Regulering"
-    return when (krav.kravGjelder) {
-        "EKSPORT" -> "Eksport"
-        "FORSTEG_BH" -> "Førstegangsbehandling"
-        "F_BH_BO_UTL" -> "Førstegangsbehandling"
-        "F_BH_MED_UTL" -> "Førstegangsbehandling"
-        "INNT_E" -> "Inntektsendring"
-        "MELLOMBH" -> "Mellombehandling"
-        "REGULERING" -> "Regulering"
-        "SLUTT_BH_UTL" -> "Sluttbehandling Norge/utland"
-        "SOK_RED_UG" -> "Søknad om reduksjon av uføregrad"
-        "SOK_OKN_UG" -> "Søknad om økning av uføregrad"
-        "SOK_UU" -> "Søknad om ung ufør"
-        "SOK_YS" -> "Søknad om yrkesskade"
-        "UT_EO" -> "Etteroppgjør"
-        "REVURD" -> if(krav.arsak == "ENDRING_IFU") "Endring av inntekt før uførhet" else if(krav.arsak == "SOKNAD_BT") "Søknad om barnetillegg" else throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+private fun lagTekster(krav: Krav, reguleringsvedtak: Boolean, avslag: Boolean? = null): Tekster {
+    var tittel: String
+    var mottatt = "Søknad er mottatt og ligger i behandlingskø"
+    var ferdigBehandlet = "Søknad er ferdig behandlet"
+    var ferdigBehandletUndertekst: String? =
+        avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
+
+    if (reguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
+        tittel = "Regulering"
+        mottatt = "Regulering er igangsatt"
+        ferdigBehandlet = "Regulering er ferdig behandlet"
+        ferdigBehandletUndertekst = null
+    } else when (krav.kravGjelder) {
+        "EKSPORT" -> tittel = "Eksport"
+        "FORSTEG_BH" -> tittel = "Førstegangsbehandling"
+        "F_BH_BO_UTL" -> tittel = "Førstegangsbehandling"
+        "F_BH_MED_UTL" -> tittel = "Førstegangsbehandling"
+        "INNT_E" -> {
+            tittel = "Inntektsendring"
+            mottatt = "Inntektsendring er mottatt og ligger i behandlingskø"
+            ferdigBehandlet = "Inntektsendring er ferdig behandlet"
+            ferdigBehandletUndertekst = null
+        }
+
+        "MELLOMBH" -> tittel = "Mellombehandling"
+        "REGULERING" -> {
+            tittel = "Regulering"
+            mottatt = "Regulering er igangsatt"
+            ferdigBehandlet = "Regulering er ferdig behandlet"
+            ferdigBehandletUndertekst = null
+        }
+
+        "SLUTT_BH_UTL" -> tittel = "Sluttbehandling Norge/utland"
+        "SOK_RED_UG" -> tittel = "Søknad om reduksjon av uføregrad"
+        "SOK_OKN_UG" -> tittel = "Søknad om økning av uføregrad"
+        "SOK_UU" -> tittel = "Søknad om ung ufør"
+        "SOK_YS" -> tittel = "Søknad om yrkesskade"
+        "UT_EO" -> {
+            tittel = "Etteroppgjør"
+            mottatt = "Etteroppgjør er igangsatt"
+            ferdigBehandlet = "Etteroppgjør er ferdig behandlet"
+            ferdigBehandletUndertekst = null
+        }
+
+        "REVURD" -> when (krav.arsak) {
+            "ENDRING_IFU" -> {
+                tittel = "Endring av inntekt før uførhet"
+                mottatt = "Endring er igangsatt"
+                ferdigBehandlet = "Endring er ferdig behandlet"
+                ferdigBehandletUndertekst = null
+            }
+
+            "SOKNAD_BT" -> tittel = "Søknad om barnetillegg"
+            else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+        }
+
         else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
     }
+
+    return Tekster(
+        tittel = tittel,
+        mottatt = mottatt,
+        ferdigBehandlet = ferdigBehandlet,
+        ferdigBehandletUndertekst = ferdigBehandletUndertekst
+    )
 }

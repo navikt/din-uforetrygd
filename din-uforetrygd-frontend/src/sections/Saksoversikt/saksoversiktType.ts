@@ -6,17 +6,24 @@ export interface SaksoversiktType {
 }
 
 export interface BehandlingType {
-  visningstittel: string
   mottattDato: string
   ferdigstiltDato?: string | null
   avslag: boolean
   etteroppgjor?: EtteroppgjorType | null
+  tekster: Tekster
 }
 
 export interface EtteroppgjorType {
   etterbetaling: number
   tilbakekreving: number
   frist: string
+}
+
+export interface Tekster {
+  tittel: string,
+  mottatt: string,
+  ferdigBehandlet: string,
+  ferdigBehandletUndertekst?: string | null
 }
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
@@ -28,10 +35,10 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
 
 const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
   return {
-    visningstittel: fra.visningstittel,
     mottattDato: fra.mottattDato,
     ferdigstiltDato: fra.ferdigstiltDato,
     avslag: fra.avslag,
     etteroppgjor: fra.etteroppgjor,
+    tekster: fra.tekster
   }
 }

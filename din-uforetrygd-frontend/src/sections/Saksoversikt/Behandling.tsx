@@ -15,9 +15,9 @@ interface Props {
 
 export function Behandling({ behandling, aktiv }: Props) {
   return (
-    <ExpansionCard aria-label={behandling.visningstittel} style={{ marginBottom: '1rem' }}>
+    <ExpansionCard aria-label={behandling.tekster.tittel} style={{ marginBottom: '1rem' }}>
       <ExpansionCard.Header>
-        <ExpansionCard.Title>{behandling.visningstittel}</ExpansionCard.Title>
+        <ExpansionCard.Title>{behandling.tekster.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${aktiv ? '' : styles.behandlingDato}`}>
           {aktiv ? 'Under behandling' : formatterDatoTekst(behandling.mottattDato)}
         </ExpansionCard.Description>
@@ -29,26 +29,28 @@ export function Behandling({ behandling, aktiv }: Props) {
         <Process>
           <Process.Event
             status="active"
-            title="Søknad er mottatt og ligger i behandlingskø"
+            title={behandling.tekster.mottatt}
             timestamp={formatterDatoTekst(behandling.mottattDato)}
             bullet={<CheckmarkHeavyIcon />}
           />
-          <Process.Event title="Søknad er ferdig behandlet"></Process.Event>
+          <Process.Event title={behandling.tekster.ferdigBehandlet}></Process.Event>
         </Process>
           :
           <Process>
             <Process.Event
               status="completed"
-              title="Søknad er mottatt og ligger i behandlingskø"
+              title={behandling.tekster.mottatt}
               timestamp={formatterDatoTekst(behandling.mottattDato)}
               bullet={<CheckmarkHeavyIcon />}
             />
             <Process.Event
               status="completed"
-              title="Søknad er ferdig behandlet"
+              title={behandling.tekster.ferdigBehandlet}
               timestamp={behandling.ferdigstiltDato ? formatterDatoTekst(behandling.ferdigstiltDato) : ''}
               bullet={<CheckmarkHeavyIcon />}
-            />
+            >
+              {behandling.tekster.ferdigBehandletUndertekst}
+            </Process.Event>
           </Process>)
         }
       </ExpansionCard.Content>

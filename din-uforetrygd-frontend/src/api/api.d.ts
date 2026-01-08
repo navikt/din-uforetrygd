@@ -61,16 +61,22 @@ export interface components {
       avsluttedeBehandlinger: components['schemas']['Behandling'][]
     }
     Behandling: {
-      visningstittel: string
       mottattDato: string
       ferdigstiltDato?: string
       avslag: boolean
       etteroppgjor?: components['schemas']['Etteroppgjor']
+      tekster: components['schemas']['Tekster']
     }
     Etteroppgjor: {
       etterbetaling: number
       tilbakekreving: number
       frist: string
+    }
+    Tekster: {
+      tittel: string,
+      mottatt: string,
+      ferdigBehandlet: string,
+      ferdigBehandletUndertekst?: string
     }
     DittUforevedtak: {
       /** Format: int32 */
