@@ -29,7 +29,6 @@ data class HendelseData(
 )
 
 data class SaksoversiktResponse(
-    // TODO får vi problmemer ved evt flere åpne krav?
     val aktivBehandling: Behandling?,
     val avsluttedeBehandlinger: List<Behandling>
 )
@@ -37,10 +36,11 @@ data class SaksoversiktResponse(
 data class Behandling(
     val tittel: String,
     val mottattDato: LocalDate,
-    val ferdigstiltDato: LocalDate?,
+    val ferdigstiltDato: LocalDate? = null,
     val avslag: Boolean,
-    val etteroppgjor: Etteroppgjør?,
-    val steg: List<Steg>
+    val etteroppgjor: Etteroppgjør? = null,
+    val steg: List<Steg>,
+    val vedtakId: Long? = null
 )
 
 data class Steg(

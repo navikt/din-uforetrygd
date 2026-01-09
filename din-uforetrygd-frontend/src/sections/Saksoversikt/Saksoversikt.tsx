@@ -11,10 +11,8 @@ interface Saksoversikt {
 }
 
 export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
-  //TODO: sjekk ut client vs server
   //TODO: figma må oppdateres med Tabs.Panel?
   //TODO: sasa: har gjort en antagelse om at ingenbehandlinger trengs også for avsluttede
-  //TODO: bytt ut idx med kravid/bruk key for behandling
 
   const [currentPage, setCurrentPage] = useState(saksoversikt.avsluttedeBehandlinger.length > 0 ? 1 : 0)
   const antallBehandlingerPerSide = 5
@@ -42,7 +40,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
           <Tabs.Panel value="avsluttede">
             {saksoversikt.avsluttedeBehandlinger.length > 0 ? (
               saksoversikt.avsluttedeBehandlinger.slice(antallBehandlingerPerSide * (currentPage-1), antallBehandlingerPerSide * currentPage).map((behandling) => (
-                <Behandling behandling={behandling} aktiv={false} />
+                <Behandling behandling={behandling} key={behandling.vedtakId} aktiv={false} />
               ))
             ) : (
               <IngenBehandlinger aktiv={false}/>

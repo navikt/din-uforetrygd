@@ -29,6 +29,7 @@ export function Behandling({ behandling, aktiv }: Props) {
           <Process>
             {behandling.steg.map((steg) => (
               <Process.Event
+                key={`${behandling.vedtakId}-${steg.tittel}`}
                 status={steg.aktiv ? "active" : steg.utfort ? "completed" : undefined}
                 title={steg.tittel}
                 timestamp={formatterDatoTekst(behandling.mottattDato)}

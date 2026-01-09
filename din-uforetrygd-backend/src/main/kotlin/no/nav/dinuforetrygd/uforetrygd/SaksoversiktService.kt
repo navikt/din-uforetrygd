@@ -41,9 +41,7 @@ class SaksoversiktService(
             isReguleringsvedtak = false
         ),
         mottattDato = this.mottattDato,
-        ferdigstiltDato = null,
         avslag = false,
-        etteroppgjor = null,
         steg = lagSteg(
             krav = this,
             reguleringsvedtak = false,
@@ -67,7 +65,8 @@ class SaksoversiktService(
             reguleringsvedtak = this.vedtakstype == "REGULERING",
             avslag = this.avslag,
             aktivBehandling = false
-        )
+        ),
+        vedtakId = this.vedtakId
     )
 
     private fun Etteroppgjør.toEtteroppgjør() =
