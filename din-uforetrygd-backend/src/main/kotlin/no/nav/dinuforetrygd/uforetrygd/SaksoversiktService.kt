@@ -76,7 +76,6 @@ class SaksoversiktService(
             etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
         )
 
-    //TODO: kanskje ta en ny runde på disse: hadde skrevet ETTEROPPGJOR istedetfor UT_EO(de har samme decode)
     private val relevanteKravMap = mapOf(
         "EKSPORT" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "UTVANDRET"),
         "FORSTEG_BH" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
@@ -112,7 +111,7 @@ class SaksoversiktService(
             "OMGJ_ETTER_FVL_P35_B",
             "OMGJ_ETTER_FVL_P35_C"
         ),
-        "UT_EO" to listOf("UT_EO", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "UT_EO" to listOf("UT_EO", "UT_OMGJ_ANKE_EO", "UT_OMGJ_KLAGE_EO"),
         "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
     )
 
