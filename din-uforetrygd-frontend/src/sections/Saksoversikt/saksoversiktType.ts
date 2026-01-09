@@ -6,11 +6,12 @@ export interface SaksoversiktType {
 }
 
 export interface BehandlingType {
+  tittel: string
   mottattDato: string
   ferdigstiltDato?: string | null
   avslag: boolean
   etteroppgjor?: EtteroppgjorType | null
-  tekster: Tekster
+  steg: StegType[]
 }
 
 export interface EtteroppgjorType {
@@ -18,11 +19,11 @@ export interface EtteroppgjorType {
   tilbakekreving: number
 }
 
-export interface Tekster {
+export interface StegType {
+  aktiv: boolean,
+  utfort: boolean,
   tittel: string,
-  mottatt: string,
-  ferdigBehandlet: string,
-  ferdigBehandletUndertekst?: string | null
+  undertekst?: string | null
 }
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
@@ -35,10 +36,11 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
 //TODO: trenger vi mappingen, feks etteroppgjor mappes auto
 const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
   return {
+    tittel: fra.tittel,
     mottattDato: fra.mottattDato,
     ferdigstiltDato: fra.ferdigstiltDato,
     avslag: fra.avslag,
     etteroppgjor: fra.etteroppgjor,
-    tekster: fra.tekster
+    steg: fra.steg
   }
 }

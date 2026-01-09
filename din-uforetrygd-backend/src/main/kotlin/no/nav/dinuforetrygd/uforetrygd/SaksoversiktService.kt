@@ -31,144 +31,210 @@ class SaksoversiktService(
                 .sortedByDescending { it.ferdigstiltDato }
         )
     }
-}
 
-private fun Krav.erRelevant() = relevanteKravMap[this.kravGjelder]?.contains(this.arsak) ?: false
-private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
+    private fun Krav.erRelevant() = relevanteKravMap[this.kravGjelder]?.contains(this.arsak) ?: false
+    private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
 
-private fun Krav.toBehandling() = Behandling(
-    mottattDato = this.mottattDato,
-    ferdigstiltDato = null,
-    avslag = false,
-    etteroppgjor = null,
-    tekster = lagTekster(
-        krav = this,
-        reguleringsvedtak = false
+    private fun Krav.toBehandling() = Behandling(
+        tittel = lagBehandlingTittel(
+            krav = this,
+            isReguleringsvedtak = false
+        ),
+        mottattDato = this.mottattDato,
+        ferdigstiltDato = null,
+        avslag = false,
+        etteroppgjor = null,
+        steg = lagSteg(
+            krav = this,
+            reguleringsvedtak = false,
+            avslag = false,
+            aktivBehandling = true
+        )
     )
-)
 
-private fun Vedtak.toBehandling() = Behandling(
-    mottattDato = this.krav.mottattDato,
-    ferdigstiltDato = this.iverksattDato,
-    avslag = this.avslag,
-    etteroppgjor = this.etteroppgjor?.toEtteroppgjør(),
-    tekster = lagTekster(
-        krav = this.krav,
-        reguleringsvedtak = this.vedtakstype == "REGULERING",
+    private fun Vedtak.toBehandling() = Behandling(
+        tittel = lagBehandlingTittel(
+            krav = this.krav,
+            isReguleringsvedtak = this.vedtakstype == "REGULERING",
+            eoÅrstall = this.etteroppgjor?.arstall
+        ),
+        mottattDato = this.krav.mottattDato,
+        ferdigstiltDato = this.iverksattDato,
         avslag = this.avslag,
-        eoÅrstall = this.etteroppgjor?.arstall
+        etteroppgjor = this.etteroppgjor?.toEtteroppgjør(),
+        steg = lagSteg(
+            krav = this.krav,
+            reguleringsvedtak = this.vedtakstype == "REGULERING",
+            avslag = this.avslag,
+            aktivBehandling = false
+        )
     )
-)
 
-private fun Etteroppgjør.toEtteroppgjør() =
-    Etteroppgjør(
-        tilbakekreving = if (this.type == "TILBAKEKR") abs(this.avviksbelop) else 0,
-        etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
+    private fun Etteroppgjør.toEtteroppgjør() =
+        Etteroppgjør(
+            tilbakekreving = if (this.type == "TILBAKEKR") abs(this.avviksbelop) else 0,
+            etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
+        )
+
+    //TODO: kanskje ta en ny runde på disse: hadde skrevet ETTEROPPGJOR istedetfor UT_EO(de har samme decode)
+    private val relevanteKravMap = mapOf(
+        "EKSPORT" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "UTVANDRET"),
+        "FORSTEG_BH" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "F_BH_BO_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "F_BH_MED_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "INNT_E" to listOf(
+            "ANNEN_FOR_END_IN",
+            "ANNEN_ARSAK_END_IN",
+            "BEGGE_FOR_END_IN",
+            "BARN_ENDRET_INNTEKT",
+            "ENDRET_INNTEKT",
+            "OMGJ_ETTER_ANKE",
+            "OMGJ_ETTER_KLAGE"
+        ),
+        "MELLOMBH" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
+        "REGULERING" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "SLUTT_BH_UTL" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
+        "SOK_RED_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "SOK_OKN_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "SOK_UU" to listOf(
+            "NY_SOKNAD",
+            "OMGJ_ETTER_ANKE",
+            "OMGJ_ETTER_KLAGE",
+            "OMGJ_ETTER_FVL_P35_A",
+            "OMGJ_ETTER_FVL_P35_B",
+            "OMGJ_ETTER_FVL_P35_C"
+        ),
+        "SOK_YS" to listOf(
+            "NY_SOKNAD",
+            "OMGJ_ETTER_ANKE",
+            "OMGJ_ETTER_KLAGE",
+            "OMGJ_ETTER_FVL_P35_A",
+            "OMGJ_ETTER_FVL_P35_B",
+            "OMGJ_ETTER_FVL_P35_C"
+        ),
+        "UT_EO" to listOf("UT_EO", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
+        "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
     )
 
-//TODO: kanskje ta en ny runde på disse: hadde skrevet ETTEROPPGJOR istedetfor UT_EO(de har samme decode)
-private val relevanteKravMap = mapOf(
-    "EKSPORT" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "UTVANDRET"),
-    "FORSTEG_BH" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "F_BH_BO_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "F_BH_MED_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "INNT_E" to listOf(
-        "ANNEN_FOR_END_IN",
-        "ANNEN_ARSAK_END_IN",
-        "BEGGE_FOR_END_IN",
-        "BARN_ENDRET_INNTEKT",
-        "ENDRET_INNTEKT",
-        "OMGJ_ETTER_ANKE",
-        "OMGJ_ETTER_KLAGE"
-    ),
-    "MELLOMBH" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
-    "REGULERING" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "SLUTT_BH_UTL" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
-    "SOK_RED_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "SOK_OKN_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "SOK_UU" to listOf(
-        "NY_SOKNAD",
-        "OMGJ_ETTER_ANKE",
-        "OMGJ_ETTER_KLAGE",
-        "OMGJ_ETTER_FVL_P35_A",
-        "OMGJ_ETTER_FVL_P35_B",
-        "OMGJ_ETTER_FVL_P35_C"
-    ),
-    "SOK_YS" to listOf(
-        "NY_SOKNAD",
-        "OMGJ_ETTER_ANKE",
-        "OMGJ_ETTER_KLAGE",
-        "OMGJ_ETTER_FVL_P35_A",
-        "OMGJ_ETTER_FVL_P35_B",
-        "OMGJ_ETTER_FVL_P35_C"
-    ),
-    "UT_EO" to listOf("UT_EO", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-    "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
-)
-
-private fun lagTekster(krav: Krav, reguleringsvedtak: Boolean, avslag: Boolean? = null, eoÅrstall: Int? = null): Tekster {
-    var tittel: String
-    var mottatt = "Søknad er mottatt og ligger i behandlingskø"
-    var ferdigBehandlet = "Søknad er ferdig behandlet"
-    var ferdigBehandletUndertekst: String? =
-        avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
-
-    if (reguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
-        tittel = "Regulering"
-        mottatt = "Regulering er igangsatt"
-        ferdigBehandlet = "Regulering er ferdig behandlet"
-        ferdigBehandletUndertekst = null
-    } else when (krav.kravGjelder) {
-        "EKSPORT" -> tittel = "Eksport"
-        "FORSTEG_BH" -> tittel = "Førstegangsbehandling"
-        "F_BH_BO_UTL" -> tittel = "Førstegangsbehandling"
-        "F_BH_MED_UTL" -> tittel = "Førstegangsbehandling"
-        "INNT_E" -> {
-            tittel = "Inntektsendring"
-            mottatt = "Inntektsendring er mottatt og ligger i behandlingskø"
-            ferdigBehandlet = "Inntektsendring er ferdig behandlet"
-            ferdigBehandletUndertekst = null
-        }
-
-        "MELLOMBH" -> tittel = "Mellombehandling"
-        "REGULERING" -> {
-            tittel = "Regulering"
-            mottatt = "Regulering er igangsatt"
-            ferdigBehandlet = "Regulering er ferdig behandlet"
-            ferdigBehandletUndertekst = null
-        }
-
-        "SLUTT_BH_UTL" -> tittel = "Sluttbehandling Norge/utland"
-        "SOK_RED_UG" -> tittel = "Søknad om reduksjon av uføregrad"
-        "SOK_OKN_UG" -> tittel = "Søknad om økning av uføregrad"
-        "SOK_UU" -> tittel = "Søknad om ung ufør"
-        "SOK_YS" -> tittel = "Søknad om yrkesskade"
-        "UT_EO" -> {
-            tittel = "Etteroppgjør" + (eoÅrstall?.let { " for $eoÅrstall" } ?: "")
-            mottatt = "Etteroppgjør er igangsatt"
-            ferdigBehandlet = "Etteroppgjør er ferdig behandlet"
-            ferdigBehandletUndertekst = null
-        }
-
-        "REVURD" -> when (krav.arsak) {
-            "ENDRING_IFU" -> {
-                tittel = "Endring av inntekt før uførhet"
-                mottatt = "Endring er igangsatt"
-                ferdigBehandlet = "Endring er ferdig behandlet"
-                ferdigBehandletUndertekst = null
+    private fun lagBehandlingTittel(krav: Krav, isReguleringsvedtak: Boolean, eoÅrstall: Int? = null): String {
+        return if (isReguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
+            "Regulering"
+        } else when (krav.kravGjelder) {
+            "EKSPORT" -> "Eksport"
+            "FORSTEG_BH" -> "Førstegangsbehandling"
+            "F_BH_BO_UTL" -> "Førstegangsbehandling"
+            "F_BH_MED_UTL" -> "Førstegangsbehandling"
+            "INNT_E" -> "Inntektsendring"
+            "MELLOMBH" -> "Mellombehandling"
+            "REGULERING" -> "Regulering"
+            "SLUTT_BH_UTL" -> "Sluttbehandling Norge/utland"
+            "SOK_RED_UG" -> "Søknad om reduksjon av uføregrad"
+            "SOK_OKN_UG" -> "Søknad om økning av uføregrad"
+            "SOK_UU" -> "Søknad om ung ufør"
+            "SOK_YS" -> "Søknad om yrkesskade"
+            "UT_EO" -> "Etteroppgjør" + (eoÅrstall?.let { " for $eoÅrstall" } ?: "")
+            "REVURD" -> when (krav.arsak) {
+                "ENDRING_IFU" -> "Endring av inntekt før uførhet"
+                "SOKNAD_BT" -> "Søknad om barnetillegg"
+                else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
             }
 
-            "SOKNAD_BT" -> tittel = "Søknad om barnetillegg"
-            else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+            else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
         }
-
-        else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
     }
 
-    return Tekster(
-        tittel = tittel,
-        mottatt = mottatt,
-        ferdigBehandlet = ferdigBehandlet,
-        ferdigBehandletUndertekst = ferdigBehandletUndertekst
-    )
+    private fun lagSteg(
+        krav: Krav,
+        reguleringsvedtak: Boolean,
+        avslag: Boolean?,
+        aktivBehandling: Boolean
+    ): List<Steg> {
+        return if (reguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
+            listOf(
+                Steg(
+                    aktiv = aktivBehandling,
+                    utfort = !aktivBehandling,
+                    tittel = "Regulering er igangsatt",
+                ),
+                Steg(
+                    aktiv = false,
+                    utfort = !aktivBehandling,
+                    tittel = "Regulering er ferdig behandlet",
+                )
+            )
+        } else when (krav.kravGjelder) {
+            "EKSPORT", "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL", "SLUTT_BH_UTL", "SOK_RED_UG", "SOK_OKN_UG", "SOK_UU", "SOK_YS", "MELLOMBH" ->
+                lagDefaultSteg(avslag, aktivBehandling)
+            "INNT_E" -> listOf(
+                Steg(
+                    aktiv = aktivBehandling,
+                    utfort = !aktivBehandling,
+                    tittel = "Inntektsendring er mottatt og ligger i behandlingskø"
+                ),
+                Steg(
+                    aktiv = false,
+                    utfort = !aktivBehandling,
+                    tittel = "Inntektsendring er ferdig behandlet"
+                )
+            )
+            "REGULERING" -> listOf(
+                Steg(
+                    aktiv = aktivBehandling,
+                    utfort = !aktivBehandling,
+                    tittel = "Regulering er igangsatt"
+                ),
+                Steg(
+                    aktiv = false,
+                    utfort = !aktivBehandling,
+                    tittel = "Regulering er ferdig behandlet"
+                )
+            )
+            "UT_EO" -> listOf(
+                Steg(
+                    aktiv = aktivBehandling,
+                    utfort = !aktivBehandling,
+                    tittel = "Etteroppgjør er igangsatt"
+                ),
+                Steg(
+                    aktiv = false,
+                    utfort = !aktivBehandling,
+                    tittel = "Etteroppgjør er ferdig behandlet"
+                )
+            )
+            "REVURD" -> when (krav.arsak) {
+                "ENDRING_IFU" -> listOf(
+                    Steg(
+                        aktiv = aktivBehandling,
+                        utfort = !aktivBehandling,
+                        tittel = "Endring er igangsatt"
+                    ),
+                    Steg(
+                        aktiv = false,
+                        utfort = !aktivBehandling,
+                        tittel = "Endring er ferdig behandlet"
+                    )
+                )
+
+                "SOKNAD_BT" -> lagDefaultSteg(avslag, aktivBehandling)
+                else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+            }
+
+            else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
+        }
+    }
+
+    private fun lagDefaultSteg(avslag: Boolean?, aktivBehandling: Boolean) =
+        listOf(
+            Steg(
+                aktiv = aktivBehandling,
+                utfort = !aktivBehandling,
+                tittel = "Søknad er mottatt og ligger i behandlingskø",
+            ),
+            Steg(
+                aktiv = false,
+                utfort = !aktivBehandling,
+                tittel = "Søknad er ferdig behandlet",
+                undertekst = avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
+            )
+        )
 }

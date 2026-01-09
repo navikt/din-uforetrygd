@@ -61,21 +61,22 @@ export interface components {
       avsluttedeBehandlinger: components['schemas']['Behandling'][]
     }
     Behandling: {
+      tittel: string
       mottattDato: string
       ferdigstiltDato?: string
       avslag: boolean
       etteroppgjor?: components['schemas']['Etteroppgjor']
-      tekster: components['schemas']['Tekster']
+      steg: components['schemas']['Steg'][]
     }
     Etteroppgjor: {
       etterbetaling: number
       tilbakekreving: number
     }
-    Tekster: {
+    Steg: {
+      aktiv: boolean,
+      utfort: boolean,
       tittel: string,
-      mottatt: string,
-      ferdigBehandlet: string,
-      ferdigBehandletUndertekst?: string
+      undertekst?: string
     }
     DittUforevedtak: {
       /** Format: int32 */
