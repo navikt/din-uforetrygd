@@ -14,8 +14,6 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
-import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
-import { Saksoversikt } from '@/sections/Saksoversikt'
 import { Dokumenter } from '@/components/Dokumenter'
 import React from 'react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from '@navikt/ds-react/LinkCard'
@@ -40,7 +38,12 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
-            {mode === 'borger' && <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her 2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.</Alert>}
+            {mode === 'borger' && (
+              <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>
+                Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her
+                2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.
+              </Alert>
+            )}
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
@@ -53,7 +56,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             />
             <LinkCard>
               <LinkCardTitle>
-                <LinkCardAnchor href={'/uforetrygd/selvbetjening/saksoversikt?saksid=25080346'}>
+                <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${uforesak?.sakId?.toString()}`}>
                   Saksoversikt
                 </LinkCardAnchor>
               </LinkCardTitle>
@@ -66,12 +69,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
             />
             <MeldeFra visningskriterier={visningskriterier} />
-
-            {/*<Saksoversikt*/}
-            {/*  visningskriterier={visningskriterier}*/}
-            {/*  pid={params.pid}*/}
-            {/*  saksid={uforesak?.sakId ?? 0}*/}
-            {/*></Saksoversikt>*/}
             <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
             <RelevanteSoknader
               visningskriterier={visningskriterier}
