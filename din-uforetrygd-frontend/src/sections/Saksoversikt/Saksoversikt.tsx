@@ -11,9 +11,6 @@ interface Saksoversikt {
 }
 
 export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
-  //TODO: figma må oppdateres med Tabs.Panel?
-  //TODO: sasa: har gjort en antagelse om at ingenbehandlinger trengs også for avsluttede
-
   const [currentPage, setCurrentPage] = useState(saksoversikt.avsluttedeBehandlinger.length > 0 ? 1 : 0)
   const antallBehandlingerPerSide = 5
   const antallSider = Math.ceil(saksoversikt.avsluttedeBehandlinger.length / antallBehandlingerPerSide)
@@ -45,14 +42,14 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
             ) : (
               <IngenBehandlinger aktiv={false}/>
             )}
-              <Pagination
+            {antallSider > 1 && <Pagination
               page={currentPage}
               onPageChange={setCurrentPage}
               count={antallSider}
               boundaryCount={1}
               siblingCount={1}
               prevNextTexts
-            />
+            />}
           </Tabs.Panel>
           </div>
         </Tabs>

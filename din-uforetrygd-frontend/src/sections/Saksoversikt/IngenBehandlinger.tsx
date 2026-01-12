@@ -10,7 +10,6 @@ type IngenBehandlingerProps = {
 }
 
 export function IngenBehandlinger({ aktiv }: IngenBehandlingerProps) {
-  //TODO: sasa: har endret tekst her for konsistens
   return (
     <div className={styles.ingenBehandlinger}>
       <EnvelopeOpenIcon />

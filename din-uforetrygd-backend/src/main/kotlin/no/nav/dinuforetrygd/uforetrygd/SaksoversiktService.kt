@@ -16,11 +16,6 @@ class SaksoversiktService(
     //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de? Og burde det vises som flere behandlinger eller en?
     // - Anne Sofie ser mer på denne.
 
-    //TODO: etteroppgjør
-    // - frist kan vi ikke ha med. Vi har ikke datoen, det kan være oppdelte betalinger etc
-    // - Det kan komme flere etteroppgjør over kort tid. Hvordan ønsker vi å håndtere det?
-    // - Få inn årstall for etteroppgjør
-
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
