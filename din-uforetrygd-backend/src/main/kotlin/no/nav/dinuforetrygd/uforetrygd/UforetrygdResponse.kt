@@ -23,7 +23,7 @@ data class SakHendelse(
     val gjelder: String?,
     val arsak: String?,
     val status: String?,
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss[xxxx]")
+    @param:JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss[xxxx]")
     val endretDato: LocalDateTime,
     val opprettetAv: EndretAvKode?,
 )
@@ -34,6 +34,8 @@ data class DittUforevedtak(
     val virkFom: LocalDate?,
     val uforetidspunkt: LocalDate?,
     val inntektsgrense: Int?,
+    val kompensasjonsgrad: Double?,
+    val nettoMndUTOgBT: Int,
     val sumAvForventedeInntekter: Long?,
     val hasBarnetilleggFellesBarn: Boolean,
     val hasBarnetilleggSaerkullsbarn: Boolean,
@@ -58,20 +60,4 @@ enum class Sakstatus (val prioritet: Int){
     TIL_BEHANDLING (2),
     AVSLUTTET (4),
     LOPENDE(1),
-}
-
-enum class Sakstype {
-    ALDERSPENSJON,
-    AFP,
-    AFP_PRIVAT,
-    BARNEPENSJON,
-    FAMILIEPLEIER_YTELSE,
-    GAMMEL_YRKESSKADE,
-    GENERELL,
-    GJENLEVENDE_YTELSE,
-    GRUNNBLANKETTER,
-    KRIGSPENSJON,
-    OMSORGSOPPTJENING,
-    UFORETRYGD,
-    UKJENT
 }

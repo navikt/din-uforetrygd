@@ -81,19 +81,21 @@ export interface components {
     }
     DittUforevedtak: {
       /** Format: int32 */
-      uforegrad?: number
+      uforegrad: number
       /** Format: date */
       virkFom?: string
       /** Format: date */
       uforetidspunkt?: string
       /** Format: int32 */
       inntektsgrense?: number
+      kompensasjonsgrad?: number
+      nettoMndUTOgBT: number
       /** Format: int64 */
       sumAvForventedeInntekter?: number
-      hasBarnetilleggFellesBarn?: boolean
-      hasBarnetilleggSaerkullsbarn?: boolean
-      hasGjenlevendeTillegg?: boolean
-      hasVarigTilrettelagtArbeid?: boolean
+      hasBarnetilleggFellesBarn: boolean
+      hasBarnetilleggSaerkullsbarn: boolean
+      hasGjenlevendeTillegg: boolean
+      hasVarigTilrettelagtArbeid: boolean
     }
     Dokument: {
       tittel?: string

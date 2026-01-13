@@ -71,6 +71,8 @@ class UforetrygdService(
             virkFom = this.virkFom,
             uforetidspunkt = this.uforetidspunkt,
             inntektsgrense = this.inntektsgrense,
+            kompensasjonsgrad = this.kompensasjonsgrad,
+            nettoMndUTOgBT = this.nettoMndUTOgBT,
             sumAvForventedeInntekter = sumAvForventedeInntekter,
             hasBarnetilleggFellesBarn = this.hasBarnetilleggFellesBarn,
             hasBarnetilleggSaerkullsbarn = this.hasBarnetilleggSaerkullsbarn,

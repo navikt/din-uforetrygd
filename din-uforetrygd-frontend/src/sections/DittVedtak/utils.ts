@@ -3,28 +3,13 @@ export function getTilleggsoppsummeringTekst(
   hasGjenlevendeTillegg: boolean,
   hasBarnetilleggFellesBarn: boolean,
   hasBarnetilleggSaerkullsbarn: boolean): string {
+    const parts: string[] = []
+    if (hasGjenlevendeTillegg) parts.push('gjenlevendetillegg')
+    if (hasBarnetilleggSaerkullsbarn) parts.push('barnetillegg for særkullsbarn')
+    if (hasBarnetilleggFellesBarn) parts.push('barnetillegg for fellesbarn')
 
-  let tilleggsoppsummering: string = ''
+    if (parts.length === 0) return '-'
 
-  if (hasGjenlevendeTillegg) {
-    tilleggsoppsummering += 'gjenlevendetillegg'
+    const result = parts.join(', ')
+    return result.charAt(0).toUpperCase() + result.slice(1)
   }
-
-  if (hasBarnetilleggSaerkullsbarn) {
-    if (tilleggsoppsummering.length === 0) {
-      tilleggsoppsummering += 'barnetillegg for særkullsbarn'
-    } else {
-      tilleggsoppsummering += ', barnetillegg for særkullsbarn'
-    }
-  }
-
-  if (hasBarnetilleggFellesBarn) {
-    if (tilleggsoppsummering.length === 0) {
-      tilleggsoppsummering += 'barnetillegg for fellesbarn'
-    } else {
-      tilleggsoppsummering += ', barnetillegg for fellesbarn'
-    }
-  }
-
-  return tilleggsoppsummering ? tilleggsoppsummering : 'Ingen'
-}

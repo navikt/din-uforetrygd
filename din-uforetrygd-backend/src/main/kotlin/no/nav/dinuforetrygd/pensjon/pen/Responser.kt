@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
 data class ForventedeInntekterResponse(
-    @JsonProperty("sumAvForventedeInntekter") val sumAvForventedeInntekter: Long?,
+    @param:JsonProperty("sumAvForventedeInntekter") val sumAvForventedeInntekter: Long?,
 )
 
 data class VedtakssammendragResponse(
@@ -17,6 +17,8 @@ data class Vedtakssammendrag(
     val virkFom: LocalDate?,
     val uforetidspunkt: LocalDate?,
     val inntektsgrense: Int?,
+    val kompensasjonsgrad: Double?,
+    val nettoMndUTOgBT: Int,
     val hasBarnetilleggFellesBarn: Boolean,
     val hasBarnetilleggSaerkullsbarn: Boolean,
     val hasGjenlevendeTillegg: Boolean,
