@@ -119,5 +119,7 @@ spec:
       value: dev-gcp:ufore:din-uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
+    - name: UNLEASH_SERVER_API_URL
+      value: https://ufore-unleash-api.nav.cloud.nais.io/api
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

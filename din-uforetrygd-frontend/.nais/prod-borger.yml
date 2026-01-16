@@ -111,5 +111,7 @@ spec:
       value: https://www.nav.no/dokumentarkiv
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
+    - name: UNLEASH_SERVER_API_URL
+      value: https://ufore-unleash-api.nav.cloud.nais.io/api
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token
