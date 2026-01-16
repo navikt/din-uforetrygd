@@ -4,9 +4,9 @@ import { after } from 'next/server'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
   const isDev = process.env.NODE_ENV !== 'production'
-  // if (isDev) {
-  //   return localToggles[toggle] ?? false
-  // }
+  if (isDev) {
+    return localToggles[toggle] ?? false
+  }
 
   const cookieStore = await cookies()
   const sessionId = cookieStore.get(unleashSessionIdKey)?.value
@@ -28,10 +28,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
     sessionId,
   })
   const flags = flagsClient(toggles)
-
   const isEnabled = flags.isEnabled(toggle)
-
-  console.log('isEnabled', isEnabled)
 
   // Ikke blokkerende rapportering tilbake til Unleash
   after(async () => flags.sendMetrics())
