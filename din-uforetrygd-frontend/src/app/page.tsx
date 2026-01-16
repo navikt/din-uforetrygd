@@ -14,8 +14,8 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
-import { mapSakCodeToSak } from '@/utils/mapSakCodeToSak'
 import { Saksoversikt } from '@/sections/Saksoversikt'
+import { isEnabled } from '@/utils/unleash'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -26,6 +26,9 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
 
+  const toggle = 'test-toggle'
+  const toggleErSlåttPå = await isEnabled(toggle)
+
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
@@ -33,11 +36,17 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
     return (
       <>
+        {toggleErSlåttPå ? <div>Toggle er slått på!</div> : <div>Toggle slått av</div>}
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
-            {mode === 'borger' && <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her 2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.</Alert>}
+            {mode === 'borger' && (
+              <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>
+                Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her
+                2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.
+              </Alert>
+            )}
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
