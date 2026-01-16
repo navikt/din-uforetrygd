@@ -36,7 +36,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
     return (
       <>
-        {toggleErSlåttPå ? <div>Toggle er slått på!</div> : <div>Toggle slått av</div>}
+        {toggleErSlåttPå && <div>Toggle er slått på!</div>}
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
