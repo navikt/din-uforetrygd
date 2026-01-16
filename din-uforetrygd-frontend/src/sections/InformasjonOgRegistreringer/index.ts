@@ -1,1 +1,0 @@
-export { InformasjonOgRegistreringer } from './InformasjonOgRegistreringer'

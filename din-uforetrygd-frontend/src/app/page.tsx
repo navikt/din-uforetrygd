@@ -1,8 +1,7 @@
-import { Alert, Heading, LinkCard } from '@navikt/ds-react'
+import { Alert, Heading } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
-import { InformasjonOgRegistreringer } from '@/sections/InformasjonOgRegistreringer'
 import DittVedtak from '@/sections/DittVedtak/index'
 import { MeldeFra } from '@/sections/MeldeFra'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
@@ -14,9 +13,10 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
-import { Dokumenter } from '@/components/Dokumenter'
 import React from 'react'
-import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from '@navikt/ds-react/LinkCard'
+import { InntektSnarveier } from '@/sections/InntektSnarveier'
+import { Snarveier } from '@/sections/Snarveier'
+import { InterneLenker } from '@/sections/InterneLenker'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -47,6 +47,10 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
+            <InntektSnarveier
+              visningskriterier={visningskriterier}
+              pid={params.pid}
+              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}></InntektSnarveier>
             <UforestatusGuidePanel visningskriterier={visningskriterier} />
             <DittVedtak
               pid={params.pid}
@@ -54,22 +58,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               dittUforevedtak={uforetrygdResponse.uforevedtak}
               sakId={uforesak?.sakId?.toString()}
             />
-            <LinkCard>
-              <LinkCardTitle>
-                <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${uforesak?.sakId?.toString()}`}>
-                  Saksoversikt
-                </LinkCardAnchor>
-              </LinkCardTitle>
-              <LinkCardDescription>Hendelser knyttet til saken din</LinkCardDescription>
-            </LinkCard>
-            <InformasjonOgRegistreringer
+            <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()}></InterneLenker>
+            <Snarveier
               visningskriterier={visningskriterier}
               pid={params.pid}
-              bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
-              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+              uforetrygdResponse={uforetrygdResponse}
             />
             <MeldeFra visningskriterier={visningskriterier} />
-            <Dokumenter pid={params.pid} journalposter={uforetrygdResponse.journalposter!} />
             <RelevanteSoknader
               visningskriterier={visningskriterier}
               innloggingstype={uforetrygdResponse.innloggingstype!}
