@@ -66,6 +66,10 @@ spec:
           namespace: ufore
       external:
         - host: ufore-unleash-api.nav.cloud.nais.io
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
   env:
     - name: MODE
       value: borger
