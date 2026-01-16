@@ -3,6 +3,11 @@ import { evaluateFlags, flagsClient, getDefinitions } from '@unleash/nextjs'
 import { after } from 'next/server'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
+  const isDev = process.env.NODE_ENV !== 'production'
+  if (isDev) {
+    return localToggles[toggle] ?? false
+  }
+
   const cookieStore = await cookies()
   const sessionId = cookieStore.get(unleashSessionIdKey)?.value
 
