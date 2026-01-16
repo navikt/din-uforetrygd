@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import logger from './utils/logger'
+import { unleashSessionIdKey } from '@/utils/unleash'
 
 export function proxy(request: NextRequest) {
   const url = new URL(request.url)
@@ -14,7 +15,15 @@ export function proxy(request: NextRequest) {
       },
     },
   })
-  return NextResponse.next()
+
+  const response = NextResponse.next()
+
+  if (!request.cookies.has(unleashSessionIdKey)) {
+    const sessionId = `${Math.floor(Math.random() * 1_000_000_000)}`
+    response.cookies.set(unleashSessionIdKey, sessionId, { path: '/' })
+  }
+
+  return response
 }
 
 export const config = {

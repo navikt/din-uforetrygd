@@ -66,6 +66,10 @@ spec:
           namespace: ufore
       external:
         - host: ufore-unleash-api.nav.cloud.nais.io
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
   env:
     - name: MODE
       value: borger
@@ -119,5 +123,7 @@ spec:
       value: dev-gcp:ufore:din-uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
+    - name: UNLEASH_SERVER_API_URL
+      value: https://ufore-unleash-api.nav.cloud.nais.io/api
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token
