@@ -15,7 +15,6 @@ import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
 import { Saksoversikt } from '@/sections/Saksoversikt'
-import { isEnabled } from '@/utils/unleash'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -26,9 +25,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
 
-  const toggle = 'test-toggle'
-  const toggleErSlåttPå = await isEnabled(toggle)
-
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
     const mode = getEnv('MODE')
@@ -36,7 +32,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
     return (
       <>
-        {toggleErSlåttPå && <div>Toggle er slått på!</div>}
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
