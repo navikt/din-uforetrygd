@@ -1,6 +1,10 @@
 import { Innloggingstype, Visningskriterier } from '@/const'
 import React from 'react'
 import { SnarveiPanel } from '@/components/SnarveiPanel'
+import { getUrl } from '@/utils/getUrl'
+import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
+import { matchAll } from '@/utils/filterShowFor'
+import { Heading, VStack } from '@navikt/ds-react'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -15,14 +19,38 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
 }) => {
   return (
     <section aria-label="Inntekt-snarveier">
-      <SnarveiPanel
-        heading="Meld fra om endring i inntekt"
+      <VStack gap="5">
+        <Heading level="2" size="medium">
+          Meld fra om endring i inntekt
+        </Heading>
+        <SnarveiPanel
+        links={await getLinks(pid)}
         visningskriterier={visningskriterier}
         pid={pid}
-        bprofFullmakt={false}
         innloggingstype={innloggingstype}
-        top={true}
       />
+      </VStack>
     </section>
   )
 }
+
+const getLinks = async (pid: string | undefined) => [
+  {
+    href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid }),
+    title: 'Inntektsplanlegger',
+    description: 'Meld fra om endring i inntekt',
+    icon: <FileTextIcon fontSize="2rem" style={{ color: 'var(--ax-text-accent-subtle)' }} />,
+    showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: false,
+    visInnloggingsModal: false,
+  },
+  {
+    href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid }),
+    title: 'Utbetalinger',
+    description: 'Oversikt og detaljer',
+    icon: <WalletIcon fontSize="2rem" style={{ color: 'var(--ax-text-accent-subtle)' }} />,
+    showFor: matchAll([Visningskriterier.Uforetrygd]),
+    showFullmaktWarning: false,
+    visInnloggingsModal: false,
+  }
+];
