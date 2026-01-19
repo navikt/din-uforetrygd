@@ -17,10 +17,13 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
 
   return (
-    <Vedtaksdetaljer
-      dittUforevedtak={dittUforevedtak!}
-      sakId={sakId}
-      linkInntektsplanlegger={linkInntektsplanlegger}
-    ></Vedtaksdetaljer>
+    <section aria-label="Detaljer om saken din">
+      <Vedtaksdetaljer
+        dittUforevedtak={dittUforevedtak!}
+        sakId={sakId}
+        linkInntektsplanlegger={linkInntektsplanlegger}
+        arstall={new Date().getFullYear()}
+      ></Vedtaksdetaljer>
+    </section>
   )
 }

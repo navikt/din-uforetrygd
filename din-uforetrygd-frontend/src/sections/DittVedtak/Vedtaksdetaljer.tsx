@@ -1,6 +1,6 @@
 'use client'
 
-import { BodyLong, BodyShort, Heading, Link, ReadMore, Table, VStack } from '@navikt/ds-react'
+import { BodyLong, BodyShort, Box, Heading, HGrid, Link, ReadMore, Table, VStack } from '@navikt/ds-react'
 import { components } from '@/api/api'
 import { format, parseISO } from 'date-fns'
 import { formatInntekt } from '@/utils/formatter/formatter'
@@ -11,13 +11,10 @@ interface VedtaksdetaljerProps {
   dittUforevedtak: components['schemas']['DittUforevedtak']
   sakId?: string
   linkInntektsplanlegger: string | undefined
+  arstall: number
 }
 
-export function Vedtaksdetaljer({
-  dittUforevedtak,
-  sakId,
-  linkInntektsplanlegger,
-}: VedtaksdetaljerProps) {
+export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger, arstall }: VedtaksdetaljerProps) {
   const uforegrad = dittUforevedtak.uforegrad
   const uforetidspunkt =
     dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
@@ -30,81 +27,81 @@ export function Vedtaksdetaljer({
   const hasGjenlevendeTillegg = dittUforevedtak.hasGjenlevendeTillegg
 
   return (
-    <VStack gap="2">
-      <Table>
-        <Table.Header>
-          <Table.Row>
+    <>
+      <Box>
+        <HGrid gap="space-0 space-40" columns={{ md: 2}}>
+          <VStack>
             <Heading size="medium">Om saken din</Heading>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.DataCell>Saksnummer</Table.DataCell>
-            <Table.DataCell align="right">{sakId}</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Uføregrad</Table.DataCell>
-            <Table.DataCell align="right">{uforegrad} prosent</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Tillegg</Table.DataCell>
-            <Table.DataCell align="right">
-              {getTilleggsoppsummeringTekst(
-                hasGjenlevendeTillegg,
-                hasBarnetilleggFellesBarn,
-                hasBarnetilleggSaerkullsbarn
-              )}
-            </Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Uføretidspunkt</Table.DataCell>
-            <Table.DataCell align="right">{uforetidspunkt}</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Innvilget fra</Table.DataCell>
-            <Table.DataCell align="right">{uforetrygdInnvilget}</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Tiltak</Table.DataCell>
-            <Table.DataCell align="right">
-              {hasVarigTilrettelagtArbeid ? <BodyShort>Varig tilrettelagt arbeid</BodyShort> : '-'}
-            </Table.DataCell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-      <Table>
-        <Table.Header>
-          <Table.Row>
+            <Table>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>Saksnummer</Table.DataCell>
+                  <Table.DataCell align="right">{sakId}</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Uføregrad</Table.DataCell>
+                  <Table.DataCell align="right">{uforegrad} prosent</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Tillegg</Table.DataCell>
+                  <Table.DataCell align="right">
+                    {getTilleggsoppsummeringTekst(
+                      hasGjenlevendeTillegg,
+                      hasBarnetilleggFellesBarn,
+                      hasBarnetilleggSaerkullsbarn
+                    )}
+                  </Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Uføretidspunkt</Table.DataCell>
+                  <Table.DataCell align="right">{uforetidspunkt}</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Innvilget fra</Table.DataCell>
+                  <Table.DataCell align="right">{uforetrygdInnvilget}</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Tiltak</Table.DataCell>
+                  <Table.DataCell align="right">
+                    {hasVarigTilrettelagtArbeid ? <BodyShort>Varig tilrettelagt arbeid</BodyShort> : '-'}
+                  </Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </VStack>
+          <VStack>
             <Heading size="medium">Uføretrygd</Heading>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.DataCell>Månedlig beregnet uføretrygd og barnetilegg</Table.DataCell>
-            <Table.DataCell align="right">{dittUforevedtak?.nettoMndUTOgBT} kr</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
-            <Table.DataCell align="right">-</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Registrert forventet inntekt i {new Date().getFullYear()}</Table.DataCell>
-            <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Fribeløp/bunnfradrag</Table.DataCell>
-            <Table.DataCell align="right">- kr</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
-            <Table.DataCell align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.DataCell>Inntektsgrense i  {new Date().getFullYear()}</Table.DataCell>
-            <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+            <Table>
+              <Table.Body>
+                <Table.Row>
+                  <Table.DataCell>Månedlig beregnet uføretrygd og barnetilegg</Table.DataCell>
+                  <Table.DataCell align="right">{dittUforevedtak?.nettoMndUTOgBT} kr</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
+                  <Table.DataCell align="right">-</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Registrert forventet inntekt i {arstall}</Table.DataCell>
+                  <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Fribeløp/bunnfradrag</Table.DataCell>
+                  <Table.DataCell align="right">- kr</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
+                  <Table.DataCell align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.DataCell>Inntektsgrense i {arstall}</Table.DataCell>
+                  <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </VStack>
+        </HGrid>
+      </Box>
       <ReadMore header={'Hvor kommer registrert forventet inntekt fra?'}>
         {' '}
         <BodyLong>
@@ -128,6 +125,6 @@ export function Vedtaksdetaljer({
           for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
         </BodyLong>
       </ReadMore>
-    </VStack>
+    </>
   )
 }
