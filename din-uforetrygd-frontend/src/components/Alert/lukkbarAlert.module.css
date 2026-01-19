@@ -1,0 +1,4 @@
+.alert {
+    max-width: var(--content-width);
+    margin: var(--ax-space-12);
+}
