@@ -71,6 +71,7 @@ class UforetrygdService(
             virkFom = this.virkFom,
             uforetidspunkt = this.uforetidspunkt,
             inntektsgrense = this.inntektsgrense,
+            inntektstak = this.inntektstak,
             kompensasjonsgrad = this.kompensasjonsgrad,
             nettoMndUTOgBT = this.nettoMndUTOgBT,
             sumAvForventedeInntekter = sumAvForventedeInntekter,

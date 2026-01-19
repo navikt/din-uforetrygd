@@ -20,6 +20,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
     dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
   const uforetrygdInnvilget = dittUforevedtak.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
   const inntektsgrense = formatInntekt(dittUforevedtak.inntektsgrense) ?? 0
+  const inntektstak = formatInntekt(dittUforevedtak.inntektstak) ?? 0
   const sumAvForventedeInntekter = formatInntekt(dittUforevedtak.sumAvForventedeInntekter) ?? 0
   const hasVarigTilrettelagtArbeid = dittUforevedtak.hasVarigTilrettelagtArbeid
   const hasBarnetilleggFellesBarn = dittUforevedtak.hasBarnetilleggFellesBarn
@@ -86,16 +87,16 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.DataCell>Fribeløp/bunnfradrag</Table.DataCell>
-                  <Table.DataCell align="right">- kr</Table.DataCell>
+                  <Table.DataCell>Inntektsgrense</Table.DataCell>
+                  <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
                   <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
                   <Table.DataCell align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.DataCell>Inntektsgrense i {arstall}</Table.DataCell>
-                  <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
+                  <Table.DataCell>Inntektstak i {arstall}</Table.DataCell>
+                  <Table.DataCell align="right">{inntektstak} kr</Table.DataCell>
                 </Table.Row>
               </Table.Body>
             </Table>

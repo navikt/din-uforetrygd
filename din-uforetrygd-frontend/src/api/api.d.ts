@@ -88,6 +88,7 @@ export interface components {
       uforetidspunkt?: string
       /** Format: int32 */
       inntektsgrense?: number
+      inntektstak?: number
       kompensasjonsgrad?: number
       nettoMndUTOgBT: number
       /** Format: int64 */

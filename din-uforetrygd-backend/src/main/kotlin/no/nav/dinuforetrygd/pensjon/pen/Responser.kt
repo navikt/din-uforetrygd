@@ -17,6 +17,7 @@ data class Vedtakssammendrag(
     val virkFom: LocalDate?,
     val uforetidspunkt: LocalDate?,
     val inntektsgrense: Int?,
+    val inntektstak: Int?,
     val kompensasjonsgrad: Double?,
     val nettoMndUTOgBT: Int,
     val hasBarnetilleggFellesBarn: Boolean,
