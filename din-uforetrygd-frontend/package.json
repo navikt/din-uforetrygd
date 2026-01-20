@@ -59,7 +59,7 @@
     "prettier": "^3.7.4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.17"
   },
   "overrides": {
     "jose": "^6.0.12"
