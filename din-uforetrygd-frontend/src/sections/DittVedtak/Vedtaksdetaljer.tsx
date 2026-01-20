@@ -39,15 +39,15 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
             <Heading size="medium">Om saken din</Heading>
             <Table>
               <Table.Body>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Saksnummer</Table.DataCell>
                   <Table.DataCell align="right">{sakId}</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Uføregrad</Table.DataCell>
                   <Table.DataCell align="right">{uforegrad} prosent</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Tillegg</Table.DataCell>
                   <Table.DataCell align="right">
                     {getTilleggsoppsummeringTekst(
@@ -57,15 +57,15 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                     )}
                   </Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Uføretidspunkt</Table.DataCell>
                   <Table.DataCell align="right">{uforetidspunkt}</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Innvilget fra</Table.DataCell>
                   <Table.DataCell align="right">{uforetrygdInnvilget}</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Tiltak</Table.DataCell>
                   <Table.DataCell align="right">
                     {hasVarigTilrettelagtArbeid ? <BodyShort>Varig tilrettelagt arbeid</BodyShort> : '-'}
@@ -82,15 +82,15 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                 <col style={{ width: '35%' }} />
               </colgroup>
               <Table.Body>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>{getManedligBeregnetYtelseTekst(hasGjenlevendeTillegg, hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn)}</Table.DataCell>
                   <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoMndUTOgBT)} kr</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
                   <Table.DataCell align="right">-</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>
                     <HStack gap="1">
                       <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
@@ -107,7 +107,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   </Table.DataCell>
                   <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>
                     <HStack gap="1">
                       <BodyShort>Inntektsgrense</BodyShort>
@@ -123,11 +123,11 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   </Table.DataCell>
                   <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
                   <Table.DataCell align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
                 </Table.Row>
-                <Table.Row>
+                <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Inntektstak i {arstall}</Table.DataCell>
                   <Table.DataCell align="right">{inntektstak} kr</Table.DataCell>
                 </Table.Row>
