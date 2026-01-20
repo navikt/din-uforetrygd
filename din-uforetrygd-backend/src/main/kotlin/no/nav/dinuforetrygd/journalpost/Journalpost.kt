@@ -10,7 +10,7 @@ data class Journalpost(
     val dokumenter: List<Dokument>,
 ) {
     data class Dokument(
-        val tittel: String,
+        val tittel: String?,
         val dokumentInfoId: String,
         val filstorrelse: Int? = null,
         val variant: DokumentVariant? = null

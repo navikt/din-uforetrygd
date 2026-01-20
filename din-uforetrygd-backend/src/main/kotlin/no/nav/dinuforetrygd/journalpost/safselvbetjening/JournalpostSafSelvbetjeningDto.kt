@@ -20,7 +20,7 @@ data class JournalpostSafSelvbetjeningDto(
         val id: String?,
     )
     data class Dokument(
-        val tittel: String,
+        val tittel: String?,
         val dokumentInfoId: String,
         val dokumentvarianter: List<DokumentVariant>,
     ) {
