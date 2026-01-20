@@ -26,6 +26,7 @@ jobs:
         with:
           languages: java-kotlin
           queries: security-and-quality
+          source-root: din-uforetrygd-backend
 
       - name: Setup java
         uses: actions/setup-java@v5
