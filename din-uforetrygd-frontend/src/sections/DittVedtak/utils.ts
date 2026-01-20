@@ -13,3 +13,18 @@ export function getTilleggsoppsummeringTekst(
     const result = parts.join(', ')
     return result.charAt(0).toUpperCase() + result.slice(1)
   }
+
+export function getManedligBeregnetYtelseTekst(
+  hasGjenlevendeTillegg: boolean,
+  hasBarnetillegg: boolean
+): string {
+  return 'Månedlig beregnet uføretrygd'.concat(
+    hasBarnetillegg && hasGjenlevendeTillegg
+      ? ', barne- og gjenlevendetillegg'
+      : hasBarnetillegg
+        ? ' og barnetillegg'
+        : hasGjenlevendeTillegg
+          ? ' og gjenlevendetillegg'
+          : ''
+  );
+}

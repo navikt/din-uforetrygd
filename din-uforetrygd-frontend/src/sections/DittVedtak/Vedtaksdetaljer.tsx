@@ -4,7 +4,10 @@ import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack }
 import { components } from '@/api/api'
 import { format, parseISO } from 'date-fns'
 import { formatInntekt } from '@/utils/formatter/formatter'
-import { getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
+import {
+  getManedligBeregnetYtelseTekst,
+  getTilleggsoppsummeringTekst,
+} from '@/sections/DittVedtak/utils'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import React from 'react'
 
@@ -80,8 +83,8 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
               </colgroup>
               <Table.Body>
                 <Table.Row>
-                  <Table.DataCell>Månedlig beregnet uføretrygd og barnetillegg</Table.DataCell>
-                  <Table.DataCell align="right">{dittUforevedtak?.nettoMndUTOgBT} kr</Table.DataCell>
+                  <Table.DataCell>{getManedligBeregnetYtelseTekst(hasGjenlevendeTillegg, hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn)}</Table.DataCell>
+                  <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoMndUTOgBT)} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
                   <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
