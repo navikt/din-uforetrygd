@@ -1,11 +1,10 @@
-import { Heading, Link } from '@navikt/ds-react'
-import { LinkList } from '@/components/LinkList'
+  import { Heading, HGrid, LinkCard, VStack } from '@navikt/ds-react'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
-import { getFullmaktProps } from '@/utils/fullmakt'
-import styles from './relevanteSoknader.module.css'
+import { LinkCardAnchor, LinkCardTitle } from '@navikt/ds-react/LinkCard'
+import React from 'react'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
@@ -16,16 +15,6 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
   const isFullmektig = (await getFullmaktCookie()) !== undefined
 
   const lenker = [
-    {
-      href: await getUrl({
-        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
-        isFullmektig: isFullmektig,
-        innloggingstype: innloggingstype,
-      }),
-      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
-      showFor: matchAll([Visningskriterier.GradertUfore]),
-      showFullmaktWarning: false,
-    },
     {
       href: await getUrl({
         urlFromEnv: 'LINK_SOKNAD_UFORE',
@@ -46,6 +35,16 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       showFor: true,
       showFullmaktWarning: false,
     },
+    {
+      href: await getUrl({
+        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
+        isFullmektig: isFullmektig,
+        innloggingstype: innloggingstype,
+      }),
+      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
+      showFor: matchAll([Visningskriterier.GradertUfore]),
+      showFullmaktWarning: false,
+    },
   ]
 
   const relevanteLenker = filterShowFor(visningskriterier, lenker)
@@ -55,24 +54,35 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
   }
 
   return (
-    <section aria-label="Relevante søknader">
-      <Heading level="2" size="medium">
-        Relevante søknader
-      </Heading>
-      <div style={{ maxWidth: '450px' }}>
-        <LinkList variant="divided">
-          {relevanteLenker.map((lenke) => (
-            <Link
-              key={lenke.href}
-              href={lenke.href}
-              className={styles.link}
-              {...getFullmaktProps(lenke.showFullmaktWarning)}
-            >
-              {lenke.text}
-            </Link>
+    <VStack
+      gap="8"
+      aria-label="Relevante søknader"
+      style={{
+        backgroundColor: 'var(--ax-bg-sunken)',
+        alignSelf: 'stretch',
+        width: '100vw',
+        paddingTop: '2rem',
+        paddingBottom: '2rem',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "var(--content-width)", marginLeft: 'var(--ax-space-12)', marginRight: 'var(--ax-space-12)', margin: '0 auto',
+        }}
+      >
+        <Heading level="2" size="medium">
+          Relevante søknader
+        </Heading>
+        <HGrid gap="6" columns={{ md: 2 }}>
+          {lenker.map((lenke) => (
+            <LinkCard key={lenke.href}>
+              <LinkCardTitle>
+                <LinkCardAnchor href={lenke.href || ''}>{lenke.text}</LinkCardAnchor>
+              </LinkCardTitle>
+            </LinkCard>
           ))}
-        </LinkList>
+        </HGrid>
       </div>
-    </section>
+    </VStack>
   )
 }

@@ -17,7 +17,6 @@ import React from 'react'
 import { InntektSnarveier } from '@/sections/InntektSnarveier'
 import { Snarveier } from '@/sections/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker'
-import { Saksoversikt } from '@/sections/Saksoversikt'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 
 interface IHomeProps {

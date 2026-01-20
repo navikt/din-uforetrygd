@@ -4,7 +4,6 @@ import { SnarveiPanel } from '@/components/SnarveiPanel'
 import { getUrl } from '@/utils/getUrl'
 import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
 import { matchAll } from '@/utils/filterShowFor'
-import { Heading, VStack } from '@navikt/ds-react'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -18,18 +17,13 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
   innloggingstype,
 }) => {
   return (
-    <section aria-label="Inntekt-snarveier">
-      <VStack gap="5">
-        <Heading level="2" size="medium">
-          Meld fra om endring i inntekt
-        </Heading>
+    <section aria-label="Snarvei til inntektsplanlegger og utbetalinger">
         <SnarveiPanel
         links={await getLinks(pid)}
         visningskriterier={visningskriterier}
         pid={pid}
         innloggingstype={innloggingstype}
       />
-      </VStack>
     </section>
   )
 }
