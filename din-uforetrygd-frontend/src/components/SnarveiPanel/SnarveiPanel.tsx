@@ -7,6 +7,7 @@ import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from
 import React from 'react'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import { showModal } from '@/utils/showMinIdModal'
+import styles from './snarveiPanel.module.css'
 
 interface ISnarveiPanelProps {
   links: ILink[]
@@ -36,9 +37,9 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
                 <Hide below="md" asChild>
                   <BoxNew
                     asChild
+                    className={styles.iconBox}
                     borderRadius="8"
                     padding="space-8"
-                    style={{ backgroundColor: 'var(--ax-bg-accent-moderateA)' }}
                   >
                     <LinkCardIcon>{link.icon}</LinkCardIcon>
                   </BoxNew>

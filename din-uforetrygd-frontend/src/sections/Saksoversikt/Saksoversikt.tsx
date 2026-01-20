@@ -22,36 +22,38 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
           Saksoversikt
         </Heading>
         <Tabs defaultValue="aktive">
-          <Tabs.List>
-            <Tabs.Tab value="aktive" label="Aktive behandlinger"></Tabs.Tab>
-            <Tabs.Tab value="avsluttede" label="Avsluttede behandlinger"></Tabs.Tab>
-          </Tabs.List>
-          <div style={{ marginTop: '3rem' }}>
-          <Tabs.Panel value="aktive">
-            {saksoversikt.aktivBehandling ? (
-              <Behandling behandling={saksoversikt.aktivBehandling} aktiv={true}></Behandling>
-            ) : (
-              <IngenBehandlinger aktiv={true}/>
-            )}
-          </Tabs.Panel>
-          <Tabs.Panel value="avsluttede">
-            {saksoversikt.avsluttedeBehandlinger.length > 0 ? (
-              saksoversikt.avsluttedeBehandlinger.slice(antallBehandlingerPerSide * (currentPage-1), antallBehandlingerPerSide * currentPage).map((behandling) => (
-                <Behandling behandling={behandling} key={behandling.vedtakId} aktiv={false} />
-              ))
-            ) : (
-              <IngenBehandlinger aktiv={false}/>
-            )}
-            {antallSider > 1 && <Pagination
-              page={currentPage}
-              onPageChange={setCurrentPage}
-              count={antallSider}
-              boundaryCount={1}
-              siblingCount={1}
-              prevNextTexts
-            />}
-          </Tabs.Panel>
-          </div>
+          <VStack gap="8">
+            <Tabs.List>
+              <Tabs.Tab value="aktive" label="Aktive behandlinger"></Tabs.Tab>
+              <Tabs.Tab value="avsluttede" label="Avsluttede behandlinger"></Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value="aktive">
+              {saksoversikt.aktivBehandling ? (
+                <Behandling behandling={saksoversikt.aktivBehandling} aktiv={true}></Behandling>
+              ) : (
+                <IngenBehandlinger aktiv={true} />
+              )}
+            </Tabs.Panel>
+            <Tabs.Panel value="avsluttede">
+              {saksoversikt.avsluttedeBehandlinger.length > 0 ? (
+                saksoversikt.avsluttedeBehandlinger
+                  .slice(antallBehandlingerPerSide * (currentPage - 1), antallBehandlingerPerSide * currentPage)
+                  .map((behandling) => <Behandling behandling={behandling} key={behandling.vedtakId} aktiv={false} />)
+              ) : (
+                <IngenBehandlinger aktiv={false} />
+              )}
+              {antallSider > 1 && (
+                <Pagination
+                  page={currentPage}
+                  onPageChange={setCurrentPage}
+                  count={antallSider}
+                  boundaryCount={1}
+                  siblingCount={1}
+                  prevNextTexts
+                />
+              )}
+            </Tabs.Panel>
+          </VStack>
         </Tabs>
       </VStack>
     </section>

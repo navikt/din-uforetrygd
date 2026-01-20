@@ -15,7 +15,7 @@ interface Props {
 
 export function Behandling({ behandling, aktiv }: Props) {
   return (
-    <ExpansionCard aria-label={behandling.tittel} style={{ marginBottom: '1rem' }}>
+    <ExpansionCard aria-label={behandling.tittel} className={styles.behandlingCard}>
       <ExpansionCard.Header>
         <ExpansionCard.Title>{behandling.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${aktiv ? '' : styles.behandlingDato}`}>

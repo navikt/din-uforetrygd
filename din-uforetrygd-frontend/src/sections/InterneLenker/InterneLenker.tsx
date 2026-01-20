@@ -4,6 +4,7 @@ import { Box, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import { FilesIcon, FolderFileIcon } from '@navikt/aksel-icons'
 import { matchSome } from '@/utils/filterShowFor'
+import styles from './interneLenker.module.css'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
@@ -19,16 +20,16 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
         Visningskriterier.AvsluttetUforetrygdSak,
       ])(visningskriterier) && (
         <section aria-label="Interne lenker til saksoversikt og dokumentoversikt">
-          <VStack gap="6" style={{ width: '100%' }}>
+          <VStack gap="6">
             <LinkCard>
               <Box
                 asChild
                 borderRadius="12"
                 padding="space-8"
-                style={{ backgroundColor: 'var(--ax-bg-accent-moderateA)' }}
+                className={styles.iconBox}
               >
                 <LinkCardIcon>
-                  <FilesIcon style={{ color: 'var(--ax-text-accent-subtle)' }} fontSize="2rem" />
+                  <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
                 </LinkCardIcon>
               </Box>
               <LinkCardTitle>
@@ -43,10 +44,10 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
                 asChild
                 borderRadius="12"
                 padding="space-8"
-                style={{ backgroundColor: 'var(--ax-bg-accent-moderateA)' }}
+                className={styles.iconBox}
               >
                 <LinkCardIcon>
-                  <FolderFileIcon style={{ color: 'var(--ax-text-accent-subtle)' }} fontSize="2rem" />
+                  <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
                 </LinkCardIcon>
               </Box>
               <LinkCardTitle>

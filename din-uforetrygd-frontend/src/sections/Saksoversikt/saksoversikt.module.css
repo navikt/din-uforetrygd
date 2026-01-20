@@ -30,3 +30,6 @@
     color: var(--ax-bg-neutral-strong-hover);
 }
 
+.behandlingCard {
+    margin-bottom: 1rem;
+}

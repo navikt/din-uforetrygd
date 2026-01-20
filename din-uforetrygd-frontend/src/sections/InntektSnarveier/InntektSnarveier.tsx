@@ -4,6 +4,7 @@ import { SnarveiPanel } from '@/components/SnarveiPanel'
 import { getUrl } from '@/utils/getUrl'
 import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
 import { matchAll } from '@/utils/filterShowFor'
+import styles from './inntektSnarveier.module.css'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -33,7 +34,7 @@ const getLinks = async (pid: string | undefined) => [
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid }),
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
-    icon: <FileTextIcon fontSize="2rem" style={{ color: 'var(--ax-text-accent-subtle)' }} />,
+    icon: <FileTextIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
@@ -42,7 +43,7 @@ const getLinks = async (pid: string | undefined) => [
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid }),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
-    icon: <WalletIcon fontSize="2rem" style={{ color: 'var(--ax-text-accent-subtle)' }} />,
+    icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
