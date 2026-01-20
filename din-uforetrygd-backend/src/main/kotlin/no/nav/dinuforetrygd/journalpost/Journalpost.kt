@@ -4,7 +4,7 @@ import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
 
 data class Journalpost(
     val id: String,
-    val tittel: String,
+    val tittel: String?,
     val opprettetAv: EndretAvKode,
     val opprettetDato: String,
     val dokumenter: List<Dokument>,
