@@ -52,7 +52,7 @@ class SaksoversiktService(
             eoÅrstall = this.etteroppgjor?.arstall
         ),
         mottattDato = this.krav.mottattDato,
-        ferdigstiltDato = this.iverksattDato,
+        ferdigstiltDato = this.vedtaksdato,
         avslag = this.avslag,
         etteroppgjor = this.etteroppgjor?.toEtteroppgjør(),
         steg = lagSteg(
