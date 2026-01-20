@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Heading } from '@navikt/ds-react'
+import { Alert, BodyLong, Heading, VStack } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
@@ -13,6 +13,8 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
+import { Saksoversikt } from '@/sections/Saksoversikt'
+import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import React from 'react'
 import { InntektSnarveier } from '@/sections/InntektSnarveier'
 import { Snarveier } from '@/sections/Snarveier'
@@ -39,9 +41,12 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
-            <Heading size="xlarge" level="1">
-              Din uføretrygd
-            </Heading>
+            <VStack gap="space-12" className={'tittel-wrapper'}>
+              <Brødsmulesti brødsmuler={[{ tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' }]} />
+              <Heading size="xlarge" level="1">
+                Din uføretrygd
+              </Heading>
+            </VStack>
             {mode === 'borger' && (
               <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
                 <Heading size="small">Nye regler for uføretrygd i 2026</Heading>
@@ -75,8 +80,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               innloggingstype={uforetrygdResponse.innloggingstype!}
             />
             <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
-            <div className="ux-signals-container">
-              <div data-uxsignals-embed="panel-u5y48zl9t7" className="ux-signals"></div>
+            <div className={'ux-signals-container'}>
+              <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'}></div>
             </div>
           </main>
         </EventProvider>

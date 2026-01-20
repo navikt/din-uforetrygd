@@ -1,10 +1,11 @@
-  import { Heading, HGrid, LinkCard, VStack } from '@navikt/ds-react'
+import { Heading, LinkCard } from '@navikt/ds-react'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor'
 import { getUrl } from '@/utils/getUrl'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
+import { getFullmaktProps } from '@/utils/fullmakt'
+import styles from './relevanteSoknader.module.css'
 import { LinkCardAnchor, LinkCardTitle } from '@navikt/ds-react/LinkCard'
-import React from 'react'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
@@ -54,35 +55,24 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
   }
 
   return (
-    <VStack
-      gap="8"
-      aria-label="Relevante søknader"
-      style={{
-        backgroundColor: 'var(--ax-bg-sunken)',
-        alignSelf: 'stretch',
-        width: '100vw',
-        paddingTop: '2rem',
-        paddingBottom: '2rem',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "var(--content-width)", marginLeft: 'var(--ax-space-12)', marginRight: 'var(--ax-space-12)', margin: '0 auto',
-        }}
-      >
+    <section aria-label={'Relevante søknader'} className={styles.relevantesoknaderSection}>
+      <div className={styles.relevanteSoknaderContent}>
         <Heading level="2" size="medium">
           Relevante søknader
         </Heading>
-        <HGrid gap="6" columns={{ md: 2 }}>
-          {lenker.map((lenke) => (
-            <LinkCard key={lenke.href}>
-              <LinkCardTitle>
-                <LinkCardAnchor href={lenke.href || ''}>{lenke.text}</LinkCardAnchor>
-              </LinkCardTitle>
-            </LinkCard>
-          ))}
-        </HGrid>
+        <div className={styles.relevanteSoknaderLenker}>
+          {relevanteLenker.map(
+            (lenke) =>
+              lenke.href && (
+                <LinkCard key={lenke.href} {...getFullmaktProps(lenke.showFullmaktWarning)}>
+                  <LinkCardTitle>
+                    <LinkCardAnchor href={lenke.href}>{lenke.text}</LinkCardAnchor>
+                  </LinkCardTitle>
+                </LinkCard>
+              )
+          )}
+        </div>
       </div>
-    </VStack>
+    </section>
   )
 }

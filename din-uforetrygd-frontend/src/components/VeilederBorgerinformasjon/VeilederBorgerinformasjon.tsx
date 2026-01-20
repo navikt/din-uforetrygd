@@ -1,4 +1,4 @@
-import { Box, HStack, CopyButton, BodyShort, BoxNew } from '@navikt/ds-react'
+import { BodyShort, BoxNew, CopyButton, HStack } from '@navikt/ds-react'
 
 import styles from './VeilederBorgerinformasjon.module.css'
 import getEnv from '@/utils/env'
