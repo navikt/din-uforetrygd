@@ -1,11 +1,12 @@
 'use client'
 
-import { BodyLong, BodyShort, Box, Heading, HGrid, Link, ReadMore, Table, VStack } from '@navikt/ds-react'
+import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react'
 import { components } from '@/api/api'
 import { format, parseISO } from 'date-fns'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import { getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
+import React from 'react'
 
 interface VedtaksdetaljerProps {
   dittUforevedtak: components['schemas']['DittUforevedtak']
@@ -30,7 +31,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
   return (
     <>
       <Box>
-        <HGrid gap="space-0 space-40" columns={{ md: 2}}>
+        <HGrid gap="space-0 space-40" columns={{ md: 2 }}>
           <VStack>
             <Heading size="medium">Om saken din</Heading>
             <Table>
@@ -72,10 +73,14 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
           </VStack>
           <VStack>
             <Heading size="medium">Uføretrygd</Heading>
-            <Table>
+            <Table className={styles.dittVedtakUforetrygdTable}>
+              <colgroup>
+                <col style={{ width: '65%' }} />
+                <col style={{ width: '35%' }} />
+              </colgroup>
               <Table.Body>
                 <Table.Row>
-                  <Table.DataCell>Månedlig beregnet uføretrygd og barnetilegg</Table.DataCell>
+                  <Table.DataCell>Månedlig beregnet uføretrygd og barnetillegg</Table.DataCell>
                   <Table.DataCell align="right">{dittUforevedtak?.nettoMndUTOgBT} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
@@ -83,11 +88,36 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   <Table.DataCell align="right">-</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.DataCell>Registrert forventet inntekt i {arstall}</Table.DataCell>
+                  <Table.DataCell>
+                    <HStack gap="1">
+                      <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
+                      <HelpText title="Hvor kommer registrert forventet inntekt fra?">
+                        Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra
+                        opplysninger vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og
+                        pensjoner du mottar. Du kan endre registrert forventet inntekt i{' '}
+                        <Link href={linkInntektsplanlegger} className={styles.link}>
+                          inntektsplanleggeren
+                        </Link>
+                        .
+                      </HelpText>
+                    </HStack>
+                  </Table.DataCell>
                   <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.DataCell>Inntektsgrense</Table.DataCell>
+                  <Table.DataCell>
+                    <HStack gap="1">
+                      <BodyShort>Inntektsgrense</BodyShort>
+                      <HelpText title="Hva er inntektsgrense?">
+                        Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
+                        &nbsp;kroner. Bruk{' '}
+                        <Link href={linkInntektsplanlegger} className={styles.link}>
+                          inntektsplanleggeren
+                        </Link>{' '}
+                        for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+                      </HelpText>
+                    </HStack>
+                  </Table.DataCell>
                   <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row>
@@ -103,29 +133,6 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
           </VStack>
         </HGrid>
       </Box>
-      <ReadMore header={'Hvor kommer registrert forventet inntekt fra?'}>
-        {' '}
-        <BodyLong>
-          Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra opplysninger vi har
-          hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og pensjoner du mottar. Du kan endre
-          registrert forventet inntekt i{' '}
-          <Link href={linkInntektsplanlegger} className={styles.link}>
-            inntektsplanleggeren
-          </Link>
-          .
-        </BodyLong>
-      </ReadMore>
-
-      <ReadMore header={'Hva er inntektsgrense?'}>
-        <BodyLong>
-          Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
-          &nbsp;kroner. Bruk{' '}
-          <Link href={linkInntektsplanlegger} className={styles.link}>
-            inntektsplanleggeren
-          </Link>{' '}
-          for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
-        </BodyLong>
-      </ReadMore>
     </>
   )
 }

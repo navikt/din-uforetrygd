@@ -13,7 +13,6 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
-import { Saksoversikt } from '@/sections/Saksoversikt'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import React from 'react'
 import { InntektSnarveier } from '@/sections/InntektSnarveier'
@@ -60,7 +59,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             <InntektSnarveier
               visningskriterier={visningskriterier}
               pid={params.pid}
-              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}></InntektSnarveier>
+              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+            ></InntektSnarveier>
             <UforestatusGuidePanel visningskriterier={visningskriterier} />
             <DittVedtak
               pid={params.pid}
@@ -69,11 +69,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               sakId={uforesak?.sakId?.toString()}
             />
             <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()}></InterneLenker>
-            <Snarveier
-              visningskriterier={visningskriterier}
-              pid={params.pid}
-              uforetrygdResponse={uforetrygdResponse}
-            />
+            <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
             <MeldeFra visningskriterier={visningskriterier} />
             <RelevanteSoknader
               visningskriterier={visningskriterier}
