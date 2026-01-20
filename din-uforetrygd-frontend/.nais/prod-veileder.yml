@@ -60,6 +60,10 @@ spec:
           namespace: ufore
       external:
         - host: ufore-unleash-api.nav.cloud.nais.io
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
   env:
     - name: MODE
       value: veileder
@@ -111,5 +115,7 @@ spec:
       value: https://www.nav.no/dokumentarkiv
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: api://prod-gcp.ufore.din-uforetrygd-backend/.default
+    - name: UNLEASH_SERVER_API_URL
+      value: https://ufore-unleash-api.nav.cloud.nais.io/api
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

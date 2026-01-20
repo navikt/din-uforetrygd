@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, BodyLong, Heading } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
@@ -17,6 +17,8 @@ import React from 'react'
 import { InntektSnarveier } from '@/sections/InntektSnarveier'
 import { Snarveier } from '@/sections/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker'
+import { Saksoversikt } from '@/sections/Saksoversikt'
+import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -38,15 +40,19 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <main className="main-content" id="maincontent" tabIndex={-1}>
-            {mode === 'borger' && (
-              <Alert contentMaxWidth={false} variant="info" style={{ width: '992px' }}>
-                Nav sender nå uføretrygd til banken 2-3 dager senere enn før, og utbetalingen din blir derfor synlig her
-                2-3 dager senere enn du er vant til. Pengene kommer likevel på konto til samme tid som før.
-              </Alert>
-            )}
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
+            {mode === 'borger' && (
+              <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
+                <Heading size="small">Nye regler for uføretrygd i 2026</Heading>
+                <BodyLong size="medium">
+                  Det kommer nye regler for uføretrygd i 2026, blant annet endring av inntektsgrensen. Vi informerer deg
+                  så snart vi vet mer. Nav.no, Din uføretrygd og inntektsplanleggeren vil bli oppdatert. De som får
+                  endring i uføretrygden sin på grunn av regelendringene, vil få brev om dette.
+                </BodyLong>
+              </LukkbarAlert>
+            )}
             <InntektSnarveier
               visningskriterier={visningskriterier}
               pid={params.pid}
