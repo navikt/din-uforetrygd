@@ -128,7 +128,7 @@ class UforetrygdServiceTest {
         val inntektsgrense = 150_000
         val inntektstak = 200_000
         val kompensasjonsgrad = 65.5
-        val nettoMndUTogBT = 20_000
+        val nettoUtbetalingMnd = 20_000
         val inntektFraSkatt = 100_000.0
         val vedtakssammendragResponse = VedtakssammendragResponse(
             hasIverksattVedtak = true,
@@ -143,7 +143,7 @@ class UforetrygdServiceTest {
                 hasVarigTilrettelagtArbeid = false,
                 inntektstak = inntektstak,
                 kompensasjonsgrad = kompensasjonsgrad,
-                nettoMndUTOgBT = nettoMndUTogBT
+                nettoUtbetalingMnd = nettoUtbetalingMnd
             )
         )
 
@@ -167,7 +167,7 @@ class UforetrygdServiceTest {
         assertEquals(inntektsgrense, response.uforevedtak?.inntektsgrense)
         assertEquals(response.uforevedtak!!.inntektstak, inntektstak)
         assertEquals(response.uforevedtak!!.kompensasjonsgrad, kompensasjonsgrad)
-        assertEquals(response.uforevedtak!!.nettoMndUTOgBT, nettoMndUTogBT)
+        assertEquals(response.uforevedtak!!.nettoUtbetalingMnd, nettoUtbetalingMnd)
         assertEquals(response.uforevedtak!!.inntektFraSkatt, inntektFraSkatt)
         assertFalse(response.uforevedtak!!.hasBarnetilleggFellesBarn)
         assertFalse(response.uforevedtak!!.hasBarnetilleggSaerkullsbarn)

@@ -37,7 +37,7 @@ data class DittUforevedtak(
     val inntektstak: Int?,
     val inntektFraSkatt: Double,
     val kompensasjonsgrad: Double?,
-    val nettoMndUTOgBT: Int,
+    val nettoUtbetalingMnd: Int,
     val sumAvForventedeInntekter: Long?,
     val hasBarnetilleggFellesBarn: Boolean,
     val hasBarnetilleggSaerkullsbarn: Boolean,

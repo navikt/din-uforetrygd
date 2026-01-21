@@ -91,7 +91,7 @@ export interface components {
       inntektstak?: number
       inntektFraSkatt: number
       kompensasjonsgrad?: number
-      nettoMndUTOgBT: number
+      nettoUtbetalingMnd: number
       /** Format: int64 */
       sumAvForventedeInntekter?: number
       hasBarnetilleggFellesBarn: boolean

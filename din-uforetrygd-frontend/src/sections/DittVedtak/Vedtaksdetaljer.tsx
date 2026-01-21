@@ -87,7 +87,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn
                     )}
                   </Table.DataCell>
-                  <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoMndUTOgBT)} kr</Table.DataCell>
+                  <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoUtbetalingMnd)} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>

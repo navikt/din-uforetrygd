@@ -105,7 +105,7 @@ class PenClientTest : WebClientTest() {
                     hasVarigTilrettelagtArbeid = false,
                     inntektstak = 200000,
                     kompensasjonsgrad = 65.5,
-                    nettoMndUTOgBT = 20000
+                    nettoUtbetalingMnd = 20000
                 )
             ), penClient.getVedtakssammendragResponse(PID)
         )
@@ -195,7 +195,7 @@ class PenClientTest : WebClientTest() {
                             "hasVarigTilrettelagtArbeid": false,
                             "inntektstak": 200000,
                             "kompensasjonsgrad": 65.5,
-                            "nettoMndUTOgBT": 20000
+                            "nettoUtbetalingMnd": 20000
                         }
                     }
                 """.trimIndent()

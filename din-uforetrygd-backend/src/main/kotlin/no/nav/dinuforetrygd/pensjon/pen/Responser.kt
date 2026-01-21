@@ -19,7 +19,7 @@ data class Vedtakssammendrag(
     val inntektsgrense: Int?,
     val inntektstak: Int?,
     val kompensasjonsgrad: Double?,
-    val nettoMndUTOgBT: Int,
+    val nettoUtbetalingMnd: Int,
     val hasBarnetilleggFellesBarn: Boolean,
     val hasBarnetilleggSaerkullsbarn: Boolean,
     val hasGjenlevendeTillegg: Boolean,
