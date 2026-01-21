@@ -5,7 +5,6 @@ import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.audit.Auditor
-import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

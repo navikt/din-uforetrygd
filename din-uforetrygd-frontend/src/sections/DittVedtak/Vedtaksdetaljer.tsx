@@ -4,10 +4,7 @@ import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack }
 import { components } from '@/api/api'
 import { format, parseISO } from 'date-fns'
 import { formatInntekt } from '@/utils/formatter/formatter'
-import {
-  getManedligBeregnetYtelseTekst,
-  getTilleggsoppsummeringTekst,
-} from '@/sections/DittVedtak/utils'
+import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import React from 'react'
 
@@ -25,6 +22,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
   const uforetrygdInnvilget = dittUforevedtak.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
   const inntektsgrense = formatInntekt(dittUforevedtak.inntektsgrense) ?? 0
   const inntektstak = formatInntekt(dittUforevedtak.inntektstak) ?? 0
+  const inntektFraSkatt = formatInntekt(dittUforevedtak.inntektFraSkatt)
   const sumAvForventedeInntekter = formatInntekt(dittUforevedtak.sumAvForventedeInntekter) ?? 0
   const hasVarigTilrettelagtArbeid = dittUforevedtak.hasVarigTilrettelagtArbeid
   const hasBarnetilleggFellesBarn = dittUforevedtak.hasBarnetilleggFellesBarn
@@ -83,12 +81,17 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
               </colgroup>
               <Table.Body>
                 <Table.Row shadeOnHover={false}>
-                  <Table.DataCell>{getManedligBeregnetYtelseTekst(hasGjenlevendeTillegg, hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn)}</Table.DataCell>
+                  <Table.DataCell>
+                    {getManedligBeregnetYtelseTekst(
+                      hasGjenlevendeTillegg,
+                      hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn
+                    )}
+                  </Table.DataCell>
                   <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoMndUTOgBT)} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
-                  <Table.DataCell align="right">-</Table.DataCell>
+                  <Table.DataCell align="right">{inntektFraSkatt} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>

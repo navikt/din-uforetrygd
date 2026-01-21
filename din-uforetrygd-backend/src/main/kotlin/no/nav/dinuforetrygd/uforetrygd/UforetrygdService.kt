@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
+import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
 import no.nav.dinuforetrygd.pensjon.pen.PenService
@@ -16,7 +17,8 @@ class UforetrygdService(
     private val penService: PenService,
     private val tokenService: TokenService,
     private val fullmaktClient: FullmaktClient,
-    private val journalpostService: JournalpostService
+    private val journalpostService: JournalpostService,
+    private val inntektskomponentenService: InntektskomponentenService,
 ) {
     private val logger: Logger = LoggerFactory.getLogger(UforetrygdService::class.java)
 
@@ -28,11 +30,12 @@ class UforetrygdService(
             val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser
             val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
             val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+            val inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
             return constructUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter),
+                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 hendelser = uforeSakshendelser
             )
         } catch (e: Exception) {
@@ -65,13 +68,14 @@ class UforetrygdService(
         hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
     )
 
-    private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?): DittUforevedtak =
+    private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
         DittUforevedtak(
             uforegrad = this.uforegrad,
             virkFom = this.virkFom,
             uforetidspunkt = this.uforetidspunkt,
             inntektsgrense = this.inntektsgrense,
             inntektstak = this.inntektstak,
+            inntektFraSkatt = inntektFraSkatt,
             kompensasjonsgrad = this.kompensasjonsgrad,
             nettoMndUTOgBT = this.nettoMndUTOgBT,
             sumAvForventedeInntekter = sumAvForventedeInntekter,

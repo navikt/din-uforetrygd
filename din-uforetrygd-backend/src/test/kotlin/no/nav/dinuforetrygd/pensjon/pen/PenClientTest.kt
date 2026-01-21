@@ -102,7 +102,10 @@ class PenClientTest : WebClientTest() {
                     hasBarnetilleggFellesBarn = false,
                     hasBarnetilleggSaerkullsbarn = false,
                     hasGjenlevendeTillegg = false,
-                    hasVarigTilrettelagtArbeid = false
+                    hasVarigTilrettelagtArbeid = false,
+                    inntektstak = 200000,
+                    kompensasjonsgrad = 65.5,
+                    nettoMndUTOgBT = 20000
                 )
             ), penClient.getVedtakssammendragResponse(PID)
         )
@@ -189,7 +192,10 @@ class PenClientTest : WebClientTest() {
                             "hasBarnetilleggFellesBarn": false,
                             "hasBarnetilleggSaerkullsbarn": false,
                             "hasGjenlevendeTillegg": false,
-                            "hasVarigTilrettelagtArbeid": false
+                            "hasVarigTilrettelagtArbeid": false,
+                            "inntektstak": 200000,
+                            "kompensasjonsgrad": 65.5,
+                            "nettoMndUTOgBT": 20000
                         }
                     }
                 """.trimIndent()

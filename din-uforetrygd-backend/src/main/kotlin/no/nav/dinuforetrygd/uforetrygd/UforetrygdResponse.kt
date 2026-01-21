@@ -35,6 +35,7 @@ data class DittUforevedtak(
     val uforetidspunkt: LocalDate?,
     val inntektsgrense: Int?,
     val inntektstak: Int?,
+    val inntektFraSkatt: Double,
     val kompensasjonsgrad: Double?,
     val nettoMndUTOgBT: Int,
     val sumAvForventedeInntekter: Long?,

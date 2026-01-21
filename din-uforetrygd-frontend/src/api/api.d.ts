@@ -74,9 +74,9 @@ export interface components {
       tilbakekreving: number
     }
     Steg: {
-      aktiv: boolean,
-      utfort: boolean,
-      tittel: string,
+      aktiv: boolean
+      utfort: boolean
+      tittel: string
       undertekst?: string
     }
     DittUforevedtak: {
@@ -89,6 +89,7 @@ export interface components {
       /** Format: int32 */
       inntektsgrense?: number
       inntektstak?: number
+      inntektFraSkatt: number
       kompensasjonsgrad?: number
       nettoMndUTOgBT: number
       /** Format: int64 */
