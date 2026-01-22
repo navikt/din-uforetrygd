@@ -3,7 +3,7 @@ package no.nav.dinuforetrygd.journalpost.safselvbetjening
 import java.time.LocalDateTime
 
 data class JournalpostSafSelvbetjeningDto(
-    val tittel: String,
+    val tittel: String?,
     val journalpostId: String,
     val journalposttype: String,
     val tema: String?,
@@ -20,7 +20,7 @@ data class JournalpostSafSelvbetjeningDto(
         val id: String?,
     )
     data class Dokument(
-        val tittel: String,
+        val tittel: String?,
         val dokumentInfoId: String,
         val dokumentvarianter: List<DokumentVariant>,
     ) {
