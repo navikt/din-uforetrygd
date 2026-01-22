@@ -149,17 +149,17 @@ class PenClient(
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
                     webClient
-                        .get()
+                        .post()
                         .uri(
                             UriComponentsBuilder.fromUriString(url)
                                 .path(path)
-                                .queryParam("sakId", sakId)
                                 .build()
                                 .toUri()
                         )
                         .header("Authorization", "Bearer $accessToken")
                         .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
                         .accept(MediaType.APPLICATION_JSON)
+                        .bodyValue(HentBehandlingerRequest(pid = pid, sakId = sakId))
                         .retrieve()
                         .bodyToMono(KravResponse::class.java)
                         .withMdcContext()

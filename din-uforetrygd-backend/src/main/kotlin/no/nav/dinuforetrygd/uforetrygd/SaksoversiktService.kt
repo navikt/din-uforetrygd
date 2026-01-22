@@ -13,9 +13,6 @@ class SaksoversiktService(
 ) {
     //TODO: trenger vi noe kall mot fullmakt her?
 
-    //TODO: forholder bruker seg til hva en mellom og sluttbehandling er? Blir det ikke bare en del av førstegangsbehandlingen for de? Og burde det vises som flere behandlinger eller en?
-    // - Anne Sofie ser mer på denne.
-
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
