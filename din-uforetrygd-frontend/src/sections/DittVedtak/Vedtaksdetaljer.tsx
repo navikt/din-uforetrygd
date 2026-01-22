@@ -32,22 +32,22 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
   return (
     <>
       <Box>
-        <HGrid gap="space-0 space-40" columns={{ md: 2 }}>
+        <HGrid gap={{xs: "space-32", md: "space-0 space-40"}} columns={{ md: 2 }}>
           <VStack>
             <Heading size="medium">Om saken din</Heading>
             <Table>
               <Table.Body>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Saksnummer</Table.DataCell>
-                  <Table.DataCell align="right">{sakId}</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{sakId}</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Uføregrad</Table.DataCell>
-                  <Table.DataCell align="right">{uforegrad} prosent</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{uforegrad} prosent</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Tillegg</Table.DataCell>
-                  <Table.DataCell align="right">
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                     {getTilleggsoppsummeringTekst(
                       hasGjenlevendeTillegg,
                       hasBarnetilleggFellesBarn,
@@ -57,15 +57,15 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Uføretidspunkt</Table.DataCell>
-                  <Table.DataCell align="right">{uforetidspunkt}</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{uforetidspunkt}</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Innvilget fra</Table.DataCell>
-                  <Table.DataCell align="right">{uforetrygdInnvilget}</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{uforetrygdInnvilget}</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Tiltak</Table.DataCell>
-                  <Table.DataCell align="right">
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                     {hasVarigTilrettelagtArbeid ? <BodyShort>Varig tilrettelagt arbeid</BodyShort> : '-'}
                   </Table.DataCell>
                 </Table.Row>
@@ -87,11 +87,11 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn
                     )}
                   </Table.DataCell>
-                  <Table.DataCell align="right">{formatInntekt(dittUforevedtak?.nettoUtbetalingMnd)} kr</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{formatInntekt(dittUforevedtak?.nettoUtbetalingMnd)} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
-                  <Table.DataCell align="right">{inntektFraSkatt} kr</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{inntektFraSkatt} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>
@@ -108,7 +108,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       </HelpText>
                     </HStack>
                   </Table.DataCell>
-                  <Table.DataCell align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{sumAvForventedeInntekter} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>
@@ -124,15 +124,15 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       </HelpText>
                     </HStack>
                   </Table.DataCell>
-                  <Table.DataCell align="right">{inntektsgrense} kr</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{inntektsgrense} kr</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
-                  <Table.DataCell align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{dittUforevedtak?.kompensasjonsgrad} prosent</Table.DataCell>
                 </Table.Row>
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Inntektstak i {arstall}</Table.DataCell>
-                  <Table.DataCell align="right">{inntektstak} kr</Table.DataCell>
+                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">{inntektstak} kr</Table.DataCell>
                 </Table.Row>
               </Table.Body>
             </Table>

@@ -1,6 +1,6 @@
 import { Visningskriterier } from '@/const'
 import React from 'react'
-import { Box, LinkCard, VStack } from '@navikt/ds-react'
+import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import { FilesIcon, FolderFileIcon } from '@navikt/aksel-icons'
 import { matchSome } from '@/utils/filterShowFor'
@@ -22,16 +22,13 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
         <section aria-label="Interne lenker til saksoversikt og dokumentoversikt">
           <VStack gap="6">
             <LinkCard>
-              <Box
-                asChild
-                borderRadius="12"
-                padding="space-8"
-                className={styles.iconBox}
-              >
-                <LinkCardIcon>
-                  <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
-                </LinkCardIcon>
-              </Box>
+              <Hide below="sm" asChild>
+                <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
+                  <LinkCardIcon>
+                    <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
+                  </LinkCardIcon>
+                </Box>
+              </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}`}>
                   Saksoversikt
@@ -40,16 +37,13 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               <LinkCardDescription>Hendelser knyttet til saken din</LinkCardDescription>
             </LinkCard>
             <LinkCard>
-              <Box
-                asChild
-                borderRadius="12"
-                padding="space-8"
-                className={styles.iconBox}
-              >
-                <LinkCardIcon>
-                  <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
-                </LinkCardIcon>
-              </Box>
+              <Hide below="sm" asChild>
+                <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
+                  <LinkCardIcon>
+                    <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
+                  </LinkCardIcon>
+                </Box>
+              </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}`}>
                   Dokumenter knyttet til saken

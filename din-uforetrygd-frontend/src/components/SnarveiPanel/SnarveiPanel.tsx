@@ -34,7 +34,7 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
           <HGrid gap="6" columns={{ md: 2 }}>
             {relevantLinks.map((link) => (
               <LinkCard key={link.title}>
-                <Hide below="md" asChild>
+                <Hide below="sm" asChild>
                   <BoxNew
                     asChild
                     className={styles.iconBox}
