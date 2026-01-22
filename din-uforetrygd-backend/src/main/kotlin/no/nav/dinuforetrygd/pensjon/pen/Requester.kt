@@ -1,0 +1,3 @@
+package no.nav.dinuforetrygd.pensjon.pen
+
+data class HentBehandlingerRequest(val pid: String, val sakId: Long)

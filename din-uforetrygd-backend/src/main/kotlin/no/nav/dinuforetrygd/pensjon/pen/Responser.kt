@@ -34,7 +34,7 @@ data class KravResponse(
 data class Vedtak(
     val vedtakId: Long,
     val vedtakstype: String,
-    val iverksattDato: LocalDate,
+    val vedtaksdato: LocalDate,
     val avslag: Boolean,
     val krav: Krav,
     val etteroppgjor: Etteroppgjør? = null
