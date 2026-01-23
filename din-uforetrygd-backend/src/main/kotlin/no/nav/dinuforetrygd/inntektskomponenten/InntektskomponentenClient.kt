@@ -5,6 +5,7 @@ import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.AzureAdService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
@@ -48,11 +49,11 @@ class InntektskomponentenClient(
                         .uri("$url$path")
                         .header("Authorization", "Bearer $accessToken")
                         .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
-                       // .header("Nav-Consumer_id", "ufoere")        //avtalt med team inntekt
                         .accept(MediaType.APPLICATION_JSON)
                         .bodyValue(request)
                         .retrieve()
                         .bodyToMono(HentAbonnerteInntekterResponse::class.java)
+                        .withMdcContext()
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
