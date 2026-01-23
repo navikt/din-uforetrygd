@@ -8,7 +8,7 @@ import { DocumentLink } from '@/components/DocumentLink'
 import styles from './dokumenterview.module.css'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
-import { FilesIcon } from '@navikt/aksel-icons'
+import { FolderFileIcon } from '@navikt/aksel-icons'
 
 interface IDokumenterProps {
   pid?: string
@@ -35,7 +35,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
           <Hide below="sm" asChild>
             <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
               <LinkCardIcon>
-                <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
+                <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
               </LinkCardIcon>
             </Box>
           </Hide>
