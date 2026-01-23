@@ -68,7 +68,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               dittUforevedtak={uforetrygdResponse.uforevedtak}
               sakId={uforesak?.sakId?.toString()}
             />
-            <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()}></InterneLenker>
+            <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()} pid={params.pid} journalposter={uforetrygdResponse.journalposter!}></InterneLenker>
             <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
             <MeldeFra visningskriterier={visningskriterier} />
             <RelevanteSoknader
