@@ -26,30 +26,28 @@ class UforetrygdService(
         val uforeSak = penService.getSaker(pid).velgSak()
         if (uforeSak == null) return constructUforetrygdResponse(pid, uforeSak)
 
-        try {
-            val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
-            val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-            val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-            var inntektFraSkatt = 0.0
-            if(vedtakssammendragResponse.hasIverksattVedtak) {
-                try {
-                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
-                } catch (e: Exception) {
-                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status)
-                }
+        val uforeSakshendelser = penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
+        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
+        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+        var inntektFraSkatt = 0.0
+        if (vedtakssammendragResponse.hasIverksattVedtak) {
+            try {
+                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            } catch (e: Exception) {
+                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status)
             }
-
-            return constructUforetrygdResponse(
-                pid = pid,
-                sak = uforeSak,
-                hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
-                hendelser = uforeSakshendelser
-            )
-        } catch (e: Exception) {
-            logger.warn("Failed to get response from pen when SAK with type UFORETRYGD exists", e)
-            return constructUforetrygdResponse(pid, uforeSak)
         }
+
+        return constructUforetrygdResponse(
+            pid = pid,
+            sak = uforeSak,
+            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(
+                sumAvForventedeInntekter,
+                inntektFraSkatt
+            ),
+            hendelser = uforeSakshendelser
+        )
     }
 
     private fun List<Sak>.velgSak() = this.minByOrNull { it.status.prioritet }
@@ -73,10 +71,14 @@ class UforetrygdService(
             journalpostService.getJournalPostliste(pid, it.sakId.toString())
                 .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
         } ?: emptyList(),
-        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
+        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }
+            ?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
     )
 
-    private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
+    private fun Vedtakssammendrag.toDittUforeVedtak(
+        sumAvForventedeInntekter: Long?,
+        inntektFraSkatt: Double
+    ): DittUforevedtak =
         DittUforevedtak(
             uforegrad = this.uforegrad,
             virkFom = this.virkFom,
