@@ -21,9 +21,9 @@ export interface EtteroppgjorType {
 }
 
 export interface StegType {
-  aktiv: boolean,
-  utfort: boolean,
-  tittel: string,
+  aktiv: boolean
+  utfort: boolean
+  tittel: string
   undertekst?: string | null
 }
 
@@ -34,7 +34,6 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
   }
 }
 
-//TODO: trenger vi mappingen, feks etteroppgjor mappes auto
 const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
   return {
     tittel: fra.tittel,
@@ -43,6 +42,6 @@ const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingT
     avslag: fra.avslag,
     etteroppgjor: fra.etteroppgjor,
     steg: fra.steg,
-    vedtakId: fra.vedtakId
+    vedtakId: fra.vedtakId,
   }
 }

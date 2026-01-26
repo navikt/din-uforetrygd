@@ -11,8 +11,6 @@ import kotlin.math.abs
 class SaksoversiktService(
     private val penClient: PenClient,
 ) {
-    //TODO: trenger vi noe kall mot fullmakt her?
-
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
