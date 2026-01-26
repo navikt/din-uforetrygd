@@ -26,7 +26,7 @@ data class Vedtakssammendrag(
     val hasVarigTilrettelagtArbeid: Boolean
 )
 
-data class KravResponse(
+data class HentBehandlingerResponse(
     val apentKrav: Krav?,
     val vedtak: List<Vedtak>
 )

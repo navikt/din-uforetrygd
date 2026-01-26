@@ -143,7 +143,7 @@ class PenClient(
     }
 
 
-    fun hentBehandlinger(pid: String, sakId: Long): KravResponse {
+    fun hentBehandlinger(pid: String, sakId: Long): HentBehandlingerResponse {
         val path = "/pen/api/uforetrygd/din-uforetrygd/behandlinger"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
@@ -161,7 +161,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .bodyValue(HentBehandlingerRequest(pid = pid, sakId = sakId))
                         .retrieve()
-                        .bodyToMono(KravResponse::class.java)
+                        .bodyToMono(HentBehandlingerResponse::class.java)
                         .withMdcContext()
                         .retry(numberOfRetries)
                         .block()!!
