@@ -1,4 +1,6 @@
 name: 'Post release note til Slack'
+permissions:
+  contents: read
 
 on:
   pull_request:
@@ -11,8 +13,6 @@ on:
 jobs:
   notifyReleaseNote:
     name: "Poster release note til Slack"
-    permissions:
-      contents: read
     if: |
       (github.event.pull_request.merged && github.base_ref == 'main') || 
       (github.event_name == 'push' && github.ref == 'refs/heads/main')
