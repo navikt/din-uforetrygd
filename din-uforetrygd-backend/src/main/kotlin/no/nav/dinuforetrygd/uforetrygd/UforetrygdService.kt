@@ -35,6 +35,7 @@ class UforetrygdService(
                 inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
             }
             catch (e: Exception) {
+                logger.warn("Sak: " + uforeSak.sakId + " status: " + uforeSak.status)
             }
             return constructUforetrygdResponse(
                 pid = pid,
