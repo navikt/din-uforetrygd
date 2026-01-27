@@ -27,16 +27,18 @@ class UforetrygdService(
         if (uforeSak == null) return constructUforetrygdResponse(pid, uforeSak)
 
         try {
-            val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser
+            val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
             val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
             val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
             var inntektFraSkatt = 0.0
-            try {
-                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            if(vedtakssammendragResponse.hasIverksattVedtak) {
+                try {
+                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+                } catch (e: Exception) {
+                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status)
+                }
             }
-            catch (e: Exception) {
-                logger.warn("Sak: " + uforeSak.sakId + " status: " + uforeSak.status)
-            }
+
             return constructUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
