@@ -42,7 +42,7 @@ export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ inn
       header={{ heading: 'For lavt innloggingsnivå' }}
     >
       <Modal.Body>
-        <VStack gap="6">
+        <VStack gap="space-24">
           <BodyLong>
             Du er logget inn med MinID. For å komme inn på Dokumenter må du logge inn med et høyere sikkerhetsnivå, for
             eksempel BankID.
@@ -50,7 +50,7 @@ export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ inn
           <BodyLong>
             Du kan se dokumenter knyttet til uføretrygd i saksoversikten her i Din uføretrygd med nåværende innlogging.
           </BodyLong>
-          <HStack marginBlock="4 0" justify="space-between">
+          <HStack marginBlock="space-16 space-0" justify="space-between">
             <Button onClick={close} variant="secondary">
               Avbryt
             </Button>

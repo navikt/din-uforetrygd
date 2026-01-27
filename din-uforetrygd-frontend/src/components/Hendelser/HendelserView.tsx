@@ -52,7 +52,7 @@ export const HendelserView: React.FC<IHendelserProps> = (props) => {
           itemTypeName="hendelser"
           renderItemAction={(hendelse) => {
             return (
-              <VStack gap="05" className={styles.hendelser} padding="2">
+              <VStack gap="space-2" className={styles.hendelser} padding="space-8">
                 <Detail>
                   {hendelse.formattedDate}
                   {hendelse.createdBy && ` - Fra ${hendelse.createdBy}`}

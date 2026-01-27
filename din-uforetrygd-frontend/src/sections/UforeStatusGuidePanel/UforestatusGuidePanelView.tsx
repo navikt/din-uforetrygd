@@ -46,7 +46,7 @@ export const UforestatusGuidePanelView: React.FC<IUforeStatusGuidePanelProps> = 
       <div className={styles.guidepanelWrapper}>
         <section aria-label="Saken din">
           <GuidePanel poster className={styles.ingenUforetrygd}>
-            <VStack gap="3">
+            <VStack gap="space-12">
               <Heading level="2" size="medium">
                 Du har ikke uføretrygd
               </Heading>

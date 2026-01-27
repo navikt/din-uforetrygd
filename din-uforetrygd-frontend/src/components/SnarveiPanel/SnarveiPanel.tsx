@@ -1,4 +1,4 @@
-import { BoxNew, HGrid, Hide, LinkCard } from '@navikt/ds-react'
+import { Box, HGrid, Hide, LinkCard } from '@navikt/ds-react'
 
 import { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor'
@@ -31,33 +31,28 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
   return (
     <>
       {relevantLinks.length > 0 && (
-          <HGrid gap="6" columns={{ md: 2 }}>
-            {relevantLinks.map((link) => (
-              <LinkCard key={link.title}>
-                <Hide below="sm" asChild>
-                  <BoxNew
-                    asChild
-                    className={styles.iconBox}
-                    borderRadius="8"
-                    padding="space-8"
-                  >
-                    <LinkCardIcon>{link.icon}</LinkCardIcon>
-                  </BoxNew>
-                </Hide>
-                <LinkCardTitle>
-                  <LinkCardAnchor
-                    href={link.href!}
-                    {...getFullmaktProps(link.showFullmaktWarning)}
-                    {...showModal(props.innloggingstype, link.visInnloggingsModal)}
-                  >
-                    {link.title}
-                  </LinkCardAnchor>
-                </LinkCardTitle>
-                <LinkCardDescription>{link.description}</LinkCardDescription>
-              </LinkCard>
-            ))}
-            <MinIdDokumentModal innloggingstype={props.innloggingstype} />
-          </HGrid>
+        <HGrid gap="space-24" columns={{ md: 2 }}>
+          {relevantLinks.map((link) => (
+            <LinkCard key={link.title}>
+              <Hide below="sm" asChild>
+                <Box asChild className={styles.iconBox} borderRadius="8" padding="space-8">
+                  <LinkCardIcon>{link.icon}</LinkCardIcon>
+                </Box>
+              </Hide>
+              <LinkCardTitle>
+                <LinkCardAnchor
+                  href={link.href!}
+                  {...getFullmaktProps(link.showFullmaktWarning)}
+                  {...showModal(props.innloggingstype, link.visInnloggingsModal)}
+                >
+                  {link.title}
+                </LinkCardAnchor>
+              </LinkCardTitle>
+              <LinkCardDescription>{link.description}</LinkCardDescription>
+            </LinkCard>
+          ))}
+          <MinIdDokumentModal innloggingstype={props.innloggingstype} />
+        </HGrid>
       )}
     </>
   )

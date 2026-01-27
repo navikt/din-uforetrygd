@@ -21,25 +21,24 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
   }
 
   return (
-    <Box.New className={styles.tile + " " + (isOpen && styles.tileOpenColour)} borderRadius="large">
-      <Box.New
+    <Box className={styles.tile + ' ' + (isOpen && styles.tileOpenColour)} borderRadius="8">
+      <Box
         as="button"
-        className={styles.tileHeader + " " + (isOpen && styles.tileOpenColour)}
+        className={styles.tileHeader + ' ' + (isOpen && styles.tileOpenColour)}
         onClick={handleOpen}
-        borderRadius={isOpen ? 'large large 0 0' : 'large'}
-        padding="4"
+        borderRadius={isOpen ? '8 8 0 0' : '8'}
+        padding="space-16"
       >
-        <VStack gap="1">{props.children}</VStack>
+        <VStack gap="space-4">{props.children}</VStack>
         <div className={`${styles.tileChevron} ${isOpen ? styles.tileChevronOpen : styles.tileChevronClosed}`}>
           {isOpen ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />}
         </div>
-      </Box.New>
-
+      </Box>
       {isOpen && (
-        <Box.New paddingBlock="0 4" paddingInline="4 0" width="100%" borderRadius="large">
+        <Box paddingBlock="space-0 space-16" paddingInline="space-16 space-0" width="100%" borderRadius="8">
           {props.content}
-        </Box.New>
+        </Box>
       )}
-    </Box.New>
+    </Box>
   )
 }
