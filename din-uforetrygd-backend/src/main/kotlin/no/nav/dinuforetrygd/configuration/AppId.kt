@@ -11,4 +11,5 @@ enum class AppId(
     PERSONDATA(true, true),
     SAF_SELVBETJENING(true, true),
     SAF(false, false),
+    INNTEKTSKOMPONENTEN(false, false),
 }

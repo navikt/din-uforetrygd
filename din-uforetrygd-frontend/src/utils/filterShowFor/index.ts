@@ -20,4 +20,7 @@ export const matchAll = (showFor: Visningskriterier[]) => (visningskriterier: Vi
 export const matchSome = (showFor: Visningskriterier[]) => (visningskriterier: Visningskriterier[]) =>
   showFor.some((kriterie) => visningskriterier.includes(kriterie))
 
+export const matchNone = (showFor: Visningskriterier[]) => (visningskriterier: Visningskriterier[]) =>
+  !showFor.some((kriterie) => visningskriterier.includes(kriterie))
+
 export default filterShowFor

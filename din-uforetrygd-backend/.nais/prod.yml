@@ -95,6 +95,10 @@ spec:
       value: https://pensjon-pen.prod-fss-pub.nais.io
     - name: PEN_SCOPE
       value: api://prod-fss.pensjondeployer.pensjon-pen/.default
+    - name: INNTEKTSKOMPONENTEN_URL
+      value: https://ikomp.prod-fss-pub.nais.io
+    - name: INNTEKTSKOMPONENTEN_SCOPE
+      value: api://prod-fss.team-inntekt.ikomp/.default
     - name: PEN_AUDIENCE
       value: prod-fss:pensjondeployer:pensjon-pen
     - name: PERSONDATA_URL

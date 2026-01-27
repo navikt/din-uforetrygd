@@ -1,3 +1,24 @@
 .readMoreOpened {
     margin-top: var(--ax-space-16);
 }
+
+.snarveiIcon {
+    color: var(--ax-text-accent-subtle)
+}
+
+.iconBox {
+    background-color: var(--ax-bg-accent-moderateA)
+}
+
+.dokumenterCardTitle {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.noTopPadding {
+  padding-top: 0 !important;
+}
+.noTopPadding > *:first-child {
+  margin-top: 0 !important;
+}

@@ -1,0 +1,1 @@
+export { InntektSnarveier } from './InntektSnarveier'

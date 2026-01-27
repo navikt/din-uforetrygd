@@ -18,16 +18,6 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
   const lenker = [
     {
       href: await getUrl({
-        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
-        isFullmektig: isFullmektig,
-        innloggingstype: innloggingstype,
-      }),
-      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
-      showFor: matchAll([Visningskriterier.GradertUfore]),
-      showFullmaktWarning: false,
-    },
-    {
-      href: await getUrl({
         urlFromEnv: 'LINK_SOKNAD_UFORE',
         isFullmektig: isFullmektig,
         innloggingstype: innloggingstype,
@@ -44,6 +34,16 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       }),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
+      showFullmaktWarning: false,
+    },
+    {
+      href: await getUrl({
+        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
+        isFullmektig: isFullmektig,
+        innloggingstype: innloggingstype,
+      }),
+      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
+      showFor: matchAll([Visningskriterier.GradertUfore]),
       showFullmaktWarning: false,
     },
   ]

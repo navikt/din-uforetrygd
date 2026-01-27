@@ -3,7 +3,7 @@ import next from 'next'
 import { stengForReguleringMiddleware } from '@navikt/steng-for-regulering/express'
 
 const isDev = process.env.NODE_ENV !== 'production'
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 const app = next({ dev: isDev })
 const handle = app.getRequestHandler()
 const server = express()

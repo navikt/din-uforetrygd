@@ -2,6 +2,7 @@
 .relevantesoknaderSection {
     background: var(--ax-bg-sunken);
     max-width: unset !important;
+    width: 100vw !important;
     justify-content: center;
     display: flex;
     gap: var(--ax-space-24);

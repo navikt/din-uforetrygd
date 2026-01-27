@@ -18,3 +18,12 @@
 .link:hover {
   cursor: pointer;
 }
+
+.dittVedtakUforetrygdTable {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.dittVedtakTableSecondColumn {
+    font-weight: 600;
+}

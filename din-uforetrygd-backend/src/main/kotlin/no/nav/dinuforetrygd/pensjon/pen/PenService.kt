@@ -2,7 +2,6 @@ package no.nav.dinuforetrygd.pensjon.pen
 
 import no.nav.dinuforetrygd.uforetrygd.Sak
 import no.nav.dinuforetrygd.uforetrygd.Sakstatus
-import no.nav.dinuforetrygd.uforetrygd.Sakstype
 import org.springframework.stereotype.Service
 
 @Service

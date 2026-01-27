@@ -28,16 +28,11 @@ body {
   padding-inline: 12px;
 }
 
-.tittel-wrapper {
-    margin-top: var(--ax-space-40);
-}
-
 .main-content {
   min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ax-space-64);
+  gap: var(--ax-space-48);
   margin-top: var(--ax-space-24);
-  margin-bottom: var(--ax-space-72);
 }

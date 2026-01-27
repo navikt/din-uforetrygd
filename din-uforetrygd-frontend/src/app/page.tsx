@@ -2,7 +2,6 @@ import { Alert, BodyLong, Heading, VStack } from '@navikt/ds-react'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader'
 import { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg'
-import { InformasjonOgRegistreringer } from '@/sections/InformasjonOgRegistreringer'
 import DittVedtak from '@/sections/DittVedtak/index'
 import { MeldeFra } from '@/sections/MeldeFra'
 import { getVisningskriterier } from '@/utils/getVisningskriterier'
@@ -14,8 +13,11 @@ import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel'
-import { Saksoversikt } from '@/sections/Saksoversikt'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
+import React from 'react'
+import { InntektSnarveier } from '@/sections/InntektSnarveier'
+import { Snarveier } from '@/sections/Snarveier'
+import { InterneLenker } from '@/sections/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 
 interface IHomeProps {
@@ -54,6 +56,11 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
                 </BodyLong>
               </LukkbarAlert>
             )}
+            <InntektSnarveier
+              visningskriterier={visningskriterier}
+              pid={params.pid}
+              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+            ></InntektSnarveier>
             <UforestatusGuidePanel visningskriterier={visningskriterier} />
             <DittVedtak
               pid={params.pid}
@@ -61,19 +68,9 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               dittUforevedtak={uforetrygdResponse.uforevedtak}
               sakId={uforesak?.sakId?.toString()}
             />
-            <InformasjonOgRegistreringer
-              visningskriterier={visningskriterier}
-              pid={params.pid}
-              bprofFullmakt={uforetrygdResponse.harGammelFullmaktmottaker!}
-              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-            />
+            <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()} pid={params.pid} journalposter={uforetrygdResponse.journalposter!}></InterneLenker>
+            <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
             <MeldeFra visningskriterier={visningskriterier} />
-            <Saksoversikt
-              visningskriterier={visningskriterier}
-              pid={params.pid}
-              journalposter={uforetrygdResponse.journalposter!}
-              hendelser={uforetrygdResponse.hendelser!}
-            ></Saksoversikt>
             <RelevanteSoknader
               visningskriterier={visningskriterier}
               innloggingstype={uforetrygdResponse.innloggingstype!}

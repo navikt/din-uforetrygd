@@ -1,0 +1,35 @@
+.sakoversiktBehandlinger {
+    margin-top: 40px;
+    gap: 24px;
+    display: grid;
+}
+
+.behandlingDato {
+    text-transform: uppercase;
+
+    color: var(--ax-text-neutral);
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* BodyLong/Medium */
+    font-family: "Source Sans 3";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 155.556% */
+}
+
+.ingenBehandlinger {
+    display: grid;
+    margin: 80px 0;
+    justify-items: center;
+    gap: 24px;
+}
+
+.ingenBehandlinger > svg {
+    height: 65px;
+    width: 65px;
+    color: var(--ax-bg-neutral-strong-hover);
+}
+
+.behandlingCard {
+    margin-bottom: 1rem;
+}

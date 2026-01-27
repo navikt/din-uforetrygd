@@ -6,6 +6,7 @@ import io.mockk.verify
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
+import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
@@ -28,11 +29,13 @@ class UforetrygdServiceTest {
     val tokenService = mockk<TokenService>()
     val fullmaktClient = mockk<FullmaktClient>()
     val journalpostService = mockk<JournalpostService>()
+    val inntektskomponentenService = mockk<InntektskomponentenService>()
     val uforetrygdService = UforetrygdService(
         penService = penService,
         tokenService = tokenService,
         fullmaktClient = fullmaktClient,
-        journalpostService = journalpostService
+        journalpostService = journalpostService,
+        inntektskomponentenService = inntektskomponentenService,
     )
 
     companion object {
@@ -123,6 +126,10 @@ class UforetrygdServiceTest {
         val uforetidspunkt = LocalDate.now().minusYears(1)
         val uforegrad = 50
         val inntektsgrense = 150_000
+        val inntektstak = 200_000
+        val kompensasjonsgrad = 65.5
+        val nettoUtbetalingMnd = 20_000
+        val inntektFraSkatt = 100_000.0
         val vedtakssammendragResponse = VedtakssammendragResponse(
             hasIverksattVedtak = true,
             vedtakssammendrag = Vedtakssammendrag(
@@ -133,7 +140,10 @@ class UforetrygdServiceTest {
                 hasBarnetilleggFellesBarn = false,
                 hasBarnetilleggSaerkullsbarn = false,
                 hasGjenlevendeTillegg = false,
-                hasVarigTilrettelagtArbeid = false
+                hasVarigTilrettelagtArbeid = false,
+                inntektstak = inntektstak,
+                kompensasjonsgrad = kompensasjonsgrad,
+                nettoUtbetalingMnd = nettoUtbetalingMnd
             )
         )
 
@@ -142,6 +152,7 @@ class UforetrygdServiceTest {
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
         every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        every { inntektskomponentenService.getAretsInntektFraSkatt(any()) } returns inntektFraSkatt
 
         val response = uforetrygdService.constructUforetrygdResponse(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
@@ -154,6 +165,10 @@ class UforetrygdServiceTest {
         assertEquals(uforetidspunkt, response.uforevedtak?.uforetidspunkt)
         assertEquals(FORVENTET_INNTEKT, response.uforevedtak?.sumAvForventedeInntekter)
         assertEquals(inntektsgrense, response.uforevedtak?.inntektsgrense)
+        assertEquals(response.uforevedtak!!.inntektstak, inntektstak)
+        assertEquals(response.uforevedtak!!.kompensasjonsgrad, kompensasjonsgrad)
+        assertEquals(response.uforevedtak!!.nettoUtbetalingMnd, nettoUtbetalingMnd)
+        assertEquals(response.uforevedtak!!.inntektFraSkatt, inntektFraSkatt)
         assertFalse(response.uforevedtak!!.hasBarnetilleggFellesBarn)
         assertFalse(response.uforevedtak!!.hasBarnetilleggSaerkullsbarn)
         assertFalse(response.uforevedtak!!.hasGjenlevendeTillegg)

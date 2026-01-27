@@ -1,12 +1,14 @@
 'use client'
 
-import { BodyShort, ExpansionCard, VStack } from '@navikt/ds-react'
+import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
 import React from 'react'
 import { ReadMoreTile } from '@/components/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList'
 import { DocumentLink } from '@/components/DocumentLink'
 import styles from './dokumenterview.module.css'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
+import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
+import { FolderFileIcon } from '@navikt/aksel-icons'
 
 interface IDokumenterProps {
   pid?: string
@@ -29,7 +31,19 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
   return (
     <ExpansionCard aria-label="Dokumenter knyttet til saken din">
       <ExpansionCard.Header>
-        <ExpansionCard.Title> Dokumenter knyttet til saken din </ExpansionCard.Title>
+        <HStack>
+          <Hide below="sm" asChild>
+            <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
+              <LinkCardIcon>
+                <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
+              </LinkCardIcon>
+            </Box>
+          </Hide>
+          <VStack className={styles.noTopPadding}>
+            <ExpansionCard.Title size="small" className={styles.dokumenterCardTitle}> Dokumenter knyttet til saken din </ExpansionCard.Title>
+            <ExpansionCard.Description>Brev og informasjon om din uføretrygd</ExpansionCard.Description>
+          </VStack>
+        </HStack>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
         <SortablePaginatedList

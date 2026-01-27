@@ -5,7 +5,7 @@ import getEnv from '@/utils/env'
 const getOboToken = async () => {
   return new Promise(async (resolve, reject) => {
     if (process.env.NODE_ENV !== 'production') {
-      resolve('mock-token')
+      resolve(process.env.ACCESS_TOKEN)
     }
     const clientHeaders = await headers()
     const token = getToken(clientHeaders)
