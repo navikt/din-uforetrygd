@@ -27,7 +27,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
         Visningskriterier.AvsluttetUforetrygdSak,
       ])(visningskriterier) && (
         <section aria-label="Interne lenker til saksoversikt og dokumentoversikt">
-          <VStack gap="6">
+          <VStack gap="space-24">
             {visSaksoversikt && (
               <LinkCard>
                 <Hide below="sm" asChild>

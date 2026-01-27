@@ -17,12 +17,12 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
 
   return (
     <section>
-      <VStack gap="6">
+      <VStack gap="space-24">
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>
         <Tabs defaultValue="aktive">
-          <VStack gap="8">
+          <VStack gap="space-32">
             <Tabs.List>
               <Tabs.Tab value="aktive" label="Aktive behandlinger"></Tabs.Tab>
               <Tabs.Tab value="avsluttede" label="Avsluttede behandlinger"></Tabs.Tab>

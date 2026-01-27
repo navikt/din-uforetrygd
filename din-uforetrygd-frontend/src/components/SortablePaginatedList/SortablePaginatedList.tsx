@@ -1,7 +1,7 @@
 'use client'
 
 import { Heading, Pagination, Select, VStack } from '@navikt/ds-react'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './sortablepaginatedlist.module.css'
 import { compareSortDate, paginateItems } from '@/components/SortablePaginatedList/utils'
 
@@ -62,7 +62,7 @@ export const SortablePaginatedList = <T extends ISortableItem>({
     if (props.itemsLength > 0) {
       return (
         <>
-          <VStack gap={'4'}>
+          <VStack gap={'space-16'}>
             <Heading size="xsmall" level="3">
               Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
             </Heading>

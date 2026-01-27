@@ -1,4 +1,4 @@
-import { BodyShort, BoxNew, CopyButton, HStack } from '@navikt/ds-react'
+import { BodyShort, Box, CopyButton, HStack } from '@navikt/ds-react'
 
 import styles from './VeilederBorgerinformasjon.module.css'
 import getEnv from '@/utils/env'
@@ -16,13 +16,13 @@ export const VeilederBorgerinformasjon: React.FC<IVeilederBorgerInformasjonProps
   if (mode !== 'veileder' || !pid) return null
 
   return (
-    <BoxNew borderWidth="0 0 1 0" borderColor="neutral-subtle">
-      <HStack align="center" gap="2" className={styles.wrapper} paddingInline="6" paddingBlock="2">
+    <Box borderWidth="0 0 1 0" borderColor="neutral-subtle">
+      <HStack align="center" gap="space-8" className={styles.wrapper} paddingInline="space-24" paddingBlock="space-8">
         <BodyShort data-testid="borger-fnr" size="small" weight="semibold">
           F.nr.: {formatFnr(pid)}
         </BodyShort>
         <CopyButton size="small" copyText={pid} />
       </HStack>
-    </BoxNew>
+    </Box>
   )
 }

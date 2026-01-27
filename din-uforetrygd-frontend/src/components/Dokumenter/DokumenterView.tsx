@@ -40,7 +40,9 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
             </Box>
           </Hide>
           <VStack className={styles.noTopPadding}>
-            <ExpansionCard.Title size="small" className={styles.dokumenterCardTitle}> Dokumenter knyttet til saken din </ExpansionCard.Title>
+            <ExpansionCard.Title size="small" className={styles.dokumenterCardTitle}>
+              Dokumenter knyttet til saken din
+            </ExpansionCard.Title>
             <ExpansionCard.Description>Brev og informasjon om din uføretrygd</ExpansionCard.Description>
           </VStack>
         </HStack>
@@ -56,7 +58,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
               <ReadMoreTile
                 key={journalpost.sortDate}
                 content={
-                  <VStack gap="4" className={styles.readMoreOpened}>
+                  <VStack gap="space-16" className={styles.readMoreOpened}>
                     <DocumentLink
                       href={getDocumentProxyLink(
                         journalpost.id,
@@ -68,7 +70,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
                     >
                       Åpne {hoveddokument.tittel.toLowerCase()}
                     </DocumentLink>
-                    <VStack gap="2">
+                    <VStack gap="space-8">
                       {vedlegg.length > 0 && (
                         <BodyShort size="medium" weight="semibold">
                           Vedlegg

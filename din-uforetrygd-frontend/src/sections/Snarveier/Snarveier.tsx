@@ -24,7 +24,7 @@ interface SnarveierProps {
 export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, pid, uforetrygdResponse }) => {
   return (
     <section aria-label="Snarveier">
-      <VStack gap="5">
+      <VStack gap="space-20">
         <Heading level="2" size="medium">
           Snarveier
         </Heading>
