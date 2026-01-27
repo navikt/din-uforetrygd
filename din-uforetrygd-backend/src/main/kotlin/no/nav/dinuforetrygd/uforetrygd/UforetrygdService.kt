@@ -30,7 +30,13 @@ class UforetrygdService(
             val uforeSakshendelser =  penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser
             val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
             val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-            val inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            var inntektFraSkatt = 0.0
+            try {
+                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            }
+            catch (e: Exception) {
+                logger.warn("Failed to get response from ikomp", e)
+            }
             return constructUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
