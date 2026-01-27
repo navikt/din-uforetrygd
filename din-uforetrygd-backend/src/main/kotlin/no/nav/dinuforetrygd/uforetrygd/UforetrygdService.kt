@@ -35,7 +35,6 @@ class UforetrygdService(
                 inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
             }
             catch (e: Exception) {
-                logger.warn("Failed to get response from ikomp", e)
             }
             return constructUforetrygdResponse(
                 pid = pid,

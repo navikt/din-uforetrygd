@@ -8,9 +8,12 @@ import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.AzureAdService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
@@ -25,6 +28,9 @@ class InntektskomponentenClient(
     @Value("\${inntektskomponenten.url}") private val url: String,
     @Value("\${inntektskomponenten.scope}") private val scope: String,
 ) {
+
+    private val logger: Logger = LoggerFactory.getLogger(InntektskomponentenClient::class.java)
+
     fun hentAbonnerteInntekter(
         pid: String,
         filter: String,
@@ -57,6 +63,9 @@ class InntektskomponentenClient(
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
+            if(e.headers.contentType == APPLICATION_PROBLEM_JSON) {
+                logger.warn("Kall til inntektskomponenten feilet med melding: ${e.responseBodyAsString}")
+            }
             when (e.statusCode) {
                 HttpStatus.FORBIDDEN -> throw ForbiddenException(AppId.INNTEKTSKOMPONENTEN.name, path, e.message, e)
                 HttpStatus.NOT_FOUND  -> throw PersonNotFoundException(AppId.INNTEKTSKOMPONENTEN.name, path, e.message, e)
