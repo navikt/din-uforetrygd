@@ -73,7 +73,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
             </Table>
           </VStack>
           <VStack>
-            <Heading size="medium">Uføretrygd</Heading>
+            <Heading size="medium">Nøkkeltall</Heading>
             <Table className={styles.dittVedtakUforetrygdTable}>
               <colgroup>
                 <col style={{ width: '65%' }} />
