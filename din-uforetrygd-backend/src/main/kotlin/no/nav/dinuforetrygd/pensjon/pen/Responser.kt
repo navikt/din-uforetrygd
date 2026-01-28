@@ -52,3 +52,8 @@ data class Etteroppgjør(
     val avviksbelop: Int,
     val type: String
 )
+
+data class HentForsideDataResponse(
+    val apentKrav: Krav?,
+    val vedtakIverksattSiste7Dager: List<Vedtak>
+)

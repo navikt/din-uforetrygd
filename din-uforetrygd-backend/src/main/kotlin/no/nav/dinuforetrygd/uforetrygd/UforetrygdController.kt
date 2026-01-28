@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 @RequestMapping("api")
 class UforetrygdController(
-    private val uforetrygdService: UforetrygdService,
+    private val uforetrygdService: ForsideService,
     private val saksoversiktService: SaksoversiktService,
     private val tokenService: TokenService,
     private val auditor: Auditor,
@@ -31,7 +31,7 @@ class UforetrygdController(
         try {
             val response = ResponseEntity
                 .status(HttpStatus.OK)
-                .body(uforetrygdService.constructUforetrygdResponse(pid))
+                .body(uforetrygdService.hentForsideData(pid))
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
                 auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())

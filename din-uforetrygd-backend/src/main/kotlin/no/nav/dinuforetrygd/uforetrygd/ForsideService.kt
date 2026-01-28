@@ -4,8 +4,7 @@ import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
-import no.nav.dinuforetrygd.pensjon.pen.PenService
-import no.nav.dinuforetrygd.pensjon.pen.Vedtakssammendrag
+import no.nav.dinuforetrygd.pensjon.pen.*
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.Logger
@@ -13,52 +12,54 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class UforetrygdService(
+class ForsideService(
     private val penService: PenService,
     private val tokenService: TokenService,
     private val fullmaktClient: FullmaktClient,
     private val journalpostService: JournalpostService,
     private val inntektskomponentenService: InntektskomponentenService,
+    private val penClient: PenClient
 ) {
-    private val logger: Logger = LoggerFactory.getLogger(UforetrygdService::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(ForsideService::class.java)
 
-    fun constructUforetrygdResponse(pid: String): UforetrygdResponse {
+    fun hentForsideData(pid: String): UforetrygdResponse {
         val uforeSak = penService.getSaker(pid).velgSak()
-        if (uforeSak == null) return constructUforetrygdResponse(pid, uforeSak)
+        if (uforeSak == null) return lagUforetrygdResponse(pid, uforeSak)
 
-        val uforeSakshendelser = penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
-        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-        var inntektFraSkatt = 0.0
-        if (vedtakssammendragResponse.hasIverksattVedtak) {
-            try {
-                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
-            } catch (e: Exception) {
-                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
+            val uforeSakshendelser = penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
+            val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
+            val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+            var inntektFraSkatt = 0.0
+            if (vedtakssammendragResponse.hasIverksattVedtak) {
+                try {
+                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+                } catch (e: Exception) {
+                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
+                }
             }
-        }
+            val forsideData = penClient.hentForsideData(pid, uforeSak.sakId)
 
-        return constructUforetrygdResponse(
-            pid = pid,
-            sak = uforeSak,
-            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(
-                sumAvForventedeInntekter,
-                inntektFraSkatt
-            ),
-            hendelser = uforeSakshendelser
-        )
+            return lagUforetrygdResponse(
+                pid = pid,
+                sak = uforeSak,
+                hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
+                hendelser = uforeSakshendelser,
+                behandling = lagBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager)
+            )
     }
+
 
     private fun List<Sak>.velgSak() = this.minByOrNull { it.status.prioritet }
 
 
-    private fun constructUforetrygdResponse(
+    private fun lagUforetrygdResponse(
         pid: String,
         sak: Sak?,
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
-        hendelser: List<HendelseData>? = null
+        hendelser: List<HendelseData>? = null,
+        behandling: ForsideBehandling? = null
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
@@ -71,14 +72,11 @@ class UforetrygdService(
             journalpostService.getJournalPostliste(pid, it.sakId.toString())
                 .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
         } ?: emptyList(),
-        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }
-            ?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
+        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
+        behandling = behandling
     )
 
-    private fun Vedtakssammendrag.toDittUforeVedtak(
-        sumAvForventedeInntekter: Long?,
-        inntektFraSkatt: Double
-    ): DittUforevedtak =
+    private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
         DittUforevedtak(
             uforegrad = this.uforegrad,
             virkFom = this.virkFom,
@@ -92,7 +90,7 @@ class UforetrygdService(
             hasBarnetilleggFellesBarn = this.hasBarnetilleggFellesBarn,
             hasBarnetilleggSaerkullsbarn = this.hasBarnetilleggSaerkullsbarn,
             hasGjenlevendeTillegg = this.hasGjenlevendeTillegg,
-            hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid
+            hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
 
     private fun constructSakHendelse(

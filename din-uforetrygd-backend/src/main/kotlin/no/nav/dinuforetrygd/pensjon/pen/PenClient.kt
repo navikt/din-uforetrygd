@@ -142,6 +142,41 @@ class PenClient(
         }
     }
 
+    fun hentForsideData(pid: String, sakId: Long): HentForsideDataResponse {
+        val path = "/pen/api/uforetrygd/din-uforetrygd/forside"
+        try {
+            return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
+                .let { accessToken ->
+                    webClient
+                        .post()
+                        .uri(
+                            UriComponentsBuilder.fromUriString(url)
+                                .path(path)
+                                .build()
+                                .toUri()
+                        )
+                        .header("Authorization", "Bearer $accessToken")
+                        .header(NAV_CALL_ID_HEADER, getCallIdFromMdc())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .bodyValue(HentForsideDataRequest(pid = pid, sakId = sakId))
+                        .retrieve()
+                        .bodyToMono(HentForsideDataResponse::class.java)
+                        .withMdcContext()
+                        .retry(numberOfRetries)
+                        .block()!!
+                }
+        } catch (e: WebClientResponseException) {
+            if (HttpStatus.FORBIDDEN == e.statusCode) {
+                throw ForbiddenException(AppId.PEN.name, path, e.message, e)
+            } else if (HttpStatus.NOT_FOUND == e.statusCode) {
+                throw SakNotFoundException()
+            }
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        } catch (e: Exception) {
+            throw ClientException(AppId.PEN.name, path, e.message, e)
+        }
+    }
+
 
     fun hentBehandlinger(pid: String, sakId: Long): HentBehandlingerResponse {
         val path = "/pen/api/uforetrygd/din-uforetrygd/behandlinger"

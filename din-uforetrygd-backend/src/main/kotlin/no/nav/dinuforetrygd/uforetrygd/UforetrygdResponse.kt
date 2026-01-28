@@ -16,6 +16,7 @@ data class UforetrygdResponse(
     val harGammelFullmaktmottaker: Boolean,
     val hendelser: List<SakHendelse?> = emptyList(),
     val journalposter: List<Journalpost> = emptyList(),
+    val behandling: ForsideBehandling? = null
 )
 
 data class SakHendelse(

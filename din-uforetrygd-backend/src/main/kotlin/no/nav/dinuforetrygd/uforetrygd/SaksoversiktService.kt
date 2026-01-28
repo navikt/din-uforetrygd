@@ -4,6 +4,7 @@ import no.nav.dinuforetrygd.pensjon.pen.Etteroppgjør
 import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
+import no.nav.dinuforetrygd.util.erRelevant
 import org.springframework.stereotype.Service
 import kotlin.math.abs
 
@@ -11,8 +12,6 @@ import kotlin.math.abs
 class SaksoversiktService(
     private val penClient: PenClient,
 ) {
-    //TODO: trenger vi noe kall mot fullmakt her?
-
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
         return SaksoversiktResponse(
@@ -23,9 +22,6 @@ class SaksoversiktService(
                 .sortedByDescending { it.ferdigstiltDato }
         )
     }
-
-    private fun Krav.erRelevant() = relevanteKravMap[this.kravGjelder]?.contains(this.arsak) ?: false
-    private fun Vedtak.erRelevant() = this.vedtakstype == "REGULERING" || this.krav.erRelevant()
 
     private fun Krav.toBehandling() = Behandling(
         tittel = lagBehandlingTittel(
@@ -67,53 +63,12 @@ class SaksoversiktService(
             etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
         )
 
-    private val relevanteKravMap = mapOf(
-        "EKSPORT" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "UTVANDRET"),
-        "FORSTEG_BH" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "F_BH_BO_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "F_BH_MED_UTL" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "INNT_E" to listOf(
-            "ANNEN_FOR_END_IN",
-            "ANNEN_ARSAK_END_IN",
-            "BEGGE_FOR_END_IN",
-            "BARN_ENDRET_INNTEKT",
-            "ENDRET_INNTEKT",
-            "OMGJ_ETTER_ANKE",
-            "OMGJ_ETTER_KLAGE"
-        ),
-        "MELLOMBH" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
-        "REGULERING" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "SLUTT_BH_UTL" to listOf("OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE", "OPPL_UTLAND"),
-        "SOK_RED_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "SOK_OKN_UG" to listOf("NY_SOKNAD", "OMGJ_ETTER_ANKE", "OMGJ_ETTER_KLAGE"),
-        "SOK_UU" to listOf(
-            "NY_SOKNAD",
-            "OMGJ_ETTER_ANKE",
-            "OMGJ_ETTER_KLAGE",
-            "OMGJ_ETTER_FVL_P35_A",
-            "OMGJ_ETTER_FVL_P35_B",
-            "OMGJ_ETTER_FVL_P35_C"
-        ),
-        "SOK_YS" to listOf(
-            "NY_SOKNAD",
-            "OMGJ_ETTER_ANKE",
-            "OMGJ_ETTER_KLAGE",
-            "OMGJ_ETTER_FVL_P35_A",
-            "OMGJ_ETTER_FVL_P35_B",
-            "OMGJ_ETTER_FVL_P35_C"
-        ),
-        "UT_EO" to listOf("UT_EO", "UT_OMGJ_ANKE_EO", "UT_OMGJ_KLAGE_EO"),
-        "REVURD" to listOf("ENDRING_IFU", "SOKNAD_BT"),
-    )
-
     private fun lagBehandlingTittel(krav: Krav, isReguleringsvedtak: Boolean, eoÅrstall: Int? = null): String {
         return if (isReguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
             "Regulering"
         } else when (krav.kravGjelder) {
             "EKSPORT" -> "Eksport"
-            "FORSTEG_BH" -> "Førstegangsbehandling"
-            "F_BH_BO_UTL" -> "Førstegangsbehandling"
-            "F_BH_MED_UTL" -> "Førstegangsbehandling"
+            "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL" -> "Søknad om uføretrygd"
             "INNT_E" -> "Inntektsendring"
             "MELLOMBH" -> "Mellombehandling"
             "REGULERING" -> "Regulering"
