@@ -34,7 +34,7 @@ class UforetrygdService(
             try {
                 inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
             } catch (e: Exception) {
-                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status)
+                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
             }
         }
 
