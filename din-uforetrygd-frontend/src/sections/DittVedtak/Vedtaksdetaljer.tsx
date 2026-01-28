@@ -49,16 +49,18 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                     {uforegrad} prosent
                   </Table.DataCell>
                 </Table.Row>
-                <Table.Row shadeOnHover={false}>
-                  <Table.DataCell>Tillegg</Table.DataCell>
-                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                    {getTilleggsoppsummeringTekst(
-                      hasGjenlevendeTillegg,
-                      hasBarnetilleggFellesBarn,
-                      hasBarnetilleggSaerkullsbarn
-                    )}
-                  </Table.DataCell>
-                </Table.Row>
+                {(hasGjenlevendeTillegg || hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn) && (
+                  <Table.Row shadeOnHover={false}>
+                    <Table.DataCell>Tillegg</Table.DataCell>
+                    <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
+                      {getTilleggsoppsummeringTekst(
+                        hasGjenlevendeTillegg,
+                        hasBarnetilleggFellesBarn,
+                        hasBarnetilleggSaerkullsbarn
+                      )}
+                    </Table.DataCell>
+                  </Table.Row>
+                )}
                 <Table.Row shadeOnHover={false}>
                   <Table.DataCell>Uføretidspunkt</Table.DataCell>
                   <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
@@ -71,12 +73,14 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                     {uforetrygdInnvilget}
                   </Table.DataCell>
                 </Table.Row>
-                <Table.Row shadeOnHover={false}>
-                  <Table.DataCell>Tiltak</Table.DataCell>
-                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                    {hasVarigTilrettelagtArbeid ? <BodyShort>Varig tilrettelagt arbeid</BodyShort> : '-'}
-                  </Table.DataCell>
-                </Table.Row>
+                {hasVarigTilrettelagtArbeid && (
+                  <Table.Row shadeOnHover={false}>
+                    <Table.DataCell>Tiltak</Table.DataCell>
+                    <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
+                      <BodyShort>Varig tilrettelagt arbeid</BodyShort>
+                    </Table.DataCell>
+                  </Table.Row>
+                )}
               </Table.Body>
             </Table>
           </VStack>
