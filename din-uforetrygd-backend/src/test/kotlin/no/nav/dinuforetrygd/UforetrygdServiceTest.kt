@@ -10,6 +10,8 @@ import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
+import no.nav.dinuforetrygd.pensjon.pen.HentForsideDataResponse
+import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import no.nav.dinuforetrygd.pensjon.pen.PenService
 import no.nav.dinuforetrygd.pensjon.pen.Vedtakssammendrag
 import no.nav.dinuforetrygd.pensjon.pen.VedtakssammendragResponse
@@ -30,12 +32,14 @@ class UforetrygdServiceTest {
     val fullmaktClient = mockk<FullmaktClient>()
     val journalpostService = mockk<JournalpostService>()
     val inntektskomponentenService = mockk<InntektskomponentenService>()
-    val uforetrygdService = UforetrygdService(
+    val penClient = mockk<PenClient>()
+    val uforetrygdService = ForsideService(
         penService = penService,
         tokenService = tokenService,
         fullmaktClient = fullmaktClient,
         journalpostService = journalpostService,
         inntektskomponentenService = inntektskomponentenService,
+        penClient = penClient,
     )
 
     companion object {
@@ -53,6 +57,7 @@ class UforetrygdServiceTest {
         every { tokenService.determineLoggedInUser() } returns ""
         every { SecurityContextUtil.isFullmakt() } returns false
         every { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
+        every { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
     }
 
     @Test
@@ -60,7 +65,7 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns emptyList()
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
-        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        val response = uforetrygdService.hentForsideData(PID)
         verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
@@ -75,7 +80,7 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns emptyList()
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
-        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        val response = uforetrygdService.hentForsideData(PID)
         verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
@@ -93,7 +98,7 @@ class UforetrygdServiceTest {
         every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
-        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        val response = uforetrygdService.hentForsideData(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
@@ -114,7 +119,7 @@ class UforetrygdServiceTest {
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
         every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
 
-        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        val response = uforetrygdService.hentForsideData(PID)
 
         assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
@@ -155,7 +160,7 @@ class UforetrygdServiceTest {
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
         every { inntektskomponentenService.getAretsInntektFraSkatt(any()) } returns inntektFraSkatt
 
-        val response = uforetrygdService.constructUforetrygdResponse(PID)
+        val response = uforetrygdService.hentForsideData(PID)
         verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
