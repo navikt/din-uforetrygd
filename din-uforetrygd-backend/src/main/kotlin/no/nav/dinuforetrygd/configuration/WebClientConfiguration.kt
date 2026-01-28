@@ -1,5 +1,6 @@
 package no.nav.dinuforetrygd.configuration
 
+import io.netty.channel.ChannelOption
 import net.logstash.logback.argument.StructuredArguments.kv
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
+import reactor.netty.resources.ConnectionProvider
 import java.time.Duration
 
 @Configuration
@@ -25,9 +27,20 @@ class WebClientConfiguration {
         .filter(logRequest())
         .build()
 
-    private val httpClient = HttpClient.create()
-        .responseTimeout(Duration.ofSeconds(5)) // Response timeout
-        .option(io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000) // Connection timeout
+
+    // Konfigurasjon for å unngå brannmur-timouts når vi kaller FSS fra GCP.
+    // Forklart her: https://github.com/nais/doc/blob/nav-gcp-fss-com/docs/workloads/how-to/gcp-fss-communication.md
+    private val connectionProvider = ConnectionProvider.builder("onprem-pool")
+        .maxConnections(200)
+        .maxIdleTime(Duration.ofMinutes(55))
+        .maxLifeTime(Duration.ofMinutes(59))
+        .evictInBackground(Duration.ofMinutes(5))
+        .build()
+
+    private val httpClient = HttpClient.create(connectionProvider)
+        .option(ChannelOption.SO_KEEPALIVE, true)
+        .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+        .responseTimeout(Duration.ofSeconds(10))
 
     private fun logRequest() = ExchangeFilterFunction.ofResponseProcessor { response ->
         Mono.deferContextual { ctx ->
