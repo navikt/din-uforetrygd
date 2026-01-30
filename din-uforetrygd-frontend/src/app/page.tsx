@@ -41,50 +41,56 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
-          <main className="main-content" id="maincontent" tabIndex={-1}>
-            <VStack gap="space-12" className={'tittel-wrapper'}>
-              <Brødsmulesti brødsmuler={[{ tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' }]} />
-              <Heading size="xlarge" level="1">
-                Din uføretrygd
-              </Heading>
-              <Behandling behandling={initResponse.uforetrygdResponse.behandling && toForsideBehandling(initResponse.uforetrygdResponse.behandling)}>
-
-              </Behandling>
-            </VStack>
-            {mode === 'borger' && (
-              <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
-                <Heading size="small">Nye regler for uføretrygd i 2026</Heading>
-                <BodyLong size="medium">
-                  Det kommer nye regler for uføretrygd i 2026, blant annet endring av inntektsgrensen. Vi informerer deg
-                  så snart vi vet mer. Nav.no, Din uføretrygd og inntektsplanleggeren vil bli oppdatert. De som får
-                  endring i uføretrygden sin på grunn av regelendringene, vil få brev om dette.
-                </BodyLong>
-              </LukkbarAlert>
-            )}
-            <InntektSnarveier
-              visningskriterier={visningskriterier}
-              pid={params.pid}
-              innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-            ></InntektSnarveier>
-            <UforestatusGuidePanel visningskriterier={visningskriterier} />
-            <DittVedtak
-              pid={params.pid}
-              hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
-              dittUforevedtak={uforetrygdResponse.uforevedtak}
-              sakId={uforesak?.sakId?.toString()}
-            />
-            <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()} pid={params.pid} journalposter={uforetrygdResponse.journalposter!}></InterneLenker>
-            <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
-            <MeldeFra visningskriterier={visningskriterier} />
-            <RelevanteSoknader
-              visningskriterier={visningskriterier}
-              innloggingstype={uforetrygdResponse.innloggingstype!}
-            />
-            <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
-            <div className={'ux-signals-container'}>
-              <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'}></div>
-            </div>
-          </main>
+          <VStack gap="space-12" className={'tittel-wrapper'}>
+            <Brødsmulesti brødsmuler={[{ tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' }]} />
+            <Heading size="xlarge" level="1">
+              Din uføretrygd
+            </Heading>
+            <Behandling
+              behandling={
+                initResponse.uforetrygdResponse.behandling &&
+                toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+              }
+            ></Behandling>
+          </VStack>
+          {mode === 'borger' && (
+            <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
+              <Heading size="small">Nye regler for uføretrygd i 2026</Heading>
+              <BodyLong size="medium">
+                Det kommer nye regler for uføretrygd i 2026, blant annet endring av inntektsgrensen. Vi informerer deg
+                så snart vi vet mer. Nav.no, Din uføretrygd og inntektsplanleggeren vil bli oppdatert. De som får
+                endring i uføretrygden sin på grunn av regelendringene, vil få brev om dette.
+              </BodyLong>
+            </LukkbarAlert>
+          )}
+          <InntektSnarveier
+            visningskriterier={visningskriterier}
+            pid={params.pid}
+            innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+          ></InntektSnarveier>
+          <UforestatusGuidePanel visningskriterier={visningskriterier} />
+          <DittVedtak
+            pid={params.pid}
+            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
+            dittUforevedtak={uforetrygdResponse.uforevedtak}
+            sakId={uforesak?.sakId?.toString()}
+          />
+          <InterneLenker
+            visningskriterier={visningskriterier}
+            sakId={uforesak?.sakId?.toString()}
+            pid={params.pid}
+            journalposter={uforetrygdResponse.journalposter!}
+          ></InterneLenker>
+          <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
+          <MeldeFra visningskriterier={visningskriterier} />
+          <RelevanteSoknader
+            visningskriterier={visningskriterier}
+            innloggingstype={uforetrygdResponse.innloggingstype!}
+          />
+          <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
+          <div className={'ux-signals-container'}>
+            <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'}></div>
+          </div>
         </EventProvider>
       </>
     )
