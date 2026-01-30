@@ -19,6 +19,8 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier'
 import { Snarveier } from '@/sections/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
+import { Behandling } from '@/sections/Behandling/Behandling'
+import { toForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -45,6 +47,9 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               <Heading size="xlarge" level="1">
                 Din uføretrygd
               </Heading>
+              <Behandling behandling={initResponse.uforetrygdResponse.behandling && toForsideBehandling(initResponse.uforetrygdResponse.behandling)}>
+
+              </Behandling>
             </VStack>
             {mode === 'borger' && (
               <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
