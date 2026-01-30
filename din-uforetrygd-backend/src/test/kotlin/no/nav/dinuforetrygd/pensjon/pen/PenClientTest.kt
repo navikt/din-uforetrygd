@@ -57,7 +57,7 @@ class PenClientTest : WebClientTest() {
         )
         val request = takeRequest()
 
-        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", request.path)
+        assertEquals("/api/selvbetjening/sak/sammendrag/v2", request.path)
         assertEquals(PID, request.getHeader("fnr"))
     }
 
@@ -67,7 +67,7 @@ class PenClientTest : WebClientTest() {
         prepare(response403())
         val exception = assertThrows<ForbiddenException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
+        assertEquals("/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test
@@ -75,7 +75,7 @@ class PenClientTest : WebClientTest() {
         prepare(response500())
         val exception = assertThrows<ClientException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
+        assertEquals("/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test
@@ -84,7 +84,7 @@ class PenClientTest : WebClientTest() {
         `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
         val exception = assertThrows<ClientException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/sak/sammendrag/v2", exception.service)
+        assertEquals("/api/selvbetjening/sak/sammendrag/v2", exception.service)
     }
 
     @Test
@@ -110,7 +110,7 @@ class PenClientTest : WebClientTest() {
         )
         val request = takeRequest()
 
-        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", request.path)
+        assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", request.path)
         assertEquals(PID, request.getHeader("fnr"))
     }
 
@@ -119,7 +119,7 @@ class PenClientTest : WebClientTest() {
         prepare(response403())
         val exception = assertThrows<ForbiddenException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
+        assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     @Test
@@ -127,7 +127,7 @@ class PenClientTest : WebClientTest() {
         prepare(response500())
         val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
+        assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     @Test
@@ -136,7 +136,7 @@ class PenClientTest : WebClientTest() {
         `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
         val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
         assertEquals(AppId.PEN.name, exception.system)
-        assertEquals("/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
+        assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
 
     private fun sakSammendragResponse200(): MockResponse {

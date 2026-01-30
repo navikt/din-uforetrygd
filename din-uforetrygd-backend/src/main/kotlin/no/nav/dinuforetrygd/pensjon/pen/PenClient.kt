@@ -28,7 +28,7 @@ class PenClient(
     private val tokenService: TokenService
 ) {
     fun getSaksammendrag(pid: String): List<SakSammendrag> {
-        val path = "/pen/api/selvbetjening/sak/sammendrag/v2"
+        val path = "/api/selvbetjening/sak/sammendrag/v2"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -55,7 +55,7 @@ class PenClient(
     }
 
     fun getSaksoversikt(pid: String, sakId: Long): Saksoversikt {
-        val path = "/pen/api/selvbetjening/saksoversikt/v2"
+        val path = "/api/selvbetjening/saksoversikt/v2"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -84,7 +84,7 @@ class PenClient(
     }
 
     fun getVedtakssammendragResponse(pid: String): VedtakssammendragResponse {
-        val path = "/pen/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste"
+        val path = "/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -111,7 +111,7 @@ class PenClient(
     }
 
     fun getForventedeInntekterResponse(pid: String): ForventedeInntekterResponse {
-        val path = "/pen/api/selvbetjening/rightColumnHelper"
+        val path = "/api/selvbetjening/rightColumnHelper"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -138,7 +138,7 @@ class PenClient(
     }
 
     fun hentForsideData(pid: String, sakId: Long): HentForsideDataResponse {
-        val path = "/pen/api/uforetrygd/din-uforetrygd/forside"
+        val path = "/api/uforetrygd/din-uforetrygd/forside"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
@@ -173,7 +173,7 @@ class PenClient(
 
 
     fun hentBehandlinger(pid: String, sakId: Long): HentBehandlingerResponse {
-        val path = "/pen/api/uforetrygd/din-uforetrygd/behandlinger"
+        val path = "/api/uforetrygd/din-uforetrygd/behandlinger"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
                 .let { accessToken ->
