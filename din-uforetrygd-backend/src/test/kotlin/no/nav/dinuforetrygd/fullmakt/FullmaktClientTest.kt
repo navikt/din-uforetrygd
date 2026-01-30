@@ -27,7 +27,6 @@ class FullmaktClientTest : WebClientTest() {
             scope = "",
             audience = "",
             tokenService = tokenService,
-            numberOfRetries = 0
         )
         `when`(tokenService.getEgressToken("", "", PID_FULLMEKTIG, AppId.PENSJON_FULLMAKT)).thenReturn("")
         MDC.put("x", "y")

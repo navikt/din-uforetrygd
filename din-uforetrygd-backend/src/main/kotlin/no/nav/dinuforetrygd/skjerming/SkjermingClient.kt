@@ -15,7 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient
 class SkjermingClient(
     @Value("\${skjerming.endpoint.url}") private val url: String,
     @Value("\${skjerming.scope}") private val scope: String,
-    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
@@ -31,7 +30,6 @@ class SkjermingClient(
                 .retrieve()
                 .bodyToMono(Boolean::class.java)
                 .withMdcContext()
-                .retry(numberOfRetries)
                 .block() ?: false
         }
     }

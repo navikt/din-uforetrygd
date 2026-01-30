@@ -25,7 +25,6 @@ class SafSelvbetjeningClient(
     @Value("\${safselvbetjening.endpoint.url}") private val baseUrl: String,
     @Value("\${safselvbetjening.audience}") private val audience: String,
     @Value("\${safselvbetjening.scope}") private val scope: String,
-    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val tokenService: TokenService,
     private val webClient: WebClient,
 ) {
@@ -85,7 +84,6 @@ class SafSelvbetjeningClient(
                 .retrieve()
                 .bodyToMono(HentJournalposterResponse::class.java)
                 .withMdcContext()
-                .retry(numberOfRetries)
                 .block()
         }
 

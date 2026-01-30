@@ -31,7 +31,6 @@ class PdlClientTest: WebClientTest(){
             audience = "",
             tokenService = tokenService,
             azureAdService = azureAdService,
-            numberOfRetries = 0
         )
         MDC.put("x", "y")
     }

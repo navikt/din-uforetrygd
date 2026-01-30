@@ -17,7 +17,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 class ParallelleSannheterClient(
     private val webClient: WebClient,
     @Value("\${parallellesannheter.endpoint.url}") private val url: String,
-    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     ) {
 
     private val logger: Logger = LoggerFactory.getLogger(ParallelleSannheterClient::class.java)
@@ -33,7 +32,6 @@ class ParallelleSannheterClient(
                 .retrieve()
                 .bodyToMono(AdressebeskyttelseParallelleSannheterContainer::class.java)
                 .withMdcContext()
-                .retry(numberOfRetries)
                 .block()
                 ?.lockDecision() ?: AdressebeskyttelseParallelleSannheterContainer(null)
         } catch (e: WebClientResponseException) {

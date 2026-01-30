@@ -31,7 +31,6 @@ class PenClientTest : WebClientTest() {
             scope = "",
             audience = "",
             tokenService = tokenService,
-            numberOfRetries = 0
         )
         MDC.put("x", "y")
     }

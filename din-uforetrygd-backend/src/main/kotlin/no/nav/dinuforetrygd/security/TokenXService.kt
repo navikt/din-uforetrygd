@@ -24,7 +24,6 @@ class TokenXService(
     @Value("\${oauth2.tokenX.tokenEndpoint}") private val endpoint: String,
     @Value("\${oauth2.tokenX.privateJwk}") private val privateJwk: String,
     @Value("\${oauth2.tokenX.clientId}") private val clientId: String,
-    @Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
 ) {
 
@@ -65,7 +64,6 @@ class TokenXService(
             .retrieve()
             .bodyToMono(TokenXResponse::class.java)
             .withMdcContext()
-            .retry(numberOfRetries)
             .block()
             ?.accessToken
 

@@ -24,7 +24,6 @@ class PenClient(
     @param:Value("\${pen.endpoint.url}") private val url: String,
     @param:Value("\${pen.scope}") private val scope: String,
     @param:Value("\${pen.audience}") private val audience: String,
-    @param:Value("\${webclient.number-of-retries}") private val numberOfRetries: Long,
     private val webClient: WebClient,
     private val tokenService: TokenService
 ) {
@@ -43,7 +42,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<SakSammendrag>>() {})
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block() ?: emptyList()
                 }
         } catch (e: WebClientResponseException) {
@@ -71,7 +69,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(Saksoversikt::class.java)
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -101,7 +98,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(VedtakssammendragResponse::class.java)
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -129,7 +125,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(ForventedeInntekterResponse::class.java)
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -162,7 +157,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(HentForsideDataResponse::class.java)
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
@@ -198,7 +192,6 @@ class PenClient(
                         .retrieve()
                         .bodyToMono(HentBehandlingerResponse::class.java)
                         .withMdcContext()
-                        .retry(numberOfRetries)
                         .block()!!
                 }
         } catch (e: WebClientResponseException) {
