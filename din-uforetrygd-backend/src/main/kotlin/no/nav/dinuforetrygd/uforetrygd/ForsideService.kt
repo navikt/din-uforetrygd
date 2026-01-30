@@ -37,7 +37,13 @@ class ForsideService(
                     logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
                 }
             }
-//            val forsideData = penClient.hentForsideData(pid, uforeSak.sakId)
+            val forsideData = try {
+                penClient.hentForsideData(pid, uforeSak.sakId)
+            }
+            catch (e: Exception) {
+                logger.warn("Feilet mot forside-data", e)
+                null
+            }
 
             return lagUforetrygdResponse(
                 pid = pid,
@@ -45,7 +51,7 @@ class ForsideService(
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 hendelser = uforeSakshendelser,
-//                behandling = lagBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager)
+                behandling = forsideData?.let { lagBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) }
             )
     }
 
