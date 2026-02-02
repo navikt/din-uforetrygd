@@ -2,10 +2,16 @@ import { components } from '@/api/api'
 
 export interface ForsideBehandling {
   type: string
-  status: string
+  status: Status
   tittel: string
   statusTekst: string
   lenker: Lenke[]
+}
+
+export enum Status {
+  MOTTATT = 'MOTTATT',
+  INNVILGET = 'INNVILGET',
+  AVSLAG = 'AVSLAG',
 }
 
 export interface Lenke {
@@ -16,9 +22,9 @@ export interface Lenke {
 export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling {
   return {
     type: fra.type,
-    status: fra.status,
+    status: fra.status as Status,
     tittel: lagTittel(fra.type),
-    statusTekst: lagStatus(fra.status),
+    statusTekst: lagStatusTekst(fra.status as Status),
     lenker: lagLenker(fra.type),
   }
 }
@@ -32,17 +38,14 @@ export function lagTittel(type: string): string {
   }
 }
 
-export function lagStatus(status: string): string {
+export function lagStatusTekst(status: Status): string {
   switch (status) {
-    case 'MOTTATT':
+    case Status.MOTTATT:
       return 'Søknad mottatt'
-    case 'INNVILGET':
+    case Status.INNVILGET:
       return 'Søknad innvilget'
-    case 'AVSLAG':
+    case Status.AVSLAG:
       return 'Søknad avslått'
-    default:
-      console.error('Ukjent status ' + status)
-      return ''
   }
 }
 
@@ -58,7 +61,7 @@ function lagLenker(behandlingType: string): Lenke[] {
     return [
       ...lenker,
       {
-        href: 'https://www.nav.no/no/person/familie/barn-og-unnskap/barnetillegg',
+        href: 'https://www.nav.no/fyllut/nav121501',
         visningstekst: 'Viktig informasjon om inntekt og barnetillegg (åpnes i ny fane).',
       },
     ]
