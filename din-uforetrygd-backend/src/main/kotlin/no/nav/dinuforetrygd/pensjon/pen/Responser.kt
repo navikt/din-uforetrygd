@@ -37,7 +37,12 @@ data class Vedtak(
     val vedtaksdato: LocalDate,
     val avslag: Boolean,
     val krav: Krav,
-    val etteroppgjor: Etteroppgjør? = null
+    val etteroppgjor: Etteroppgjør? = null,
+    val beregning: Beregning
+)
+
+data class Beregning(
+    val nettoUforetrygdPerManed: Int
 )
 
 data class Krav(

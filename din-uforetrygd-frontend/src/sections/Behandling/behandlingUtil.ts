@@ -1,11 +1,11 @@
 import { components } from '@/api/api'
 
 export interface ForsideBehandling {
-  type: string
   status: Status
   tittel: string
   statusTekst: string
   lenker: Lenke[]
+  beregninger: BeregningRad[]
 }
 
 export enum Status {
@@ -14,24 +14,38 @@ export enum Status {
   AVSLAG = 'AVSLAG',
 }
 
+enum BehandlingType {
+  SØKNAD_UFØRETRYGD = 'SØKNAD_UFØRETRYGD',
+  SØKNAD_ENDRING_UFØREGRAD = 'SØKNAD_ENDRING_UFØREGRAD',
+  SØKNAD_BARNETILLEGG = 'SØKNAD_BARNETILLEGG',
+  SØKNAD_UNG_UFØR = 'SØKNAD_UNG_UFØR',
+  SØKNAD_YRKESSKADE = 'SØKNAD_YRKESSKADE',
+  INGEN = 'SØKNAD_YRKESSKADE',
+}
+
 export interface Lenke {
   href: string
   visningstekst: string
 }
 
+interface BeregningRad {
+  label: string
+  verdi: string
+}
+
 export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling {
   return {
-    type: fra.type,
     status: fra.status as Status,
-    tittel: lagTittel(fra.type),
+    tittel: lagTittel(fra.type as BehandlingType),
     statusTekst: lagStatusTekst(fra.status as Status),
-    lenker: lagLenker(fra.type),
+    lenker: lagLenker(fra.status as Status, fra.type as BehandlingType),
+    beregninger: lagBeregning(fra.beregning, fra.status as Status),
   }
 }
 
-export function lagTittel(type: string): string {
+export function lagTittel(type: BehandlingType): string {
   switch (type) {
-    case 'SØKNAD_UFØRETRYGD':
+    case BehandlingType.SØKNAD_UFØRETRYGD:
       return 'Søknad om uføretrygd'
     default:
       return ''
@@ -49,7 +63,18 @@ export function lagStatusTekst(status: Status): string {
   }
 }
 
-function lagLenker(behandlingType: string): Lenke[] {
+function lagLenker(status: Status, behandlingType: BehandlingType) {
+  switch (status) {
+    case Status.MOTTATT:
+      return lagLenkerMottatt(behandlingType)
+    case Status.INNVILGET:
+      return lagLenkerInnvilget(behandlingType)
+    default:
+      return []
+  }
+}
+
+function lagLenkerMottatt(behandlingType: BehandlingType): Lenke[] {
   const lenker = [
     {
       href: 'http://nav.no/saksbehandlingstider#uforetrygd',
@@ -57,7 +82,7 @@ function lagLenker(behandlingType: string): Lenke[] {
     },
   ]
 
-  if (behandlingType === 'SØKNAD_BARNETILLEGG') {
+  if (behandlingType === BehandlingType.SØKNAD_BARNETILLEGG) {
     return [
       ...lenker,
       {
@@ -68,4 +93,42 @@ function lagLenker(behandlingType: string): Lenke[] {
   }
 
   return lenker
+}
+
+function lagLenkerInnvilget(behandlingType: BehandlingType): Lenke[] {
+  const lenker = []
+
+  if (behandlingType === BehandlingType.SØKNAD_UFØRETRYGD || behandlingType === BehandlingType.SØKNAD_UNG_UFØR) {
+    lenker.push(
+      {
+        href: 'https://www.nav.no/uforetrygd#etteroppgjor',
+        visningstekst: 'Slik kan etteroppgjøret påvirke deg (åpnes i ny fane)',
+      },
+      {
+        href: 'https://www.nav.no/uforetrygd#inntektsplanlegger',
+        visningstekst: 'Hvordan bruke Inntektsplanlegger (åpnes i ny fane)',
+      },
+      {
+        href: 'https://www.nav.no/uforetrygd#jobb',
+        visningstekst: 'Du kan jobbe ved siden av uføretrygd (åpnes i ny fane)',
+      }
+    )
+  }
+
+  lenker.push({
+    href: 'todo',
+    visningstekst: 'Se mer i vedtaksbrev i dokumentoversikten (åpnes i ny fane)',
+  })
+
+  return lenker
+}
+
+function lagBeregning(beregning: components['schemas']['Beregning'], status: Status): BeregningRad[] {
+  if (status !== Status.INNVILGET) return []
+
+  const beregninger: BeregningRad[] = []
+
+  if (beregning.nettoUforetrygdPerManed)
+    beregninger.push({ label: 'Uføretrygd', verdi: beregning.nettoUforetrygdPerManed.toString() + ' kroner' })
+  return beregninger
 }

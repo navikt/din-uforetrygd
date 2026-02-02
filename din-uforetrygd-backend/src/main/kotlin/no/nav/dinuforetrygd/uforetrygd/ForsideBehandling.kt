@@ -6,7 +6,12 @@ import no.nav.dinuforetrygd.util.erRelevant
 
 data class ForsideBehandling(
     val type: BehandlingType,
-    val status: Status
+    val status: Status,
+    val beregning: Beregning? = null
+)
+
+data class Beregning(
+    val nettoUforetrygdPerManed: Int
 )
 
 enum class BehandlingType {
@@ -29,7 +34,8 @@ fun lagBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): 
 
     return ForsideBehandling(
         type = finnBehandlingType(relevantÅpentKrav ?: relevantVedtak!!.krav),
-        status = finnBehandlingStatus(relevantÅpentKrav, relevantVedtak))
+        status = finnBehandlingStatus(relevantÅpentKrav, relevantVedtak),
+        beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) })
 }
 
 fun finnBehandlingType(krav: Krav): BehandlingType {

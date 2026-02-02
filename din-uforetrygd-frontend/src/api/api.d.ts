@@ -58,7 +58,11 @@ export interface components {
   schemas: {
     ForsideBehandling: {
       type: string,
-      status: string
+      status: string,
+      beregning: components['schemas']['Beregning']
+    }
+    Beregning: {
+      nettoUforetrygdPerManed: number
     }
     SaksoversiktResponse: {
       aktivBehandling?: components['schemas']['Behandling']
