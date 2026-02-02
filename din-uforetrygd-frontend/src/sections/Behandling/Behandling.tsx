@@ -10,9 +10,6 @@ interface BehandlingProps {
 export const Behandling: React.FC<BehandlingProps> = async ({ behandling }) => {
   const visBehandling = await isEnabled('din.uforetrygd.forside.behandling')
 
-  const søknadTekst = lagSøknadTekst()
-  const lenkeHref = 'http://nav.no/saksbehandlingstider#uforetrygd'
-  const lenkeTekst = 'Les mer om saksbehandlingstid (åpnes i ny fane).'
   const dokumentasjonTekst = 'Trenger du å sende oss dokumentasjon, kan du gjøre det her.'
   const lastOppDokumentasjonTekst = 'Last opp dokumentasjon'
   const lastOppDokumentasjonHref = 'https://www.ansatt.dev.nav.no/ettersende#uforetrygd'
@@ -35,8 +32,8 @@ export const Behandling: React.FC<BehandlingProps> = async ({ behandling }) => {
 
             <span style={{ borderBottom: '1px solid var(--ax-border-neutral-subtleA)' }} />
 
-            <BodyShort>{søknadTekst}</BodyShort>
-            <Link href={lenkeHref}>{lenkeTekst}</Link>
+            <BodyShort>{lagSøknadTekst(behandling.type)}</BodyShort>
+            {lagLenker(behandling.type)}
 
             <span style={{ borderBottom: '1px solid var(--ax-border-neutral-subtleA)' }} />
 
@@ -53,6 +50,32 @@ export const Behandling: React.FC<BehandlingProps> = async ({ behandling }) => {
   )
 }
 
-function lagSøknadTekst(): string {
-  return 'Søknaden din om uføretrygd venter på behandling.'
+function lagSøknadTekst(type: string): string {
+  switch (type) {
+    case "SØKNAD_UFØRETRYGD":
+      return "Søknaden din om uføretrygd venter på behandling.";
+    case "SØKNAD_ENDRING_UFØREGRAD":
+      return "Søknaden din om endring av uføregrad venter på behandling.";
+    case "SØKNAD_BARNETILLEGG":
+      return "Søknaden din om barnetillegg venter på behandling.";
+    case "SØKNAD_UNG_UFØR":
+      return "Søknaden din om ung ufør venter på behandling.";
+    case "SØKNAD_YRKESSKADE":
+      return "Søknaden din om yrkesskade venter på behandling.";
+    default:
+      return "Søknaden din venter på behandling.";
+  }
+}
+
+function lagLenker(behandlingType: string): React.ReactNode[] {
+  const lenker = [<Link href="http://nav.no/saksbehandlingstider#uforetrygd">Les mer om saksbehandlingstid (åpnes i ny fane).</Link>]
+
+  if (behandlingType === "SØKNAD_BARNETILLEGG") {
+    return [
+      ...lenker,
+      <Link href="https://www.nav.no/no/person/familie/barn-og-unnskap/barnetillegg">Viktig informasjon om inntekt og barnetillegg  (åpnes i ny fane).</Link>
+    ]
+  }
+
+  return lenker
 }
