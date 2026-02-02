@@ -41,7 +41,7 @@ class ForsideService(
                 penClient.hentForsideData(pid, uforeSak.sakId)
             }
             catch (e: Exception) {
-                logger.warn("Feilet mot forside-data", e)
+                logger.warn("Feilet mot forside-data, sak " + uforeSak.sakId, e)
                 null
             }
 
