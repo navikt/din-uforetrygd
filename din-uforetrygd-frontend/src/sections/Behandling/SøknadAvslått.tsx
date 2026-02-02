@@ -2,23 +2,22 @@ import { BodyShort, Link } from '@navikt/ds-react'
 import React from 'react'
 import { BehandlingHeader } from '@/sections/Behandling/BehandlingHeader'
 import Divider from '@/sections/Behandling/Divider'
+import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 
 interface Props {
-  tittel: string
+  behandling: ForsideBehandling
 }
 
-export const SøknadAvslått = ({ tittel }: Props) => {
+export const SøknadAvslått = ({ behandling }: Props) => {
   return (
     <>
-      <BehandlingHeader tittel={tittel} statusTekst="Søknad avslått" statusFarge="warning" />
+      <BehandlingHeader tittel={behandling.tittel} statusTekst={behandling.statusTekst} statusFarge="warning" />
       <Divider />
-      <BodyShort>
-        I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du
-        informasjon om hvordan du kan klage.
-      </BodyShort>
+      <BodyShort>{behandling.beskrivelse}</BodyShort>
       <Divider />
-      <Link href="https://klage.nav.no/nb/klage/UFORETRYGD">Klag på vedtaket her (åpnes i ny fane)</Link>
-      <Link href="https://www.nav.no/kontaktoss">Kontakt oss (åpnes i ny fane)</Link>
+      {behandling.lenker.map((lenke, index) => (
+        <Link key={index} href={lenke.href}>{lenke.visningstekst}</Link>
+      ))}
     </>
   )
 }

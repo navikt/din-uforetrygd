@@ -19,9 +19,9 @@ export const SøknadMottatt = ({ behandling }: Props) => {
 
       <Divider />
 
-      <BodyShort>Søknaden din venter på behandling.</BodyShort>
-      {behandling.lenker.map((lenke) => (
-        <Link href={lenke.href}>{lenke.visningstekst}</Link>
+      <BodyShort>{behandling.beskrivelse}</BodyShort>
+      {behandling.lenker.map((lenke, index) => (
+        <Link key={index} href={lenke.href}>{lenke.visningstekst}</Link>
       ))}
 
       <Divider />

@@ -12,7 +12,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
   return (
     <>
       <BehandlingHeader
-        tittel={behandling.tittel + ' er innvilget'}
+        tittel={behandling.tittel}
         statusTekst={behandling.statusTekst}
         statusFarge="success"
       />
@@ -34,8 +34,8 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
 
       <Divider />
       <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
-        {behandling.lenker.map((lenke) => (
-          <Link href={lenke.href}>{lenke.visningstekst}</Link>
+        {behandling.lenker.map((lenke, index) => (
+          <Link key={index} href={lenke.href}>{lenke.visningstekst}</Link>
         ))}
       </HGrid>
     </>
