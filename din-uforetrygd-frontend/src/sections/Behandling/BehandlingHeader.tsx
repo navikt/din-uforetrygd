@@ -1,26 +1,14 @@
 import { Heading, Stack, Tag } from '@navikt/ds-react'
 import React from 'react'
-import { Status } from '@/sections/Behandling/behandlingUtil'
 import { AkselColor } from '@navikt/ds-react/types/theme'
 
 interface Props {
   tittel: string
   statusTekst: string
-  statusType: Status
+  statusFarge: AkselColor
 }
 
-export const BehandlingHeader = ({ tittel, statusTekst, statusType }: Props) => {
-  const statusFarge = (): AkselColor => {
-    switch (statusType) {
-      case Status.MOTTATT:
-        return 'info'
-      case Status.INNVILGET:
-        return 'success'
-      case Status.AVSLAG:
-        return 'warning'
-    }
-  }
-
+export const BehandlingHeader = ({ tittel, statusTekst, statusFarge }: Props) => {
   return (
     <Stack
       gap="space-16"
@@ -29,7 +17,7 @@ export const BehandlingHeader = ({ tittel, statusTekst, statusType }: Props) => 
       justify="space-between"
     >
       <Heading size="medium">{tittel}</Heading>
-      <Tag data-color={statusFarge()}>{statusTekst}</Tag>
+      <Tag data-color={statusFarge}>{statusTekst}</Tag>
     </Stack>
   )
 }
