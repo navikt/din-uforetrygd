@@ -56,6 +56,10 @@ export interface paths {
 export type webhooks = Record<string, never>
 export interface components {
   schemas: {
+    ForsideBehandling: {
+      type: string,
+      status: string
+    }
     SaksoversiktResponse: {
       aktivBehandling?: components['schemas']['Behandling']
       avsluttedeBehandlinger: components['schemas']['Behandling'][]
@@ -142,6 +146,7 @@ export interface components {
       harGammelFullmaktmottaker?: boolean
       hendelser?: components['schemas']['SakHendelse'][]
       journalposter?: components['schemas']['Journalpost'][]
+      behandling?: components['schemas']['ForsideBehandling']
     }
   }
   responses: never
