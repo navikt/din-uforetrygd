@@ -5,7 +5,6 @@ export interface ForsideBehandling {
   status: string
   tittel: string
   statusTekst: string
-  søknadTekst: string
   lenker: Lenke[]
 }
 
