@@ -20,25 +20,7 @@ export function toForsideBehandling(fra: components['schemas']['ForsideBehandlin
     status: fra.status,
     tittel: lagTittel(fra.type),
     statusTekst: lagStatus(fra.status),
-    søknadTekst: lagSøknadTekst(fra.type),
     lenker: lagLenker(fra.type),
-  }
-}
-
-function lagSøknadTekst(type: string): string {
-  switch (type) {
-    case 'SØKNAD_UFØRETRYGD':
-      return 'Søknaden din om uføretrygd venter på behandling.'
-    case 'SØKNAD_ENDRING_UFØREGRAD':
-      return 'Søknaden din om endring av uføregrad venter på behandling.'
-    case 'SØKNAD_BARNETILLEGG':
-      return 'Søknaden din om barnetillegg venter på behandling.'
-    case 'SØKNAD_UNG_UFØR':
-      return 'Søknaden din om ung ufør venter på behandling.'
-    case 'SØKNAD_YRKESSKADE':
-      return 'Søknaden din om yrkesskade venter på behandling.'
-    default:
-      return 'Søknaden din venter på behandling.'
   }
 }
 

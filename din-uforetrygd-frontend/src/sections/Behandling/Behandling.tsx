@@ -13,6 +13,7 @@ export const Behandling: React.FC<BehandlingProps> = async ({ behandling }) => {
   const dokumentasjonTekst = 'Trenger du å sende oss dokumentasjon, kan du gjøre det her.'
   const lastOppDokumentasjonTekst = 'Last opp dokumentasjon'
   const lastOppDokumentasjonHref = 'https://www.ansatt.dev.nav.no/ettersende#uforetrygd'
+  const søknadstekst = 'Søknaden din venter på behandling.'
 
   return (
     visBehandling &&
@@ -32,7 +33,7 @@ export const Behandling: React.FC<BehandlingProps> = async ({ behandling }) => {
 
             <span style={{ borderBottom: '1px solid var(--ax-border-neutral-subtleA)' }} />
 
-            <BodyShort>{behandling.søknadTekst}</BodyShort>
+            <BodyShort>{søknadstekst}</BodyShort>
             {behandling.lenker.map((lenke) => (
               <Link href={lenke.href}>{lenke.visningstekst}</Link>
             ))}

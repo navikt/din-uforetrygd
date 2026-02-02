@@ -46,12 +46,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
-            <Behandling
-              behandling={
-                initResponse.uforetrygdResponse.behandling &&
-                toForsideBehandling(initResponse.uforetrygdResponse.behandling)
-              }
-            ></Behandling>
           </VStack>
           {mode === 'borger' && (
             <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
@@ -63,6 +57,12 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               </BodyLong>
             </LukkbarAlert>
           )}
+          <Behandling
+            behandling={
+              initResponse.uforetrygdResponse.behandling &&
+              toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+            }
+          ></Behandling>
           <InntektSnarveier
             visningskriterier={visningskriterier}
             pid={params.pid}
