@@ -12,9 +12,9 @@ export const SøknadMottatt = ({ behandling }: Props) => {
   return (
     <>
       <BehandlingHeader
-        tittel={behandling.tittel}
+        tittel={behandling.tittel + ' er mottatt'}
         statusTekst={behandling.statusTekst}
-        statusFarge='info'
+        statusFarge="info"
       />
 
       <Divider />
@@ -28,7 +28,7 @@ export const SøknadMottatt = ({ behandling }: Props) => {
 
       <BodyShort>Trenger du å sende oss dokumentasjon, kan du gjøre det her.</BodyShort>
       <div>
-        <Button as="a" href='https://www.nav.no/ettersende#uforetrygd'>
+        <Button as="a" href="https://www.nav.no/ettersende#uforetrygd">
           Last opp dokumentasjon
         </Button>
       </div>
