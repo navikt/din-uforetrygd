@@ -1,1 +1,0 @@
-export { KanVaereAktueltForDeg } from './KanVaereAktueltForDeg'

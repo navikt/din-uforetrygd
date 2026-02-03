@@ -1,7 +1,7 @@
 import { components } from '@/api/api'
 import { DokumenterView } from './DokumenterView'
 import { formatDate } from '@/utils/formatter/formatter'
-import { mapOpprettetAv } from '@/utils/mapOpprettetAv'
+import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 
 interface IDokumenterProps {
   pid?: string

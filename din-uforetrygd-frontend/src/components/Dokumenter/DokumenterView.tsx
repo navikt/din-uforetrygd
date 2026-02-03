@@ -2,9 +2,9 @@
 
 import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
 import React from 'react'
-import { ReadMoreTile } from '@/components/ReadMoreTile'
-import { SortablePaginatedList } from '@/components/SortablePaginatedList'
-import { DocumentLink } from '@/components/DocumentLink'
+import { ReadMoreTile } from '@/components/ReadMoreTile/ReadMoreTile'
+import { SortablePaginatedList } from '@/components/SortablePaginatedList/SortablePaginatedList'
+import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
 import styles from './dokumenterview.module.css'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'

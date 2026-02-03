@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Visningskriterier } from '@/const'
-import filterShowFor, { matchAll, matchSome } from './index'
+import filterShowFor, { matchAll, matchSome } from './filterShowFor'
 
 describe('filterShowFor', () => {
   const lenker = [

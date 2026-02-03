@@ -1,6 +1,6 @@
 import styles from '@/sections/UforeStatusGuidePanel/uforestatusGuidePanel.module.css'
 import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
-import { getUrl } from '@/utils/getUrl'
+import { getUrl } from '@/utils/getUrl/getUrl'
 
 export const IngenUføretrygd = async () => {
   const dittLokaleNavKontorLenke = await getUrl({ urlFromEnv: 'LINK_DITT_LOKALE_NAV_KONTOR' })

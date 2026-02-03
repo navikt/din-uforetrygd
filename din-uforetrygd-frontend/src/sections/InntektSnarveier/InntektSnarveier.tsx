@@ -1,9 +1,9 @@
 import { Innloggingstype, Visningskriterier } from '@/const'
 import React from 'react'
-import { SnarveiPanel } from '@/components/SnarveiPanel'
-import { getUrl } from '@/utils/getUrl'
+import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
-import { matchAll } from '@/utils/filterShowFor'
+import { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import styles from './inntektSnarveier.module.css'
 
 interface InntektSnarveierProps {

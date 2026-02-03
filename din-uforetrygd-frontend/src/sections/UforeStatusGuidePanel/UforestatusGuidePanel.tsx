@@ -1,6 +1,6 @@
 import { Visningskriterier } from '@/const'
 import { UforestatusGuidePanelView } from './UforestatusGuidePanelView'
-import { getUrl } from '@/utils/getUrl'
+import { getUrl } from '@/utils/getUrl/getUrl'
 
 interface IUforestatusGuideProps {
   visningskriterier: Visningskriterier[]

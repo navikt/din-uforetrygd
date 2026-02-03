@@ -1,1 +1,0 @@
-export { RelevanteSoknader } from './RelevanteSoknader'

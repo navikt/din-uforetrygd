@@ -1,6 +1,6 @@
 import React from 'react'
 import { hentSaksoversikt } from '@/api/endpoints'
-import { Saksoversikt } from '@/sections/Saksoversikt'
+import { Saksoversikt } from '@/sections/Saksoversikt/Saksoversikt'
 import { mapTilSaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 
 interface Props {

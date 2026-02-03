@@ -1,5 +1,5 @@
 import getEnv from '@/utils/env'
-import { getAzureUserPayload } from '@/utils/getAzureUserPayload'
+import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
 
 export interface GetUrlInput {
   urlFromEnv: EnvUrl

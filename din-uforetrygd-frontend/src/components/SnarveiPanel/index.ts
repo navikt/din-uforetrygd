@@ -1,1 +1,0 @@
-export { SnarveiPanel } from './SnarveiPanel'

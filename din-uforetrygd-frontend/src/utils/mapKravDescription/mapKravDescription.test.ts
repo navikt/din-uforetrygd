@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mapKravDescription } from '.'
+import { mapKravDescription } from './mapKravDescription'
 
 describe('mapKravDescription', () => {
   it('returns correct description for valid kravGjelder and kravArsak', () => {
