@@ -1,6 +1,5 @@
 package no.nav.dinuforetrygd.configuration
 
-import io.micrometer.observation.ObservationRegistry
 import io.netty.channel.ChannelOption
 import net.logstash.logback.argument.StructuredArguments.kv
 import org.slf4j.LoggerFactory
@@ -17,7 +16,7 @@ import reactor.netty.resources.ConnectionProvider
 import java.time.Duration
 
 @Configuration
-class WebClientConfiguration(private val observationRegistry: ObservationRegistry) {
+class WebClientConfiguration {
     private val logger = LoggerFactory.getLogger(WebClientConfiguration::class.java)
 
     @Bean
@@ -25,7 +24,6 @@ class WebClientConfiguration(private val observationRegistry: ObservationRegistr
         .clientConnector(ReactorClientHttpConnector(httpClient))
         .exchangeStrategies(ExchangeStrategies.builder().codecs { it.defaultCodecs().maxInMemorySize(16 * 1024 * 1024) }
             .build())
-        .observationRegistry(observationRegistry)
         .filter(logRequest())
         .build()
 
