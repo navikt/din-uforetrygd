@@ -21,6 +21,7 @@ import { InterneLenker } from '@/sections/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import { Behandling } from '@/sections/Behandling/Behandling'
 import { toForsideBehandling } from '@/sections/Behandling/behandlingUtil'
+import { isEnabled } from '@/utils/unleash'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -30,6 +31,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
+  const visBehandling = await isEnabled('din.uforetrygd.forside.behandling')
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -57,18 +59,22 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               </BodyLong>
             </LukkbarAlert>
           )}
-          <Behandling
-            behandling={
-              initResponse.uforetrygdResponse.behandling &&
-              toForsideBehandling(initResponse.uforetrygdResponse.behandling)
-            }
-          ></Behandling>
+          {visBehandling ? (
+            <Behandling
+              behandling={
+                initResponse.uforetrygdResponse.behandling &&
+                toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+              }
+              visningskriterier={visningskriterier}
+            />
+          ) : (
+            <UforestatusGuidePanel visningskriterier={visningskriterier} />
+          )}
           <InntektSnarveier
             visningskriterier={visningskriterier}
             pid={params.pid}
             innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
           ></InntektSnarveier>
-          <UforestatusGuidePanel visningskriterier={visningskriterier} />
           <DittVedtak
             pid={params.pid}
             hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}

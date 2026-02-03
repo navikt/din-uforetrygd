@@ -123,8 +123,8 @@ function lagLenkerInnvilget(behandlingType: BehandlingType): Lenke[] {
   return lenker
 }
 
-function lagBeregning(beregning: components['schemas']['Beregning'], status: Status): BeregningRad[] {
-  if (status !== Status.INNVILGET) return []
+function lagBeregning(beregning: components['schemas']['Beregning'] | null, status: Status): BeregningRad[] {
+  if (status !== Status.INNVILGET || beregning == null) return []
 
   const beregninger: BeregningRad[] = []
 
