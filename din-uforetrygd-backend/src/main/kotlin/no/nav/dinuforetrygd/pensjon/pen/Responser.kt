@@ -38,7 +38,7 @@ data class Vedtak(
     val avslag: Boolean,
     val krav: Krav,
     val etteroppgjor: Etteroppgjør? = null,
-    val beregning: Beregning
+    val beregning: Beregning? = null
 )
 
 data class Beregning(

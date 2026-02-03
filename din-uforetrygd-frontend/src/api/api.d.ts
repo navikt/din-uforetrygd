@@ -59,7 +59,7 @@ export interface components {
     ForsideBehandling: {
       type: string,
       status: string,
-      beregning: components['schemas']['Beregning']
+      beregning?: components['schemas']['Beregning']
     }
     Beregning: {
       nettoUforetrygdPerManed: number
