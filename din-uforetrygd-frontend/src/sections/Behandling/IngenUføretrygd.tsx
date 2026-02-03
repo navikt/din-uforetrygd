@@ -3,9 +3,7 @@ import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
 import { getUrl } from '@/utils/getUrl'
 
 export const IngenUføretrygd = async () => {
-  let dittLokaleNavKontorLenke = await getUrl({ urlFromEnv: 'LINK_DITT_LOKALE_NAV_KONTOR' })
-
-  console.log(dittLokaleNavKontorLenke)
+  const dittLokaleNavKontorLenke = await getUrl({ urlFromEnv: 'LINK_DITT_LOKALE_NAV_KONTOR' })
 
   return (
     <div className={styles.guidepanelWrapper}>
