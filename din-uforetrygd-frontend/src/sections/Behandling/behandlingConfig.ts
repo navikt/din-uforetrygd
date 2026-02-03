@@ -26,8 +26,16 @@ export type BehandlingData = {
 
 export type BehandlingConfig = {
   [key in BehandlingType]: {
-    [key in Status]: BehandlingData
+    [key in Exclude<Status, Status.AVSLAG>]: BehandlingData
   }
+}
+
+const avslåttData: { [key in BehandlingType]: { tittel: string } } = {
+  [BehandlingType.SØKNAD_BARNETILLEGG]: { tittel: 'Søknaden om uføretrygd er avslått' },
+  [BehandlingType.SØKNAD_ENDRING_UFØREGRAD]: { tittel: '' },
+  [BehandlingType.SØKNAD_UFØRETRYGD]: { tittel: '' },
+  [BehandlingType.SØKNAD_UNG_UFØR]: { tittel: '' },
+  [BehandlingType.SØKNAD_YRKESSKADE]: { tittel: '' },
 }
 
 export const BEHANDLING_CONFIG: BehandlingConfig = {
@@ -66,22 +74,6 @@ export const BEHANDLING_CONFIG: BehandlingConfig = {
         },
       ],
     },
-    [Status.AVSLAG]: {
-      tittel: 'Søknaden om uføretrygd er avslått',
-      statusTekst: 'Søknad avslått',
-      beskrivelse:
-        'I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du informasjon om hvordan du kan klage.',
-      lenker: [
-        {
-          href: 'https://klage.nav.no/nb/klage/UFORETRYGD',
-          visningstekst: 'Klag på vedtaket her (åpnes i ny fane)',
-        },
-        {
-          href: 'https://www.nav.no/kontaktoss',
-          visningstekst: 'Kontakt oss (åpnes i ny fane)',
-        },
-      ],
-    },
   },
 
   [BehandlingType.SØKNAD_BARNETILLEGG]: {
@@ -108,22 +100,6 @@ export const BEHANDLING_CONFIG: BehandlingConfig = {
         {
           href: 'todo',
           visningstekst: 'Se mer i vedtaksbrev i dokumentoversikten (åpnes i ny fane)',
-        },
-      ],
-    },
-    [Status.AVSLAG]: {
-      tittel: 'Søknaden om barnetillegg er avslått',
-      statusTekst: 'Søknad avslått',
-      beskrivelse:
-        'I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du informasjon om hvordan du kan klage.',
-      lenker: [
-        {
-          href: 'https://klage.nav.no/nb/klage/UFORETRYGD',
-          visningstekst: 'Klag på vedtaket her (åpnes i ny fane)',
-        },
-        {
-          href: 'https://www.nav.no/kontaktoss',
-          visningstekst: 'Kontakt oss (åpnes i ny fane)',
         },
       ],
     },
@@ -164,22 +140,6 @@ export const BEHANDLING_CONFIG: BehandlingConfig = {
         },
       ],
     },
-    [Status.AVSLAG]: {
-      tittel: 'Søknaden om ung ufør er avslått',
-      statusTekst: 'Søknad avslått',
-      beskrivelse:
-        'I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du informasjon om hvordan du kan klage.',
-      lenker: [
-        {
-          href: 'https://klage.nav.no/nb/klage/UFORETRYGD',
-          visningstekst: 'Klag på vedtaket her (åpnes i ny fane)',
-        },
-        {
-          href: 'https://www.nav.no/kontaktoss',
-          visningstekst: 'Kontakt oss (åpnes i ny fane)',
-        },
-      ],
-    },
   },
 
   [BehandlingType.SØKNAD_ENDRING_UFØREGRAD]: {
@@ -213,22 +173,6 @@ export const BEHANDLING_CONFIG: BehandlingConfig = {
         },
       ],
     },
-    [Status.AVSLAG]: {
-      tittel: 'Søknaden om endring av uføregrad er avslått',
-      statusTekst: 'Søknad avslått',
-      beskrivelse:
-        'I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du informasjon om hvordan du kan klage.',
-      lenker: [
-        {
-          href: 'https://klage.nav.no/nb/klage/UFORETRYGD',
-          visningstekst: 'Klag på vedtaket her (åpnes i ny fane)',
-        },
-        {
-          href: 'https://www.nav.no/kontaktoss',
-          visningstekst: 'Kontakt oss (åpnes i ny fane)',
-        },
-      ],
-    },
   },
 
   [BehandlingType.SØKNAD_YRKESSKADE]: {
@@ -251,22 +195,6 @@ export const BEHANDLING_CONFIG: BehandlingConfig = {
         {
           href: 'todo',
           visningstekst: 'Se mer i vedtaksbrev i dokumentoversikten (åpnes i ny fane)',
-        },
-      ],
-    },
-    [Status.AVSLAG]: {
-      tittel: 'Søknaden om yrkesskade er avslått',
-      statusTekst: 'Søknad avslått',
-      beskrivelse:
-        'I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du informasjon om hvordan du kan klage.',
-      lenker: [
-        {
-          href: 'https://klage.nav.no/nb/klage/UFORETRYGD',
-          visningstekst: 'Klag på vedtaket her (åpnes i ny fane)',
-        },
-        {
-          href: 'https://www.nav.no/kontaktoss',
-          visningstekst: 'Kontakt oss (åpnes i ny fane)',
         },
       ],
     },
