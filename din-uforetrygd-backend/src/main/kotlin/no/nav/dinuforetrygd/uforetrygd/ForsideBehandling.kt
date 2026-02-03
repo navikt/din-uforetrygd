@@ -32,8 +32,12 @@ fun lagBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): 
 
     if (relevantÅpentKrav == null && relevantVedtak == null) return null
 
+    val type = finnBehandlingType(relevantÅpentKrav ?: relevantVedtak!!.krav)
+
+    if(type == BehandlingType.INGEN) return null
+
     return ForsideBehandling(
-        type = finnBehandlingType(relevantÅpentKrav ?: relevantVedtak!!.krav),
+        type = type,
         status = finnBehandlingStatus(relevantÅpentKrav, relevantVedtak),
         beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) })
 }

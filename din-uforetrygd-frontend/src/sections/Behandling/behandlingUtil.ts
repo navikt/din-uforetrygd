@@ -116,7 +116,7 @@ function lagLenkerInnvilget(behandlingType: BehandlingType): Lenke[] {
   }
 
   lenker.push({
-    href: 'todo',
+    href: 'https://www.nav.no/dokumentarkiv',
     visningstekst: 'Se mer i vedtaksbrev i dokumentoversikten (åpnes i ny fane)',
   })
 
