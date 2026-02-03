@@ -57,9 +57,9 @@ export type webhooks = Record<string, never>
 export interface components {
   schemas: {
     ForsideBehandling: {
-      type: string,
-      status: string,
-      beregning?: components['schemas']['Beregning']
+      type: string
+      status: string
+      beregning: components['schemas']['Beregning'] | null
     }
     Beregning: {
       nettoUforetrygdPerManed: number
