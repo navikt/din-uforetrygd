@@ -129,16 +129,6 @@ export interface components {
       /** Format: int64 */
       sakId?: number
     }
-    SakHendelse: {
-      type?: string
-      gjelder?: string
-      arsak?: string
-      status?: string
-      /** Format: date-time */
-      endretDato?: string
-      /** @enum {string} */
-      opprettetAv?: 'BRUKER' | 'FULLMEKTIG' | 'SAKSBEHANDLER' | 'AUTOMATISK_PROSESS' | 'UKJENT' | 'NAV'
-    }
     UforetrygdResponse: {
       pid?: string
       loggetInnSom?: string
@@ -148,7 +138,6 @@ export interface components {
       /** @enum {string} */
       innloggingstype?: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
       harGammelFullmaktmottaker?: boolean
-      hendelser?: components['schemas']['SakHendelse'][]
       journalposter?: components['schemas']['Journalpost'][]
       behandling?: components['schemas']['ForsideBehandling']
     }

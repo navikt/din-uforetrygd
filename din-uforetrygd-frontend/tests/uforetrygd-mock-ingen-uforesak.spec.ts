@@ -6,22 +6,6 @@ test.describe('Ingen uforesak', () => {
     await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
   })
 
-  test('does not display saksoversikt', async ({ page }) => {
-    await page.goto('')
-
-    const saksoversiktHeading = page.getByRole('heading', { name: 'Saksoversikt' })
-    await expect(saksoversiktHeading).not.toBeVisible()
-
-    const hendelserHeading = page.getByRole('heading', { name: 'Dette har skjedd i saken din' })
-    await expect(hendelserHeading).not.toBeVisible()
-
-    const hendelserSection = page.locator('section[aria-label="Hendelser i saken din"]')
-    await expect(hendelserSection).not.toBeVisible()
-
-    const documentsSection = page.locator('[aria-label="Dokumenter knyttet til saken din"]')
-    await expect(documentsSection).not.toBeVisible()
-  })
-
   test('displays standard guidepanel for users without uforetrygd', async ({ page }) => {
     await page.goto('')
 

@@ -14,21 +14,9 @@ data class UforetrygdResponse(
     val uforevedtak: DittUforevedtak?,
     val innloggingstype: Innloggingstype,
     val harGammelFullmaktmottaker: Boolean,
-    val hendelser: List<SakHendelse?> = emptyList(),
     val journalposter: List<Journalpost> = emptyList(),
     val behandling: ForsideBehandling? = null
 )
-
-data class SakHendelse(
-    val type: String,
-    val gjelder: String?,
-    val arsak: String?,
-    val status: String?,
-    @param:JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss[xxxx]")
-    val endretDato: LocalDateTime,
-    val opprettetAv: EndretAvKode?,
-)
-
 
 data class DittUforevedtak(
     val uforegrad: Int,
