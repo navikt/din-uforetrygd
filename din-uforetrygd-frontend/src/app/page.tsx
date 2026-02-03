@@ -62,8 +62,9 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           {visBehandling ? (
             <Behandling
               behandling={
-                initResponse.uforetrygdResponse.behandling &&
-                toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+                initResponse.uforetrygdResponse.behandling
+                  ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+                  : null
               }
               visningskriterier={visningskriterier}
             />

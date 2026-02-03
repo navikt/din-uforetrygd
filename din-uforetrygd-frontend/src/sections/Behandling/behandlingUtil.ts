@@ -33,7 +33,9 @@ interface BeregningRad {
   verdi: string
 }
 
-export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling {
+export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling | null {
+  if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD) return null
+
   return {
     status: fra.status as Status,
     tittel: lagTittel(fra.type as BehandlingType),

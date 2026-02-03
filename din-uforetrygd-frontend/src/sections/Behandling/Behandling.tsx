@@ -8,7 +8,7 @@ import { Visningskriterier } from '@/const'
 import { IngenUføretrygd } from '@/sections/Behandling/IngenUføretrygd'
 
 interface BehandlingProps {
-  behandling: ForsideBehandling | undefined
+  behandling: ForsideBehandling | null
   visningskriterier: Visningskriterier[]
 }
 
