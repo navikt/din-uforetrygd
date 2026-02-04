@@ -1,6 +1,6 @@
 import { Visningskriterier } from '@/const'
 import styles from './MeldeFra.module.css'
-import { getUrl } from '@/utils/getUrl'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import '@navikt/ds-tokens'
 import '@navikt/ds-css'
 import { Box, Heading, Link, VStack } from '@navikt/ds-react'

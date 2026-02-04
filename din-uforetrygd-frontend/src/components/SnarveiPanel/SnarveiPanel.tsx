@@ -1,12 +1,12 @@
 import { Box, HGrid, Hide, LinkCard } from '@navikt/ds-react'
 
 import { Innloggingstype, Visningskriterier } from '@/const'
-import filterShowFor from '@/utils/filterShowFor'
+import filterShowFor from '@/utils/filterShowFor/filterShowFor'
 import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import React from 'react'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { showModal } from '@/utils/showMinIdModal'
+import { showMinIdModal } from '@/utils/showMinIdModal/showMinIdModal'
 import styles from './snarveiPanel.module.css'
 
 interface ISnarveiPanelProps {
@@ -43,7 +43,7 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
                 <LinkCardAnchor
                   href={link.href!}
                   {...getFullmaktProps(link.showFullmaktWarning)}
-                  {...showModal(props.innloggingstype, link.visInnloggingsModal)}
+                  {...showMinIdModal(props.innloggingstype, link.visInnloggingsModal)}
                 >
                   {link.title}
                 </LinkCardAnchor>

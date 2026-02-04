@@ -1,1 +1,0 @@
-export { VeilederBorgerinformasjon } from './VeilederBorgerinformasjon'

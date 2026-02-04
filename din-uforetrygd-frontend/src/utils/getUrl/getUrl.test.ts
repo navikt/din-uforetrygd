@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { getUrl, GetUrlInput } from '@/utils/getUrl/index'
+import { getUrl, GetUrlInput } from '@/utils/getUrl/getUrl'
 
 const inputOnlyUrl: GetUrlInput = {
   urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',

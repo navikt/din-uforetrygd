@@ -1,1 +1,0 @@
-export { Snarveier } from './Snarveier'

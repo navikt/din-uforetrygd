@@ -1,1 +1,0 @@
-export { DocumentLink } from './DocumentLink'

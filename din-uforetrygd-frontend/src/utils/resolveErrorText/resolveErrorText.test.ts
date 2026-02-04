@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { resolveErrorText } from '@/utils/resolveErrorText/index'
+import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 
 describe('resolveErrorText', () => {
   it("should return 'Du må logge inn med et høyere sikkerhetsnivå for å få tilgang til denne siden. Du kan for eksempel bruke BankID.' when type is 'LOGIN_LEVEL_TOO_LOW'", () => {

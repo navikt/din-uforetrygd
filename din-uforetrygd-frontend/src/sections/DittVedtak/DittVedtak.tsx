@@ -1,4 +1,4 @@
-import { getUrl } from '@/utils/getUrl'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import { components } from '@/api/api'
 
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'

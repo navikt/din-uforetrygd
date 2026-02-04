@@ -1,1 +1,0 @@
-export { InterneLenker } from './InterneLenker'

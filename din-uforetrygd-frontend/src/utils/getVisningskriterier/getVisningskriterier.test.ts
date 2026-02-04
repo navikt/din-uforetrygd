@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getVisningskriterier } from '@/utils/getVisningskriterier/index'
+import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 import { components } from '@/api/api'
 import { Visningskriterier } from '@/const'
 
