@@ -2,6 +2,7 @@ package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
+import no.nav.dinuforetrygd.pensjon.pen.VedtakStatus
 import no.nav.dinuforetrygd.util.erRelevant
 
 data class ForsideBehandling(
@@ -57,7 +58,7 @@ fun finnBehandlingType(krav: Krav): BehandlingType {
 }
 
 fun finnBehandlingStatus(krav: Krav?, vedtak: Vedtak?): Status {
-    return if (krav != null) Status.MOTTATT
+    return if (krav != null || vedtak?.vedtakstatus == VedtakStatus.TIL_IVERKS) Status.MOTTATT
     else if (vedtak!!.avslag) Status.AVSLAG
     else Status.INNVILGET
 }
