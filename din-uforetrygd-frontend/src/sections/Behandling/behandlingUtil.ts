@@ -1,4 +1,5 @@
 import { components } from '@/api/api'
+import { formatInntekt } from '@/utils/formatter/formatter'
 
 export interface ForsideBehandling {
   status: Status
@@ -133,6 +134,6 @@ function lagBeregning(beregning: components['schemas']['Beregning'] | null, stat
   const beregninger: BeregningRad[] = []
 
   if (beregning.nettoUforetrygdPerManed)
-    beregninger.push({ label: 'Uføretrygd', verdi: beregning.nettoUforetrygdPerManed.toString() + ' kroner' })
+    beregninger.push({ label: 'Uføretrygd', verdi: formatInntekt(beregning.nettoUforetrygdPerManed) + ' kroner' })
   return beregninger
 }
