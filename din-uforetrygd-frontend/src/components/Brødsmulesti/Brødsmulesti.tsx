@@ -19,7 +19,7 @@ export default function Brødsmulesti({ brødsmuler = [] }: Props) {
     <VStack>
       <HStack>
         {defaultBrødsmuler.map(({ tittel, url }, index) => (
-          <div className={styles.brodsmuleLink}>
+          <div className={styles.brodsmuleLink} key={tittel}>
             <Link href={url} underline={false}>
               {tittel}
             </Link>

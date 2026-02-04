@@ -95,7 +95,6 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.hentForsideData(PID)
@@ -117,7 +116,6 @@ class UforetrygdServiceTest {
         every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
-        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
 
         val response = uforetrygdService.hentForsideData(PID)
 
@@ -156,7 +154,6 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         every { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
         every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        every { penService.penClient.getSaksoversikt(any(), any()) } returns Saksoversikt(1L, null, null, null, emptyList())
         every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
         every { inntektskomponentenService.getAretsInntektFraSkatt(any()) } returns inntektFraSkatt
 

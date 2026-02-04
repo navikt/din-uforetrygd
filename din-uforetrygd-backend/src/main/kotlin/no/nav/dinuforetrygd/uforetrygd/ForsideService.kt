@@ -26,7 +26,6 @@ class ForsideService(
         val uforeSak = penService.getSaker(pid).velgSak()
         if (uforeSak == null) return lagUforetrygdResponse(pid, uforeSak)
 
-            val uforeSakshendelser = penService.penClient.getSaksoversikt(pid, uforeSak.sakId).hendelser//TODO: denne kan vel fjernes?
             val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
             val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
             var inntektFraSkatt = 0.0
@@ -50,7 +49,6 @@ class ForsideService(
                 sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
-                hendelser = uforeSakshendelser,
                 behandling = forsideData?.let { lagBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) }
             )
     }
@@ -64,7 +62,6 @@ class ForsideService(
         sak: Sak?,
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
-        hendelser: List<HendelseData>? = null,
         behandling: ForsideBehandling? = null
     ) = UforetrygdResponse(
         pid = pid,
@@ -78,7 +75,6 @@ class ForsideService(
             journalpostService.getJournalPostliste(pid, it.sakId.toString())
                 .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
         } ?: emptyList(),
-        hendelser = hendelser?.filterNot { it.kravStatus == "AVBRUTT" }?.let { hendelseData -> hendelseData.map { constructSakHendelse(it, pid) } } ?: listOf(),
         behandling = behandling
     )
 
@@ -98,44 +94,6 @@ class ForsideService(
             hasGjenlevendeTillegg = this.hasGjenlevendeTillegg,
             hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
-
-    private fun constructSakHendelse(
-        hendelse: HendelseData,
-        pid: String,
-    ): SakHendelse {
-        return SakHendelse(
-            type = hendelse.hendelse,
-            gjelder = hendelse.kravGjelder,
-            arsak = hendelse.kravArsak,
-            status = hendelse.kravStatus,
-            endretDato = hendelse.endretDato,
-            opprettetAv = convertToEndretAvKode(hendelse.opprettetAv, pid)
-        )
-    }
-
-    private fun convertToEndretAvKode(endretAvString: String?, pid: String): EndretAvKode {
-        if (endretAvString == null) {
-            return EndretAvKode.UKJENT
-        }
-        if (endretAvString.lowercase().contains("bpen")
-            || endretAvString.lowercase().contains("automatisk")
-        ) {
-            return EndretAvKode.AUTOMATISK_PROSESS
-        }
-        if (endretAvString.matches(Regex("^[A-Za-z]\\d{6}\$"))) {
-            return EndretAvKode.SAKSBEHANDLER
-        }
-        if (endretAvString == pid) {
-            return EndretAvKode.BRUKER
-        }
-        if (isFodselsnummer(endretAvString)) {
-            return EndretAvKode.FULLMEKTIG
-        }
-        return EndretAvKode.UKJENT
-    }
-
-    private fun isFodselsnummer(fodselsnummer: String): Boolean =
-        fodselsnummer.matches(Regex("^\\d{11}\$"))
 
     private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
         if (SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
