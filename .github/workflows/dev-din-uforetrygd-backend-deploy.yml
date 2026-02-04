@@ -2,8 +2,11 @@ name: "Dev: Din uforetrygd backend deploy"
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 4 * * MON'
+  push:
+    branches:
+      - main
+    paths:
+      - din-uforetrygd-backend/**
 
 jobs:
   build-backend-and-publish-docker:
