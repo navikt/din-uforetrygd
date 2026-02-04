@@ -58,6 +58,7 @@ fun finnBehandlingType(krav: Krav): BehandlingType {
 
 fun finnBehandlingStatus(krav: Krav?, vedtak: Vedtak?): Status {
     return if (krav != null) Status.MOTTATT
-    else if (vedtak!!.avslag) Status.AVSLAG
+    else if (vedtak!!.vedtakstatus  == "TIL_IVERKS") Status.MOTTATT
+    else if (vedtak.avslag) Status.AVSLAG
     else Status.INNVILGET
 }
