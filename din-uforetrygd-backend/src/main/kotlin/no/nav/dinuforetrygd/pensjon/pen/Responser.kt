@@ -34,12 +34,27 @@ data class HentBehandlingerResponse(
 data class Vedtak(
     val vedtakId: Long,
     val vedtakstype: String,
+    val vedtakstatus: VedtakStatus,
     val vedtaksdato: LocalDate,
     val avslag: Boolean,
     val krav: Krav,
     val etteroppgjor: Etteroppgjør? = null,
     val beregning: Beregning? = null
 )
+
+enum class VedtakStatus {
+    ATT, AVBR,
+    AVV_OS_KVITT,
+    FASTS,
+    IVERKS,
+    REAK,
+    SAMORDN,
+    STOPPES,
+    STOPPET,
+    TIL_ATT,
+    TIL_IVERKS,
+    TIL_SAMORDN
+}
 
 data class Beregning(
     val nettoUforetrygdPerManed: Int
