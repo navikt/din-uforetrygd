@@ -14,10 +14,9 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
     const saksoversiktResponse = await hentSaksoversikt(saksid)
     const saksoversikt =
       saksoversiktResponse.saksoversiktResponse && mapTilSaksoversiktType(saksoversiktResponse.saksoversiktResponse)
-    console.log(saksoversikt)
     if (saksoversikt) {
       return <Saksoversikt saksoversikt={saksoversikt} />
-    } else return <div>Laster</div>//TODO havner her hvis det feiler mot backend
+    } else return <div>Laster</div> //TODO havner her hvis det feiler mot backend
   }
 }
 

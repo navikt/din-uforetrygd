@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { Behandling } from '@/sections/Saksoversikt/Behandling'
 import { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
+import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 
 interface Saksoversikt {
   saksoversikt: SaksoversiktType
@@ -18,6 +19,12 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
   return (
     <section>
       <VStack gap="space-24">
+        <Brødsmulesti
+          brødsmuler={[
+            { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
+            { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
+          ]}
+        />
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>
