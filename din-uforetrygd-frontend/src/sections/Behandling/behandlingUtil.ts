@@ -48,7 +48,9 @@ export function toForsideBehandling(fra: components['schemas']['ForsideBehandlin
 export function lagTittel(type: BehandlingType): string {
   switch (type) {
     case BehandlingType.SØKNAD_UFØRETRYGD:
-      return 'Søknad om uføretrygd'
+      return 'Søknaden om uføretrygd'
+    case BehandlingType.SØKNAD_ENDRING_UFØREGRAD:
+      return 'Søknaden om endring av uføregrad'
     default:
       return ''
   }
