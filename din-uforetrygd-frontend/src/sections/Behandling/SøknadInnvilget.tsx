@@ -35,7 +35,9 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
       <Divider />
       <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
         {behandling.lenker.map((lenke) => (
-          <Link href={lenke.href}>{lenke.visningstekst}</Link>
+          <Link target="_blank" href={lenke.href}>
+            {lenke.visningstekst}
+          </Link>
         ))}
       </HGrid>
     </>
