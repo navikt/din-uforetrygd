@@ -43,17 +43,7 @@ data class Vedtak(
 )
 
 enum class VedtakStatus {
-    ATT, AVBR,
-    AVV_OS_KVITT,
-    FASTS,
-    IVERKS,
-    REAK,
-    SAMORDN,
-    STOPPES,
-    STOPPET,
-    TIL_ATT,
-    TIL_IVERKS,
-    TIL_SAMORDN
+    TIL_IVERKS, IVERKS, REAK, STOPPES, STOPPET, TIL_SAMORDN, SAMORDN
 }
 
 data class Beregning(
