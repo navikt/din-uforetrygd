@@ -12,8 +12,7 @@ export function Etteroppgjor({ etteroppgjor }: Props) {
   return (
     <VStack gap="space-24">
       <BodyShort>
-        Etteroppgjøret viser en foreløpig beregning av om du har fått for mye eller for lite utbetalt i uføretrygd i
-        fjor.
+        Etteroppgjøret viser en beregning av om du har fått for mye eller for lite utbetalt i uføretrygd.
       </BodyShort>
       <VStack gap="space-8">
         <HStack gap="space-16">
