@@ -31,8 +31,8 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
         <Tabs defaultValue="aktive">
           <VStack gap="space-32">
             <Tabs.List>
-              <Tabs.Tab value="aktive" label="Aktive behandlinger"></Tabs.Tab>
-              <Tabs.Tab value="avsluttede" label="Avsluttede behandlinger"></Tabs.Tab>
+              <Tabs.Tab value="aktive" label="Til behandling"></Tabs.Tab>
+              <Tabs.Tab value="avsluttede" label="Ferdig behandlet"></Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel value="aktive">
               {saksoversikt.aktivBehandling ? (
