@@ -19,7 +19,9 @@ export function Behandling({ behandling, aktiv }: Props) {
       <ExpansionCard.Header>
         <ExpansionCard.Title>{behandling.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${aktiv ? '' : styles.behandlingDato}`}>
-          {aktiv ? 'Under behandling' : formatterDatoTekst(behandling.mottattDato)}
+          {aktiv
+            ? `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
+            : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
         </ExpansionCard.Description>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
@@ -30,10 +32,10 @@ export function Behandling({ behandling, aktiv }: Props) {
             {behandling.steg.map((steg) => (
               <Process.Event
                 key={`${behandling.vedtakId}-${steg.tittel}`}
-                status={steg.aktiv ? "active" : steg.utfort ? "completed" : undefined}
+                status={steg.aktiv ? 'active' : steg.utfort ? 'completed' : undefined}
                 title={steg.tittel}
                 timestamp={formatterDatoTekst(behandling.mottattDato)}
-                bullet={(steg.aktiv || steg.utfort) ? <CheckmarkHeavyIcon /> : undefined}
+                bullet={steg.aktiv || steg.utfort ? <CheckmarkHeavyIcon /> : undefined}
               >
                 {steg.undertekst}
               </Process.Event>

@@ -5,8 +5,6 @@
 }
 
 .behandlingDato {
-    text-transform: uppercase;
-
     color: var(--ax-text-neutral);
     font-feature-settings: 'liga' off, 'clig' off;
     /* BodyLong/Medium */
