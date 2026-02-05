@@ -2,6 +2,7 @@
 
 import { EtteroppgjorType } from '@/sections/Saksoversikt/saksoversiktType'
 import { BodyShort, HStack, Link, VStack } from '@navikt/ds-react'
+import { formatInntekt } from '@/utils/formatter/formatter'
 
 interface Props {
   etteroppgjor: EtteroppgjorType
@@ -15,19 +16,21 @@ export function Etteroppgjor({ etteroppgjor }: Props) {
         fjor.
       </BodyShort>
       <VStack gap="space-8">
-        <HStack justify="space-between">
+        <HStack gap="space-16">
           <BodyShort>Du må betale tilbake:</BodyShort>
           <BodyShort>
-            <strong>{etteroppgjor.tilbakekreving}</strong>
+            <strong>{formatInntekt(etteroppgjor.tilbakekreving)} kroner</strong>
           </BodyShort>
         </HStack>
-        <HStack justify="space-between">
+        <HStack gap="space-16">
           <BodyShort>Du får tilbake fra oss:</BodyShort>
           <BodyShort>
-            <strong>{etteroppgjor.etterbetaling}</strong>
+            <strong>{formatInntekt(etteroppgjor.etterbetaling)} kroner</strong>
           </BodyShort>
         </HStack>
-        <Link>Her finner du informasjon om etteroppgjøret og hvordan du kan betale tilbake (åpnes i ny fane)</Link>
+        <Link href="https://www.nav.no/uforetrygd#etteroppgjor" target="_blank">
+          Her finner du informasjon om etteroppgjøret og hvordan du kan betale tilbake (åpnes i ny fane)
+        </Link>
       </VStack>
     </VStack>
   )
