@@ -38,7 +38,10 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
                   </Box>
                 </Hide>
                 <LinkCardTitle>
-                  <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}`}>
+                  {/* TODO: Kun for veileder */}
+                  <LinkCardAnchor
+                    href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}&pid=${pid}`}
+                  >
                     Saksoversikt
                   </LinkCardAnchor>
                 </LinkCardTitle>

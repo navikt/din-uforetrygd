@@ -5,7 +5,7 @@ import { getFullmaktCookie } from './getFullmaktCookie'
 import fetchLogger from '@/utils/fetchLogger'
 
 const client = createClient<paths>({
-  baseUrl: process.env.NODE_ENV !== 'development' ? process.env.DIN_UFORETRYGD_BACKEND : "http://localhost:8080",
+  baseUrl: process.env.NODE_ENV !== 'development' ? process.env.DIN_UFORETRYGD_BACKEND : 'http://localhost:8080',
   fetch: fetchLogger,
 })
 
@@ -31,7 +31,7 @@ export const initate = async (pid: string | undefined) => {
   }
 
   return await client
-    .GET("/api/initiate", {
+    .GET('/api/initiate', {
       headers,
       cache: 'no-store',
     })
@@ -43,37 +43,36 @@ export const initate = async (pid: string | undefined) => {
     })
 }
 
+export const hentSaksoversikt = async (saksid: number, pid: string | undefined) => {
+  const oboToken = await getOboToken().catch((error) => {
+    console.error('Error: ', error)
+    return
+  })
 
-export const hentSaksoversikt = async (saksid: number) => {
-    const oboToken = await getOboToken().catch((error) => {
-        console.error('Error: ', error)
-        return
+  const fullmaktCookie = await getFullmaktCookie()
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${oboToken}`,
+    pid: pid || '',
+    Cookie: fullmaktCookie as string,
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
+  }
+
+  return await client
+    .GET('/api/saksoversikt', {
+      headers,
+      cache: 'no-store',
+      params: {
+        query: { saksid },
+      },
     })
-
-    const fullmaktCookie = await getFullmaktCookie()
-
-    const headers: Record<string, string> = {
-        Authorization: `Bearer ${oboToken}`,
-        Cookie: fullmaktCookie as string,
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-        headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
-    }
-
-    return await client
-        .GET("/api/saksoversikt", {
-            headers,
-            cache: 'no-store',
-            params: {
-                query: { saksid }
-            }
-        })
-        .then((res) => {
-            if (!res.response.ok && res.response.status === 403) {
-                return { backendError: res.error! as BackendError }
-            }
-            return { saksoversiktResponse: res.data as components['schemas']['SaksoversiktResponse'] }
-        })
+    .then((res) => {
+      if (!res.response.ok && res.response.status === 403) {
+        return { backendError: res.error! as BackendError }
+      }
+      return { saksoversiktResponse: res.data as components['schemas']['SaksoversiktResponse'] }
+    })
 }
-
