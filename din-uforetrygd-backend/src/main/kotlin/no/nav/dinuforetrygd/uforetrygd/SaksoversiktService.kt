@@ -179,7 +179,7 @@ class SaksoversiktService(
                 aktiv = false,
                 utfort = !aktivBehandling,
                 tittel = "Søknad er ferdig behandlet",
-                undertekst = avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
+                undertekst = if (aktivBehandling) null else avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
             )
         )
 }

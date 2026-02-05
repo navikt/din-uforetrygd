@@ -34,7 +34,7 @@ export function Behandling({ behandling, aktiv }: Props) {
                 key={`${behandling.vedtakId}-${steg.tittel}`}
                 status={steg.aktiv ? 'active' : steg.utfort ? 'completed' : undefined}
                 title={steg.tittel}
-                timestamp={formatterDatoTekst(behandling.mottattDato)}
+                timestamp={steg.aktiv || steg.utfort ? formatterDatoTekst(behandling.mottattDato) : undefined}
                 bullet={steg.aktiv || steg.utfort ? <CheckmarkHeavyIcon /> : undefined}
               >
                 {steg.undertekst}
