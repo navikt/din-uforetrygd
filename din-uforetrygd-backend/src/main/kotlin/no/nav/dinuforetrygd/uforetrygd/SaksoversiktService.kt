@@ -64,7 +64,7 @@ class SaksoversiktService(
         )
 
     private fun lagBehandlingTittel(krav: Krav, isReguleringsvedtak: Boolean, eoÅrstall: Int? = null): String {
-        val reguleringTekst = "Regulering ifbm nytt grunnbeløp"
+        val reguleringTekst = "Regulering i forbindelse med nytt grunnbeløp"
         return if (isReguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
             reguleringTekst
         } else when (krav.kravGjelder) {
