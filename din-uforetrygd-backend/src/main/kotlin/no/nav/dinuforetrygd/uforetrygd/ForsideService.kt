@@ -3,7 +3,6 @@ package no.nav.dinuforetrygd.uforetrygd
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.JournalpostService
-import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
 import no.nav.dinuforetrygd.pensjon.pen.*
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
