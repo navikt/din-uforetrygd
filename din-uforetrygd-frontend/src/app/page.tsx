@@ -44,7 +44,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <VStack gap="space-12" className={'tittel-wrapper'}>
-            <Brødsmulesti brødsmuler={[{ tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' }]} />
+            <Brødsmulesti />
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>

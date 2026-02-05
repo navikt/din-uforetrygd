@@ -19,12 +19,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
   return (
     <section>
       <VStack gap="space-24">
-        <Brødsmulesti
-          brødsmuler={[
-            { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
-            { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
-          ]}
-        />
+        <Brødsmulesti />
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>
