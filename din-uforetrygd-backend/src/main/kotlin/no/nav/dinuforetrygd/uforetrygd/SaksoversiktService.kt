@@ -64,14 +64,15 @@ class SaksoversiktService(
         )
 
     private fun lagBehandlingTittel(krav: Krav, isReguleringsvedtak: Boolean, eoÅrstall: Int? = null): String {
+        val reguleringTekst = "Regulering ifbm nytt grunnbeløp"
         return if (isReguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
-            "Regulering"
+            reguleringTekst
         } else when (krav.kravGjelder) {
-            "EKSPORT" -> "Eksport"
+            "EKSPORT" -> "Eksport av uføretrygd til utlandet"
             "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL" -> "Søknad om uføretrygd"
             "INNT_E" -> "Inntektsendring"
             "MELLOMBH" -> "Mellombehandling"
-            "REGULERING" -> "Regulering"
+            "REGULERING" -> reguleringTekst
             "SLUTT_BH_UTL" -> "Sluttbehandling Norge/utland"
             "SOK_RED_UG" -> "Søknad om reduksjon av uføregrad"
             "SOK_OKN_UG" -> "Søknad om økning av uføregrad"
@@ -114,7 +115,7 @@ class SaksoversiktService(
                 Steg(
                     aktiv = aktivBehandling,
                     utfort = !aktivBehandling,
-                    tittel = "Inntektsendring er mottatt og ligger i behandlingskø"
+                    tittel = "Opplysninger om endret inntekt er mottatt og ligger i behandlingskø"
                 ),
                 Steg(
                     aktiv = false,
@@ -126,12 +127,12 @@ class SaksoversiktService(
                 Steg(
                     aktiv = aktivBehandling,
                     utfort = !aktivBehandling,
-                    tittel = "Regulering er igangsatt"
+                    tittel = "Regulering av uføretrygden er igangsatt"
                 ),
                 Steg(
                     aktiv = false,
                     utfort = !aktivBehandling,
-                    tittel = "Regulering er ferdig behandlet"
+                    tittel = "Regulering av uføretrygden er ferdig behandlet"
                 )
             )
             "UT_EO" -> listOf(
@@ -147,19 +148,7 @@ class SaksoversiktService(
                 )
             )
             "REVURD" -> when (krav.arsak) {
-                "ENDRING_IFU" -> listOf(
-                    Steg(
-                        aktiv = aktivBehandling,
-                        utfort = !aktivBehandling,
-                        tittel = "Endring er igangsatt"
-                    ),
-                    Steg(
-                        aktiv = false,
-                        utfort = !aktivBehandling,
-                        tittel = "Endring er ferdig behandlet"
-                    )
-                )
-
+                "ENDRING_IFU" -> lagDefaultSteg(avslag, aktivBehandling)
                 "SOKNAD_BT" -> lagDefaultSteg(avslag, aktivBehandling)
                 else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
             }
