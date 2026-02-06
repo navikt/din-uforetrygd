@@ -2,14 +2,12 @@ package no.nav.dinuforetrygd.person
 
 import no.nav.dinuforetrygd.person.parallellesannheter.ParallelleSannheterService
 import no.nav.dinuforetrygd.person.pdl.*
-import no.nav.dinuforetrygd.person.persondata.PersondataClient
 import org.springframework.stereotype.Service
 
 @Service
 class PersonService(
     private val pdlClient: PdlClient,
     private val parallelleSannheterService: ParallelleSannheterService,
-    private val persondataClient: PersondataClient,
 ) {
 
     fun hasAdressebeskyttelse(pid: String): Boolean {
@@ -25,11 +23,4 @@ class PersonService(
             pdlClient.performQueryWithElevatedPriveleges(PdlQueryBuilder.getAdressebeskyttelseQuery(pid)).adressebeskyttelse
         return parallelleSannheterService.decideAdressebeskyttelse(adressebeskyttelse)?.gradering
     }
-
-    fun getVergemaalEllerFremtidsfullmakt(pid: String): PdlVergemaalEllerFremtidsfullmakt? {
-        val vergemaalEllerFremtidsfullmakt = pdlClient.performQuery(PdlQueryBuilder.getVergemaaalEllerFremtidsfullmaktQuery(pid)).vergemaalEllerFremtidsfullmakt
-        return vergemaalEllerFremtidsfullmakt?.firstOrNull()
-    }
-
-    fun getLandkodeFromBostedsland(pid: String) = persondataClient.getBostedsland(pid).landkode
 }
