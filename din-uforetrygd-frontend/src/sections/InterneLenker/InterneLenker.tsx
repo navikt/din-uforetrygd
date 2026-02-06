@@ -8,6 +8,7 @@ import styles from './interneLenker.module.css'
 import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
 import { components } from '@/api/api'
 import { isEnabled } from '@/utils/unleash'
+import getEnv from '@/utils/env'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
@@ -18,6 +19,7 @@ interface InterneLenkerProps {
 
 export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid, journalposter }) => {
   const visSaksoversikt = await isEnabled('din.uforetrygd.saksoversikt')
+  const mode = getEnv('MODE')
 
   return (
     <>
@@ -38,7 +40,9 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
                   </Box>
                 </Hide>
                 <LinkCardTitle>
-                  <LinkCardAnchor href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}`}>
+                  <LinkCardAnchor
+                    href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${mode === 'veileder' ? `&pid=${pid}` : ''}`}
+                  >
                     Saksoversikt
                   </LinkCardAnchor>
                 </LinkCardTitle>
