@@ -3,7 +3,7 @@ package no.nav.dinuforetrygd.uforetrygd
 import java.time.LocalDate
 
 data class SaksoversiktResponse(
-    val aktivBehandling: Behandling?,
+    val aktiveBehandlinger: List<Behandling>,
     val avsluttedeBehandlinger: List<Behandling>
 )
 
