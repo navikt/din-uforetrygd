@@ -2,7 +2,7 @@
 
 import { HStack, Link, VStack } from '@navikt/ds-react'
 import styles from './brødsmulesti.module.css'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export interface Brødsmuler {
   tittel: string
@@ -15,9 +15,19 @@ const allePaths: Record<string, Brødsmuler> = {
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
 }
 
-export default function Brødsmulesti() {
+interface Props {
+  mode: string | undefined
+}
+
+export default function Brødsmulesti({ mode }: Props) {
   const pathname = usePathname()
   const brødsmuler = [allePaths['minside'], allePaths['']]
+
+  const searchParams = useSearchParams()
+
+  const pidQuery = mode === 'veileder' ? `?pid=${searchParams.get('pid')}` : ''
+
+  console.log(mode + pidQuery)
 
   const segments = pathname.split('/').filter(Boolean)
 
@@ -29,7 +39,7 @@ export default function Brødsmulesti() {
         {brødsmuler.map(({ tittel, url }, index) => (
           <div className={styles.brodsmuleLink} key={tittel}>
             {index !== brødsmuler.length - 1 ? (
-              <Link href={url} underline={false}>
+              <Link href={url + pidQuery} underline={false}>
                 {tittel}
               </Link>
             ) : (

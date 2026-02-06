@@ -9,9 +9,10 @@ import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 
 interface Saksoversikt {
   saksoversikt: SaksoversiktType
+  mode: string | undefined
 }
 
-export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
+export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => {
   const [currentPage, setCurrentPage] = useState(saksoversikt.avsluttedeBehandlinger.length > 0 ? 1 : 0)
   const antallBehandlingerPerSide = 5
   const antallSider = Math.ceil(saksoversikt.avsluttedeBehandlinger.length / antallBehandlingerPerSide)
@@ -19,7 +20,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
   return (
     <section>
       <VStack gap="space-24">
-        <Brødsmulesti />
+        <Brødsmulesti mode={mode}/>
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>
