@@ -27,8 +27,6 @@ export default function Brødsmulesti({ mode }: Props) {
 
   const pidQuery = mode === 'veileder' ? `?pid=${searchParams.get('pid')}` : ''
 
-  console.log(mode + pidQuery)
-
   const segments = pathname.split('/').filter(Boolean)
 
   segments.forEach((segment) => brødsmuler.push(allePaths[segment]))
