@@ -1,26 +1,34 @@
+'use client'
+
 import { HStack, Link, VStack } from '@navikt/ds-react'
 import styles from './brødsmulesti.module.css'
+import { usePathname } from 'next/navigation'
 
 export interface Brødsmuler {
   tittel: string
   url: string
 }
 
-interface Props {
-  brødsmuler: Brødsmuler[]
+const allePaths: Record<string, Brødsmuler> = {
+  minside: { tittel: 'Min side', url: '/minside' },
+  '': { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
+  saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
 }
 
-export default function Brødsmulesti({ brødsmuler = [] }: Props) {
-  const defaultBrødsmuler = [{ tittel: 'Min side', url: '/minside' }]
+export default function Brødsmulesti() {
+  const pathname = usePathname()
+  const brødsmuler = [allePaths['minside'], allePaths['']]
 
-  brødsmuler.map((brødsmule) => defaultBrødsmuler.push(brødsmule))
+  const segments = pathname.split('/').filter(Boolean)
+
+  segments.forEach((segment) => brødsmuler.push(allePaths[segment]))
 
   return (
     <VStack>
       <HStack>
-        {defaultBrødsmuler.map(({ tittel, url }, index) => (
+        {brødsmuler.map(({ tittel, url }, index) => (
           <div className={styles.brodsmuleLink} key={tittel}>
-            {index !== defaultBrødsmuler.length - 1 ? (
+            {index !== brødsmuler.length - 1 ? (
               <Link href={url} underline={false}>
                 {tittel}
               </Link>
