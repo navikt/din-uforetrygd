@@ -8,7 +8,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -90,41 +89,6 @@ class FullmaktClient(
         } catch (e: RuntimeException) { // e.g. when connection broken
             logger.error("Kall til fullmaktstjenesten feilet: ${e.message}")
             throw FullmaktException(SERVICE, "hasValidRepresentasjonsforhold", "Failed to call service", e)
-        }
-    }
-
-    fun findAllRepresentasjonsforhold(fullmektigPid: String): List<Representasjonsforhold> {
-        return try {
-            tokenService.getEgressToken(scope, audience, fullmektigPid, AppId.PENSJON_FULLMAKT).let {
-                webClient
-                    .get()
-                    .uri(urlFindRepresentasjonsforhold())
-                    .headers { header ->
-                        header.setBearerAuth(it!!)
-                        header[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
-                        header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
-                        header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
-                    }
-                    .retrieve()
-                    .bodyToMono(object : ParameterizedTypeReference<List<Representasjonsforhold>>() {})
-                    .withMdcContext()
-                    .block() ?: emptyList()
-            }
-
-        } catch (e: WebClientResponseException) {
-            logger.error("Kall til fullmaktstjenesten feilet med melding: ${e.responseBodyAsString}")
-            throw FullmaktException(
-                SERVICE,
-                "findAllRepresentasjonsforhold",
-                "Failed to call service: " + e.responseBodyAsString,
-                e
-            )
-        } catch (e: ResponseStatusException) {
-            logger.error("Kall til fullmaktstjenesten feilet med statuskode ${e.statusCode}: ${e.message}")
-            throw FullmaktException(SERVICE, "findAllRepresentasjonsforhold", "Failed to call service", e)
-        } catch (e: RuntimeException) { // e.g. when connection broken
-            logger.error("Kall til fullmaktstjenesten feilet: ${e.message}")
-            throw FullmaktException(SERVICE, "findAllRepresentasjonsforhold", "Failed to call service", e)
         }
     }
 

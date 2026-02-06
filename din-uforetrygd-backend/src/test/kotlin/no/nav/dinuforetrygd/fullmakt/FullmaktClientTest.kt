@@ -57,25 +57,6 @@ class FullmaktClientTest : WebClientTest() {
         assertEquals(PID_FULLMAKTSGIVER, request.getHeader("fullmaktsgiverPid"))
     }
 
-    @Test
-    fun `should return list of representasjonsforhold when 200 response from findAllRepresentasjonsforhold`() {
-        prepare(findAllRepresentasjonsforholdResponse200())
-        assertEquals(
-            listOf(
-                Representasjonsforhold(
-                    PID_FULLMAKTSGIVER,
-                    "Navn Navnesen",
-                    listOf("PENSJON_SKRIV"),
-                    "PDL"
-                )
-            ),
-            fullmaktClient.findAllRepresentasjonsforhold(PID_FULLMEKTIG)
-        )
-        val request = takeRequest()
-
-        assertEquals("/representasjon/findAllRepresentasjonsforhold", request.path)
-    }
-
     private fun hasValidRepresentasjonsforholdResponse200(): MockResponse {
         return jsonResponse(HttpStatus.OK)!!
             .setBody(
@@ -86,24 +67,6 @@ class FullmaktClientTest : WebClientTest() {
                         "fullmaktsgiverFnrKryptert": "fnr_kryptert",
                         "fullmaktsgiverFnr": $PID_FULLMAKTSGIVER
                     }
-                """.trimIndent()
-            )
-    }
-
-    private fun findAllRepresentasjonsforholdResponse200(): MockResponse {
-        return jsonResponse(HttpStatus.OK)!!
-            .setBody(
-                """
-                        [
-                            {
-                                "fullmaktsgiver": "$PID_FULLMAKTSGIVER",
-                                "fullmaktsgiverNavn": "Navn Navnesen",
-                                "typer": ["PENSJON_SKRIV"],
-                                "gyldigFraOgMed": "2000-01-02",
-                                "gyldigTilOgMed": "2018-09-12",
-                                "kilde": "PDL"
-                            }
-                        ]
                 """.trimIndent()
             )
     }
