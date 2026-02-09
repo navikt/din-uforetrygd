@@ -20,5 +20,5 @@ export const formatDate = (date?: string): string | undefined => {
 
 export const formatterDatoTekst = (dateString?: string | null): string | undefined => {
   if (!dateString) return undefined
-  return format(parseISO(dateString), 'd. MMM yyyy', { locale: nb })
+  return format(parseISO(dateString), 'd. MMMM yyyy', { locale: nb })
 }
