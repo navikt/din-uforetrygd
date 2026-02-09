@@ -65,7 +65,7 @@ class SaksoversiktService(
             krav = this.krav,
             reguleringsvedtak = this.vedtakstype == "REGULERING",
             avslag = this.avslag,
-            aktivBehandling = false
+            aktivBehandling = this.vedtakstatus == VedtakStatus.TIL_IVERKS
         ),
         vedtakId = this.vedtakId
     )

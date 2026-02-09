@@ -20,7 +20,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
   return (
     <section>
       <VStack gap="space-24">
-        <Brødsmulesti mode={mode}/>
+        <Brødsmulesti mode={mode} />
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>
@@ -31,8 +31,10 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
               <Tabs.Tab value="avsluttede" label="Ferdig behandlet"></Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel value="aktive">
-              {saksoversikt.aktivBehandling ? (
-                <Behandling behandling={saksoversikt.aktivBehandling} aktiv={true}></Behandling>
+              {saksoversikt.aktiveBehandlinger.length > 0 ? (
+                saksoversikt.aktiveBehandlinger.map((aktivBehandling) => (
+                  <Behandling behandling={aktivBehandling} aktiv={true}></Behandling>
+                ))
               ) : (
                 <IngenBehandlinger aktiv={true} />
               )}

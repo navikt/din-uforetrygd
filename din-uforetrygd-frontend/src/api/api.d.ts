@@ -65,7 +65,7 @@ export interface components {
       nettoUforetrygdPerManed: number
     }
     SaksoversiktResponse: {
-      aktivBehandling?: components['schemas']['Behandling']
+      aktiveBehandlinger: components['schemas']['Behandling'][]
       avsluttedeBehandlinger: components['schemas']['Behandling'][]
     }
     Behandling: {

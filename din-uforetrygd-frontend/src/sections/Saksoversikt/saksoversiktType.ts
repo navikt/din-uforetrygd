@@ -1,7 +1,7 @@
 import { components } from '@/api/api'
 
 export interface SaksoversiktType {
-  aktivBehandling?: BehandlingType
+  aktiveBehandlinger: BehandlingType[]
   avsluttedeBehandlinger: BehandlingType[]
 }
 
@@ -29,7 +29,7 @@ export interface StegType {
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
   return {
-    aktivBehandling: fra.aktivBehandling && mapTilBehandling(fra.aktivBehandling),
+    aktiveBehandlinger: fra.aktiveBehandlinger.map((aktivBehandling) => mapTilBehandling(aktivBehandling)),
     avsluttedeBehandlinger: fra.avsluttedeBehandlinger.map((it) => mapTilBehandling(it)),
   }
 }
