@@ -18,7 +18,7 @@ export const formatDate = (date?: string): string | undefined => {
   return date ? format(parseISO(date), 'dd.MM.yyyy') : undefined
 }
 
-export const formatterDatoTekst = (dateString?: string): string | undefined => {
+export const formatterDatoTekst = (dateString?: string | null): string | undefined => {
   if (!dateString) return undefined
   return format(parseISO(dateString), 'd. MMM yyyy', { locale: nb })
 }
