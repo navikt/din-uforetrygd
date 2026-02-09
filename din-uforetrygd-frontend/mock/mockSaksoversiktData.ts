@@ -2,7 +2,7 @@ import { components } from '../src/api/api'
 
 export const mockSaksoversiktData: Record<string, components['schemas']['SaksoversiktResponse']> = {
   default: {
-    aktivBehandling: {
+    aktiveBehandlinger: [{
       tittel: 'Søknad om uføretrygd',
       mottattDato: '2024-10-01',
       ferdigstiltDato: undefined,
@@ -22,7 +22,7 @@ export const mockSaksoversiktData: Record<string, components['schemas']['Saksove
         }
       ],
       vedtakId: 123
-    },
+    }],
     avsluttedeBehandlinger: [
       {
         tittel: 'Revurdering av uføretrygd',
@@ -69,7 +69,7 @@ export const mockSaksoversiktData: Record<string, components['schemas']['Saksove
     ],
   },
   'ingen-aktiv-behandling': {
-    aktivBehandling: undefined,
+    aktiveBehandlinger: [],
     avsluttedeBehandlinger: [
       {
         tittel: 'Søknad om uføretrygd',
