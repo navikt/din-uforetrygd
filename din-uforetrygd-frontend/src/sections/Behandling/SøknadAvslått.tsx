@@ -1,16 +1,17 @@
 import { BodyShort, Link } from '@navikt/ds-react'
 import React from 'react'
-import { BehandlingHeader } from '@/sections/Behandling/BehandlingHeader'
+import { ForsideBehandlingHeader } from '@/sections/Behandling/ForsideBehandlingHeader'
 import Divider from '@/sections/Behandling/Divider'
+import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 
 interface Props {
-  tittel: string
+  behandling: ForsideBehandling
 }
 
-export const SøknadAvslått = ({ tittel }: Props) => {
+export const SøknadAvslått = ({ behandling }: Props) => {
   return (
     <>
-      <BehandlingHeader tittel={tittel} statusTekst="Søknad avslått" statusFarge="warning" />
+      <ForsideBehandlingHeader tittel={behandling.tittel + " er avslått"} statusTekst="Søknad avslått" dato={behandling.dato} statusFarge="warning" />
       <Divider />
       <BodyShort>
         I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du

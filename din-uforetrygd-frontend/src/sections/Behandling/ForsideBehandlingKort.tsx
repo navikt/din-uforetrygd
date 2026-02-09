@@ -12,7 +12,7 @@ interface BehandlingProps {
   visningskriterier: Visningskriterier[]
 }
 
-export const Behandling: React.FC<BehandlingProps> = async ({ behandling, visningskriterier }) => {
+export const ForsideBehandlingKort: React.FC<BehandlingProps> = async ({ behandling, visningskriterier }) => {
   if (
     !behandling &&
     (visningskriterier.includes(Visningskriterier.IngenUforesak) ||
@@ -24,10 +24,10 @@ export const Behandling: React.FC<BehandlingProps> = async ({ behandling, visnin
   if (!behandling) return null
 
   return (
-    <section aria-label="Behandling">
+    <section aria-label="Status på søknad">
       <Box padding="space-16" borderWidth="1" borderColor="neutral-subtleA" borderRadius="12">
         <VStack gap="space-16">
-          {behandling.status == 'AVSLAG' && <SøknadAvslått tittel={behandling.tittel + ' er avslått'} />}
+          {behandling.status == 'AVSLAG' && <SøknadAvslått behandling={behandling} />}
           {behandling.status == 'MOTTATT' && <SøknadMottatt behandling={behandling} />}
           {behandling.status == 'INNVILGET' && <SøknadInnvilget behandling={behandling} />}
         </VStack>

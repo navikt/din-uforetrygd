@@ -18,7 +18,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
-import { Behandling } from '@/sections/Behandling/Behandling'
+import { ForsideBehandlingKort } from '@/sections/Behandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 import { isEnabled } from '@/utils/unleash'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
@@ -60,7 +60,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             </LukkbarAlert>
           )}
           {visBehandling ? (
-            <Behandling
+            <ForsideBehandlingKort
               behandling={
                 initResponse.uforetrygdResponse.behandling
                   ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)

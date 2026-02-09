@@ -1,6 +1,6 @@
 import { BodyShort, Button, Link } from '@navikt/ds-react'
 import React from 'react'
-import { BehandlingHeader } from '@/sections/Behandling/BehandlingHeader'
+import { ForsideBehandlingHeader } from '@/sections/Behandling/ForsideBehandlingHeader'
 import Divider from '@/sections/Behandling/Divider'
 import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 
@@ -11,9 +11,10 @@ interface Props {
 export const SøknadMottatt = ({ behandling }: Props) => {
   return (
     <>
-      <BehandlingHeader
+      <ForsideBehandlingHeader
         tittel={behandling.tittel + ' er mottatt'}
         statusTekst={behandling.statusTekst}
+        dato={behandling.dato}
         statusFarge="info"
       />
 

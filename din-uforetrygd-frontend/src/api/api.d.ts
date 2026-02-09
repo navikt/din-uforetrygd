@@ -60,6 +60,7 @@ export interface components {
       type: string
       status: string
       beregning: components['schemas']['Beregning'] | null
+      dato: string
     }
     Beregning: {
       nettoUforetrygdPerManed: number
