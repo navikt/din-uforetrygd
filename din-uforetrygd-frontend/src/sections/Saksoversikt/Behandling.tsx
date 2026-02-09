@@ -26,16 +26,10 @@ export function Behandling({ behandling, aktiv }: Props) {
                 : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
             </BodyShort>
             {behandling.avslattForutgaendeMedlemskap && (
-              <>
-                <BodyShort weight="semibold">
-                  I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt
-                  finner du informasjon om hvordan du kan klage.
-                </BodyShort>
-                <BodyShort weight="semibold">
-                  Hvis du i stedet har fått et informasjonsbrev, ikke et vedtak, kan du se bort fra dette. I så fall vil
-                  du få et vedtak når nødvendige opplysninger er mottatt fra utlandet.
-                </BodyShort>
-              </>
+              <BodyShort weight="semibold">
+                Viktig! Hvis du har fått et informasjonsbrev, ikke et vedtak, kan du se bort fra dette. I så fall vil du
+                få et vedtak når nødvendige opplysninger er mottatt fra utlandet.
+              </BodyShort>
             )}
           </VStack>
         </ExpansionCard.Description>

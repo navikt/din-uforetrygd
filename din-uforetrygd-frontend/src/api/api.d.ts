@@ -61,6 +61,7 @@ export interface components {
       status: string
       beregning: components['schemas']['Beregning'] | null
       dato: string
+      avslattForutgaendeMedlemskap: boolean
     }
     Beregning: {
       nettoUforetrygdPerManed: number
