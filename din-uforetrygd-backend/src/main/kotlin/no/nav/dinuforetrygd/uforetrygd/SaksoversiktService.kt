@@ -43,6 +43,7 @@ class SaksoversiktService(
         ),
         mottattDato = this.mottattDato,
         avslag = false,
+        avslattForutgaendeMedlemskap = false,
         steg = lagSteg(
             krav = this,
             reguleringsvedtak = false,
@@ -60,6 +61,7 @@ class SaksoversiktService(
         mottattDato = this.krav.mottattDato,
         ferdigstiltDato = this.vedtaksdato,
         avslag = this.avslag,
+        avslattForutgaendeMedlemskap = this.avslattForutgaendeMedlemskap,
         etteroppgjor = this.etteroppgjor?.toEtteroppgjør(),
         steg = lagSteg(
             krav = this.krav,

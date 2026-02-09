@@ -14,7 +14,8 @@ data class Behandling(
     val avslag: Boolean,
     val etteroppgjor: Etteroppgjør? = null,
     val steg: List<Steg>,
-    val vedtakId: Long? = null
+    val vedtakId: Long? = null,
+    val avslattForutgaendeMedlemskap: Boolean
 )
 
 data class Steg(

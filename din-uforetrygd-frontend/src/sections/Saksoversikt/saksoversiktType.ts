@@ -13,6 +13,7 @@ export interface BehandlingType {
   etteroppgjor?: EtteroppgjorType | null
   steg: StegType[]
   vedtakId?: number | null
+  avslattForutgaendeMedlemskap: boolean
 }
 
 export interface EtteroppgjorType {
@@ -43,5 +44,6 @@ const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingT
     etteroppgjor: fra.etteroppgjor,
     steg: fra.steg,
     vedtakId: fra.vedtakId,
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
   }
 }

@@ -77,6 +77,7 @@ export interface components {
       etteroppgjor?: components['schemas']['Etteroppgjor']
       steg: components['schemas']['Steg'][]
       vedtakId?: number
+      avslattForutgaendeMedlemskap: boolean
     }
     Etteroppgjor: {
       etterbetaling: number
