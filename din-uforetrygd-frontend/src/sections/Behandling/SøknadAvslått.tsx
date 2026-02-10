@@ -12,16 +12,21 @@ interface Props {
 export const SøknadAvslått = ({ behandling, visAvslåttForutgåendeMedlemskap }: Props) => {
   return (
     <>
-      <ForsideBehandlingHeader tittel={behandling.tittel + " er avslått"} statusTekst="Søknad avslått" dato={behandling.dato} statusFarge="warning" />
+      <ForsideBehandlingHeader
+        tittel={behandling.tittel + ' er avslått'}
+        statusTekst="Søknad avslått"
+        dato={behandling.dato}
+        statusFarge="warning"
+      />
       <Divider />
       <BodyShort>
         I vedtaksbrevet ditt kan du lese hvorfor. Har du spørsmål kan du kontakte oss. I vedtaksbrevet ditt finner du
         informasjon om hvordan du kan klage.
       </BodyShort>
       {visAvslåttForutgåendeMedlemskap && (
-        <BodyShort weight="semibold">
-          Viktig! Hvis du i stedet har fått et informasjonsbrev, ikke et vedtak, kan du se bort fra dette. I så fall vil
-          du få et vedtak når nødvendige opplysninger er mottatt fra utlandet.
+        <BodyShort>
+          <b>Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget.</b> I så fall
+          vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
         </BodyShort>
       )}
       <Divider />

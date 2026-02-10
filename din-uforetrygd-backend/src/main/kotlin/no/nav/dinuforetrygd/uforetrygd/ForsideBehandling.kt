@@ -10,7 +10,7 @@ data class ForsideBehandling(
     val type: BehandlingType,
     val status: Status,
     val beregning: Beregning? = null,
-    val dato: LocalDate?
+    val dato: LocalDate?,
     val avslattForutgaendeMedlemskap: Boolean
 )
 

@@ -7,6 +7,7 @@ import styles from './saksoversikt.module.css'
 import { BodyShort, Process, VStack } from '@navikt/ds-react'
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons'
 import { Etteroppgjor } from '@/sections/Saksoversikt/Etteroppgjor'
+import React from 'react'
 
 interface Props {
   behandling: BehandlingType
@@ -26,9 +27,9 @@ export function Behandling({ behandling, aktiv }: Props) {
                 : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
             </BodyShort>
             {behandling.avslattForutgaendeMedlemskap && (
-              <BodyShort weight="semibold">
-                Viktig! Hvis du har fått et informasjonsbrev, ikke et vedtak, kan du se bort fra dette. I så fall vil du
-                få et vedtak når nødvendige opplysninger er mottatt fra utlandet.
+              <BodyShort>
+                <b>Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget.</b> I så fall
+                vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
               </BodyShort>
             )}
           </VStack>
