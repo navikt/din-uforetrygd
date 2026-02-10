@@ -22,7 +22,10 @@ class SaksoversiktService(
 
         val relevanteVedtak = vedtak
             .filter { it.erRelevant() }
-            .sortedByDescending { it.vedtaksdato }
+            .sortedWith(
+                compareByDescending<Vedtak> { it.vedtaksdato }
+                    .thenByDescending { it.vedtakId }
+            )
 
         val vedtakTilIverksettelse = relevanteVedtak
             .filter { it.vedtakstatus == VedtakStatus.TIL_IVERKS }
