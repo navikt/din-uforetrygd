@@ -1,6 +1,6 @@
 import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
 import React from 'react'
-import { BehandlingHeader } from '@/sections/Behandling/BehandlingHeader'
+import { ForsideBehandlingHeader } from '@/sections/Behandling/ForsideBehandlingHeader'
 import Divider from '@/sections/Behandling/Divider'
 import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
 
@@ -11,9 +11,10 @@ interface Props {
 export const SøknadInnvilget = ({ behandling }: Props) => {
   return (
     <>
-      <BehandlingHeader
+      <ForsideBehandlingHeader
         tittel={behandling.tittel + ' er innvilget'}
         statusTekst={behandling.statusTekst}
+        dato={behandling.dato}
         statusFarge="success"
       />
 

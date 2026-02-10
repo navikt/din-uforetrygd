@@ -3,10 +3,10 @@ export const mockData = {
     pid: '81549300',
     loggetInnSom: '81549300',
     sak: {
-        type: 'UFORETRYGD',
-        status: 'LOPENDE',
-        sakId: 519023581092,
-      },
+      type: 'UFORETRYGD',
+      status: 'LOPENDE',
+      sakId: 519023581092,
+    },
     hasIverksattVedtak: true,
     uforevedtak: {
       uforegrad: 100,
@@ -183,6 +183,12 @@ export const mockData = {
         ],
       },
     ],
+    behandling: {
+      type: 'SØKNAD_UFØRETRYGD',
+      status: 'MOTTATT',
+      beregning: { nettoUforetrygdPerManed: 123456 },
+      dato: '2025-12-14',
+    },
   },
   avsluttet: {
     pid: '81549300',

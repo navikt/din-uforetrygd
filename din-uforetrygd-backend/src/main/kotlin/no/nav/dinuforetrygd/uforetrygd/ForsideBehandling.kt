@@ -4,11 +4,13 @@ import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import no.nav.dinuforetrygd.pensjon.pen.VedtakStatus
 import no.nav.dinuforetrygd.util.erRelevant
+import java.time.LocalDate
 
 data class ForsideBehandling(
     val type: BehandlingType,
     val status: Status,
-    val beregning: Beregning? = null
+    val beregning: Beregning? = null,
+    val dato: LocalDate?
 )
 
 data class Beregning(
@@ -35,12 +37,16 @@ fun lagBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): 
 
     val type = finnBehandlingType(relevantÅpentKrav ?: relevantVedtak!!.krav)
 
-    if(type == BehandlingType.INGEN) return null
+    if (type == BehandlingType.INGEN) return null
+
+    val status = finnBehandlingStatus(relevantÅpentKrav, relevantVedtak)
 
     return ForsideBehandling(
         type = type,
-        status = finnBehandlingStatus(relevantÅpentKrav, relevantVedtak),
-        beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) })
+        status = status,
+        beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) },
+        dato = if (status == Status.MOTTATT) åpentKrav?.mottattDato else relevantVedtak!!.vedtaksdato
+    )
 }
 
 fun finnBehandlingType(krav: Krav): BehandlingType {
