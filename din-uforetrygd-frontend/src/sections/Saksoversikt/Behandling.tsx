@@ -27,9 +27,9 @@ export function Behandling({ behandling, aktiv }: Props) {
                 : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
             </BodyShort>
             {behandling.avslattForutgaendeMedlemskap && (
-              <BodyShort>
-                <b>Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget.</b> I så fall
-                vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
+              <BodyShort weight={'semibold'}>
+                Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget. I så
+                fall vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
               </BodyShort>
             )}
           </VStack>

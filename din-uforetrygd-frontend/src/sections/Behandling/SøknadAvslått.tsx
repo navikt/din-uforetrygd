@@ -24,8 +24,8 @@ export const SøknadAvslått = ({ behandling, visAvslåttForutgåendeMedlemskap 
         informasjon om hvordan du kan klage.
       </BodyShort>
       {visAvslåttForutgåendeMedlemskap && (
-        <BodyShort>
-          <b>Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget.</b> I så fall
+        <BodyShort weight={'semibold'}>
+          Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget. I så fall
           vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
         </BodyShort>
       )}
