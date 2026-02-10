@@ -22,10 +22,9 @@ export interface EtteroppgjorType {
 }
 
 export interface StegType {
-  aktiv: boolean
-  utfort: boolean
   tittel: string
   undertekst?: string | null
+  dato: string | null
 }
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {

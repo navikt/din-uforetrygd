@@ -85,10 +85,9 @@ export interface components {
       tilbakekreving: number
     }
     Steg: {
-      aktiv: boolean
-      utfort: boolean
       tittel: string
       undertekst?: string
+      dato: string
     }
     DittUforevedtak: {
       /** Format: int32 */

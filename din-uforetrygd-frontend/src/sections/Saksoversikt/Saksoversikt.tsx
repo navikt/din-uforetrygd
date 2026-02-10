@@ -2,7 +2,7 @@
 
 import { Heading, Pagination, Tabs, VStack } from '@navikt/ds-react'
 import React, { useState } from 'react'
-import { Behandling } from '@/sections/Saksoversikt/Behandling'
+import { SaksoversiktBehandling } from '@/sections/Saksoversikt/SaksoversiktBehandling'
 import { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
@@ -33,7 +33,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
             <Tabs.Panel value="aktive">
               {saksoversikt.aktiveBehandlinger.length > 0 ? (
                 saksoversikt.aktiveBehandlinger.map((aktivBehandling) => (
-                  <Behandling behandling={aktivBehandling} aktiv={true}></Behandling>
+                  <SaksoversiktBehandling behandling={aktivBehandling} ferdigBehandlet={false} />
                 ))
               ) : (
                 <IngenBehandlinger aktiv={true} />
@@ -43,7 +43,9 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
               {saksoversikt.avsluttedeBehandlinger.length > 0 ? (
                 saksoversikt.avsluttedeBehandlinger
                   .slice(antallBehandlingerPerSide * (currentPage - 1), antallBehandlingerPerSide * currentPage)
-                  .map((behandling) => <Behandling behandling={behandling} key={behandling.vedtakId} aktiv={false} />)
+                  .map((behandling) => (
+                    <SaksoversiktBehandling behandling={behandling} key={behandling.vedtakId} ferdigBehandlet={true} />
+                  ))
               ) : (
                 <IngenBehandlinger aktiv={false} />
               )}

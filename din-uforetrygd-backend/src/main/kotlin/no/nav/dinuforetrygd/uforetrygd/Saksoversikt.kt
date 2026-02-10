@@ -19,10 +19,9 @@ data class Behandling(
 )
 
 data class Steg(
-    val aktiv: Boolean,
-    val utfort: Boolean,
     val tittel: String,
-    val undertekst: String? = null
+    val undertekst: String? = null,
+    val dato: LocalDate? = null,
 )
 
 data class Etteroppgjør(
