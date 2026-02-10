@@ -10,7 +10,8 @@ data class ForsideBehandling(
     val type: BehandlingType,
     val status: Status,
     val beregning: Beregning? = null,
-    val dato: LocalDate?
+    val dato: LocalDate?,
+    val avslattForutgaendeMedlemskap: Boolean
 )
 
 data class Beregning(
@@ -45,7 +46,9 @@ fun lagBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): 
         type = type,
         status = status,
         beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) },
-        dato = if (status == Status.MOTTATT) åpentKrav?.mottattDato else relevantVedtak!!.vedtaksdato
+        dato = if (status == Status.MOTTATT) åpentKrav?.mottattDato else relevantVedtak!!.vedtaksdato,
+        avslattForutgaendeMedlemskap = relevantVedtak?.avslattForutgaendeMedlemskap ?: false
+
     )
 }
 
@@ -59,6 +62,7 @@ fun finnBehandlingType(krav: Krav): BehandlingType {
             "SOKNAD_BT" -> BehandlingType.SØKNAD_BARNETILLEGG
             else -> BehandlingType.INGEN // TODO: når alle typer er lagt til, så trenger vi ikke koden ingen, men kaster exception hvis det er noe vi ikke forventer
         }
+
         else -> BehandlingType.INGEN // TODO: når alle typer er lagt til, så trenger vi ikke koden ingen, men kaster exception hvis det er noe vi ikke forventer
     }
 }

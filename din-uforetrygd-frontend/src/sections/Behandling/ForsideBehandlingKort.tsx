@@ -27,7 +27,12 @@ export const ForsideBehandlingKort: React.FC<BehandlingProps> = async ({ behandl
     <section aria-label="Status på søknad">
       <Box padding="space-16" borderWidth="1" borderColor="neutral-subtleA" borderRadius="12">
         <VStack gap="space-16">
-          {behandling.status == 'AVSLAG' && <SøknadAvslått behandling={behandling} />}
+          {behandling.status == 'AVSLAG' && (
+            <SøknadAvslått
+              behandling={behandling}
+              visAvslåttForutgåendeMedlemskap={behandling.avslattForutgaendeMedlemskap}
+            />
+          )}
           {behandling.status == 'MOTTATT' && <SøknadMottatt behandling={behandling} />}
           {behandling.status == 'INNVILGET' && <SøknadInnvilget behandling={behandling} />}
         </VStack>

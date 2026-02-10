@@ -4,9 +4,10 @@ import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
 import { BehandlingType } from '@/sections/Saksoversikt/saksoversiktType'
 import { formatterDatoTekst } from '@/utils/formatter/formatter'
 import styles from './saksoversikt.module.css'
-import { Process } from '@navikt/ds-react'
+import { BodyShort, Process, VStack } from '@navikt/ds-react'
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons'
 import { Etteroppgjor } from '@/sections/Saksoversikt/Etteroppgjor'
+import React from 'react'
 
 interface Props {
   behandling: BehandlingType
@@ -19,9 +20,19 @@ export function Behandling({ behandling, aktiv }: Props) {
       <ExpansionCard.Header>
         <ExpansionCard.Title>{behandling.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${aktiv ? '' : styles.behandlingDato}`}>
-          {aktiv
-            ? `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
-            : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
+          <VStack gap="space-8">
+            <BodyShort>
+              {aktiv
+                ? `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
+                : `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`}
+            </BodyShort>
+            {behandling.avslattForutgaendeMedlemskap && (
+              <BodyShort>
+                <b>Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget.</b> I så fall
+                vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
+              </BodyShort>
+            )}
+          </VStack>
         </ExpansionCard.Description>
       </ExpansionCard.Header>
       <ExpansionCard.Content>

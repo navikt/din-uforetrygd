@@ -8,6 +8,7 @@ export interface ForsideBehandling {
   lenker: Lenke[]
   beregninger: BeregningRad[]
   dato: string
+  avslattForutgaendeMedlemskap: boolean
 }
 
 export enum Status {
@@ -45,6 +46,7 @@ export function toForsideBehandling(fra: components['schemas']['ForsideBehandlin
     lenker: lagLenker(fra.status as Status, fra.type as BehandlingType),
     beregninger: lagBeregning(fra.beregning, fra.status as Status),
     dato: fra.dato,
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
   }
 }
 

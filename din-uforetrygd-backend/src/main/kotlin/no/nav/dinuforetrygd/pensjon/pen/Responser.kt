@@ -39,7 +39,8 @@ data class Vedtak(
     val avslag: Boolean,
     val krav: Krav,
     val etteroppgjor: Etteroppgjør? = null,
-    val beregning: Beregning? = null
+    val beregning: Beregning? = null,
+    val avslattForutgaendeMedlemskap: Boolean
 )
 
 enum class VedtakStatus {
