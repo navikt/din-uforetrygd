@@ -1,12 +1,10 @@
 package no.nav.dinuforetrygd.uforetrygd
 
+import no.nav.dinuforetrygd.pensjon.pen.*
 import no.nav.dinuforetrygd.pensjon.pen.Etteroppgjør
-import no.nav.dinuforetrygd.pensjon.pen.Krav
-import no.nav.dinuforetrygd.pensjon.pen.PenClient
-import no.nav.dinuforetrygd.pensjon.pen.Vedtak
-import no.nav.dinuforetrygd.pensjon.pen.VedtakStatus
 import no.nav.dinuforetrygd.util.erRelevant
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import kotlin.math.abs
 
 @Service
@@ -67,7 +65,8 @@ class SaksoversiktService(
             krav = this.krav,
             reguleringsvedtak = this.vedtakstype == "REGULERING",
             avslag = this.avslag,
-            aktivBehandling = this.vedtakstatus == VedtakStatus.TIL_IVERKS
+            aktivBehandling = this.vedtakstatus == VedtakStatus.TIL_IVERKS,
+            ferdigstiltDato = this.vedtaksdato
         ),
         vedtakId = this.vedtakId
     )
@@ -108,63 +107,60 @@ class SaksoversiktService(
         krav: Krav,
         reguleringsvedtak: Boolean,
         avslag: Boolean?,
-        aktivBehandling: Boolean
+        aktivBehandling: Boolean,
+        ferdigstiltDato: LocalDate? = null
     ): List<Steg> {
         return if (reguleringsvedtak) {//Her er vedtaket type regulering. Det trenger ikke bety at kravet er regulering(det kan bety manuell regulering). Derfor denne i tillegg
             listOf(
                 Steg(
-                    aktiv = aktivBehandling,
-                    utfort = !aktivBehandling,
                     tittel = "Regulering er igangsatt",
+                    dato = krav.mottattDato,
                 ),
                 Steg(
-                    aktiv = false,
-                    utfort = !aktivBehandling,
                     tittel = "Regulering er ferdig behandlet",
+                    dato = ferdigstiltDato
                 )
             )
         } else when (krav.kravGjelder) {
             "EKSPORT", "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL", "SLUTT_BH_UTL", "SOK_RED_UG", "SOK_OKN_UG", "SOK_UU", "SOK_YS", "MELLOMBH" ->
-                lagDefaultSteg(avslag, aktivBehandling)
+                lagDefaultSteg(avslag, aktivBehandling, krav.mottattDato, ferdigstiltDato)
+
             "INNT_E" -> listOf(
                 Steg(
-                    aktiv = aktivBehandling,
-                    utfort = !aktivBehandling,
-                    tittel = "Opplysninger om endret inntekt er mottatt og ligger i behandlingskø"
+                    tittel = "Opplysninger om endret inntekt er mottatt og ligger i behandlingskø",
+                    dato = krav.mottattDato
                 ),
                 Steg(
-                    aktiv = false,
-                    utfort = !aktivBehandling,
-                    tittel = "Inntektsendring er ferdig behandlet"
+                    tittel = "Inntektsendring er ferdig behandlet",
+                    dato = ferdigstiltDato
                 )
             )
+
             "REGULERING" -> listOf(
                 Steg(
-                    aktiv = aktivBehandling,
-                    utfort = !aktivBehandling,
-                    tittel = "Regulering av uføretrygden er igangsatt"
+                    tittel = "Regulering av uføretrygden er igangsatt",
+                    dato = krav.mottattDato
                 ),
                 Steg(
-                    aktiv = false,
-                    utfort = !aktivBehandling,
-                    tittel = "Regulering av uføretrygden er ferdig behandlet"
+                    tittel = "Regulering av uføretrygden er ferdig behandlet",
+                    dato = ferdigstiltDato
                 )
             )
+
             "UT_EO" -> listOf(
                 Steg(
-                    aktiv = aktivBehandling,
-                    utfort = !aktivBehandling,
-                    tittel = "Etteroppgjør er igangsatt"
+                    tittel = "Etteroppgjør er igangsatt",
+                    dato = krav.mottattDato
                 ),
                 Steg(
-                    aktiv = false,
-                    utfort = !aktivBehandling,
-                    tittel = "Etteroppgjør er ferdig behandlet"
+                    tittel = "Etteroppgjør er ferdig behandlet",
+                    dato = ferdigstiltDato
                 )
             )
+
             "REVURD" -> when (krav.arsak) {
-                "ENDRING_IFU" -> lagDefaultSteg(avslag, aktivBehandling)
-                "SOKNAD_BT" -> lagDefaultSteg(avslag, aktivBehandling)
+                "ENDRING_IFU" -> lagDefaultSteg(avslag, aktivBehandling, krav.mottattDato, ferdigstiltDato)
+                "SOKNAD_BT" -> lagDefaultSteg(avslag, aktivBehandling, krav.mottattDato, ferdigstiltDato)
                 else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
             }
 
@@ -172,18 +168,16 @@ class SaksoversiktService(
         }
     }
 
-    private fun lagDefaultSteg(avslag: Boolean?, aktivBehandling: Boolean) =
+    private fun lagDefaultSteg(avslag: Boolean?, aktivBehandling: Boolean, mottattDato: LocalDate, ferdigstiltDato: LocalDate? = null) =
         listOf(
             Steg(
-                aktiv = aktivBehandling,
-                utfort = !aktivBehandling,
                 tittel = "Søknad er mottatt og ligger i behandlingskø",
+                dato = mottattDato
             ),
             Steg(
-                aktiv = false,
-                utfort = !aktivBehandling,
                 tittel = "Søknad er ferdig behandlet",
-                undertekst = if (aktivBehandling) null else avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" }
+                undertekst = if (aktivBehandling) null else avslag?.let { if (avslag) "Søknaden er avslått" else "Søknaden er innvilget" },
+                dato = ferdigstiltDato
             )
         )
 }
