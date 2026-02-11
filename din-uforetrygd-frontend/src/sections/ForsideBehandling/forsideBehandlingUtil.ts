@@ -43,7 +43,7 @@ export interface BeregningRad {
 }
 
 export function toForsideBehandling(fra: components['schemas']['Behandling']): ForsideBehandling | null {
-  if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD && fra.type != BehandlingType.SØKNAD_UNG_UFØR) return null
+  if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD && fra.type != BehandlingType.SØKNAD_UNG_UFØR && fra.type != BehandlingType.SØKNAD_YRKESSKADE) return null
 
   return {
     status: fra.status as Status,
@@ -64,6 +64,8 @@ export function lagTittel(type: BehandlingType): string {
       return 'Søknaden om endring av uføregrad'
     case BehandlingType.SØKNAD_UNG_UFØR:
       return 'Søknaden om beregning som ung ufør'
+    case BehandlingType.SØKNAD_YRKESSKADE:
+      return 'Søknaden om uføreberegning for yrkesskade eller yrkessykdom'
     default:
       return ''
   }
