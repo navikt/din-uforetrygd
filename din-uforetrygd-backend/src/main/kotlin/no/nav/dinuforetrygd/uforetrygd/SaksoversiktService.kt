@@ -88,9 +88,9 @@ class SaksoversiktService(
             "EKSPORT" -> "Eksport av uføretrygd til utlandet"
             "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL" -> "Søknad om uføretrygd"
             "INNT_E" -> "Inntektsendring"
-            "MELLOMBH" -> "Mellombehandling"
+            "MELLOMBH" -> "Søknad om uføretrygd - opplysninger fra utlandet"
             "REGULERING" -> reguleringTekst
-            "SLUTT_BH_UTL" -> "Sluttbehandling Norge/utland"
+            "SLUTT_BH_UTL" -> "Søknad om uføretrygd - endelig vedtak"
             "SOK_RED_UG" -> "Søknad om reduksjon av uføregrad"
             "SOK_OKN_UG" -> "Søknad om økning av uføregrad"
             "SOK_UU" -> "Søknad om ung ufør"
