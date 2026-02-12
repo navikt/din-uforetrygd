@@ -16,17 +16,22 @@ interface Props {
 }
 
 export function SaksoversiktBehandling({ behandling, ferdigBehandlet }: Props) {
+  const finnStatusTekst = () => {
+    if (ferdigBehandlet && behandling.avslag)
+      return `Søknad avslått: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
+    if (ferdigBehandlet && behandling.tittel.includes('Søknad'))
+      return `Søknad innvilget: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
+    if (ferdigBehandlet) return `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
+    return `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
+  }
+
   return (
     <ExpansionCard aria-label={behandling.tittel} className={styles.behandlingCard}>
       <ExpansionCard.Header>
         <ExpansionCard.Title>{behandling.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${ferdigBehandlet ? '' : styles.behandlingDato}`}>
           <VStack gap="space-8">
-            <BodyShort>
-              {ferdigBehandlet
-                ? `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
-                : `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`}
-            </BodyShort>
+            <BodyShort>{finnStatusTekst()}</BodyShort>
             {behandling.avslattForutgaendeMedlemskap && (
               <BodyShort weight={'semibold'}>
                 Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget. I så
