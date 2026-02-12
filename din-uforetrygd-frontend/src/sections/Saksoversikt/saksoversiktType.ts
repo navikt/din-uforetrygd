@@ -1,4 +1,5 @@
 import { components } from '@/api/api'
+import { lagBehandlingTittel, lagSteg } from './saksoversiktUtil'
 
 export interface SaksoversiktType {
   aktiveBehandlinger: BehandlingType[]
@@ -7,6 +8,9 @@ export interface SaksoversiktType {
 
 export interface BehandlingType {
   tittel: string
+  kravGjelder: string
+  arsak: string | null
+  vedtakstype: string | null
   mottattDato: string
   ferdigstiltDato?: string | null
   avslag: boolean
@@ -19,6 +23,7 @@ export interface BehandlingType {
 export interface EtteroppgjorType {
   etterbetaling: number
   tilbakekreving: number
+  arstall?: number
 }
 
 export interface StegType {
@@ -29,20 +34,31 @@ export interface StegType {
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
   return {
-    aktiveBehandlinger: fra.aktiveBehandlinger.map((aktivBehandling) => mapTilBehandling(aktivBehandling)),
-    avsluttedeBehandlinger: fra.avsluttedeBehandlinger.map((it) => mapTilBehandling(it)),
+    aktiveBehandlinger: fra.aktiveBehandlinger.map((aktivBehandling) => mapTilBehandling(aktivBehandling, true)),
+    avsluttedeBehandlinger: fra.avsluttedeBehandlinger.map((it) => mapTilBehandling(it, false)),
   }
 }
 
-const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
+const mapTilBehandling = (fra: components['schemas']['Behandling'], aktivBehandling: boolean): BehandlingType => {
   return {
-    tittel: fra.tittel,
+    tittel: lagBehandlingTittel(fra.kravGjelder, fra.arsak ?? null, fra.vedtakstype ?? null, fra.etteroppgjor?.arstall),
+    kravGjelder: fra.kravGjelder,
+    arsak: fra.arsak ?? null,
+    vedtakstype: fra.vedtakstype ?? null,
     mottattDato: fra.mottattDato,
     ferdigstiltDato: fra.ferdigstiltDato,
     avslag: fra.avslag,
     etteroppgjor: fra.etteroppgjor,
-    steg: fra.steg,
+    steg: lagSteg(
+      fra.kravGjelder,
+      fra.arsak ?? null,
+      fra.vedtakstype ?? null,
+      fra.mottattDato,
+      fra.ferdigstiltDato ?? null,
+      fra.avslag,
+      aktivBehandling
+    ),
     vedtakId: fra.vedtakId,
-    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap,
   }
 }

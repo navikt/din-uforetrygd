@@ -8,20 +8,15 @@ data class SaksoversiktResponse(
 )
 
 data class Behandling(
-    val tittel: String,
+    val kravGjelder: String,
+    val arsak: String?,
+    val vedtakstype: String?,
     val mottattDato: LocalDate,
     val ferdigstiltDato: LocalDate? = null,
     val avslag: Boolean,
     val etteroppgjor: Etteroppgjør? = null,
-    val steg: List<Steg>,
     val vedtakId: Long? = null,
     val avslattForutgaendeMedlemskap: Boolean
-)
-
-data class Steg(
-    val tittel: String,
-    val undertekst: String? = null,
-    val dato: LocalDate? = null,
 )
 
 data class Etteroppgjør(

@@ -71,23 +71,20 @@ export interface components {
       avsluttedeBehandlinger: components['schemas']['Behandling'][]
     }
     Behandling: {
-      tittel: string
+      kravGjelder: string
+      arsak?: string
+      vedtakstype?: string
       mottattDato: string
       ferdigstiltDato?: string
       avslag: boolean
       etteroppgjor?: components['schemas']['Etteroppgjor']
-      steg: components['schemas']['Steg'][]
       vedtakId?: number
       avslattForutgaendeMedlemskap: boolean
     }
     Etteroppgjor: {
       etterbetaling: number
       tilbakekreving: number
-    }
-    Steg: {
-      tittel: string
-      undertekst?: string
-      dato: string
+      arstall?: number
     }
     DittUforevedtak: {
       /** Format: int32 */
