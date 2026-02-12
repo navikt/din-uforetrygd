@@ -15,7 +15,8 @@ data class ForsideBehandling(
 )
 
 data class Beregning(
-    val nettoUforetrygdPerManed: Int
+    val nettoUforetrygdPerManed: Int,
+    val barnetillegg: Int
 )
 
 enum class BehandlingType {
@@ -45,7 +46,7 @@ fun lagBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): 
     return ForsideBehandling(
         type = type,
         status = status,
-        beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed) },
+        beregning = relevantVedtak?.beregning?.let { Beregning(it.nettoUforetrygdPerManed, it.barnetillegg) },
         dato = if (status == Status.MOTTATT) åpentKrav?.mottattDato else relevantVedtak!!.vedtaksdato,
         avslattForutgaendeMedlemskap = relevantVedtak?.avslattForutgaendeMedlemskap ?: false
 

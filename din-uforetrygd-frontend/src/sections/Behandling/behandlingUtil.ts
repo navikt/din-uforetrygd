@@ -37,7 +37,7 @@ interface BeregningRad {
 }
 
 export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling | null {
-  if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD) return null
+  if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD && fra.type != BehandlingType.SØKNAD_BARNETILLEGG) return null
 
   return {
     status: fra.status as Status,
@@ -56,6 +56,8 @@ export function lagTittel(type: BehandlingType): string {
       return 'Søknaden om uføretrygd'
     case BehandlingType.SØKNAD_ENDRING_UFØREGRAD:
       return 'Søknaden om endring av uføregrad'
+    case BehandlingType.SØKNAD_BARNETILLEGG:
+      return 'Søknaden om barnetillegg'
     default:
       return ''
   }
@@ -139,5 +141,7 @@ function lagBeregning(beregning: components['schemas']['Beregning'] | null, stat
 
   if (beregning.nettoUforetrygdPerManed)
     beregninger.push({ label: 'Uføretrygd', verdi: formatInntekt(beregning.nettoUforetrygdPerManed) + ' kroner' })
+  if (beregning.barnetillegg)
+    beregninger.push({ label: 'Barnetillegg', verdi: formatInntekt(beregning.barnetillegg) + ' kroner' })
   return beregninger
 }

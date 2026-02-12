@@ -65,6 +65,7 @@ export interface components {
     }
     Beregning: {
       nettoUforetrygdPerManed: number
+      barnetillegg: number
     }
     SaksoversiktResponse: {
       aktiveBehandlinger: components['schemas']['Behandling'][]
