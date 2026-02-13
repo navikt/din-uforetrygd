@@ -33,7 +33,11 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
             <Tabs.Panel value="aktive">
               {saksoversikt.aktiveBehandlinger.length > 0 ? (
                 saksoversikt.aktiveBehandlinger.map((aktivBehandling) => (
-                  <SaksoversiktBehandlingKort behandling={aktivBehandling} ferdigBehandlet={false} />
+                  <SaksoversiktBehandlingKort
+                    key={aktivBehandling.tittel + aktivBehandling.mottattDato}
+                    behandling={aktivBehandling}
+                    ferdigBehandlet={false}
+                  />
                 ))
               ) : (
                 <IngenBehandlinger aktiv={true} />

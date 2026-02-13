@@ -61,6 +61,8 @@ class ForsideService(
             .maxByOrNull { it.vedtaksdato }
             .takeIf { relevantÅpentKrav == null }
 
+        if (relevantÅpentKrav == null && relevantVedtak == null) return null
+
         return relevantÅpentKrav?.let { Behandling.fraKrav(it) }
             ?: Behandling.fraVedtak(relevantVedtak!!)
     }

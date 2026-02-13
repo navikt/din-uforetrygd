@@ -35,7 +35,7 @@ data class Behandling(
         )
 
         private fun finnType(krav: Krav, vedtakstype: String? = null): BehandlingType {
-            if (vedtakstype == "REGULERING" || krav.kravGjelder ==  "REGULERING" ) return BehandlingType.REGULERING
+            if (vedtakstype == "REGULERING" || krav.kravGjelder == "REGULERING") return BehandlingType.REGULERING
 
             return when (krav.kravGjelder) {
                 "FORSTEG_BH", "F_BH_BO_UTL", "F_BH_MED_UTL" -> BehandlingType.SØKNAD_UFØRETRYGD
@@ -45,14 +45,15 @@ data class Behandling(
                 "REVURD" -> when (krav.arsak) {
                     "SOKNAD_BT" -> BehandlingType.SØKNAD_BARNETILLEGG
                     "ENDRING_IFU" -> BehandlingType.ENDRING_IFU
-                    else -> throw Exception("Skal ikke mappe kravårsak $krav.arsak")
+                    else -> throw Exception("Skal ikke mappe kravårsak ${krav.arsak}")
                 }
+
                 "EKSPORT" -> BehandlingType.EKSPORT
                 "INNT_E" -> BehandlingType.INNTEKTSENDRING
                 "MELLOMBH" -> BehandlingType.MELLOMBEHANDLING
                 "SLUTT_BH_UTL" -> BehandlingType.SLUTTBEHANDLING
                 "UT_EO" -> BehandlingType.ETTEROPPGJØR
-                else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
+                else -> throw Exception("Skal ikke mappe kravGjelder ${krav.kravGjelder}")
             }
         }
 

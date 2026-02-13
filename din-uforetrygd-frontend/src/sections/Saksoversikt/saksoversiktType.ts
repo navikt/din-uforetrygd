@@ -68,7 +68,7 @@ const lagSteg = (
         {
           tittel: 'Søknad er ferdig behandlet',
           dato: ferdigstiltDato,
-          undertekst: status == Status.AVSLAG ? 'Søknaden er avslått' : 'Søknaden er innvilget',
+          undertekst: status === Status.AVSLAG ? 'Søknaden er avslått' : 'Søknaden er innvilget',
         },
       ]
     case BehandlingType.INNTEKTSENDRING:
@@ -87,7 +87,7 @@ const lagSteg = (
         },
         { tittel: 'Regulering av uføretrygden er ferdig behandlet', dato: ferdigstiltDato },
       ]
-    case BehandlingType.ETTEROPPGJOR:
+    case BehandlingType.ETTEROPPGJØR:
       return [
         {
           tittel: 'Etteroppgjør er igangsatt',
@@ -116,7 +116,7 @@ function lagBehandlingTittel(type: BehandlingType, etteroppgjorArstall?: number 
       return 'Eksport av uføretrygd til utlandet'
     case BehandlingType.INNTEKTSENDRING:
       return 'Inntektsendring'
-    case BehandlingType.ETTEROPPGJOR:
+    case BehandlingType.ETTEROPPGJØR:
       return 'Etteroppgjør' + (etteroppgjorArstall ? ` for ${etteroppgjorArstall}` : '')
     case BehandlingType.ENDRING_IFU:
       return 'Endring av inntekt før uførhet'
