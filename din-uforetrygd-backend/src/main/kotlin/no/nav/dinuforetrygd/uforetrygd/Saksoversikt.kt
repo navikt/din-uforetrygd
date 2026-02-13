@@ -3,8 +3,8 @@ package no.nav.dinuforetrygd.uforetrygd
 import java.time.LocalDate
 
 data class SaksoversiktResponse(
-    val aktiveBehandlinger: List<SaksoversiktBehandling>,
-    val avsluttedeBehandlinger: List<SaksoversiktBehandling>
+    val aktiveBehandlinger: List<Behandling>,
+    val avsluttedeBehandlinger: List<Behandling>
 )
 
 data class SaksoversiktBehandling(

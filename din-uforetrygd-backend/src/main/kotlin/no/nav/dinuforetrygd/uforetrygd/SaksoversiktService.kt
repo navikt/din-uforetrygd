@@ -11,12 +11,13 @@ import kotlin.math.abs
 class SaksoversiktService(
     private val penClient: PenClient,
 ) {
+
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
 
-        val åpentKravBehandling: List<SaksoversiktBehandling> = listOfNotNull(
-            krav?.takeIf { it.erRelevant() }?.toBehandling()
-        )
+        val åpentKravBehandling = listOfNotNull(
+            krav?.takeIf { it.erRelevant() }
+        ).map { Behandling.fraKrav(it) }
 
         val relevanteVedtak = vedtak
             .filter { it.erRelevant() }
@@ -27,12 +28,13 @@ class SaksoversiktService(
 
         val vedtakTilIverksettelse = relevanteVedtak
             .filter { it.vedtakstatus == VedtakStatus.TIL_IVERKS }
-            .map { it.toBehandling() }
+            .map { Behandling.fraVedtak(it) }
 
         val aktiveBehandlinger = åpentKravBehandling + vedtakTilIverksettelse
+
         val avsluttedeBehandlinger = relevanteVedtak
             .filter { it.vedtakstatus != VedtakStatus.TIL_IVERKS }
-            .map { it.toBehandling() }
+            .map { Behandling.fraVedtak(it) }
 
         return SaksoversiktResponse(aktiveBehandlinger, avsluttedeBehandlinger)
     }
