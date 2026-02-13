@@ -1,6 +1,6 @@
 package no.nav.dinuforetrygd.uforetrygd
 
-import no.nav.dinuforetrygd.pensjon.pen.EtteroppgjørGammel
+import no.nav.dinuforetrygd.pensjon.pen.EtteroppgjørResponse
 import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import no.nav.dinuforetrygd.pensjon.pen.VedtakStatus
@@ -51,7 +51,7 @@ data class Behandling(
                 "INNT_E" -> BehandlingType.INNTEKTSENDRING
                 "MELLOMBH" -> BehandlingType.MELLOMBEHANDLING
                 "SLUTT_BH_UTL" -> BehandlingType.SLUTTBEHANDLING
-                "UT_EO" -> BehandlingType.ETTEROPPGJOR
+                "UT_EO" -> BehandlingType.ETTEROPPGJØR
                 else -> throw Exception("Skal ikke mappe kravGjelder $krav.kravGjelder")
             }
         }
@@ -74,7 +74,7 @@ data class Etteroppgjør(
     val type: String
 ) {
     companion object {
-        fun fraPenEtteroppgjør(penEtteroppgjør: EtteroppgjørGammel) = Etteroppgjør(
+        fun fraPenEtteroppgjør(penEtteroppgjør: EtteroppgjørResponse) = Etteroppgjør(
             arstall = penEtteroppgjør.arstall,
             avviksbelop = penEtteroppgjør.avviksbelop,
             type = penEtteroppgjør.type
@@ -83,7 +83,7 @@ data class Etteroppgjør(
 }
 
 enum class BehandlingType {
-    SØKNAD_UFØRETRYGD, SØKNAD_ENDRING_UFØREGRAD, SØKNAD_BARNETILLEGG, SØKNAD_UNG_UFØR, SØKNAD_YRKESSKADE, EKSPORT, INNTEKTSENDRING, ETTEROPPGJOR, ENDRING_IFU, MELLOMBEHANDLING, SLUTTBEHANDLING, REGULERING
+    SØKNAD_UFØRETRYGD, SØKNAD_ENDRING_UFØREGRAD, SØKNAD_BARNETILLEGG, SØKNAD_UNG_UFØR, SØKNAD_YRKESSKADE, EKSPORT, INNTEKTSENDRING, ETTEROPPGJØR, ENDRING_IFU, MELLOMBEHANDLING, SLUTTBEHANDLING, REGULERING
 }
 
 enum class Status {

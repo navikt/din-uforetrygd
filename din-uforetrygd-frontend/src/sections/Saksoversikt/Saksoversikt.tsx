@@ -17,7 +17,6 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
   const antallBehandlingerPerSide = 5
   const antallSider = Math.ceil(saksoversikt.avsluttedeBehandlinger.length / antallBehandlingerPerSide)
 
-  console.log(saksoversikt)
   return (
     <section>
       <VStack gap="space-24">

@@ -52,7 +52,6 @@ const lagSteg = (
   mottattDato: string,
   ferdigstiltDato?: string
 ): StegType[] => {
-  console.log(behandlingType, status, mottattDato, ferdigstiltDato)
 
   switch (behandlingType) {
     case BehandlingType.EKSPORT:
