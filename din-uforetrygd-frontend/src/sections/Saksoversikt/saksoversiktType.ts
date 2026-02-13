@@ -1,5 +1,5 @@
 import { components } from '@/api/api'
-import { BehandlingType, Status } from '@/sections/Behandling/forsideBehandlingUtil'
+import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export interface SaksoversiktType {
   aktiveBehandlinger: SaksoversiktBehandling[]

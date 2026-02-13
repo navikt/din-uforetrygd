@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, VStack } from '@navikt/ds-react'
-import { ForsideBehandling, Status } from '@/sections/Behandling/forsideBehandlingUtil'
-import { SøknadAvslått } from '@/sections/Behandling/SøknadAvslått'
-import { SøknadMottatt } from '@/sections/Behandling/SøknadMottatt'
-import { SøknadInnvilget } from '@/sections/Behandling/SøknadInnvilget'
+import { ForsideBehandling, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { SøknadAvslått } from '@/sections/ForsideBehandling/SøknadAvslått'
+import { SøknadMottatt } from '@/sections/ForsideBehandling/SøknadMottatt'
+import { SøknadInnvilget } from '@/sections/ForsideBehandling/SøknadInnvilget'
 import { Visningskriterier } from '@/const'
-import { IngenUføretrygd } from '@/sections/Behandling/IngenUføretrygd'
+import { IngenUføretrygd } from '@/sections/ForsideBehandling/IngenUføretrygd'
 
 interface BehandlingProps {
   behandling: ForsideBehandling | null

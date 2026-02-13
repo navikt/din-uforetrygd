@@ -1,4 +1,4 @@
-import { BehandlingType } from '@/sections/Behandling/forsideBehandlingUtil'
+import { BehandlingType } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export const mapKravDescription = (kravGjelder: string, kravArsak: string, sakstype: string): string => {
   const descriptions: Record<string, Record<string, string> | string> = {
