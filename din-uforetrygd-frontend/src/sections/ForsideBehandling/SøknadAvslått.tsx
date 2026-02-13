@@ -3,9 +3,11 @@ import React from 'react'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import Divider from '@/sections/ForsideBehandling/Divider'
 import { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { forsideKortTitler } from '@/sections/ForsideBehandling/tekster'
+import { components } from '@/api/api'
 
 interface Props {
-  behandling: ForsideBehandling
+  behandling: components['schemas']['Behandling']
   visAvslåttForutgåendeMedlemskap: boolean
 }
 
@@ -13,9 +15,9 @@ export const SøknadAvslått = ({ behandling, visAvslåttForutgåendeMedlemskap 
   return (
     <>
       <ForsideBehandlingHeader
-        tittel={behandling.tittel + ' er avslått'}
+        tittel={forsideKortTitler[behandling.type] + ' er avslått'}
         statusTekst="Søknad avslått"
-        dato={behandling.dato}
+        dato={behandling.ferdigstiltDato!!}
         statusFarge="warning"
       />
       <Divider />

@@ -19,7 +19,6 @@ import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
-import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 import { isEnabled } from '@/utils/unleash'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 
@@ -44,7 +43,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <VStack gap="space-12" className={'tittel-wrapper'}>
-            <Brødsmulesti mode={mode}/>
+            <Brødsmulesti mode={mode} />
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
@@ -61,11 +60,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           )}
           {visBehandling ? (
             <ForsideBehandlingKort
-              behandling={
-                initResponse.uforetrygdResponse.behandling
-                  ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
-                  : null
-              }
+              behandling={initResponse.uforetrygdResponse.behandling}
               visningskriterier={visningskriterier}
             />
           ) : (

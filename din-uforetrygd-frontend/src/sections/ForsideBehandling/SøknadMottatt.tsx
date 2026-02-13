@@ -2,26 +2,28 @@ import { BodyShort, Button, Link } from '@navikt/ds-react'
 import React from 'react'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import Divider from '@/sections/ForsideBehandling/Divider'
-import { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { components } from '@/api/api'
+import { forsideKortTitler, lenker, statusTekst } from '@/sections/ForsideBehandling/tekster'
 
 interface Props {
-  behandling: ForsideBehandling
+  behandling: components['schemas']['Behandling']
 }
 
 export const SøknadMottatt = ({ behandling }: Props) => {
   return (
     <>
       <ForsideBehandlingHeader
-        tittel={behandling.tittel + ' er mottatt'}
-        statusTekst={behandling.statusTekst}
-        dato={behandling.dato}
+        tittel={forsideKortTitler[behandling.type] + ' er mottatt'}
+        statusTekst={statusTekst[behandling.status]}
+        dato={behandling.mottattDato}
         statusFarge="info"
       />
 
       <Divider />
 
       <BodyShort>Søknaden din venter på behandling.</BodyShort>
-      {behandling.lenker.map((lenke) => (
+      {lenker(behandling.type).map((lenke) => (
         <Link href={lenke.href} target="_blank">
           {lenke.visningstekst}
         </Link>

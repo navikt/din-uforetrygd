@@ -2,19 +2,20 @@ import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
 import React from 'react'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import Divider from '@/sections/ForsideBehandling/Divider'
-import { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { components } from '@/api/api'
+import { beregning, forsideKortTitler, lenker, statusTekst } from '@/sections/ForsideBehandling/tekster'
 
 interface Props {
-  behandling: ForsideBehandling
+  behandling: components['schemas']['Behandling']
 }
 
 export const SøknadInnvilget = ({ behandling }: Props) => {
   return (
     <>
       <ForsideBehandlingHeader
-        tittel={behandling.tittel + ' er innvilget'}
-        statusTekst={behandling.statusTekst}
-        dato={behandling.dato}
+        tittel={forsideKortTitler[behandling.type] + ' er innvilget'}
+        statusTekst={statusTekst[behandling.status]}
+        dato={behandling.ferdigstiltDato!!}
         statusFarge="success"
       />
 
@@ -26,7 +27,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
           får det utbetalt.
         </HelpText>
       </HStack>
-      {behandling.beregninger.map((beregning) => (
+      {beregning(behandling).map((beregning) => (
         <HStack gap={'space-16'}>
           <span>{beregning.label}:</span>
           <span style={{ fontWeight: '600' }}>{beregning.verdi}</span>
@@ -35,7 +36,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
 
       <Divider />
       <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
-        {behandling.lenker.map((lenke) => (
+        {lenker(behandling.type).map((lenke) => (
           <Link target="_blank" href={lenke.href}>
             {lenke.visningstekst}
           </Link>

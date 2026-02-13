@@ -52,7 +52,6 @@ const lagSteg = (
   mottattDato: string,
   ferdigstiltDato?: string
 ): StegType[] => {
-
   switch (behandlingType) {
     case BehandlingType.EKSPORT:
     case BehandlingType.SØKNAD_UFØRETRYGD:
