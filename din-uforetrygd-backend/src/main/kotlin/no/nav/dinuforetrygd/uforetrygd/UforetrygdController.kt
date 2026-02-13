@@ -2,9 +2,9 @@ package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.ErrorHandler
 import no.nav.dinuforetrygd.SakNotFoundException
+import no.nav.dinuforetrygd.audit.Auditor
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
-import no.nav.dinuforetrygd.audit.Auditor
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -55,14 +55,18 @@ class UforetrygdController(
                 auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
             }
             return response
-        }
-        catch(e: SakNotFoundException) {
+        } catch (e: SakNotFoundException) {
             logger.warn(e.message, e)
             throw ResponseStatusException(HttpStatus.NOT_FOUND)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             logger.error(e.message, e)
             throw ErrorHandler.exceptionToErrorResponse(e)
         }
     }
+
 }
+
+data class SaksoversiktResponse(
+    val aktiveBehandlinger: List<Behandling>,
+    val avsluttedeBehandlinger: List<Behandling>
+)

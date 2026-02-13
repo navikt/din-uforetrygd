@@ -34,7 +34,7 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
   }
 }
 
-const mapTilBehandling = (fra: components['schemas']['NyBehandling']): SaksoversiktBehandling => {
+const mapTilBehandling = (fra: components['schemas']['Behandling']): SaksoversiktBehandling => {
   return {
     tittel: lagBehandlingTittel(fra.type, fra.etteroppgjor?.arstall),
     mottattDato: fra.mottattDato,
@@ -132,7 +132,7 @@ function lagBehandlingTittel(type: BehandlingType, etteroppgjorArstall?: number 
   }
 }
 
-function lagEtteroppgjørRad(etteroppgjør: components['schemas']['NyEtteroppgjor']): EtteroppgjorType {
+function lagEtteroppgjørRad(etteroppgjør: components['schemas']['Etteroppgjor']): EtteroppgjorType {
   return {
     tilbakekreving: etteroppgjør.type === 'TILBAKEKR' ? Math.abs(etteroppgjør.avviksbelop) : 0,
     etterbetaling: etteroppgjør.type === 'ETTERBET' ? Math.abs(etteroppgjør.avviksbelop) : 0,

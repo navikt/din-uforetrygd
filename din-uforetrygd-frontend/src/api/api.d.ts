@@ -55,58 +55,30 @@ export interface paths {
   }
 }
 
-
 export type webhooks = Record<string, never>
+
 export interface components {
   schemas: {
-    // TODO: rename til behandling
-    NyBehandling: {
+    Behandling: {
       type: BehandlingType
       status: Status
       mottattDato: string
       avslattForutgaendeMedlemskap: boolean
       ferdigstiltDato?: string
-      etteroppgjor?: components['schemas']['NyEtteroppgjor']
+      etteroppgjor?: components['schemas']['Etteroppgjor']
       beregning: components['schemas']['Beregning'] | null
     }
-    // TODO: Rename
-    NyEtteroppgjor: {
+    Etteroppgjor: {
       arstall: number
       avviksbelop: number
       type: string
-    }
-    ForsideBehandling: {
-      type: string
-      status: string
-      beregning: components['schemas']['Beregning'] | null
-      dato: string
-      avslattForutgaendeMedlemskap: boolean
     }
     Beregning: {
       nettoUforetrygdPerManed: number
     }
     SaksoversiktResponse: {
-      aktiveBehandlinger: components['schemas']['NyBehandling'][]
-      avsluttedeBehandlinger: components['schemas']['NyBehandling'][]
-    }
-    Behandling: {
-      tittel: string
-      mottattDato: string
-      ferdigstiltDato?: string
-      avslag: boolean
-      etteroppgjor?: components['schemas']['Etteroppgjor']
-      steg: components['schemas']['Steg'][]
-      vedtakId?: number
-      avslattForutgaendeMedlemskap: boolean
-    }
-    Etteroppgjor: {
-      etterbetaling: number
-      tilbakekreving: number
-    }
-    Steg: {
-      tittel: string
-      undertekst?: string
-      dato: string
+      aktiveBehandlinger: components['schemas']['Behandling'][]
+      avsluttedeBehandlinger: components['schemas']['Behandling'][]
     }
     DittUforevedtak: {
       /** Format: int32 */
@@ -160,7 +132,7 @@ export interface components {
       innloggingstype?: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
       harGammelFullmaktmottaker?: boolean
       journalposter?: components['schemas']['Journalpost'][]
-      behandling?: components['schemas']['NyBehandling']
+      behandling?: components['schemas']['Behandling']
     }
   }
   responses: never
