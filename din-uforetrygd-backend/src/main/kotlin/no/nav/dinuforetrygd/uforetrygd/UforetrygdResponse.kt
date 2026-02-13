@@ -1,10 +1,7 @@
 package no.nav.dinuforetrygd.uforetrygd
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import no.nav.dinuforetrygd.journalpost.Journalpost
-import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class UforetrygdResponse(
     val pid: String,
@@ -15,7 +12,7 @@ data class UforetrygdResponse(
     val innloggingstype: Innloggingstype,
     val harGammelFullmaktmottaker: Boolean,
     val journalposter: List<Journalpost> = emptyList(),
-    val behandling: ForsideBehandling? = null
+    val behandling: Behandling? = null
 )
 
 data class DittUforevedtak(

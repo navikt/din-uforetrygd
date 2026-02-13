@@ -3,16 +3,16 @@ package no.nav.dinuforetrygd.uforetrygd
 import java.time.LocalDate
 
 data class SaksoversiktResponse(
-    val aktiveBehandlinger: List<Behandling>,
-    val avsluttedeBehandlinger: List<Behandling>
+    val aktiveBehandlinger: List<SaksoversiktBehandling>,
+    val avsluttedeBehandlinger: List<SaksoversiktBehandling>
 )
 
-data class Behandling(
+data class SaksoversiktBehandling(
     val tittel: String,
     val mottattDato: LocalDate,
     val ferdigstiltDato: LocalDate? = null,
     val avslag: Boolean,
-    val etteroppgjor: Etteroppgjør? = null,
+    val etteroppgjor: SaksoversiktEtteroppgjørGammel? = null,
     val steg: List<Steg>,
     val vedtakId: Long? = null,
     val avslattForutgaendeMedlemskap: Boolean
@@ -24,7 +24,7 @@ data class Steg(
     val dato: LocalDate? = null,
 )
 
-data class Etteroppgjør(
+data class SaksoversiktEtteroppgjørGammel(
     val etterbetaling: Int,
     val tilbakekreving: Int,
 )

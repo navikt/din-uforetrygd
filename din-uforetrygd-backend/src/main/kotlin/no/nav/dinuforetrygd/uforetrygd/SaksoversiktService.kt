@@ -1,7 +1,7 @@
 package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.pensjon.pen.*
-import no.nav.dinuforetrygd.pensjon.pen.Etteroppgjør
+import no.nav.dinuforetrygd.pensjon.pen.EtteroppgjørGammel
 import no.nav.dinuforetrygd.util.erRelevant
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -14,7 +14,7 @@ class SaksoversiktService(
     fun hentSaksoversikt(pid: String, saksid: Long): SaksoversiktResponse {
         val (krav, vedtak) = penClient.hentBehandlinger(pid, saksid)
 
-        val åpentKravBehandling: List<Behandling> = listOfNotNull(
+        val åpentKravBehandling: List<SaksoversiktBehandling> = listOfNotNull(
             krav?.takeIf { it.erRelevant() }?.toBehandling()
         )
 
@@ -37,7 +37,7 @@ class SaksoversiktService(
         return SaksoversiktResponse(aktiveBehandlinger, avsluttedeBehandlinger)
     }
 
-    private fun Krav.toBehandling() = Behandling(
+    private fun Krav.toBehandling() = SaksoversiktBehandling(
         tittel = lagBehandlingTittel(
             krav = this,
             isReguleringsvedtak = false
@@ -53,7 +53,7 @@ class SaksoversiktService(
         )
     )
 
-    private fun Vedtak.toBehandling() = Behandling(
+    private fun Vedtak.toBehandling() = SaksoversiktBehandling(
         tittel = lagBehandlingTittel(
             krav = this.krav,
             isReguleringsvedtak = this.vedtakstype == "REGULERING",
@@ -74,8 +74,8 @@ class SaksoversiktService(
         vedtakId = this.vedtakId
     )
 
-    private fun Etteroppgjør.toEtteroppgjør() =
-        Etteroppgjør(
+    private fun EtteroppgjørGammel.toEtteroppgjør() =
+        SaksoversiktEtteroppgjørGammel(
             tilbakekreving = if (this.type == "TILBAKEKR") abs(this.avviksbelop) else 0,
             etterbetaling = if (this.type == "ETTERBET") abs(this.avviksbelop) else 0,
         )

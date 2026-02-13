@@ -36,7 +36,7 @@ interface BeregningRad {
   verdi: string
 }
 
-export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling | null {
+export function toForsideBehandling(fra: components['schemas']['NyBehandling']): ForsideBehandling | null {
   if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD) return null
 
   return {
@@ -45,8 +45,8 @@ export function toForsideBehandling(fra: components['schemas']['ForsideBehandlin
     statusTekst: lagStatusTekst(fra.status as Status),
     lenker: lagLenker(fra.status as Status, fra.type as BehandlingType),
     beregninger: lagBeregning(fra.beregning, fra.status as Status),
-    dato: fra.dato,
-    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
+    dato: fra.status == Status.MOTTATT ? fra.mottattDato : fra.ferdigstiltDato!!,
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap,
   }
 }
 

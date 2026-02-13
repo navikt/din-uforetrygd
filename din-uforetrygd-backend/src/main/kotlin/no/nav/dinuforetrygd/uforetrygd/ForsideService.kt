@@ -6,6 +6,7 @@ import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.pensjon.pen.*
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.TokenService
+import no.nav.dinuforetrygd.util.erRelevant
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -25,31 +26,43 @@ class ForsideService(
         val uforeSak = penService.getSaker(pid).velgSak()
         if (uforeSak == null) return lagUforetrygdResponse(pid, uforeSak)
 
-            val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-            val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-            var inntektFraSkatt = 0.0
-            if (vedtakssammendragResponse.hasIverksattVedtak) {
-                try {
-                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
-                } catch (e: Exception) {
-                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
-                }
+        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
+        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
+        var inntektFraSkatt = 0.0
+        if (vedtakssammendragResponse.hasIverksattVedtak) {
+            try {
+                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            } catch (e: Exception) {
+                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
             }
-            val forsideData = try {
-                penClient.hentForsideData(pid, uforeSak.sakId)
-            }
-            catch (e: Exception) {
-                logger.warn("Feilet mot forside-data, sak " + uforeSak.sakId, e)
-                null
-            }
+        }
+        val forsideData = try {
+            penClient.hentForsideData(pid, uforeSak.sakId)
+        }
+        catch (e: Exception) {
+            logger.warn("Feilet mot forside-data, sak " + uforeSak.sakId, e)
+            null
+        }
 
-            return lagUforetrygdResponse(
-                pid = pid,
-                sak = uforeSak,
-                hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
-                behandling = forsideData?.let { lagBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) }
-            )
+        return lagUforetrygdResponse(
+            pid = pid,
+            sak = uforeSak,
+            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
+            behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
+        )
+    }
+
+    fun finnAktivBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): Behandling? {
+        val relevantÅpentKrav: Krav? = åpentKrav?.takeIf { it.erRelevant() }
+
+        val relevantVedtak: Vedtak? = vedtakIverksattSiste7Dager
+            .filter { it.erRelevant() }
+            .maxByOrNull { it.vedtaksdato }
+            .takeIf { relevantÅpentKrav == null }
+
+        return relevantÅpentKrav?.let { Behandling.fraKrav(it) }
+            ?: Behandling.fraVedtak(relevantVedtak!!)
     }
 
 
@@ -61,7 +74,7 @@ class ForsideService(
         sak: Sak?,
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
-        behandling: ForsideBehandling? = null
+        behandling: Behandling? = null
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
