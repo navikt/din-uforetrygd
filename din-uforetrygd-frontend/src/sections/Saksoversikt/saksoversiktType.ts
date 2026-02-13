@@ -1,18 +1,18 @@
 import { components } from '@/api/api'
+import { BehandlingType, Status } from '@/sections/Behandling/forsideBehandlingUtil'
 
 export interface SaksoversiktType {
-  aktiveBehandlinger: BehandlingType[]
-  avsluttedeBehandlinger: BehandlingType[]
+  aktiveBehandlinger: SaksoversiktBehandling[]
+  avsluttedeBehandlinger: SaksoversiktBehandling[]
 }
 
-export interface BehandlingType {
+export interface SaksoversiktBehandling {
   tittel: string
   mottattDato: string
   ferdigstiltDato?: string | null
   avslag: boolean
-  etteroppgjor?: EtteroppgjorType | null
+  etteroppgjør: EtteroppgjorType | null
   steg: StegType[]
-  vedtakId?: number | null
   avslattForutgaendeMedlemskap: boolean
 }
 
@@ -24,7 +24,7 @@ export interface EtteroppgjorType {
 export interface StegType {
   tittel: string
   undertekst?: string | null
-  dato: string | null
+  dato?: string
 }
 
 export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
@@ -34,15 +34,107 @@ export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktR
   }
 }
 
-const mapTilBehandling = (fra: components['schemas']['Behandling']): BehandlingType => {
+const mapTilBehandling = (fra: components['schemas']['NyBehandling']): SaksoversiktBehandling => {
   return {
-    tittel: fra.tittel,
+    tittel: lagBehandlingTittel(fra.type, fra.etteroppgjor?.arstall),
     mottattDato: fra.mottattDato,
     ferdigstiltDato: fra.ferdigstiltDato,
-    avslag: fra.avslag,
-    etteroppgjor: fra.etteroppgjor,
-    steg: fra.steg,
-    vedtakId: fra.vedtakId,
-    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
+    avslag: fra.status === 'AVSLAG',
+    etteroppgjør: fra.etteroppgjor ? lagEtteroppgjørRad(fra.etteroppgjor) : null,
+    steg: lagSteg(fra.type, fra.status, fra.mottattDato, fra.ferdigstiltDato),
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap,
+  }
+}
+
+const lagSteg = (
+  behandlingType: BehandlingType,
+  status: Status,
+  mottattDato: string,
+  ferdigstiltDato?: string
+): StegType[] => {
+  console.log(behandlingType, status, mottattDato, ferdigstiltDato)
+
+  switch (behandlingType) {
+    case BehandlingType.EKSPORT:
+    case BehandlingType.SØKNAD_UFØRETRYGD:
+    case BehandlingType.SLUTTBEHANDLING:
+    case BehandlingType.SØKNAD_ENDRING_UFØREGRAD:
+    case BehandlingType.SØKNAD_UNG_UFØR:
+    case BehandlingType.SØKNAD_YRKESSKADE:
+    case BehandlingType.MELLOMBEHANDLING:
+    case BehandlingType.SØKNAD_BARNETILLEGG:
+    case BehandlingType.ENDRING_IFU:
+      return [
+        { tittel: 'Søknad er mottatt og ligger i behandlingskø', dato: mottattDato },
+        {
+          tittel: 'Søknad er ferdig behandlet',
+          dato: ferdigstiltDato,
+          undertekst: status == Status.AVSLAG ? 'Søknaden er avslått' : 'Søknaden er innvilget',
+        },
+      ]
+    case BehandlingType.INNTEKTSENDRING:
+      return [
+        {
+          tittel: 'Opplysninger om endret inntekt er mottatt og ligger i behandlingskø',
+          dato: mottattDato,
+        },
+        { tittel: 'Inntektsendring er ferdig behandlet', dato: ferdigstiltDato },
+      ]
+    case BehandlingType.REGULERING:
+      return [
+        {
+          tittel: 'Regulering av uføretrygden er igangsatt',
+          dato: mottattDato,
+        },
+        { tittel: 'Regulering av uføretrygden er ferdig behandlet', dato: ferdigstiltDato },
+      ]
+    case BehandlingType.ETTEROPPGJOR:
+      return [
+        {
+          tittel: 'Etteroppgjør er igangsatt',
+          dato: mottattDato,
+        },
+        { tittel: 'Etteroppgjør er ferdig behandlet', dato: ferdigstiltDato },
+      ]
+  }
+
+  return []
+}
+
+function lagBehandlingTittel(type: BehandlingType, etteroppgjorArstall?: number | null): string {
+  switch (type) {
+    case BehandlingType.SØKNAD_UFØRETRYGD:
+      return 'Søknad om uføretrygd'
+    case BehandlingType.SØKNAD_ENDRING_UFØREGRAD:
+      return 'Søknad om endring av uføregrad'
+    case BehandlingType.SØKNAD_BARNETILLEGG:
+      return 'Søknad om barnetillegg'
+    case BehandlingType.SØKNAD_UNG_UFØR:
+      return 'Søknad om ung ufør'
+    case BehandlingType.SØKNAD_YRKESSKADE:
+      return 'Søknad om yrkesskade'
+    case BehandlingType.EKSPORT:
+      return 'Eksport av uføretrygd til utlandet'
+    case BehandlingType.INNTEKTSENDRING:
+      return 'Inntektsendring'
+    case BehandlingType.ETTEROPPGJOR:
+      return 'Etteroppgjør' + (etteroppgjorArstall ? ` for ${etteroppgjorArstall}` : '')
+    case BehandlingType.ENDRING_IFU:
+      return 'Endring av inntekt før uførhet'
+    case BehandlingType.MELLOMBEHANDLING:
+      return 'Søknad om uføretrygd - opplysninger fra utlandet'
+    case BehandlingType.SLUTTBEHANDLING:
+      return 'Søknad om uføretrygd - endelig vedtak'
+    case BehandlingType.REGULERING:
+      return 'Regulering i forbindelse med nytt grunnbeløp'
+    default:
+      return 'Behandling'
+  }
+}
+
+function lagEtteroppgjørRad(etteroppgjør: components['schemas']['NyEtteroppgjor']): EtteroppgjorType {
+  return {
+    tilbakekreving: etteroppgjør.type === 'TILBAKEKR' ? Math.abs(etteroppgjør.avviksbelop) : 0,
+    etterbetaling: etteroppgjør.type === 'ETTERBET' ? Math.abs(etteroppgjør.avviksbelop) : 0,
   }
 }

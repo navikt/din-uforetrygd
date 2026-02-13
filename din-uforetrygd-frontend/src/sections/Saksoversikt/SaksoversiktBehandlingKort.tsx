@@ -1,7 +1,7 @@
 'use client'
 
 import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
-import { BehandlingType } from '@/sections/Saksoversikt/saksoversiktType'
+import { SaksoversiktBehandling } from '@/sections/Saksoversikt/saksoversiktType'
 import { formatterDatoTekst } from '@/utils/formatter/formatter'
 import styles from './saksoversikt.module.css'
 import { BodyShort, VStack } from '@navikt/ds-react'
@@ -11,11 +11,11 @@ import { TilBehandlingStegvisning } from '@/sections/Saksoversikt/TilBehandlingS
 import { FerdigBehandletStegvisning } from '@/sections/Saksoversikt/FerdigBehandletStegvisning'
 
 interface Props {
-  behandling: BehandlingType
+  behandling: SaksoversiktBehandling
   ferdigBehandlet: boolean
 }
 
-export function SaksoversiktBehandling({ behandling, ferdigBehandlet }: Props) {
+export function SaksoversiktBehandlingKort({ behandling, ferdigBehandlet }: Props) {
   const finnStatusTekst = () => {
     if (ferdigBehandlet && behandling.avslag)
       return `Søknad avslått: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
@@ -42,8 +42,8 @@ export function SaksoversiktBehandling({ behandling, ferdigBehandlet }: Props) {
         </ExpansionCard.Description>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
-        {behandling.etteroppgjor ? (
-          <Etteroppgjor etteroppgjor={behandling.etteroppgjor} />
+        {behandling.etteroppgjør ? (
+          <Etteroppgjor etteroppgjor={behandling.etteroppgjør} />
         ) : ferdigBehandlet ? (
           <FerdigBehandletStegvisning steg={behandling.steg} />
         ) : (

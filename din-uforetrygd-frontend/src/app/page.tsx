@@ -19,7 +19,7 @@ import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import { ForsideBehandlingKort } from '@/sections/Behandling/ForsideBehandlingKort'
-import { toForsideBehandling } from '@/sections/Behandling/behandlingUtil'
+import { toForsideBehandling } from '@/sections/Behandling/forsideBehandlingUtil'
 import { isEnabled } from '@/utils/unleash'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, VStack } from '@navikt/ds-react'
-import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
+import { ForsideBehandling, Status } from '@/sections/Behandling/forsideBehandlingUtil'
 import { SøknadAvslått } from '@/sections/Behandling/SøknadAvslått'
 import { SøknadMottatt } from '@/sections/Behandling/SøknadMottatt'
 import { SøknadInnvilget } from '@/sections/Behandling/SøknadInnvilget'
@@ -27,14 +27,14 @@ export const ForsideBehandlingKort: React.FC<BehandlingProps> = async ({ behandl
     <section aria-label="Status på søknad">
       <Box padding="space-16" borderWidth="1" borderColor="neutral-subtleA" borderRadius="12">
         <VStack gap="space-16">
-          {behandling.status == 'AVSLAG' && (
+          {behandling.status == Status.AVSLAG && (
             <SøknadAvslått
               behandling={behandling}
               visAvslåttForutgåendeMedlemskap={behandling.avslattForutgaendeMedlemskap}
             />
           )}
-          {behandling.status == 'MOTTATT' && <SøknadMottatt behandling={behandling} />}
-          {behandling.status == 'INNVILGET' && <SøknadInnvilget behandling={behandling} />}
+          {behandling.status == Status.MOTTATT && <SøknadMottatt behandling={behandling} />}
+          {behandling.status == Status.INNVILGET && <SøknadInnvilget behandling={behandling} />}
         </VStack>
       </Box>
     </section>

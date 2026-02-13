@@ -17,13 +17,19 @@ export enum Status {
   AVSLAG = 'AVSLAG',
 }
 
-enum BehandlingType {
+export enum BehandlingType {
   SØKNAD_UFØRETRYGD = 'SØKNAD_UFØRETRYGD',
   SØKNAD_ENDRING_UFØREGRAD = 'SØKNAD_ENDRING_UFØREGRAD',
   SØKNAD_BARNETILLEGG = 'SØKNAD_BARNETILLEGG',
   SØKNAD_UNG_UFØR = 'SØKNAD_UNG_UFØR',
   SØKNAD_YRKESSKADE = 'SØKNAD_YRKESSKADE',
-  INGEN = 'SØKNAD_YRKESSKADE',
+  EKSPORT = 'EKSPORT',
+  INNTEKTSENDRING = 'INNTEKTSENDRING',
+  ETTEROPPGJOR = 'ETTEROPPGJOR',
+  ENDRING_IFU = 'ENDRING_IFU',
+  MELLOMBEHANDLING = 'MELLOMBEHANDLING',
+  SLUTTBEHANDLING = 'SLUTTBEHANDLING',
+  REGULERING = 'REGULERING',
 }
 
 export interface Lenke {
@@ -31,7 +37,7 @@ export interface Lenke {
   visningstekst: string
 }
 
-interface BeregningRad {
+export interface BeregningRad {
   label: string
   verdi: string
 }

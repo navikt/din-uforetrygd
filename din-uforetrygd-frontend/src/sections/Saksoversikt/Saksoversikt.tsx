@@ -2,7 +2,7 @@
 
 import { Heading, Pagination, Tabs, VStack } from '@navikt/ds-react'
 import React, { useState } from 'react'
-import { SaksoversiktBehandling } from '@/sections/Saksoversikt/SaksoversiktBehandling'
+import { SaksoversiktBehandlingKort } from '@/sections/Saksoversikt/SaksoversiktBehandlingKort'
 import { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
@@ -17,6 +17,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
   const antallBehandlingerPerSide = 5
   const antallSider = Math.ceil(saksoversikt.avsluttedeBehandlinger.length / antallBehandlingerPerSide)
 
+  console.log(saksoversikt)
   return (
     <section>
       <VStack gap="space-24">
@@ -33,7 +34,7 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
             <Tabs.Panel value="aktive">
               {saksoversikt.aktiveBehandlinger.length > 0 ? (
                 saksoversikt.aktiveBehandlinger.map((aktivBehandling) => (
-                  <SaksoversiktBehandling behandling={aktivBehandling} ferdigBehandlet={false} />
+                  <SaksoversiktBehandlingKort behandling={aktivBehandling} ferdigBehandlet={false} />
                 ))
               ) : (
                 <IngenBehandlinger aktiv={true} />
@@ -44,7 +45,11 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
                 saksoversikt.avsluttedeBehandlinger
                   .slice(antallBehandlingerPerSide * (currentPage - 1), antallBehandlingerPerSide * currentPage)
                   .map((behandling) => (
-                    <SaksoversiktBehandling behandling={behandling} key={behandling.vedtakId} ferdigBehandlet={true} />
+                    <SaksoversiktBehandlingKort
+                      behandling={behandling}
+                      key={behandling.tittel + behandling.ferdigstiltDato}
+                      ferdigBehandlet={true}
+                    />
                   ))
               ) : (
                 <IngenBehandlinger aktiv={false} />

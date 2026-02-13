@@ -1,3 +1,5 @@
+import { BehandlingType } from '@/sections/Behandling/forsideBehandlingUtil'
+
 export const mapKravDescription = (kravGjelder: string, kravArsak: string, sakstype: string): string => {
   const descriptions: Record<string, Record<string, string> | string> = {
     AFP_EO: {
@@ -20,32 +22,20 @@ export const mapKravDescription = (kravGjelder: string, kravArsak: string, sakst
       YRKESSKADE: 'Anke av yrkesskade',
       default: 'Anke',
     },
-    EKSPORT: 'Eksport av ' + sakstype,
+    [BehandlingType.EKSPORT]: 'Eksport av ' + sakstype,
     ENDR_UTTAKSGRAD: 'Endring av uttaksgrad', // mulig å få med grad her?
     ETTERGIV_GJELD: {
       OMGJ_ETTER_ANKE: 'Ettergivelse av gjeld grunnet omgjøring etter anke',
       OMGJ_ETTER_KLAGE: 'Ettergivelse av gjeld grunnet omgjøring etter klage',
       default: 'Ettergivelse av gjeld',
     },
-    FORSTEG_BH: {
-      NY_SOKNAD: 'Søknad om ' + sakstype + ' - ny søknad',
-      OMGJ_ETTER_ANKE: 'Søknad om ' + sakstype + ' - omgjøring etter anke',
-      OMGJ_ETTER_KLAGE: 'Søknad om ' + sakstype + ' - omgjøring etter klage',
-      REKONSTRUKSJON: 'Søknad om ' + sakstype + ' - rekonstruksjon',
-    },
-    F_BH_BO_UTL: {
+    [BehandlingType.SØKNAD_UFØRETRYGD]: {
       NY_SOKNAD: 'Søknad om ' + sakstype + ' - ny søknad',
       OMGJ_ETTER_ANKE: 'Søknad om ' + sakstype + ' - omgjøring etter anke',
       OMGJ_ETTER_KLAGE: 'Søknad om ' + sakstype + ' - omgjøring etter klage',
       REKONSTRUKSJON: 'Søknad om ' + sakstype + ' - rekonstruksjon',
     },
     F_BH_KUN_UTL: {
-      NY_SOKNAD: 'Søknad om ' + sakstype + ' - ny søknad',
-      OMGJ_ETTER_ANKE: 'Søknad om ' + sakstype + ' - omgjøring etter anke',
-      OMGJ_ETTER_KLAGE: 'Søknad om ' + sakstype + ' - omgjøring etter klage',
-      REKONSTRUKSJON: 'Søknad om ' + sakstype + ' - rekonstruksjon',
-    },
-    F_BH_MED_UTL: {
       NY_SOKNAD: 'Søknad om ' + sakstype + ' - ny søknad',
       OMGJ_ETTER_ANKE: 'Søknad om ' + sakstype + ' - omgjøring etter anke',
       OMGJ_ETTER_KLAGE: 'Søknad om ' + sakstype + ' - omgjøring etter klage',
@@ -100,7 +90,7 @@ export const mapKravDescription = (kravGjelder: string, kravArsak: string, sakst
     // KONVERTERING: 'Konvertert krav',
     // KONVERTERING_MIN: 'Minimalt konvertert krav',
     // KONV_AVVIK_G_BATCH: 'Konvertering - Avvik ved G-omr',
-    // MELLOMBH: 'Mellombehandling',
+    [BehandlingType.MELLOMBEHANDLING]: 'Mellombehandling',
     // MTK: 'Merskatt tilbakekreving',
     OMGJ_TILBAKE: 'Omgjøring av tilbakekreving',
     OVERF_OMSGSP: {
@@ -148,15 +138,14 @@ export const mapKravDescription = (kravGjelder: string, kravArsak: string, sakst
       default: 'Saksgjennomgang',
     },
     SAK_OMKOST: 'Behandling relatert til saksomkostninger',
-    SLUTT_BH_UTL: 'Behandling av saken din i utlandet', // ??
-    SOK_OKN_UG: 'Endring av uføregrad',
-    SOK_RED_UG: 'Endring av uføregrad',
-    SOK_UU: {
+    [BehandlingType.SLUTTBEHANDLING]: 'Behandling av saken din i utlandet', // ??
+    [BehandlingType.SØKNAD_ENDRING_UFØREGRAD]: 'Endring av uføregrad',
+    [BehandlingType.SØKNAD_UNG_UFØR]: {
       OMGJ_ETTER_KLAGE: 'Søknad om ung ufør - omgjøring etter klage',
       OMGJ_ETTER_ANKE: 'Søknad om ung ufør - omgjøring etter anke',
       default: 'Søknad om ung ufør',
     },
-    SOK_YS: {
+    [BehandlingType.SØKNAD_YRKESSKADE]: {
       OMGJ_ETTER_KLAGE: 'Søknad yrkesskade ufør - omgjøring etter klage',
       OMGJ_ETTER_ANKE: 'Søknad yrkesskade ufør - omgjøring etter anke',
       default: 'Søknad om yrkesskade',
