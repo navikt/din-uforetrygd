@@ -54,7 +54,7 @@ jobs:
       - name: "Send slack-notifikasjon om bygget feiler"
         if: ${{ failure() }}
         run: |
-          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-frontend til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Bygg av din-uforetrygd-frontend til deploy til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:
@@ -105,6 +105,16 @@ jobs:
           RESOURCE: din-uforetrygd-frontend/.nais/prod-borger.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore
+      - name: "Send slack-notifikasjon om deploy til borger feiler"
+        if: ${{ failure() }}
+        run: |
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-frontend-borger til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
+          "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY_NOTIFY_TO_SLACK }}
+          AUTHOR: ${{ github.actor }}
+          WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 
 
   deploy-frontend-veileder-prod:
@@ -125,3 +135,13 @@ jobs:
           RESOURCE: din-uforetrygd-frontend/.nais/prod-veileder.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
           IMAGE: ${{ needs.build-frontend-and-publish-docker.outputs.image }}
           TEAM: ufore
+      - name: "Send slack-notifikasjon om deploy til veileder feiler"
+        if: ${{ failure() }}
+        run: |
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-frontend-veileder til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
+          "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY_NOTIFY_TO_SLACK }}
+          AUTHOR: ${{ github.actor }}
+          WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
