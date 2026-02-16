@@ -17,13 +17,19 @@ export enum Status {
   AVSLAG = 'AVSLAG',
 }
 
-enum BehandlingType {
+export enum BehandlingType {
   SØKNAD_UFØRETRYGD = 'SØKNAD_UFØRETRYGD',
   SØKNAD_ENDRING_UFØREGRAD = 'SØKNAD_ENDRING_UFØREGRAD',
   SØKNAD_BARNETILLEGG = 'SØKNAD_BARNETILLEGG',
   SØKNAD_UNG_UFØR = 'SØKNAD_UNG_UFØR',
   SØKNAD_YRKESSKADE = 'SØKNAD_YRKESSKADE',
-  INGEN = 'SØKNAD_YRKESSKADE',
+  EKSPORT = 'EKSPORT',
+  INNTEKTSENDRING = 'INNTEKTSENDRING',
+  ETTEROPPGJØR = 'ETTEROPPGJØR',
+  ENDRING_IFU = 'ENDRING_IFU',
+  MELLOMBEHANDLING = 'MELLOMBEHANDLING',
+  SLUTTBEHANDLING = 'SLUTTBEHANDLING',
+  REGULERING = 'REGULERING',
 }
 
 export interface Lenke {
@@ -31,12 +37,12 @@ export interface Lenke {
   visningstekst: string
 }
 
-interface BeregningRad {
+export interface BeregningRad {
   label: string
   verdi: string
 }
 
-export function toForsideBehandling(fra: components['schemas']['ForsideBehandling']): ForsideBehandling | null {
+export function toForsideBehandling(fra: components['schemas']['Behandling']): ForsideBehandling | null {
   if (fra.type != BehandlingType.SØKNAD_UFØRETRYGD) return null
 
   return {
@@ -45,8 +51,8 @@ export function toForsideBehandling(fra: components['schemas']['ForsideBehandlin
     statusTekst: lagStatusTekst(fra.status as Status),
     lenker: lagLenker(fra.status as Status, fra.type as BehandlingType),
     beregninger: lagBeregning(fra.beregning, fra.status as Status),
-    dato: fra.dato,
-    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap
+    dato: fra.status == Status.MOTTATT ? fra.mottattDato : fra.ferdigstiltDato!!,
+    avslattForutgaendeMedlemskap: fra.avslattForutgaendeMedlemskap,
   }
 }
 

@@ -1,8 +1,8 @@
 import { BodyShort, Link } from '@navikt/ds-react'
 import React from 'react'
-import { ForsideBehandlingHeader } from '@/sections/Behandling/ForsideBehandlingHeader'
-import Divider from '@/sections/Behandling/Divider'
-import { ForsideBehandling } from '@/sections/Behandling/behandlingUtil'
+import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
+import Divider from '@/sections/ForsideBehandling/Divider'
+import { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 interface Props {
   behandling: ForsideBehandling

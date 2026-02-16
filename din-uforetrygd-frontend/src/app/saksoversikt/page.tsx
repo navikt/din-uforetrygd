@@ -20,6 +20,7 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
     const saksoversiktResponse = await hentSaksoversikt(saksid, pid)
     const saksoversikt =
       saksoversiktResponse.saksoversiktResponse && mapTilSaksoversiktType(saksoversiktResponse.saksoversiktResponse)
+
     if (saksoversikt) {
       return <Saksoversikt saksoversikt={saksoversikt} mode={mode} />
     } else

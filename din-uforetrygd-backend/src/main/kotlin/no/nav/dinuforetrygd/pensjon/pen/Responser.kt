@@ -38,7 +38,7 @@ data class Vedtak(
     val vedtaksdato: LocalDate,
     val avslag: Boolean,
     val krav: Krav,
-    val etteroppgjor: Etteroppgjør? = null,
+    val etteroppgjor: EtteroppgjørResponse? = null,
     val beregning: Beregning? = null,
     val avslattForutgaendeMedlemskap: Boolean
 )
@@ -58,7 +58,7 @@ data class Krav(
     val mottattDato: LocalDate,
 )
 
-data class Etteroppgjør(
+data class EtteroppgjørResponse(
     val arstall: Int,
     val avviksbelop: Int,
     val type: String
