@@ -59,7 +59,7 @@
     "openapi-typescript": "^7.10.1",
     "prettier": "^3.8.1",
     "typescript": "^5",
-    "vite-tsconfig-paths": "^6.0.5",
+    "vite-tsconfig-paths": "^6.1.0",
     "vitest": "^4.0.18"
   },
   "overrides": {
