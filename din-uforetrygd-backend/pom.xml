@@ -18,7 +18,7 @@
         <kotlin.version>2.3.10</kotlin.version>
         <jackson-version>2.21.0</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <logback.version>1.5.28</logback.version>
+        <logback.version>1.5.29</logback.version>
         <logback-access.version>2.0.9</logback-access.version>
         <micrometer.version>1.16.2</micrometer.version>
         <!-- Test -->
