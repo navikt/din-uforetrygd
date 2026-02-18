@@ -1,4 +1,4 @@
-import styles from '@/sections/UforeStatusGuidePanel/uforestatusGuidePanel.module.css'
+import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
 import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
 import { getUrl } from '@/utils/getUrl/getUrl'
 

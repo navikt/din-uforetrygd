@@ -2,10 +2,6 @@
     width: clamp(300px, 100vw - 36px, 632px);
 }
 
-.tilBehandling {
-    width: clamp(300px, 100vw - 36px, 632px);
-}
-
 .guidepanelWrapper {
   max-width: var(--content-width);
   width: 100%;
@@ -13,10 +9,6 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
-}
-
-.uforetrygdHeading {
-  padding-bottom: 1rem;
 }
 
 .link {
