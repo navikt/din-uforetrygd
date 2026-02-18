@@ -1,97 +1,41 @@
 import { components } from '../src/api/api'
+import { BehandlingType, Status } from '../src/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export const mockSaksoversiktData: Record<string, components['schemas']['SaksoversiktResponse']> = {
   default: {
     aktiveBehandlinger: [
       {
-        tittel: 'Søknad om uføretrygd',
+        type: BehandlingType.SØKNAD_UFØRETRYGD,
+        status: Status.MOTTATT,
         mottattDato: '2024-10-01',
         ferdigstiltDato: undefined,
-        avslag: false,
         etteroppgjor: undefined,
-        steg: [
-          {
-            aktiv: true,
-            utfort: false,
-            tittel: 'Søknad mottatt',
-          },
-          {
-            aktiv: false,
-            utfort: false,
-            tittel: 'Søknad innvilget',
-            undertekst: 'Det er bra',
-          },
-        ],
-        vedtakId: 123,
         avslattForutgaendeMedlemskap: false,
+        beregning: null,
       },
     ],
     avsluttedeBehandlinger: [
       {
-        tittel: 'Søknad om uføretrygd',
-        mottattDato: '2024-05-15',
-        ferdigstiltDato: '2024-06-20',
-        avslag: false,
-        etteroppgjor: undefined,
-        steg: [
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad mottatt',
-          },
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknaden er avslått',
-            undertekst: 'Les brevet ditt',
-          },
-        ],
-        vedtakId: 1234,
-        avslattForutgaendeMedlemskap: true,
+        type: BehandlingType.ETTEROPPGJØR,
+        status: Status.INNVILGET,
+        mottattDato: '2024-10-01',
+        ferdigstiltDato: '2024-10-01',
+        etteroppgjor: {
+          type: 'TILBAKEKR',
+          arstall: 2024,
+          avviksbelop: 10000,
+        },
+        avslattForutgaendeMedlemskap: false,
+        beregning: null,
       },
       {
-        tittel: 'Revurdering av uføretrygd',
-        mottattDato: '2023-05-15',
-        ferdigstiltDato: '2023-06-20',
-        avslag: false,
+        type: BehandlingType.REGULERING,
+        status: Status.MOTTATT,
+        mottattDato: '2024-10-01',
+        ferdigstiltDato: '2024-10-01',
         etteroppgjor: undefined,
-        steg: [
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad mottatt',
-          },
-          {
-            aktiv: true,
-            utfort: false,
-            tittel: 'Søknad innvilget',
-            undertekst: 'Det er bra',
-          },
-        ],
-        vedtakId: 123,
         avslattForutgaendeMedlemskap: false,
-      },
-      {
-        tittel: 'Etteroppgjør',
-        mottattDato: '2024-05-15',
-        ferdigstiltDato: '2024-06-20',
-        avslag: false,
-        etteroppgjor: undefined,
-        steg: [
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad mottatt',
-          },
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad innvilget',
-            undertekst: 'Det er bra',
-          },
-        ],
-        vedtakId: 1234,
-        avslattForutgaendeMedlemskap: false,
+        beregning: null,
       },
     ],
   },
@@ -99,26 +43,13 @@ export const mockSaksoversiktData: Record<string, components['schemas']['Saksove
     aktiveBehandlinger: [],
     avsluttedeBehandlinger: [
       {
-        tittel: 'Søknad om uføretrygd',
-        mottattDato: '2023-01-01',
-        ferdigstiltDato: '2023-02-15',
-        avslag: false,
+        type: BehandlingType.REGULERING,
+        status: Status.MOTTATT,
+        mottattDato: '2024-10-01',
+        ferdigstiltDato: '2024-10-01',
         etteroppgjor: undefined,
-        steg: [
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad mottatt',
-          },
-          {
-            aktiv: false,
-            utfort: true,
-            tittel: 'Søknad innvilget',
-            undertekst: 'Det er bra',
-          },
-        ],
-        vedtakId: 1234,
         avslattForutgaendeMedlemskap: false,
+        beregning: null,
       },
     ],
   },

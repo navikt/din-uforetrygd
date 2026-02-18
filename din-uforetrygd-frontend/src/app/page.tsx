@@ -64,7 +64,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             }
             visningskriterier={visningskriterier}
           />
-          )
           <InntektSnarveier
             visningskriterier={visningskriterier}
             pid={params.pid}
