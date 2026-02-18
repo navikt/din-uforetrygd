@@ -11,7 +11,6 @@ import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import getEnv from '@/utils/env'
 import './layout.css'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
-import UforestatusGuidePanel from '@/sections/UforeStatusGuidePanel/UforestatusGuidePanel'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import React from 'react'
 import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
@@ -20,7 +19,6 @@ import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
-import { isEnabled } from '@/utils/unleash'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 
 interface IHomeProps {
@@ -31,7 +29,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
-  const visBehandling = await isEnabled('din.uforetrygd.forside.behandling')
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -44,7 +41,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <VStack gap="space-12" className={'tittel-wrapper'}>
-            <Brødsmulesti mode={mode}/>
+            <Brødsmulesti mode={mode} />
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
@@ -59,18 +56,15 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               </BodyLong>
             </LukkbarAlert>
           )}
-          {visBehandling ? (
-            <ForsideBehandlingKort
-              behandling={
-                initResponse.uforetrygdResponse.behandling
-                  ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
-                  : null
-              }
-              visningskriterier={visningskriterier}
-            />
-          ) : (
-            <UforestatusGuidePanel visningskriterier={visningskriterier} />
-          )}
+          <ForsideBehandlingKort
+            behandling={
+              initResponse.uforetrygdResponse.behandling
+                ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+                : null
+            }
+            visningskriterier={visningskriterier}
+          />
+          )
           <InntektSnarveier
             visningskriterier={visningskriterier}
             pid={params.pid}

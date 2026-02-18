@@ -7,7 +7,6 @@ import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
 import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
 import { components } from '@/api/api'
-import { isEnabled } from '@/utils/unleash'
 import getEnv from '@/utils/env'
 
 interface InterneLenkerProps {
@@ -18,7 +17,6 @@ interface InterneLenkerProps {
 }
 
 export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid, journalposter }) => {
-  const visSaksoversikt = await isEnabled('din.uforetrygd.saksoversikt')
   const mode = getEnv('MODE')
 
   return (
@@ -30,25 +28,23 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
       ])(visningskriterier) && (
         <section aria-label="Interne lenker til saksoversikt og dokumentoversikt">
           <VStack gap="space-24">
-            {visSaksoversikt && (
-              <LinkCard>
-                <Hide below="sm" asChild>
-                  <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
-                    <LinkCardIcon>
-                      <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
-                    </LinkCardIcon>
-                  </Box>
-                </Hide>
-                <LinkCardTitle>
-                  <LinkCardAnchor
-                    href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${mode === 'veileder' ? `&pid=${pid}` : ''}`}
-                  >
-                    Saksoversikt
-                  </LinkCardAnchor>
-                </LinkCardTitle>
-                <LinkCardDescription>Behandlinger knyttet til saken din</LinkCardDescription>
-              </LinkCard>
-            )}
+            <LinkCard>
+              <Hide below="sm" asChild>
+                <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
+                  <LinkCardIcon>
+                    <FilesIcon className={styles.snarveiIcon} fontSize="2rem" />
+                  </LinkCardIcon>
+                </Box>
+              </Hide>
+              <LinkCardTitle>
+                <LinkCardAnchor
+                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${mode === 'veileder' ? `&pid=${pid}` : ''}`}
+                >
+                  Saksoversikt
+                </LinkCardAnchor>
+              </LinkCardTitle>
+              <LinkCardDescription>Behandlinger knyttet til saken din</LinkCardDescription>
+            </LinkCard>
             <Dokumenter pid={pid} journalposter={journalposter!} />
           </VStack>
         </section>
