@@ -56,7 +56,7 @@
     "eslint": "^10.0.0",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
-    "openapi-typescript": "^7.12.0",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.1",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.0",
