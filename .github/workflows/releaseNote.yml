@@ -28,7 +28,7 @@ jobs:
           # Escape quotation marks ( " -> \" )
           MESSAGE=$(echo "$MESSAGE" | sed -r 's/"/\\\"/g')
                     
-          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Ny versjon av Din uføretrygd*\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
+          PAYLOAD="payload={ \"attachments\": [{ \"text\": \"*Ny versjon av Din uføretrygd på vei ut *:howdy-mette:\n\${MESSAGE}\n\nAnsvarlig: \${slack_id}\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${USER}" "${PAYLOAD}" "${WEBHOOK_URL}"
 

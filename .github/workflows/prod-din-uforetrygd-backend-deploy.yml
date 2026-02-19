@@ -8,6 +8,10 @@ on:
     paths:
       - din-uforetrygd-backend/**
 
+concurrency:
+  group: prod-din-uforetrygd-backend-deploy
+  cancel-in-progress: true
+
 jobs:
   build-backend-and-publish-docker:
     name: Bygg backend application
@@ -49,7 +53,7 @@ jobs:
       - name: "Send slack-notifikasjon om bygget feiler"
         if: ${{ failure() }}
         run: |
-          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Bygg av din-uforetrygd-backend til deploy til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Bygg av din-uforetrygd-backend til deploy til prod feilet* :bomb::broken_heart:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:
@@ -103,7 +107,7 @@ jobs:
       - name: "Send slack-notifikasjon om deploy feiler"
         if: ${{ failure() }}
         run: |
-          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-backend til prod feilet* :bomb:\nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
+          PAYLOAD="payload={ \"attachments\": [{\"color\": \"danger\", \"text\": \"*Deploy av din-uforetrygd-backend til prod feilet* :bomb::this-is-fine-fire: \nAnsvarlig: \${slack_id}\nCommit: <https://github.com/navikt/din-uforetrygd/commit/$GITHUB_SHA|$GITHUB_SHA>\" }] }"
           chmod +x "${GITHUB_WORKSPACE}/.github/notify-slack.sh"
           "${GITHUB_WORKSPACE}/.github/notify-slack.sh" "${SSH_KEY}" "${AUTHOR}" "${PAYLOAD}" "${WEBHOOK_URL}"
         env:
