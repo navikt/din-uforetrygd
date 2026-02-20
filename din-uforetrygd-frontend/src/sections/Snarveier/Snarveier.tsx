@@ -52,7 +52,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
   {
     href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
     title: 'Se alle dokumentene dine',
-    description: 'Gå til dokumenter',
+    description: 'Alle dokumentene dine',
     icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
     showFullmaktWarning: false,
@@ -88,7 +88,7 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
   {
     href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
     title: 'Ettersend dokumentasjon',
-    description: 'Ettersend dokumenter om saken din',
+    description: 'Her kan du ettersende dokumenter om saken din',
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,

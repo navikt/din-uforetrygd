@@ -22,7 +22,7 @@ export function SaksoversiktBehandlingKort({ behandling, ferdigBehandlet }: Prop
     if (ferdigBehandlet && behandling.tittel.includes('Søknad'))
       return `Søknad innvilget: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
     if (ferdigBehandlet) return `Ferdig behandlet: ${formatterDatoTekst(behandling.ferdigstiltDato!)}`
-    return `Mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
+    return `Søknad mottatt: ${formatterDatoTekst(behandling.mottattDato)}`
   }
 
   return (

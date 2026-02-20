@@ -13,7 +13,7 @@ export function IngenBehandlinger({ aktiv }: IngenBehandlingerProps) {
   return (
     <div className={styles.ingenBehandlinger}>
       <EnvelopeOpenIcon />
-      <BodyShort>{aktiv ? "Du har ingen aktive behandlinger" : "Du har ingen avsluttede behandlinger"}</BodyShort>
+      <BodyShort>{aktiv ? "Du har ingen saker til behandling" : "Du har ingen saker som er ferdig behandlet"}</BodyShort>
     </div>
   )
 }
