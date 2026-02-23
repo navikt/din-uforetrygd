@@ -116,7 +116,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
                       <HelpText
                         title="Hvor kommer registrert forventet inntekt fra?"
-                        onClick={() => umami('hjelpetekst klikket', { tekst: 'Registrert forventet inntekt' })}
+                        onClick={() => umami('hjelpetekst åpnet', { tekst: 'Registrert forventet inntekt' })}
                       >
                         Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra
                         opplysninger vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og

@@ -4,6 +4,7 @@ import { Box, VStack } from '@navikt/ds-react'
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons'
 import { useState } from 'react'
 import styles from './readmoretile.module.css'
+import { umami } from '@/utils/umami'
 
 interface IReadMoreTileProps {
   children: React.ReactNode
@@ -17,6 +18,7 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
       setIsOpen(false)
     } else {
       setIsOpen(true)
+      umami('accordion åpnet', { tekst: 'Dokument' })
     }
   }
 

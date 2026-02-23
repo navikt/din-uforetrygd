@@ -9,6 +9,7 @@ import styles from './dokumenterview.module.css'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
 import { FolderFileIcon } from '@navikt/aksel-icons'
+import { umami } from '@/utils/umami'
 
 interface IDokumenterProps {
   pid?: string
@@ -40,7 +41,11 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
             </Box>
           </Hide>
           <VStack className={styles.noTopPadding}>
-            <ExpansionCard.Title size="small" className={styles.dokumenterCardTitle}>
+            <ExpansionCard.Title
+              size="small"
+              className={styles.dokumenterCardTitle}
+              onClick={() => umami('accordion åpnet', { tekst: 'Dokumenter knyttet til saken din' })}
+            >
               Dokumenter knyttet til saken din
             </ExpansionCard.Title>
             <ExpansionCard.Description>Brev og informasjon om din uføretrygd</ExpansionCard.Description>
