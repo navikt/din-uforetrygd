@@ -7,6 +7,7 @@ import { formatInntekt } from '@/utils/formatter/formatter'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import React from 'react'
+import { umami } from '@/utils/umami'
 
 interface VedtaksdetaljerProps {
   dittUforevedtak: components['schemas']['DittUforevedtak']
@@ -113,7 +114,10 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   <Table.DataCell>
                     <HStack gap="space-4">
                       <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
-                      <HelpText title="Hvor kommer registrert forventet inntekt fra?">
+                      <HelpText
+                        title="Hvor kommer registrert forventet inntekt fra?"
+                        onClick={() => umami('hjelpetekst klikket', { tekst: 'Registrert forventet inntekt' })}
+                      >
                         Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra
                         opplysninger vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og
                         pensjoner du mottar. Du kan endre registrert forventet inntekt i{' '}
@@ -132,7 +136,10 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                   <Table.DataCell>
                     <HStack gap="space-4">
                       <BodyShort>Inntektsgrense</BodyShort>
-                      <HelpText title="Hva er inntektsgrense?">
+                      <HelpText
+                        title="Hva er inntektsgrense?"
+                        onClick={() => umami('hjelpetekst åpnet', { tekst: 'Inntektsgrense' })}
+                      >
                         Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
                         &nbsp;kroner. Bruk{' '}
                         <Link href={linkInntektsplanlegger} className={styles.link}>
