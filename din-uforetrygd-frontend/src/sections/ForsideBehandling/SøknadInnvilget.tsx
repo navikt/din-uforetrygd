@@ -1,3 +1,5 @@
+'use client'
+
 import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
 import React from 'react'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
