@@ -32,7 +32,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: |
-            node_modules
+            din-uforetrygd-frontend/node_modules
             ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
@@ -41,6 +41,9 @@ jobs:
         run: cd din-uforetrygd-frontend && npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Lint
+        run: cd din-uforetrygd-frontend && npm run check
 
       - name: Bygg med node
         run: cd din-uforetrygd-frontend && npm ci && npm run build
