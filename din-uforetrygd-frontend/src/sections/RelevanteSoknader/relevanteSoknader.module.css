@@ -1,29 +1,28 @@
-
 .relevantesoknaderSection {
-    background: var(--ax-bg-sunken);
-    max-width: unset !important;
-    width: 100vw !important;
-    justify-content: center;
-    display: flex;
-    gap: var(--ax-space-24);
-    padding: var(--ax-space-40) 0 !important;
+	background: var(--ax-bg-sunken);
+	max-width: unset;
+	width: 100vw;
+	justify-content: center;
+	display: flex;
+	gap: var(--ax-space-24);
+	padding: var(--ax-space-40) 0;
 }
 
 .relevanteSoknaderContent {
-    max-width: var(--content-width);
-    width: 100%;
-    padding-inline: var(--ax-space-12);
+	max-width: var(--content-width);
+	width: 100%;
+	padding-inline: var(--ax-space-12);
 }
 
 .relevanteSoknaderLenker {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--ax-space-24);
-    margin-top: var(--ax-space-12);
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--ax-space-24);
+	margin-top: var(--ax-space-12);
 }
 
 @media (max-width: 768px) {
-    .relevanteSoknaderLenker {
-        grid-template-columns: 1fr;
-    }
+	.relevanteSoknaderLenker {
+		grid-template-columns: 1fr;
+	}
 }

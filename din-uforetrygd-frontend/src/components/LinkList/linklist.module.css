@@ -1,31 +1,30 @@
 .linkList {
-  list-style: none;
-  padding-inline-start: 0;
-  display: grid;
-  grid-template-colums: auto 1fr;
+	list-style: none;
+	padding-inline-start: 0;
+	display: grid;
 }
 
 .dividedVariant {
-  color: black;
+	color: black;
 }
 
 .dividedVariantLink a {
-  color: var(--ax-text-neutral);
+	color: var(--ax-text-neutral);
 }
 
 .dividedVariantLink:first-child {
-  padding-top: 10px;
-  border-top: 1px solid var(--ax-border-neutral-subtle); /* Divider between links */
+	padding-top: 10px;
+	border-top: 1px solid var(--ax-border-neutral-subtle); /* Divider between links */
 }
 
 .dividedVariantLink {
-  border-bottom: 1px solid var(--ax-border-neutral-subtle); /* Divider between links */
+	border-bottom: 1px solid var(--ax-border-neutral-subtle); /* Divider between links */
 }
 
 .link:not(:first-child) {
-  padding-top: 10px;
+	padding-top: 10px;
 }
 
 .link {
-  padding-bottom: 10px;
+	padding-bottom: 10px;
 }
