@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    team: ufore
+  name: din-uforetrygd-alerts
+  namespace: ufore
+spec:
+  groups:
+    - name: din-uforetrygd-alerts
+      rules:
+        - alert: "For mange serverfeil i din-uføretrygd-backend"
+          expr: |
+            round(
+                sum(rate(http_server_requests_seconds_count{app="din-uforetrygd-backend", status=~"[45].."}[5m])) by (uri) / sum(rate(http_server_requests_seconds_count{app="din-uforetrygd-backend"}[5m])) by ( uri) * 100 
+            ) > 10
+          for: 2m
+          annotations:
+            message: "{{ $value }}% 5xx / 4xx-feil fra `{{ $labels.uri }}` siste 2 min! :hellmo:"
+            dashboard_url: "https://grafana.nav.cloud.nais.io/goto/bfeeyrjvwrbpcd?orgId=1"
+          labels:
+            severity: error
+            namespace: ufore
