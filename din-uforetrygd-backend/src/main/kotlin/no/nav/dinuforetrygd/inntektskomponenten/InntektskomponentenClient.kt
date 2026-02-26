@@ -5,6 +5,7 @@ import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.AzureAdService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
@@ -59,6 +60,7 @@ class InntektskomponentenClient(
                         .bodyValue(request)
                         .retrieve()
                         .bodyToMono(HentAbonnerteInntekterResponse::class.java)
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block()!!
                 }
