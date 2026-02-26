@@ -1,11 +1,12 @@
 'use client'
 
 import { Heading, Pagination, Tabs, VStack } from '@navikt/ds-react'
-import React, { useState } from 'react'
-import { SaksoversiktBehandlingKort } from '@/sections/Saksoversikt/SaksoversiktBehandlingKort'
-import { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
-import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
+import type React from 'react'
+import { useState } from 'react'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
+import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
+import { SaksoversiktBehandlingKort } from '@/sections/Saksoversikt/SaksoversiktBehandlingKort'
+import type { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 
 interface Saksoversikt {
   saksoversikt: SaksoversiktType

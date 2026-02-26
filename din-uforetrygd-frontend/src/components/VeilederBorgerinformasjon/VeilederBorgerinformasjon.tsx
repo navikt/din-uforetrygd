@@ -1,7 +1,6 @@
 import { BodyShort, Box, CopyButton, HStack } from '@navikt/ds-react'
-
-import styles from './VeilederBorgerinformasjon.module.css'
 import getEnv from '@/utils/env'
+import styles from './VeilederBorgerinformasjon.module.css'
 
 interface IVeilederBorgerInformasjonProps {
   pid?: string

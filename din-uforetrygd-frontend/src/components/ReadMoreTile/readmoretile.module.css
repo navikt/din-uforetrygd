@@ -1,55 +1,55 @@
 .tile {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: var(--ax-space-8);
-    margin: 0 0 var(--ax-space-2) 0;
-    text-align: left;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--ax-space-8);
+  margin: 0 0 var(--ax-space-2) 0;
+  text-align: left;
+  position: relative;
+  z-index: 1;
 }
 
 .tileOpenColour {
-    background-color: var(--ax-neutral-200);
+  background-color: var(--ax-neutral-200);
 }
 
 .tileHeader:hover {
-    background-color: var(--ax-neutral-300);
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
-    cursor: pointer;
+  background-color: var(--ax-neutral-300);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
+  cursor: pointer;
 }
 
-.tileHeader:is(:hover,:focus-visible) .tileChevronClosed {
-    transform: translateY(2px);
+.tileHeader:is(:hover, :focus-visible) .tileChevronClosed {
+  transform: translateY(2px);
 }
 
-.tileHeader:is(:hover,:focus-visible) .tileChevronOpen {
-    transform: translateY(-2px);
+.tileHeader:is(:hover, :focus-visible) .tileChevronOpen {
+  transform: translateY(-2px);
 }
 
 .tileHeader {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    text-align: left;
-    position: relative;
-    margin: 0;
-    z-index: 1;
-    border: none;
-    background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  margin: 0;
+  z-index: 1;
+  border: none;
+  background-color: transparent;
 }
 
 .tileChevron {
-    transition: transform 0.2s ease 0s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 4rem;
+  transition: transform 0.2s ease 0s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
 }
 
 .tileChevron > svg {
-    width: 1.5rem;
-    height: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }

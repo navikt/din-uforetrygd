@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server'
-import getOboToken from '@/api/getOboToken'
 import { redirect } from 'next/navigation'
+import type { NextRequest } from 'next/server'
+import getOboToken from '@/api/getOboToken'
 
 export async function GET(
   request: NextRequest,

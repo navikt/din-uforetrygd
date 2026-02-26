@@ -1,15 +1,15 @@
 'use client'
 
+import { FolderFileIcon } from '@navikt/aksel-icons'
 import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
-import React from 'react'
+import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
+import type React from 'react'
+import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
+import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { ReadMoreTile } from '@/components/ReadMoreTile/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList/SortablePaginatedList'
-import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
-import styles from './dokumenterview.module.css'
-import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
-import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
-import { FolderFileIcon } from '@navikt/aksel-icons'
 import { umami } from '@/utils/umami'
+import styles from './dokumenterview.module.css'
 
 interface IDokumenterProps {
   pid?: string

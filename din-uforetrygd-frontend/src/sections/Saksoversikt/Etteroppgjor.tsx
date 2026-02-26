@@ -1,7 +1,7 @@
 'use client'
 
-import { EtteroppgjorType } from '@/sections/Saksoversikt/saksoversiktType'
 import { BodyShort, HStack, Link, VStack } from '@navikt/ds-react'
+import type { EtteroppgjorType } from '@/sections/Saksoversikt/saksoversiktType'
 import { formatInntekt } from '@/utils/formatter/formatter'
 
 interface Props {

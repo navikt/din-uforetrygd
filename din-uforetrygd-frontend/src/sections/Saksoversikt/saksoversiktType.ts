@@ -1,4 +1,4 @@
-import { components } from '@/api/api'
+import type { components } from '@/api/api'
 import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export interface SaksoversiktType {
@@ -52,7 +52,6 @@ const lagSteg = (
   mottattDato: string,
   ferdigstiltDato?: string
 ): StegType[] => {
-
   switch (behandlingType) {
     case BehandlingType.EKSPORT:
     case BehandlingType.SØKNAD_UFØRETRYGD:

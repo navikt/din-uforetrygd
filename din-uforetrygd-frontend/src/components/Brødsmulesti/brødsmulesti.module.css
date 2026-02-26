@@ -1,11 +1,11 @@
 .brodsmuleLink:not(:last-child)::after {
-    content: '|';
-    margin: 0 0.5rem;
-    cursor: pointer;
-    color: var(--ax-text-subtle, rgba(1, 11, 24, 0.68));
+  content: "|";
+  margin: 0 0.5rem;
+  cursor: pointer;
+  color: var(--ax-text-subtle, rgba(1, 11, 24, 0.68));
 }
 
 .aktivLenke {
-    color: var(--ax-text-accent-decoration);
-    font-weight: bold;
+  color: var(--ax-text-accent-decoration);
+  font-weight: bold;
 }

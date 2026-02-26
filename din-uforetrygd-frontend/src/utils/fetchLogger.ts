@@ -1,4 +1,4 @@
-import logger, { ILogEntry } from './logger'
+import logger, { type ILogEntry } from './logger'
 
 export const fetchLogger = (input: Request): Promise<Response> => {
   const correlationIdName = 'Nav-Call-Id'

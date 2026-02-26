@@ -1,7 +1,6 @@
-import { getUrl } from '@/utils/getUrl/getUrl'
-import { components } from '@/api/api'
-
+import type { components } from '@/api/api'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
+import { getUrl } from '@/utils/getUrl/getUrl'
 
 interface IDittVedtak {
   pid?: string

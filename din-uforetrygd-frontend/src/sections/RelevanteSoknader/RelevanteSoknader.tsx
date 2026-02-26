@@ -1,11 +1,11 @@
 import { Heading, LinkCard } from '@navikt/ds-react'
+import { LinkCardAnchor, LinkCardTitle } from '@navikt/ds-react/LinkCard'
+import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
-import { getUrl } from '@/utils/getUrl/getUrl'
-import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getFullmaktProps } from '@/utils/fullmakt'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './relevanteSoknader.module.css'
-import { LinkCardAnchor, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]

@@ -1,5 +1,5 @@
-import { headers } from 'next/headers'
 import { getToken, requestOboToken, validateToken } from '@navikt/oasis'
+import { headers } from 'next/headers'
 import getEnv from '@/utils/env'
 
 const getOboToken = async () => {

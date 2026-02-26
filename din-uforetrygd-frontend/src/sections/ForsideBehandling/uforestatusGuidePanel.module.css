@@ -1,5 +1,5 @@
 .ingenUforetrygd {
-    width: clamp(300px, 100vw - 36px, 632px);
+  width: clamp(300px, 100vw - 36px, 632px);
 }
 
 .guidepanelWrapper {

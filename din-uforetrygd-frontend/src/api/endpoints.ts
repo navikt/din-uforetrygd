@@ -1,8 +1,8 @@
-import type { components, paths } from '@/api/api'
 import createClient from 'openapi-fetch'
+import type { components, paths } from '@/api/api'
 import getOboToken from '@/api/getOboToken'
-import { getFullmaktCookie } from './getFullmaktCookie'
 import fetchLogger from '@/utils/fetchLogger'
+import { getFullmaktCookie } from './getFullmaktCookie'
 
 const client = createClient<paths>({
   baseUrl: process.env.NODE_ENV !== 'development' ? process.env.DIN_UFORETRYGD_BACKEND : 'http://localhost:8080',

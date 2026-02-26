@@ -1,9 +1,9 @@
-import { Innloggingstype, Visningskriterier } from '@/const'
-import React from 'react'
-import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
+import type React from 'react'
+import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
+import { type Innloggingstype, Visningskriterier } from '@/const'
 import { matchAll } from '@/utils/filterShowFor/filterShowFor'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './inntektSnarveier.module.css'
 
 interface InntektSnarveierProps {
@@ -19,7 +19,7 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
 }) => {
   return (
     <section aria-label="Snarvei til inntektsplanlegger og utbetalinger">
-        <SnarveiPanel
+      <SnarveiPanel
         links={await getLinks(pid)}
         visningskriterier={visningskriterier}
         pid={pid}
@@ -47,5 +47,5 @@ const getLinks = async (pid: string | undefined) => [
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
-  }
-];
+  },
+]

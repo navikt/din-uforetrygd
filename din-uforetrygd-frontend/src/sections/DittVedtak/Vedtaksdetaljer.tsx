@@ -1,12 +1,12 @@
 'use client'
 
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react'
-import { components } from '@/api/api'
 import { format, parseISO } from 'date-fns'
-import { formatInntekt } from '@/utils/formatter/formatter'
-import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
-import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import React from 'react'
+import type { components } from '@/api/api'
+import styles from '@/sections/DittVedtak/dittvedtak.module.css'
+import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
+import { formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
 
 interface VedtaksdetaljerProps {

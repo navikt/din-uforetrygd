@@ -1,7 +1,7 @@
-import { components } from '@/api/api'
-import { DokumenterView } from './DokumenterView'
+import type { components } from '@/api/api'
 import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
+import { DokumenterView } from './DokumenterView'
 
 interface IDokumenterProps {
   pid?: string

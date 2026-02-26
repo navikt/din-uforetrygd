@@ -1,9 +1,9 @@
+import { Heading, Link } from '@navikt/ds-react'
 import { LinkList } from '@/components/LinkList/LinkList'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
-import { Heading, Link } from '@navikt/ds-react'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import { getFullmaktProps } from '@/utils/fullmakt'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './kanVaereAktueltForDeg.module.css'
 
 interface IKanVaereAktueltForDegProps {

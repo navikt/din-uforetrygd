@@ -26,7 +26,7 @@ const log = (entiry: ILogEntry, level: 'Info' | 'Warning' | 'Error' | 'Fatal'): 
     ...entiry,
     level: level,
   }
-  // eslint-disable-next-line no-console
+
   console.log(JSON.stringify(logEntry))
 }
 

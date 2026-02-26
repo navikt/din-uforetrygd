@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import logger from './utils/logger'
+import { NextResponse } from 'next/server'
 import { unleashSessionIdKey } from '@/utils/unleash'
+import logger from './utils/logger'
 
 export function proxy(request: NextRequest) {
   const url = new URL(request.url)

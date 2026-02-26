@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { Button, Modal } from '@navikt/ds-react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 import useIsFullmakt from '@/hooks/useIsFullmakt'
 
 export function FullmaktModal() {
