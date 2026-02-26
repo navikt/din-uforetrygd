@@ -5,6 +5,7 @@ import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
+import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
@@ -39,6 +40,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<List<SakSammendrag>>() {})
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block() ?: emptyList()
                 }
@@ -66,6 +68,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(VedtakssammendragResponse::class.java)
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block()!!
                 }
@@ -93,6 +96,7 @@ class PenClient(
                         .accept(MediaType.APPLICATION_JSON)
                         .retrieve()
                         .bodyToMono(ForventedeInntekterResponse::class.java)
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block()!!
                 }
@@ -125,6 +129,7 @@ class PenClient(
                         .bodyValue(HentForsideDataRequest(pid = pid, sakId = sakId))
                         .retrieve()
                         .bodyToMono(HentForsideDataResponse::class.java)
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block()!!
                 }
@@ -160,6 +165,7 @@ class PenClient(
                         .bodyValue(HentBehandlingerRequest(pid = pid, sakId = sakId))
                         .retrieve()
                         .bodyToMono(HentBehandlingerResponse::class.java)
+                        .retryWhen(retryOnTimeout)
                         .withMdcContext()
                         .block()!!
                 }

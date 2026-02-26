@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.configuration
 
 import io.netty.channel.ChannelOption
+import io.netty.handler.timeout.ReadTimeoutException
 import net.logstash.logback.argument.StructuredArguments.kv
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
@@ -13,6 +14,8 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
 import reactor.netty.resources.ConnectionProvider
+import reactor.util.retry.Retry
+import reactor.util.retry.RetryBackoffSpec
 import java.time.Duration
 
 @Configuration
@@ -55,6 +58,9 @@ class WebClientConfiguration {
         }
     }
 }
+
+val retryOnTimeout: RetryBackoffSpec = Retry.backoff(2, Duration.ofMillis(100))
+    .filter { it is ReadTimeoutException }
 
 fun <T : Any> Mono<T>.withMdcContext(): Mono<T> {
     val mdc = MDC.getCopyOfContextMap()

@@ -3,6 +3,7 @@ package no.nav.dinuforetrygd.fullmakt
 
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.configuration.AppId
+import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -39,6 +40,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(HarBprofFullmaktmottakereResponse::class.java)
+                    .retryWhen(retryOnTimeout)
                     .withMdcContext()
                     .block()
             }
@@ -71,6 +73,7 @@ class FullmaktClient(
                     }
                     .retrieve()
                     .bodyToMono(RepresentasjonsforholdValidity::class.java)
+                    .retryWhen(retryOnTimeout)
                     .withMdcContext()
                     .block()
             }
