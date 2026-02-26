@@ -71,7 +71,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           ></InntektSnarveier>
           <DittVedtak
             pid={params.pid}
-            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak!}
+            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
             dittUforevedtak={uforetrygdResponse.uforevedtak}
             sakId={uforesak?.sakId?.toString()}
           />
@@ -79,13 +79,13 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             visningskriterier={visningskriterier}
             sakId={uforesak?.sakId?.toString()}
             pid={params.pid}
-            journalposter={uforetrygdResponse.journalposter!}
+            journalposter={uforetrygdResponse.journalposter}
           ></InterneLenker>
           <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader
             visningskriterier={visningskriterier}
-            innloggingstype={uforetrygdResponse.innloggingstype!}
+            innloggingstype={uforetrygdResponse.innloggingstype}
           />
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
           <div className={'ux-signals-container'}>

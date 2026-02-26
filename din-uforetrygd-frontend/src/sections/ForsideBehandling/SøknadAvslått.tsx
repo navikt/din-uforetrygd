@@ -1,5 +1,4 @@
 import { BodyShort, Link } from '@navikt/ds-react'
-import React from 'react'
 import Divider from '@/sections/ForsideBehandling/Divider'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import type { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -13,7 +12,7 @@ export const SøknadAvslått = ({ behandling, visAvslåttForutgåendeMedlemskap 
   return (
     <>
       <ForsideBehandlingHeader
-        tittel={behandling.tittel + ' er avslått'}
+        tittel={`${behandling.tittel} er avslått`}
         statusTekst="Søknad avslått"
         dato={behandling.dato}
         statusFarge="warning"

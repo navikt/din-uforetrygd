@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Lopende uforesak uten vedtak', () => {
   test('Viser ingen kort for bruker uten vedtak men med lopende ufore', async ({ page }) => {

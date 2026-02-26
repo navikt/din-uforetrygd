@@ -1,6 +1,5 @@
 import { CheckmarkHeavyIcon } from '@navikt/aksel-icons'
 import { Process } from '@navikt/ds-react'
-import React from 'react'
 import type { StegType } from '@/sections/Saksoversikt/saksoversiktType'
 import { formatterDatoTekst } from '@/utils/formatter/formatter'
 

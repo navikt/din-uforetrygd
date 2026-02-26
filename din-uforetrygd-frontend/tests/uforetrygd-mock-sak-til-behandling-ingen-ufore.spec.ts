@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Sak til behandling ingen ufore', () => {
   test('Viser sak til behandling og ingen ufore boks', async ({ page }) => {
@@ -11,5 +11,4 @@ test.describe('Sak til behandling ingen ufore', () => {
     const sakTilBehandlingBoks = page.getByText('Søknad under behandling')
     await expect(sakTilBehandlingBoks).toBeVisible()
   })
-
 })

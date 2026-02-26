@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noConsole: TODO Vi bruker console for logging, bør fikse sånn at vi kan bruke logger */
 import createClient from 'openapi-fetch'
 import type { components, paths } from '@/api/api'
 import getOboToken from '@/api/getOboToken'
@@ -37,6 +38,7 @@ export const initate = async (pid: string | undefined) => {
     })
     .then((res) => {
       if (!res.response.ok && res.response.status === 403) {
+        // biome-ignore lint/style/noNonNullAssertion: skal aldri være null når error
         return { backendError: res.error! as BackendError }
       }
       return { uforetrygdResponse: res.data as components['schemas']['UforetrygdResponse'] }
@@ -71,6 +73,7 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
     })
     .then((res) => {
       if (!res.response.ok && res.response.status === 403) {
+        // biome-ignore lint/style/noNonNullAssertion: TODO: se på typen, refaktorer
         return { backendError: res.error! as BackendError }
       }
       return { saksoversiktResponse: res.data as components['schemas']['SaksoversiktResponse'] }

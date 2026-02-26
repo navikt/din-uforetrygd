@@ -1,7 +1,6 @@
 'use client'
 
 import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
-import React from 'react'
 import Divider from '@/sections/ForsideBehandling/Divider'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import type { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -15,7 +14,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
   return (
     <>
       <ForsideBehandlingHeader
-        tittel={behandling.tittel + ' er innvilget'}
+        tittel={`${behandling.tittel} er innvilget`}
         statusTekst={behandling.statusTekst}
         dato={behandling.dato}
         statusFarge="success"
@@ -33,7 +32,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
         </HelpText>
       </HStack>
       {behandling.beregninger.map((beregning) => (
-        <HStack gap={'space-16'}>
+        <HStack key={beregning.label} gap={'space-16'}>
           <span>{beregning.label}:</span>
           <span style={{ fontWeight: '600' }}>{beregning.verdi}</span>
         </HStack>
@@ -42,7 +41,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
       <Divider />
       <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
         {behandling.lenker.map((lenke) => (
-          <Link target="_blank" href={lenke.href}>
+          <Link key={lenke.href} target="_blank" href={lenke.href}>
             {lenke.visningstekst}
           </Link>
         ))}

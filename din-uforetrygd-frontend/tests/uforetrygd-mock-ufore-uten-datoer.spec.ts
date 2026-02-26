@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Ufore uten datoer', () => {
   test('renders ufore data even when dates are missing', async ({ page }) => {

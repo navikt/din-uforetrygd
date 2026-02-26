@@ -20,11 +20,14 @@ export const LukkbarAlert = ({
     const cookies = document.cookie.split(';').map((c) => c.trim())
     const cookie = cookies.find((c) => c.startsWith(`${cookieNavn}=`))
     if (cookie && cookie.split('=')[1] === 'false') {
+      // TODO Trenger vi denne?
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShow(false)
     }
-  }, [])
+  }, [cookieNavn])
 
   const handleClose = () => {
+    // biome-ignore lint/suspicious/noDocumentCookie: TODO: fiks denne
     document.cookie = `${cookieNavn}=false; path=/; max-age=31536000`
     setShow(false)
   }

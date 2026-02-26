@@ -116,7 +116,7 @@ function lagBehandlingTittel(type: BehandlingType, etteroppgjorArstall?: number 
     case BehandlingType.INNTEKTSENDRING:
       return 'Inntektsendring'
     case BehandlingType.ETTEROPPGJØR:
-      return 'Etteroppgjør' + (etteroppgjorArstall ? ` for ${etteroppgjorArstall}` : '')
+      return `Etteroppgjør${etteroppgjorArstall ? ` for ${etteroppgjorArstall}` : ''}`
     case BehandlingType.ENDRING_IFU:
       return 'Endring av inntekt før uførhet'
     case BehandlingType.MELLOMBEHANDLING:

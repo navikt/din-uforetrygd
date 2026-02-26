@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Gradert ufore scenario', () => {
   test('displays main heading and gradert uføretrygd information', async ({ page }) => {
