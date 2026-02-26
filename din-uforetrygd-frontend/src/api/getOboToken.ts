@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import getEnv from '@/utils/env'
 
 const getOboToken = async () => {
+  // biome-ignore lint/suspicious/noAsyncPromiseExecutor: TODO bør refaktoreres
   return new Promise(async (resolve, reject) => {
     if (process.env.NODE_ENV !== 'production') {
       resolve(process.env.ACCESS_TOKEN)

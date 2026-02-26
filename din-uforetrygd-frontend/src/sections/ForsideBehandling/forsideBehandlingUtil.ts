@@ -153,6 +153,6 @@ function lagBeregning(beregning: components['schemas']['Beregning'] | null, stat
   const beregninger: BeregningRad[] = []
 
   if (beregning.nettoUforetrygdPerManed)
-    beregninger.push({ label: 'Uføretrygd', verdi: formatInntekt(beregning.nettoUforetrygdPerManed) + ' kroner' })
+    beregninger.push({ label: 'Uføretrygd', verdi: `${formatInntekt(beregning.nettoUforetrygdPerManed)} kroner` })
   return beregninger
 }

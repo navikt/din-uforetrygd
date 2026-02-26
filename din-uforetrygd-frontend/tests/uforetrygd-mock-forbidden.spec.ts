@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Forbidden login level scenario', () => {
   test('should not display main uføretrygd content', async ({ page }) => {

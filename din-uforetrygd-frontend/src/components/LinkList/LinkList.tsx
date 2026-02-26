@@ -16,6 +16,7 @@ export const LinkList: React.FC<ILinkListProps> = (props) => {
     >
       {children.map((child, index) => (
         <li
+          // biome-ignore lint/suspicious/noArrayIndexKey: TODO: flytt koden utenfra inn hit
           key={index}
           className={clsx(styles.link, {
             [styles.dividedVariantLink]: props.variant === 'divided',

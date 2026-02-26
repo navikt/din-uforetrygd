@@ -8,6 +8,7 @@ type AzurePayload = {
 }
 
 export const getAzureUserPayload = () =>
+  // biome-ignore lint/suspicious/noAsyncPromiseExecutor: TODO: refaktorer
   new Promise<AzurePayload>(async (resolve, reject) => {
     if (process.env.NODE_ENV !== 'production') {
       return resolve({

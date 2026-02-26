@@ -68,6 +68,7 @@ export const SortablePaginatedList = <T extends ISortableItem>({
       />
       <ul className={styles.sortableList}>
         {paginatedItems.map((item, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <li key={index}>{renderItemAction(item, index)}</li>
         ))}
       </ul>
@@ -90,17 +91,15 @@ export const SortablePaginatedList = <T extends ISortableItem>({
 const SortablePaginatedListHeading: React.FC<ISortablePaginatedListHeadingProps> = (props) => {
   if (props.itemsLength > 0) {
     return (
-      <>
-        <VStack gap={'space-16'}>
-          <Heading size="xsmall" level="3">
-            Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
-          </Heading>
-          <Select label="Sorter etter" hideLabel size="small" onChange={props.handleSort} style={{ maxWidth: '150px' }}>
-            <option value="desc">Nyeste først</option>
-            <option value="asc">Eldste først</option>
-          </Select>
-        </VStack>
-      </>
+      <VStack gap={'space-16'}>
+        <Heading size="xsmall" level="3">
+          Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
+        </Heading>
+        <Select label="Sorter etter" hideLabel size="small" onChange={props.handleSort} style={{ maxWidth: '150px' }}>
+          <option value="desc">Nyeste først</option>
+          <option value="asc">Eldste først</option>
+        </Select>
+      </VStack>
     )
   }
 

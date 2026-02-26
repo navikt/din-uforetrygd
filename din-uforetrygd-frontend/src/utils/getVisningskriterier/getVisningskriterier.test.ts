@@ -11,6 +11,7 @@ const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   sak: undefined,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
+  journalposter: [],
 }
 
 const uforevedtak: components['schemas']['DittUforevedtak'] = {
@@ -23,6 +24,8 @@ const uforevedtak: components['schemas']['DittUforevedtak'] = {
   hasBarnetilleggSaerkullsbarn: false,
   hasGjenlevendeTillegg: false,
   hasVarigTilrettelagtArbeid: false,
+  inntektFraSkatt: 1000,
+  nettoUtbetalingMnd: 1200,
 }
 
 const uforesak: components['schemas']['Sak'] = {

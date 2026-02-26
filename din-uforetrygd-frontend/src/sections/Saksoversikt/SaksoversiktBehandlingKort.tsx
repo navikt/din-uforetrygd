@@ -2,7 +2,6 @@
 
 import { BodyShort, VStack } from '@navikt/ds-react'
 import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
-import React from 'react'
 import { Etteroppgjor } from '@/sections/Saksoversikt/Etteroppgjor'
 import { FerdigBehandletStegvisning } from '@/sections/Saksoversikt/FerdigBehandletStegvisning'
 import type { SaksoversiktBehandling } from '@/sections/Saksoversikt/saksoversiktType'

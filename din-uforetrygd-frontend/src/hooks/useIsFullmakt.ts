@@ -12,6 +12,7 @@ const useIsFullmakt = () => {
       },
       {} as Record<string, string>
     )
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFullmakt(Object.keys(cookies).includes('nav-obo'))
   }, [])
   return fullmakt

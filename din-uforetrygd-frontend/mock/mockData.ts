@@ -188,7 +188,7 @@ export const mockData = {
       status: 'AVSLAG',
       beregning: { nettoUforetrygdPerManed: 123456 },
       dato: '2025-12-14',
-      avslattForutgaendeMedlemskap: true
+      avslattForutgaendeMedlemskap: true,
     },
   },
   avsluttet: {

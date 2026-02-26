@@ -28,7 +28,7 @@ export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ inn
 
     document.addEventListener('click', onClick)
     return () => document.removeEventListener('click', onClick)
-  }, [])
+  }, [innloggingstype])
 
   const close = () => {
     modalRef.current?.close()

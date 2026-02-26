@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('Avsluttet uforesak med dokumenter', () => {
   test('renders page for avsluttet sak', async ({ page }) => {

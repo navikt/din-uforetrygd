@@ -10,7 +10,7 @@ export function onRequestError(
       request: {
         method: request.method,
         path: request.path,
-        host: request.headers['host'] ?? '',
+        host: request.headers.host ?? '',
       },
     },
   })
