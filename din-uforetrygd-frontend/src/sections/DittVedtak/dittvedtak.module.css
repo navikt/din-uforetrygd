@@ -20,10 +20,10 @@
 }
 
 .dittVedtakUforetrygdTable {
-    table-layout: fixed;
-    width: 100%;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .dittVedtakTableSecondColumn {
-    font-weight: 600;
+  font-weight: 600;
 }

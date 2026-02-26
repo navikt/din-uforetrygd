@@ -1,13 +1,13 @@
-import { Visningskriterier } from '@/const'
-import React from 'react'
+import { FilesIcon } from '@navikt/aksel-icons'
 import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
-import { FilesIcon } from '@navikt/aksel-icons'
+import type React from 'react'
+import type { components } from '@/api/api'
+import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
+import { Visningskriterier } from '@/const'
+import getEnv from '@/utils/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
-import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
-import { components } from '@/api/api'
-import getEnv from '@/utils/env'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]

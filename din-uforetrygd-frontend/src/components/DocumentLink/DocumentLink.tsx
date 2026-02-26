@@ -1,9 +1,9 @@
-import { Detail, Link, VStack } from '@navikt/ds-react'
 import { ExternalLinkIcon } from '@navikt/aksel-icons'
-import React from 'react'
+import { Detail, Link, VStack } from '@navikt/ds-react'
+import type React from 'react'
 import { readableFileSize } from '@/components/DocumentLink/utils'
-import styles from './documentLink.module.css'
 import { umami } from '@/utils/umami'
+import styles from './documentLink.module.css'
 
 interface IDocumentLink {
   href: string

@@ -1,10 +1,10 @@
-import React from 'react'
+import { Alert } from '@navikt/ds-react'
+import type React from 'react'
 import { hentSaksoversikt } from '@/api/endpoints'
 import { Saksoversikt } from '@/sections/Saksoversikt/Saksoversikt'
 import { mapTilSaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
-import { Alert } from '@navikt/ds-react'
-import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import getEnv from '@/utils/env'
+import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 
 interface Props {
   searchParams: Promise<{ saksid: number; pid: string }>

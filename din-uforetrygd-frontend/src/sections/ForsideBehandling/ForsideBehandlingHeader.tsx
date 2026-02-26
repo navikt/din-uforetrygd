@@ -1,6 +1,6 @@
 import { BodyShort, Heading, Stack, Tag, VStack } from '@navikt/ds-react'
+import type { AkselColor } from '@navikt/ds-react/types/theme'
 import React from 'react'
-import { AkselColor } from '@navikt/ds-react/types/theme'
 import { formatterDatoTekst } from '@/utils/formatter/formatter'
 
 interface Props {

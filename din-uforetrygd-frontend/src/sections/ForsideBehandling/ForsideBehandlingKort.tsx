@@ -8,35 +8,35 @@ import { SøknadInnvilget } from '@/sections/ForsideBehandling/SøknadInnvilget'
 import { SøknadMottatt } from '@/sections/ForsideBehandling/SøknadMottatt'
 
 interface BehandlingProps {
-	behandling: ForsideBehandling | null
-	visningskriterier: Visningskriterier[]
+  behandling: ForsideBehandling | null
+  visningskriterier: Visningskriterier[]
 }
 
 export const ForsideBehandlingKort: React.FC<BehandlingProps> = async ({ behandling, visningskriterier }) => {
-	if (
-		!behandling &&
-		(visningskriterier.includes(Visningskriterier.IngenUforesak) ||
-			visningskriterier.includes(Visningskriterier.AvsluttetUforetrygdSak))
-	) {
-		return <IngenUføretrygd />
-	}
+  if (
+    !behandling &&
+    (visningskriterier.includes(Visningskriterier.IngenUforesak) ||
+      visningskriterier.includes(Visningskriterier.AvsluttetUforetrygdSak))
+  ) {
+    return <IngenUføretrygd />
+  }
 
-	if (!behandling) return null
+  if (!behandling) return null
 
-	return (
-		<section aria-label="Status på søknad">
-			<Box padding="space-16" borderWidth="1" borderColor="neutral-subtleA" borderRadius="12">
-				<VStack gap="space-16">
-					{behandling.status === Status.AVSLAG && (
-						<SøknadAvslått
-							behandling={behandling}
-							visAvslåttForutgåendeMedlemskap={behandling.avslattForutgaendeMedlemskap}
-						/>
-					)}
-					{behandling.status === Status.MOTTATT && <SøknadMottatt behandling={behandling} />}
-					{behandling.status === Status.INNVILGET && <SøknadInnvilget behandling={behandling} />}
-				</VStack>
-			</Box>
-		</section>
-	)
+  return (
+    <section aria-label="Status på søknad">
+      <Box padding="space-16" borderWidth="1" borderColor="neutral-subtleA" borderRadius="12">
+        <VStack gap="space-16">
+          {behandling.status === Status.AVSLAG && (
+            <SøknadAvslått
+              behandling={behandling}
+              visAvslåttForutgåendeMedlemskap={behandling.avslattForutgaendeMedlemskap}
+            />
+          )}
+          {behandling.status === Status.MOTTATT && <SøknadMottatt behandling={behandling} />}
+          {behandling.status === Status.INNVILGET && <SøknadInnvilget behandling={behandling} />}
+        </VStack>
+      </Box>
+    </section>
+  )
 }

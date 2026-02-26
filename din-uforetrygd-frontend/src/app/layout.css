@@ -1,4 +1,4 @@
-@import '@navikt/ds-tokens';
+@import "@navikt/ds-tokens";
 
 body {
   margin: 0;
@@ -21,7 +21,8 @@ body {
   }
 }
 
-.main-content > h1, .main-content > .tittel-wrapper {
+.main-content > h1,
+.main-content > .tittel-wrapper {
   max-width: var(--content-width);
   width: 100%;
 }

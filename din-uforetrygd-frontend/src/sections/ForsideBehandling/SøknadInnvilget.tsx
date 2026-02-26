@@ -2,9 +2,9 @@
 
 import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
 import React from 'react'
-import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import Divider from '@/sections/ForsideBehandling/Divider'
-import { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
+import type { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 import { umami } from '@/utils/umami'
 
 interface Props {
@@ -24,7 +24,10 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
       <Divider />
       <HStack gap={'space-12'}>
         <Heading size="small">Ny månedlig beregning før skatt</Heading>
-        <HelpText title={"Om månedlig beregning"} onClick={() => umami('hjelpetekst klikket', { tekst: 'Månedlig beregning'})}>
+        <HelpText
+          title={'Om månedlig beregning'}
+          onClick={() => umami('hjelpetekst klikket', { tekst: 'Månedlig beregning' })}
+        >
           Dette er ikke beløpet du får utbetalt på konto. Det trekkes skatt, eventuelle lønnstrekk og andre trekk før du
           får det utbetalt.
         </HelpText>

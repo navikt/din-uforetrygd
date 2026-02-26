@@ -1,4 +1,4 @@
-import { ISortableItem } from './SortablePaginatedList'
+import type { ISortableItem } from './SortablePaginatedList'
 
 export const compareSortDate =
   (sortDirection: 'asc' | 'desc') =>

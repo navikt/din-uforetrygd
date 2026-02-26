@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { Alert, AlertProps } from '@navikt/ds-react'
+import { Alert, type AlertProps } from '@navikt/ds-react'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 import styles from './lukkbarAlert.module.css'
 
 export const LukkbarAlert = ({
@@ -31,12 +32,7 @@ export const LukkbarAlert = ({
   if (!show) return null
 
   return (
-    <Alert
-      className={styles.alert}
-      contentMaxWidth={false}
-      variant={variant}
-      closeButton
-      onClose={handleClose}>
+    <Alert className={styles.alert} contentMaxWidth={false} variant={variant} closeButton onClose={handleClose}>
       {children}
     </Alert>
   )

@@ -1,8 +1,3 @@
-import { Innloggingstype, Visningskriterier } from '@/const'
-import React from 'react'
-import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
-import { components } from '@/api/api'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import {
   BulletListIcon,
   EnvelopeClosedIcon,
@@ -11,8 +6,13 @@ import {
   PlusMinusSlashIcon,
   WalletIcon,
 } from '@navikt/aksel-icons'
-import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { Heading, VStack } from '@navikt/ds-react'
+import type React from 'react'
+import type { components } from '@/api/api'
+import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
+import { type Innloggingstype, Visningskriterier } from '@/const'
+import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './snarveier.module.css'
 
 interface SnarveierProps {

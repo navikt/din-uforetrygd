@@ -1,5 +1,5 @@
-import { headers } from 'next/headers'
 import { getToken, parseAzureUserToken } from '@navikt/oasis'
+import { headers } from 'next/headers'
 
 type AzurePayload = {
   NAVident: string

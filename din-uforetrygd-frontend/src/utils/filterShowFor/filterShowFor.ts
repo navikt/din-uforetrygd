@@ -1,4 +1,4 @@
-import { Visningskriterier } from '@/const'
+import type { Visningskriterier } from '@/const'
 
 type ShowForData = {
   showFor: ((visningskriterier: Visningskriterier[]) => boolean) | boolean

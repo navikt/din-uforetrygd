@@ -7,9 +7,9 @@ import '../global.css'
 import './layout.css'
 import '@navikt/ds-tokens'
 import '@navikt/ds-css'
-import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
-import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
+import RepresentasjonBanner from '@/components/RepresentasjonBanner'
+import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'

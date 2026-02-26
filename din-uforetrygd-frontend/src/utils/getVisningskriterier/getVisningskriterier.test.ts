@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
-import { components } from '@/api/api'
+import type { components } from '@/api/api'
 import { Visningskriterier } from '@/const'
+import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 
 const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   pid: '81549300',

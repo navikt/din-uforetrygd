@@ -1,14 +1,14 @@
 'use client'
 
+import { BodyShort, VStack } from '@navikt/ds-react'
 import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
-import { SaksoversiktBehandling } from '@/sections/Saksoversikt/saksoversiktType'
+import React from 'react'
+import { Etteroppgjor } from '@/sections/Saksoversikt/Etteroppgjor'
+import { FerdigBehandletStegvisning } from '@/sections/Saksoversikt/FerdigBehandletStegvisning'
+import type { SaksoversiktBehandling } from '@/sections/Saksoversikt/saksoversiktType'
+import { TilBehandlingStegvisning } from '@/sections/Saksoversikt/TilBehandlingStegvisning'
 import { formatterDatoTekst } from '@/utils/formatter/formatter'
 import styles from './saksoversikt.module.css'
-import { BodyShort, VStack } from '@navikt/ds-react'
-import { Etteroppgjor } from '@/sections/Saksoversikt/Etteroppgjor'
-import React from 'react'
-import { TilBehandlingStegvisning } from '@/sections/Saksoversikt/TilBehandlingStegvisning'
-import { FerdigBehandletStegvisning } from '@/sections/Saksoversikt/FerdigBehandletStegvisning'
 
 interface Props {
   behandling: SaksoversiktBehandling

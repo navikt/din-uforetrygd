@@ -1,5 +1,5 @@
-import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
 import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
+import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
 import { getUrl } from '@/utils/getUrl/getUrl'
 
 export const IngenUføretrygd = async () => {
