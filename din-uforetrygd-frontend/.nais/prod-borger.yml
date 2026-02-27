@@ -119,5 +119,7 @@ spec:
       value: TODO
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
+    - name: NEXT_PUBLIC_FARO_URL
+      value: https://telemetry.nav.no/collect
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

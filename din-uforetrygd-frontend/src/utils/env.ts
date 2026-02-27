@@ -28,6 +28,7 @@ export type Env =
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
   | 'REPRESENTASJON_BANNER'
   | 'LINK_REPRESENTASJON_TILLEGGSDATA'
+  | 'NEXT_PUBLIC_FARO_URL'
 
 export default function getEnv(env: Env) {
   noStore()

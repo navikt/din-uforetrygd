@@ -25,7 +25,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
         <Heading size="small">Ny månedlig beregning før skatt</Heading>
         <HelpText
           title={'Om månedlig beregning'}
-          onClick={() => umami('hjelpetekst klikket', { tekst: 'Månedlig beregning' })}
+          onClick={() => umami('hjelpetekst åpnet', { tekst: 'Månedlig beregning' })}
         >
           Dette er ikke beløpet du får utbetalt på konto. Det trekkes skatt, eventuelle lønnstrekk og andre trekk før du
           får det utbetalt.

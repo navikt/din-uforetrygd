@@ -60,7 +60,9 @@ class WebClientConfiguration {
 }
 
 val retryOnTimeout: RetryBackoffSpec = Retry.backoff(2, Duration.ofMillis(100))
-    .filter { it is ReadTimeoutException }
+    .filter { throwable ->
+        generateSequence(throwable) { it.cause }.any { it is ReadTimeoutException }
+    }
 
 fun <T : Any> Mono<T>.withMdcContext(): Mono<T> {
     val mdc = MDC.getCopyOfContextMap()
