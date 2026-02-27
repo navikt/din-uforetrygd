@@ -10,6 +10,9 @@ import '@navikt/ds-css'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
+import { initFaro } from '@/utils/faro'
+
+initFaro()
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'

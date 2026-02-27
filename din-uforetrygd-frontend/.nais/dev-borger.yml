@@ -125,5 +125,7 @@ spec:
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
+    - name: FARO_URL
+      value: https://telemetry.dev-gcp.nav.cloud.nais.io/collect
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

@@ -27,6 +27,7 @@ export type Env =
   | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
   | 'REPRESENTASJON_BANNER'
+  | 'FARO_URL'
 
 export default function getEnv(env: Env) {
   noStore()
