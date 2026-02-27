@@ -10,9 +10,7 @@ import '@navikt/ds-css'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
-import { initFaro } from '@/utils/faro'
-
-initFaro()
+import InitializeFaro from '@/utils/faro/faro'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -68,6 +66,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
           <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
           <script src="https://widget.uxsignals.com/embed.js" async></script>
           <FullmaktModal />
+          <InitializeFaro />
         </Theme>
       </body>
     </html>
