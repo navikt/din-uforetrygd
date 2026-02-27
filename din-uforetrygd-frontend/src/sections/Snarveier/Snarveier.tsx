@@ -1,18 +1,18 @@
 import {
-  BulletListIcon,
-  EnvelopeClosedIcon,
-  FolderFileIcon,
-  PersonTallShortIcon,
-  PlusMinusSlashIcon,
-  WalletIcon,
+    BulletListIcon,
+    EnvelopeClosedIcon,
+    FolderFileIcon,
+    PersonTallShortIcon,
+    PlusMinusSlashIcon,
+    WalletIcon,
 } from '@navikt/aksel-icons'
-import { Heading, VStack } from '@navikt/ds-react'
+import {Heading, VStack} from '@navikt/ds-react'
 import type React from 'react'
-import type { components } from '@/api/api'
-import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
-import { type Innloggingstype, Visningskriterier } from '@/const'
-import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
-import { getUrl } from '@/utils/getUrl/getUrl'
+import type {components} from '@/api/api'
+import {SnarveiPanel} from '@/components/SnarveiPanel/SnarveiPanel'
+import {type Innloggingstype, Visningskriterier} from '@/const'
+import {matchAll, matchNone, matchSome} from '@/utils/filterShowFor/filterShowFor'
+import {getUrl} from '@/utils/getUrl/getUrl'
 import styles from './snarveier.module.css'
 
 interface SnarveierProps {
@@ -74,6 +74,15 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
+  },
+  {
+    href: await getUrl({ urlFromEnv: 'LINK_REPRESENTASJON_TILLEGGSDATA', pid: pid }),
+    title: 'Administrer vergeforhold',
+    description: 'Spesifiser brevadresse for vergemål ',
+    icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    showFor: matchAll([Visningskriterier.ErVerge]),
+    showFullmaktWarning: true,
     visInnloggingsModal: false,
   },
   {

@@ -133,6 +133,7 @@ export interface components {
       harGammelFullmaktmottaker?: boolean
       journalposter: components['schemas']['Journalpost'][]
       behandling?: components['schemas']['Behandling']
+      isVerge?: boolean
     }
   }
   responses: never

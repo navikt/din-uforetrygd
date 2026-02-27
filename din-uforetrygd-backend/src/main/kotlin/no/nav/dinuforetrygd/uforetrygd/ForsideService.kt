@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
+import no.nav.dinuforetrygd.fullmakt.FullmaktClient.Companion.UFORETRYGD_VERGE_TYPER
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.pensjon.pen.*
@@ -89,7 +90,8 @@ class ForsideService(
             journalpostService.getJournalPostliste(pid, it.sakId.toString())
                 .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
         } ?: emptyList(),
-        behandling = behandling
+        behandling = behandling,
+        isVerge = isUforetrygdVerge(pid)
     )
 
     private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
@@ -114,4 +116,7 @@ class ForsideService(
             false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler
         else
             fullmaktClient.harBprofFullmaktmottager(pid)?.value ?: false
+
+    private fun isUforetrygdVerge(pid: String): Boolean =
+        !SecurityContextUtil.isFullmakt() && fullmaktClient.harRepresentasjonsforhold(pid, UFORETRYGD_VERGE_TYPER)?.value ?: false
 }

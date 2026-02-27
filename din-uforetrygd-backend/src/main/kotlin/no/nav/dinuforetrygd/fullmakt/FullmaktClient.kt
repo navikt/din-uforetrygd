@@ -95,12 +95,55 @@ class FullmaktClient(
         }
     }
 
+    fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
+        return try {
+            tokenService.getEgressToken(scope, audience, representantPid, AppId.PENSJON_FULLMAKT).let {
+                webClient
+                    .post()
+                    .uri(urlHarRepresentasjonsforhold())
+                    .headers { header ->
+                        header.setBearerAuth(it!!)
+                        header[HttpHeaders.CONTENT_TYPE] = MediaType.APPLICATION_JSON_VALUE
+                        header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
+                        header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
+                    }
+                    .bodyValue(HarRepresentasjonforholdRequest(representantPid, UFORETRYGD_VERGE_TYPER))
+                    .retrieve()
+                    .bodyToMono(HarRepresentasjonsforhold::class.java)
+                    .retryWhen(retryOnTimeout)
+                    .withMdcContext()
+                    .block()
+            }
+
+        } catch (e: WebClientResponseException) {
+            logger.error("Kall til representasjonstjenesten feilet med melding: ${e.responseBodyAsString}")
+            throw FullmaktException(
+                SERVICE,
+                "harRepresentasjonsforhold",
+                "Failed to call service: " + e.responseBodyAsString,
+                e
+            )
+        } catch (e: ResponseStatusException) {
+            logger.error("Kall til representasjonstjenesten feilet med statuskode ${e.statusCode}: ${e.message}")
+            throw FullmaktException(SERVICE, "harRepresentasjonsforhold", "Failed to call service", e)
+        } catch (e: RuntimeException) { // e.g. when connection broken
+            logger.error("Kall til representasjonstjenesten feilet: ${e.message}")
+            throw FullmaktException(SERVICE, "harRepresentasjonsforhold", "Failed to call service", e)
+        }
+    }
+
+
     private fun urlValidRepresentasjonsforhold() = UriComponentsBuilder.fromUriString(baseUrl)
-            .path(PATH_HASREPRESENTASJONSFORHOLD)
+            .path(PATH_HAS_VALID_REPRESENTASJONSFORHOLD)
             .queryParam(VALID_REPRESENTASJONSTYPER_KEY, VALID_REPRESENTASJONSTYPER)
             .queryParam(INCLUDE_NAVN_KEY, false)
             .build()
             .toUriString()
+
+    private fun urlHarRepresentasjonsforhold() = UriComponentsBuilder.fromUriString(baseUrl)
+        .path(PATH_HAR_REPRESENTASJONSFORHOLD)
+        .build()
+        .toUriString()
 
     private fun urlHarBprofFullmaktmottakere(): String {
         return UriComponentsBuilder.fromUriString(baseUrl)
@@ -109,17 +152,10 @@ class FullmaktClient(
             .toUriString()
     }
 
-    private fun urlFindRepresentasjonsforhold(): String {
-        return UriComponentsBuilder.fromUriString(baseUrl)
-            .path(PATH_FINDREPRESENTASJONSFORHOLD)
-            .build()
-            .toUriString()
-    }
-
     companion object {
         private const val SERVICE = "Fullmakt"
-        private const val PATH_HASREPRESENTASJONSFORHOLD = "/representasjon/hasValidRepresentasjonsforhold"
-        private const val PATH_FINDREPRESENTASJONSFORHOLD = "/representasjon/findAllRepresentasjonsforhold"
+        private const val PATH_HAS_VALID_REPRESENTASJONSFORHOLD = "/representasjon/hasValidRepresentasjonsforhold"
+        private const val PATH_HAR_REPRESENTASJONSFORHOLD = "/representasjon/harRepresentasjonsforhold"
         private const val PATH_HASBPROFFULLMAKTMOTTAKERE = "/representasjon/bprof/harFullmaktmottakere"
 
         const val NAV_CALL_ID = "Nav-Call-Id"
@@ -130,6 +166,10 @@ class FullmaktClient(
             "PENSJON_FULLSTENDIG",
             "PENSJON_BEGRENSET",
             "UFORETRYGD_LES")
+        val UFORETRYGD_VERGE_TYPER = listOf(
+            "VERGE_UFORETRYGD_LES",
+            "VERGE_UFORETRYGD_SKRIV"
+        )
 
         private val logger: Logger = LoggerFactory.getLogger(FullmaktClient::class.java)
 

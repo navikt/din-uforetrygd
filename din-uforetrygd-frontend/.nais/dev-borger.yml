@@ -119,11 +119,14 @@ spec:
       value: https://www.ansatt.dev.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: LINK_DOKUMENTOVERSIKT
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
+    - name: LINK_REPRESENTASJON_TILLEGGSDATA
+      value: https://borger.ansatt.dev.nav.no/representasjon-tilleggsdata
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: dev-gcp:ufore:din-uforetrygd-backend
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
+
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

@@ -24,5 +24,9 @@ export const getVisningskriterier = (init: components['schemas']['UforetrygdResp
     visningskriterier.push(Visningskriterier.SakTilBehandling)
   }
 
+  if (init.isVerge) {
+    visningskriterier.push(Visningskriterier.ErVerge)
+  }
+
   return visningskriterier
 }

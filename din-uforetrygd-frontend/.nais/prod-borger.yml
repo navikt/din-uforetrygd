@@ -115,6 +115,8 @@ spec:
       value: https://www.nav.no/dokumentarkiv
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
+    - name: LINK_REPRESENTASJON_TILLEGGSDATA
+      value: TODO
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
   envFrom:
