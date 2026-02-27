@@ -107,7 +107,7 @@ class FullmaktClient(
                         header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
                         header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
                     }
-                    .bodyValue(HarRepresentasjonforholdRequest(representantPid, UFORETRYGD_VERGE_TYPER))
+                    .bodyValue(HarRepresentasjonforholdRequest(representantPid, validRepresentasjonstyper))
                     .retrieve()
                     .bodyToMono(HarRepresentasjonsforhold::class.java)
                     .retryWhen(retryOnTimeout)

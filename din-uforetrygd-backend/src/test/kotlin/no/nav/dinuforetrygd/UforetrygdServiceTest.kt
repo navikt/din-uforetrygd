@@ -6,6 +6,7 @@ import io.mockk.verify
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
+import no.nav.dinuforetrygd.fullmakt.HarRepresentasjonsforhold
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
@@ -57,6 +58,7 @@ class UforetrygdServiceTest {
         every { tokenService.determineLoggedInUser() } returns ""
         every { SecurityContextUtil.isFullmakt() } returns false
         every { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
+        every { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
         every { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
     }
 
