@@ -3,12 +3,19 @@
 import { faro, getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk'
 import logger from '@/utils/logger'
 
-export default function InitializeFaro() {
-  if (typeof window === 'undefined' || faro.api) return null
+interface Props {
+  url: string | undefined
+}
+
+export default function InitializeFaro({ url }: Props) {
+  if (typeof window === 'undefined' || faro.api || !url) {
+    logger.error({ message: 'Klarte ikke initialisere Faro' })
+    return null
+  }
 
   try {
     const faro = initializeFaro({
-      url: process.env.NEXT_PUBLIC_FARO_URL,
+      url: url,
       app: {
         name: 'din-uforetrygd',
       },
