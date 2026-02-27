@@ -40,7 +40,6 @@ class UforetrygdController(
             }
             return response
         } catch (e: Exception) {
-            logger.error(e.message, e)
             throw ErrorHandler.exceptionToErrorResponse(e)
         }
     }
@@ -56,10 +55,8 @@ class UforetrygdController(
             }
             return response
         } catch (e: SakNotFoundException) {
-            logger.warn(e.message, e)
             throw ResponseStatusException(HttpStatus.NOT_FOUND)
         } catch (e: Exception) {
-            logger.error(e.message, e)
             throw ErrorHandler.exceptionToErrorResponse(e)
         }
     }
