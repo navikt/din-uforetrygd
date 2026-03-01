@@ -12,6 +12,7 @@ const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   hasIverksattVedtak: false,
   uforevedtak: undefined,
   journalposter: [],
+  verge: false,
 }
 
 const uforevedtak: components['schemas']['DittUforevedtak'] = {
