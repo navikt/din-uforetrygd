@@ -9,15 +9,17 @@ spec:
   groups:
     - name: din-uforetrygd-alerts
       rules:
-        - alert: "For mange serverfeil i din-uføretrygd-backend"
+        - alert: "For mange serverfeil"
           expr: |
             round(
-                sum(rate(http_server_requests_seconds_count{app="din-uforetrygd-backend", status=~"[45].."}[5m])) by (uri) / sum(rate(http_server_requests_seconds_count{app="din-uforetrygd-backend"}[5m])) by ( uri) * 100 
+                sum(rate(http_server_requests_seconds_count{app=~"din-uforetrygd-.*|inntektsplanleggeren-.*", status=~"[45].."}[5m])) by (app, uri) / sum(rate(http_server_requests_seconds_count{app=~"din-uforetrygd-backend|inntektsplanleggeren-.*"}[5m])) by (app, uri) * 100 
             ) > 10
           for: 2m
           annotations:
-            message: "{{ $value }}% 5xx / 4xx-feil fra `{{ $labels.uri }}` siste 2 min! :hellmo:"
-            dashboard_url: "https://grafana.nav.cloud.nais.io/goto/bfeeyrjvwrbpcd?orgId=1"
+            message: "*{{ $labels.app }}*: {{ $value }}% 5xx / 4xx-feil fra `{{ $labels.uri }}` siste 2 min!"
+            action: "https://logs.az.nav.no/goto/ae4094e3dd306b3e8e64f2a0086f2db7?security_tenant=navlogs"
+            dashboard_url: "https://grafana.nav.cloud.nais.io/d/din-uforetrygd-monitoring/din-uforetrygd?from=now-1h&to=now"
           labels:
             severity: error
             namespace: ufore
+            ufore_alerts: slack
