@@ -21,4 +21,4 @@ spec:
           labels:
             severity: error
             namespace: ufore
-            pensjon_pen_alerts: slack
+            ufore_alerts: slack
