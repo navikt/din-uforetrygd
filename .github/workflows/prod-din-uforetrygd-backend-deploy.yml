@@ -101,7 +101,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
-          RESOURCE: din-uforetrygd-backend/.nais/prod.yml,alerts/alerts.yaml
+          RESOURCE: din-uforetrygd-backend/.nais/prod.yml
           IMAGE: ${{ needs.build-backend-and-publish-docker.outputs.image }}
           TEAM: ufore
       - name: "Send slack-notifikasjon om deploy feiler"
