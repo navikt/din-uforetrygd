@@ -12,13 +12,13 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: "##uføre-varsling-test"
+          channel: "#uføre-varsling-test"
           iconEmoji: ":trygdebeistet:"
           username: "Trygdebeistet"
           sendResolved: true
           title: |-
             {{ if eq .Status "resolved" }}[{{ .Status | title }}]{{ end }} {{ .CommonLabels.alertname }}
-          text: >-
+          text: |-
             {{ if eq .Status "firing" }}
             {{ range .Alerts -}}
             {{ .Annotations.message }}
@@ -58,4 +58,4 @@ spec:
     groupInterval: 10s
     groupWait: 5s
     receiver: ufore-alerts-receiver
-    repeatInterval: 1m
+    repeatInterval: 12h
