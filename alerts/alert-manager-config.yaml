@@ -56,6 +56,6 @@ spec:
         matchType: "="
         value: "slack"
     groupInterval: 10s
-    groupWait: 5s
+    groupWait: 1m
     receiver: ufore-alerts-receiver
     repeatInterval: 12h

@@ -23,3 +23,4 @@ spec:
             severity: error
             namespace: ufore
             ufore_alerts: slack
+            alert_type: custom
