@@ -1,32 +1,39 @@
-import { Box, HGrid, Hide, LinkCard } from '@navikt/ds-react'
-import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
-import type React from 'react'
-import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
-import type { Innloggingstype, Visningskriterier } from '@/const'
-import filterShowFor from '@/utils/filterShowFor/filterShowFor'
-import { getFullmaktProps } from '@/utils/fullmakt'
-import { showMinIdModal } from '@/utils/showMinIdModal/showMinIdModal'
-import styles from './snarveiPanel.module.css'
+import { Box, HGrid, Hide, LinkCard } from "@navikt/ds-react";
+import {
+  LinkCardAnchor,
+  LinkCardDescription,
+  LinkCardIcon,
+  LinkCardTitle,
+} from "@navikt/ds-react/LinkCard";
+import type React from "react";
+import { MinIdDokumentModal } from "@/components/MidIdDokumentModal/MinIdDokumentModal";
+import type { Innloggingstype, Visningskriterier } from "@/const";
+import filterShowFor from "@/utils/filterShowFor/filterShowFor";
+import { getFullmaktProps } from "@/utils/fullmakt";
+import { showMinIdModal } from "@/utils/showMinIdModal/showMinIdModal";
+import styles from "./snarveiPanel.module.css";
+import { isEnabled } from "@/utils/unleash";
 
 interface ISnarveiPanelProps {
-  links: ILink[]
-  visningskriterier: Visningskriterier[]
-  pid: string | undefined
-  innloggingstype: Innloggingstype
+  links: ILink[];
+  visningskriterier: Visningskriterier[];
+  pid: string | undefined;
+  innloggingstype: Innloggingstype;
 }
 
 interface ILink {
-  href: string | undefined
-  title: string
-  description: string
-  icon: React.ReactNode
-  showFor: ((visningskriterier: Visningskriterier[]) => boolean) | boolean
-  showFullmaktWarning: boolean
-  visInnloggingsModal: boolean
+  href: string | undefined;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  showFor: ((visningskriterier: Visningskriterier[]) => boolean) | boolean;
+  showFullmaktWarning: boolean;
+  visInnloggingsModal: boolean;
 }
 
 export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
-  const relevantLinks = filterShowFor(props.visningskriterier, props.links)
+  const relevantLinks = filterShowFor(props.visningskriterier, props.links);
+
   return (
     <>
       {relevantLinks.length > 0 && (
@@ -34,7 +41,12 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
           {relevantLinks.map((link) => (
             <LinkCard key={link.title}>
               <Hide below="sm" asChild>
-                <Box asChild className={styles.iconBox} borderRadius="8" padding="space-8">
+                <Box
+                  asChild
+                  className={styles.iconBox}
+                  borderRadius="8"
+                  padding="space-8"
+                >
                   <LinkCardIcon>{link.icon}</LinkCardIcon>
                 </Box>
               </Hide>
@@ -42,7 +54,10 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
                 <LinkCardAnchor
                   href={link.href!}
                   {...getFullmaktProps(link.showFullmaktWarning)}
-                  {...showMinIdModal(props.innloggingstype, link.visInnloggingsModal)}
+                  {...showMinIdModal(
+                    props.innloggingstype,
+                    link.visInnloggingsModal,
+                  )}
                 >
                   {link.title}
                 </LinkCardAnchor>
@@ -54,5 +69,5 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
         </HGrid>
       )}
     </>
-  )
-}
+  );
+};
