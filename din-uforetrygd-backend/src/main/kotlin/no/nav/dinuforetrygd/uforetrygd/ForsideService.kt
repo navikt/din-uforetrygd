@@ -140,7 +140,7 @@ class ForsideService(
             hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
 
-    private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
+    suspend private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
         if (SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
             false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler
         else

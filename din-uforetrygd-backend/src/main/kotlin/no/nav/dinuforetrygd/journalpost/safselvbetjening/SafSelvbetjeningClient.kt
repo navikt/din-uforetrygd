@@ -1,5 +1,6 @@
 package no.nav.dinuforetrygd.journalpost.safselvbetjening
 
+import kotlinx.coroutines.reactor.awaitSingle
 import no.nav.dinuforetrygd.ClientException
 import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.PersonNotFoundException
@@ -68,7 +69,7 @@ class SafSelvbetjeningClient(
         }
     }
 
-    fun performGraphQLQuery(pid: String): List<JournalpostSafSelvbetjeningDto>? {
+    suspend fun performGraphQLQuery(pid: String): List<JournalpostSafSelvbetjeningDto>? {
         val query = getSafSelvbetjeningJournalpostQuery(pid)
         val response = tokenService.getEgressToken(
             scope,
@@ -87,7 +88,8 @@ class SafSelvbetjeningClient(
                 .bodyToMono(HentJournalposterResponse::class.java)
                 .retryWhen(retryOnTimeout)
                 .withMdcContext()
-                .block()
+                .awaitSingle()
+
         }
 
         return response?.data?.dokumentoversiktSelvbetjening?.journalposter
