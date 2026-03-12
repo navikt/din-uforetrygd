@@ -1,5 +1,6 @@
 package no.nav.dinuforetrygd.pensjon.pen
 
+import kotlinx.coroutines.reactor.awaitSingle
 import no.nav.dinuforetrygd.ClientException
 import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.SakNotFoundException
@@ -54,7 +55,7 @@ class PenClient(
         }
     }
 
-    fun getVedtakssammendragResponse(pid: String): VedtakssammendragResponse {
+    suspend fun getVedtakssammendragResponse(pid: String): VedtakssammendragResponse {
         val path = "/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
@@ -70,7 +71,8 @@ class PenClient(
                         .bodyToMono(VedtakssammendragResponse::class.java)
                         .retryWhen(retryOnTimeout)
                         .withMdcContext()
-                        .block()!!
+                        .awaitSingle()
+
                 }
         } catch (e: WebClientResponseException) {
             if (HttpStatus.FORBIDDEN == e.statusCode) {
@@ -82,7 +84,7 @@ class PenClient(
         }
     }
 
-    fun getForventedeInntekterResponse(pid: String): ForventedeInntekterResponse {
+    suspend fun getForventedeInntekterResponse(pid: String): ForventedeInntekterResponse {
         val path = "/api/selvbetjening/rightColumnHelper"
         return try {
             tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
@@ -98,7 +100,7 @@ class PenClient(
                         .bodyToMono(ForventedeInntekterResponse::class.java)
                         .retryWhen(retryOnTimeout)
                         .withMdcContext()
-                        .block()!!
+                        .awaitSingle()
                 }
         } catch (e: WebClientResponseException) {
             if (HttpStatus.FORBIDDEN == e.statusCode) {
@@ -110,7 +112,7 @@ class PenClient(
         }
     }
 
-    fun hentForsideData(pid: String, sakId: Long): HentForsideDataResponse {
+    suspend fun hentForsideData(pid: String, sakId: Long): HentForsideDataResponse {
         val path = "/api/uforetrygd/din-uforetrygd/forside"
         try {
             return tokenService.getEgressToken(scope = scope, audience = audience, pid = pid, appId = AppId.PEN)
@@ -131,7 +133,8 @@ class PenClient(
                         .bodyToMono(HentForsideDataResponse::class.java)
                         .retryWhen(retryOnTimeout)
                         .withMdcContext()
-                        .block()!!
+                        .awaitSingle()
+
                 }
         } catch (e: WebClientResponseException) {
             if (HttpStatus.FORBIDDEN == e.statusCode) {

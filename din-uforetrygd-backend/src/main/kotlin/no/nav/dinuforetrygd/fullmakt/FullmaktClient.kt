@@ -1,6 +1,7 @@
 package no.nav.dinuforetrygd.fullmakt
 
 
+import kotlinx.coroutines.reactor.awaitSingle
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.retryOnTimeout
@@ -26,7 +27,7 @@ class FullmaktClient(
     private val tokenService: TokenService
 ) {
 
-    fun harBprofFullmaktmottager(fullmektigPid: String): HarBprofFullmaktmottakereResponse? {
+    suspend fun harBprofFullmaktmottager(fullmektigPid: String): HarBprofFullmaktmottakereResponse? {
         return try {
             tokenService.getEgressToken(scope, audience, fullmektigPid, AppId.PENSJON_FULLMAKT).let {
                 webClient
@@ -42,7 +43,7 @@ class FullmaktClient(
                     .bodyToMono(HarBprofFullmaktmottakereResponse::class.java)
                     .retryWhen(retryOnTimeout)
                     .withMdcContext()
-                    .block()
+                    .awaitSingle()
             }
 
         } catch (e: WebClientResponseException) {

@@ -1,10 +1,17 @@
 package no.nav.dinuforetrygd.uforetrygd
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
+import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.pensjon.pen.*
+import no.nav.dinuforetrygd.security.RequestContextAsyncContext
 import no.nav.dinuforetrygd.security.SecurityContextUtil
+import no.nav.dinuforetrygd.security.SecurityCoroutineContext
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.erRelevant
 import org.slf4j.Logger
@@ -22,35 +29,60 @@ class ForsideService(
 ) {
     private val logger: Logger = LoggerFactory.getLogger(ForsideService::class.java)
 
-    fun hentForsideData(pid: String): UforetrygdResponse {
-        val uforeSak = penService.getSaker(pid).velgSak()
-        if (uforeSak == null) return lagUforetrygdResponse(pid, uforeSak)
+    fun hentForsideData(pid: String): UforetrygdResponse = runBlocking {
+        withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {
 
-        val vedtakssammendragResponse = penService.getVedtakssammendrag(pid)
-        val sumAvForventedeInntekter = penService.getSumAvForventedeInntekter(pid)
-        var inntektFraSkatt = 0.0
-        if (vedtakssammendragResponse.hasIverksattVedtak) {
-            try {
-                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
-            } catch (e: Exception) {
-                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
+            val uforeSak = penService.getSaker(pid).velgSak()
+            if (uforeSak == null) return@withContext lagUforetrygdResponse(pid, uforeSak, harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()))
+
+
+            val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
+            val sumAvForventedeInntekterDeferred = async { penService.getSumAvForventedeInntekter(pid) }
+
+            val forsideDataDeferred = async {
+                try {
+                    penClient.hentForsideData(pid, uforeSak.sakId)
+                } catch (e: Exception) {
+                    logger.warn("Feilet mot forside-data, sak " + uforeSak.sakId, e)
+                    null
+                }
             }
-        }
-        val forsideData = try {
-            penClient.hentForsideData(pid, uforeSak.sakId)
-        }
-        catch (e: Exception) {
-            logger.warn("Feilet mot forside-data, sak " + uforeSak.sakId, e)
-            null
-        }
 
-        return lagUforetrygdResponse(
-            pid = pid,
-            sak = uforeSak,
-            hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-            uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
-            behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
-        )
+            val journalposterDeferred = async {
+                uforeSak.let {
+                    journalpostService.getJournalPostliste(pid, it.sakId.toString())
+                        .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
+                }
+            }
+
+            val harGammelFullmaktEllerVeilderDeferred = async { harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()) }
+
+            val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
+            val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
+            val forsideData = forsideDataDeferred.await()
+            val journalposter = journalposterDeferred.await()
+            val harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilderDeferred.await()
+
+            var inntektFraSkatt = 0.0
+
+            if (vedtakssammendragResponse.hasIverksattVedtak) {
+                try {
+                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+                } catch (e: Exception) {
+                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
+                }
+            }
+
+            return@withContext lagUforetrygdResponse(
+                pid = pid,
+                sak = uforeSak,
+                hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
+                behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
+                journalposter = journalposter,
+                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder
+            )
+        }
     }
 
     fun finnAktivBehandling(åpentKrav: Krav?, vedtakIverksattSiste7Dager: List<Vedtak>): Behandling? {
@@ -76,19 +108,18 @@ class ForsideService(
         sak: Sak?,
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
-        behandling: Behandling? = null
+        behandling: Behandling? = null,
+        journalposter: List<Journalpost> = emptyList(),
+        harGammelFullmaktEllerVeilder: Boolean,
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
         sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
-        harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()),
+        harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder,
         hasIverksattVedtak = hasIverksattVedtak,
         uforevedtak = uforevedtak,
-        journalposter = sak?.let {
-            journalpostService.getJournalPostliste(pid, it.sakId.toString())
-                .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
-        } ?: emptyList(),
+        journalposter = journalposter,
         behandling = behandling
     )
 
@@ -109,7 +140,7 @@ class ForsideService(
             hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
 
-    private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
+    suspend private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
         if (SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
             false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler
         else
