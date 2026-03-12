@@ -1,5 +1,9 @@
 package no.nav.dinuforetrygd.journalpost
 
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import no.nav.dinuforetrygd.journalpost.model.EndretAvKode
 import no.nav.dinuforetrygd.journalpost.saf.JournalpostSafDto
 import no.nav.dinuforetrygd.journalpost.saf.SafClient
@@ -9,15 +13,13 @@ import no.nav.dinuforetrygd.security.TokenService
 import org.junit.jupiter.api.Assertions.assertEquals as assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNull
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
 import java.time.LocalDate
 
 class JournalpostServiceTest {
 
-    private val tokenService = mock(TokenService::class.java)
-    private val safSelvbetjeningClient = mock(SafSelvbetjeningClient::class.java)
-    private val safClient = mock(SafClient::class.java)
+    private val tokenService = mockk<TokenService>()
+    private val safSelvbetjeningClient = mockk<SafSelvbetjeningClient>()
+    private val safClient = mockk<SafClient>()
     private val journalpostService = JournalpostService(
         safSelvbetjeningClient = safSelvbetjeningClient,
         safClient = safClient,
@@ -56,11 +58,11 @@ class JournalpostServiceTest {
             dokumenter = listOf(dokument)
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid)).thenReturn(listOf(journalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(journalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -81,12 +83,11 @@ class JournalpostServiceTest {
         val relevantJournalpost = createJournalpostSelvbetjening("JP123", "UFO", sakId, "I")
         val irrelevantJournalpost = createJournalpostSelvbetjening("JP456", "SYK", sakId, "I")
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
-            .thenReturn(listOf(relevantJournalpost, irrelevantJournalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(relevantJournalpost, irrelevantJournalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -103,12 +104,11 @@ class JournalpostServiceTest {
         val relevantJournalpost = createJournalpostSelvbetjening("JP123", "UFO", sakId, "I")
         val irrelevantJournalpost = createJournalpostSelvbetjening("JP456", "UFO", otherSakId, "I")
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
-            .thenReturn(listOf(relevantJournalpost, irrelevantJournalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(relevantJournalpost, irrelevantJournalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -134,12 +134,11 @@ class JournalpostServiceTest {
             dokumenter = emptyList()
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
-            .thenReturn(listOf(relevantJournalpost, emptyDocsJournalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(relevantJournalpost, emptyDocsJournalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -175,12 +174,12 @@ class JournalpostServiceTest {
             avsenderMottaker = null
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId)).thenReturn(listOf(journalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(journalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -204,20 +203,18 @@ class JournalpostServiceTest {
         val emptyDocsJournalpost = createJournalpostSafWithNoDocs("JP101", "UFO", sakId, "I")
         val typeNJournalpost = createJournalpostSaf("JP102", "UFO", sakId, "N")
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId)).thenReturn(
-            listOf(
-                relevantJournalpost,
-                wrongTemaJournalpost,
-                wrongSakIdJournalpost,
-                emptyDocsJournalpost,
-                typeNJournalpost
-            )
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(
+            relevantJournalpost,
+            wrongTemaJournalpost,
+            wrongSakIdJournalpost,
+            emptyDocsJournalpost,
+            typeNJournalpost
         )
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -238,14 +235,10 @@ class JournalpostServiceTest {
 
         val journalpost = createJournalpostSelvbetjening("JP123", "UFO", sakId, "I", listOf(dokument))
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid)).thenReturn(
-            listOf(
-                journalpost
-            )
-        )
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(journalpost)
 
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         assertEquals(0, result.first().dokumenter.size)
     }
@@ -262,20 +255,18 @@ class JournalpostServiceTest {
         val emptyDocsJournalpost = createJournalpostSafWithNoDocs("JP101", "PEN", sakId, "I")
         val typeNJournalpost = createJournalpostSaf("JP102", "PEN", sakId, "N")
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId)).thenReturn(
-            listOf(
-                relevantJournalpost,
-                wrongTemaJournalpost,
-                wrongSakIdJournalpost,
-                emptyDocsJournalpost,
-                typeNJournalpost
-            )
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(
+            relevantJournalpost,
+            wrongTemaJournalpost,
+            wrongSakIdJournalpost,
+            emptyDocsJournalpost,
+            typeNJournalpost
         )
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -311,12 +302,12 @@ class JournalpostServiceTest {
             avsenderMottaker = null
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId)).thenReturn(listOf(journalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(journalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -362,12 +353,12 @@ class JournalpostServiceTest {
             avsenderMottaker = null
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId)).thenReturn(listOf(journalpost))
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(journalpost)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -400,12 +391,11 @@ class JournalpostServiceTest {
             )
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
-            .thenReturn(listOf(relevantJournalpost, journalpostWithNullSak))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(relevantJournalpost, journalpostWithNullSak)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -437,12 +427,11 @@ class JournalpostServiceTest {
             )
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(true)
-        Mockito.`when`(safSelvbetjeningClient.performGraphQLQuery(pid))
-            .thenReturn(listOf(relevantJournalpost, journalpostWithNullFagsakId))
+        every { tokenService.isUserLoggedInAsPerson() } returns true
+        coEvery { safSelvbetjeningClient.performGraphQLQuery(pid) } returns listOf(relevantJournalpost, journalpostWithNullFagsakId)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -479,13 +468,12 @@ class JournalpostServiceTest {
             avsenderMottaker = null
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId))
-            .thenReturn(listOf(relevantJournalpost, journalpostWithNullSak))
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(relevantJournalpost, journalpostWithNullSak)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)
@@ -522,13 +510,12 @@ class JournalpostServiceTest {
             avsenderMottaker = null
         )
 
-        Mockito.`when`(tokenService.isUserLoggedInAsPerson()).thenReturn(false)
-        Mockito.`when`(tokenService.isUserLoggedInAsSaksbehandler()).thenReturn(true)
-        Mockito.`when`(safClient.performGraphQLQuery(sakId))
-            .thenReturn(listOf(relevantJournalpost, journalpostWithNullFagsakId))
+        every { tokenService.isUserLoggedInAsPerson() } returns false
+        every { tokenService.isUserLoggedInAsSaksbehandler() } returns true
+        every { safClient.performGraphQLQuery(sakId) } returns listOf(relevantJournalpost, journalpostWithNullFagsakId)
 
         // Act
-        val result = journalpostService.getJournalPostliste(pid, sakId)
+        val result = runBlocking { journalpostService.getJournalPostliste(pid, sakId) }
 
         // Assert
         assertEquals(1, result.size)

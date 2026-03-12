@@ -1,5 +1,8 @@
 package no.nav.dinuforetrygd.pensjon.pen
 
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import no.nav.dinuforetrygd.ClientException
 import no.nav.dinuforetrygd.ForbiddenException
 import no.nav.dinuforetrygd.WebClientTest
@@ -11,15 +14,13 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.slf4j.MDC
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
 import java.time.LocalDate
 
 class PenClientTest : WebClientTest() {
-    val tokenService = Mockito.mock(TokenService::class.java)
+    val tokenService = mockk<TokenService>(relaxed = true)
     lateinit var penClient: PenClient
 
     @BeforeEach
@@ -81,7 +82,7 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `should throw ClientException when unexpected exception occurs in getSaksammendrag`() {
         prepare(sakSammendragResponse200())
-        `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
+        every { tokenService.getEgressToken("", "", PID, AppId.PEN) } throws IllegalStateException()
         val exception = assertThrows<ClientException> { penClient.getSaksammendrag(PID) }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/api/selvbetjening/sak/sammendrag/v2", exception.service)
@@ -106,7 +107,7 @@ class PenClientTest : WebClientTest() {
                     kompensasjonsgrad = 65.5,
                     nettoUtbetalingMnd = 20000
                 )
-            ), penClient.getVedtakssammendragResponse(PID)
+            ), runBlocking { penClient.getVedtakssammendragResponse(PID) }
         )
         val request = takeRequest()
 
@@ -117,7 +118,7 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `throws ForbiddenException when 403 response from din-uforetrygd`() {
         prepare(response403())
-        val exception = assertThrows<ForbiddenException> { penClient.getVedtakssammendragResponse(PID) }
+        val exception = assertThrows<ForbiddenException> { runBlocking { penClient.getVedtakssammendragResponse(PID) } }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
@@ -125,7 +126,7 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `throws ClientException when 500 response from din-uforetrygd`() {
         prepare(response500())
-        val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
+        val exception = assertThrows<ClientException> { runBlocking { penClient.getVedtakssammendragResponse(PID) } }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
@@ -133,8 +134,8 @@ class PenClientTest : WebClientTest() {
     @Test
     fun `throws ClientException when unexpected exception occurs in getDinUforetrygdResponse`() {
         prepare(uforegradResponse200())
-        `when`(tokenService.getEgressToken("", "", PID, AppId.PEN)).thenThrow(IllegalStateException())
-        val exception = assertThrows<ClientException> { penClient.getVedtakssammendragResponse(PID) }
+        every { tokenService.getEgressToken("", "", PID, AppId.PEN) } throws IllegalStateException()
+        val exception = assertThrows<ClientException> { runBlocking { penClient.getVedtakssammendragResponse(PID) } }
         assertEquals(AppId.PEN.name, exception.system)
         assertEquals("/api/selvbetjening/uforetrygd/vedtakssammendrag/seneste", exception.service)
     }
