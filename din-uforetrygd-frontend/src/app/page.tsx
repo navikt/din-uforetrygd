@@ -1,24 +1,24 @@
-import { Alert, Heading, VStack } from "@navikt/ds-react";
-import { initate } from "@/api/endpoints";
-import { TaskAnalytics } from "@/components/TaskAnalytics/TaskAnalytics";
-import { VeilederBorgerinformasjon } from "@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon";
-import type { Innloggingstype, Visningskriterier } from "@/const";
-import { KanVaereAktueltForDeg } from "@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg";
-import { MeldeFra } from "@/sections/MeldeFra/MeldeFra";
-import { RelevanteSoknader } from "@/sections/RelevanteSoknader/RelevanteSoknader";
-import getEnv from "@/utils/env";
-import { getVisningskriterier } from "@/utils/getVisningskriterier/getVisningskriterier";
-import { resolveErrorText } from "@/utils/resolveErrorText/resolveErrorText";
-import "./layout.css";
-import type React from "react";
-import Brødsmulesti from "@/components/Brødsmulesti/Brødsmulesti";
-import { DittVedtak } from "@/sections/DittVedtak/DittVedtak";
-import { ForsideBehandlingKort } from "@/sections/ForsideBehandling/ForsideBehandlingKort";
-import { toForsideBehandling } from "@/sections/ForsideBehandling/forsideBehandlingUtil";
-import { InntektSnarveier } from "@/sections/InntektSnarveier/InntektSnarveier";
-import { InterneLenker } from "@/sections/InterneLenker/InterneLenker";
-import { Snarveier } from "@/sections/Snarveier/Snarveier";
-import EventProvider from "@/utils/dataContextProvider/EventContextProvider";
+import { Alert, Heading, VStack } from '@navikt/ds-react'
+import { initate } from '@/api/endpoints'
+import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
+import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
+import type { Innloggingstype, Visningskriterier } from '@/const'
+import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
+import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
+import { RelevanteSoknader } from '@/sections/RelevanteSoknader/RelevanteSoknader'
+import getEnv from '@/utils/env'
+import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
+import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
+import './layout.css'
+import type React from 'react'
+import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
+import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
+import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
+import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
+import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
+import { Snarveier } from '@/sections/Snarveier/Snarveier'
+import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>;

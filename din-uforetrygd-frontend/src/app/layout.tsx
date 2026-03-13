@@ -58,17 +58,19 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Theme>
-          <Decorator.Header />
-          <RepresentasjonBanner />
-          <main className="main-content" id="maincontent" tabIndex={-1}>
-            {children}
-          </main>
-          <Decorator.Footer />
-          <Decorator.Scripts loader={Script} />
-          <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
-          <script src="https://widget.uxsignals.com/embed.js" async></script>
-          <FullmaktModal />
-          <InitializeFaro url={faroUrl} />
+          <div className="layout-wrapper">
+            <Decorator.Header />
+            <RepresentasjonBanner />
+            <main className="main-content" id="maincontent" tabIndex={-1}>
+              {children}
+            </main>
+            <Decorator.Footer />
+            <Decorator.Scripts loader={Script} />
+            <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
+            <script src="https://widget.uxsignals.com/embed.js" async></script>
+            <FullmaktModal />
+            <InitializeFaro url={faroUrl} />
+          </div>
         </Theme>
       </body>
     </html>
