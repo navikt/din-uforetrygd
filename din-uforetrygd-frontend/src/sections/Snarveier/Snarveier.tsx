@@ -136,7 +136,7 @@ const getLinks = async (
           ),
           showFor: true,
           showFullmaktWarning: false,
-          visInnloggingsModal: true,
+          visInnloggingsModal: false,
         },
       ]
     : []),
