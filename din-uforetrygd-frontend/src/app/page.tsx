@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Heading, VStack } from '@navikt/ds-react'
+import { Alert, Heading, VStack } from '@navikt/ds-react'
 import { initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
@@ -11,7 +11,6 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskr
 import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import './layout.css'
 import type React from 'react'
-import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
