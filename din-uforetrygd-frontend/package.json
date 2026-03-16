@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.6",
-    "@eslint/compat": "^2.0.2",
+    "@eslint/compat": "^2.0.3",
     "@next/eslint-plugin-next": "^16.1.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.6",
