@@ -45,6 +45,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               Din uføretrygd
             </Heading>
           </VStack>
+
           <ForsideBehandlingKort
             behandling={
               initResponse.uforetrygdResponse.behandling

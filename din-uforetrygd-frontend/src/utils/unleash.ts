@@ -1,7 +1,7 @@
 import { evaluateFlags, flagsClient, getDefinitions } from '@unleash/nextjs'
 import { cookies } from 'next/headers'
 import { after } from 'next/server'
-import { ClientFeaturesResponse } from 'unleash-client'
+import type { ClientFeaturesResponse } from 'unleash-client'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
   /* const isDev = process.env.NODE_ENV !== 'production'

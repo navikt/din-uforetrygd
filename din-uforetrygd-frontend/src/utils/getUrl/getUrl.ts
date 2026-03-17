@@ -30,6 +30,7 @@ type EnvUrl =
   | 'LINK_MELD_FRA_OM_ENDRINGER'
   | 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'
   | 'LINK_DITT_LOKALE_NAV_KONTOR'
+  | 'LINK_REGELVERKSENDRINGER'
 
 export const getUrl = async ({
   urlFromEnv,

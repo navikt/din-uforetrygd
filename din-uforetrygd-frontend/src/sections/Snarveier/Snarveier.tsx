@@ -2,6 +2,7 @@ import {
   BulletListIcon,
   EnvelopeClosedIcon,
   FolderFileIcon,
+  ParagraphIcon,
   PersonTallShortIcon,
   PlusMinusSlashIcon,
   WalletIcon,
@@ -13,6 +14,7 @@ import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
+import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
 
 interface SnarveierProps {
@@ -22,6 +24,8 @@ interface SnarveierProps {
 }
 
 export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, pid, uforetrygdResponse }) => {
+  const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
+
   return (
     <section aria-label="Snarveier">
       <VStack gap="space-20">
@@ -29,7 +33,9 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={await getLinks(pid, uforetrygdResponse.harGammelFullmaktmottaker!)}
+          links={
+            await getLinks(pid, uforetrygdResponse.harGammelFullmaktmottaker!, featureVisRegelverksendringerUt2026)
+          }
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -39,7 +45,11 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
   )
 }
 
-const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
+const getLinks = async (
+  pid: string | undefined,
+  bprofFullmakt: boolean,
+  featureVisRegelverksendringerUt2026: boolean
+) => [
   {
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
     title: 'Utbetalinger',
@@ -77,7 +87,10 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER', pid: pid }),
+    href: await getUrl({
+      urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER',
+      pid: pid,
+    }),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
     icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -94,4 +107,20 @@ const getLinks = async (pid: string | undefined, bprofFullmakt: boolean) => [
     showFullmaktWarning: true,
     visInnloggingsModal: false,
   },
+  ...(featureVisRegelverksendringerUt2026
+    ? [
+        {
+          href: await getUrl({
+            urlFromEnv: 'LINK_REGELVERKSENDRINGER',
+            pid: pid,
+          }),
+          title: 'Regelverksendringer 2026',
+          description: 'Regelendringer for uføretrygd',
+          icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,
+          showFor: true,
+          showFullmaktWarning: false,
+          visInnloggingsModal: false,
+        },
+      ]
+    : []),
 ]
