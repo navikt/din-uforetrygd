@@ -6,7 +6,6 @@ import type { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import { showMinIdModal } from '@/utils/showMinIdModal/showMinIdModal'
-import { isEnabled } from '@/utils/unleash'
 import styles from './snarveiPanel.module.css'
 
 interface ISnarveiPanelProps {
