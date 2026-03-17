@@ -21,26 +21,25 @@ import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 
 interface IHomeProps {
-  searchParams: Promise<{ pid?: string }>;
+  searchParams: Promise<{ pid?: string }>
 }
 
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
-  const params = await searchParams;
-  const initResponse = await initate(params.pid);
-  const uforetrygdResponse = initResponse.uforetrygdResponse;
+  const params = await searchParams
+  const initResponse = await initate(params.pid)
+  const uforetrygdResponse = initResponse.uforetrygdResponse
 
   if (uforetrygdResponse) {
-    const visningskriterier: Visningskriterier[] =
-      getVisningskriterier(uforetrygdResponse);
-    const mode = getEnv("MODE");
-    const uforesak = uforetrygdResponse.sak;
+    const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
+    const mode = getEnv('MODE')
+    const uforesak = uforetrygdResponse.sak
 
     return (
       <>
-        <TaskAnalytics id="03419" shouldRun={mode === "borger"} />
+        <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
-          <VStack gap="space-12" className={"tittel-wrapper"}>
+          <VStack gap="space-12" className={'tittel-wrapper'}>
             <Brødsmulesti mode={mode} />
             <Heading size="xlarge" level="1">
               Din uføretrygd
@@ -50,9 +49,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           <ForsideBehandlingKort
             behandling={
               initResponse.uforetrygdResponse.behandling
-                ? toForsideBehandling(
-                    initResponse.uforetrygdResponse.behandling,
-                  )
+                ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
                 : null
             }
             visningskriterier={visningskriterier}
@@ -60,9 +57,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           <InntektSnarveier
             visningskriterier={visningskriterier}
             pid={params.pid}
-            innloggingstype={
-              uforetrygdResponse.innloggingstype as Innloggingstype
-            }
+            innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
           ></InntektSnarveier>
           <DittVedtak
             pid={params.pid}
@@ -76,26 +71,19 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             pid={params.pid}
             journalposter={uforetrygdResponse.journalposter}
           ></InterneLenker>
-          <Snarveier
-            visningskriterier={visningskriterier}
-            pid={params.pid}
-            uforetrygdResponse={uforetrygdResponse}
-          />
+          <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader
             visningskriterier={visningskriterier}
             innloggingstype={uforetrygdResponse.innloggingstype}
           />
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
-          <div className={"ux-signals-container"}>
-            <div
-              data-uxsignals-embed={"panel-u5y48zl9t7"}
-              className={"ux-signals"}
-            ></div>
+          <div className={'ux-signals-container'}>
+            <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'}></div>
           </div>
         </EventProvider>
       </>
-    );
+    )
   } else {
     return (
       <section className="main-content">
@@ -103,8 +91,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           {resolveErrorText(initResponse.backendError?.message)}
         </Alert>
       </section>
-    );
+    )
   }
-};
+}
 
-export default Home;
+export default Home
