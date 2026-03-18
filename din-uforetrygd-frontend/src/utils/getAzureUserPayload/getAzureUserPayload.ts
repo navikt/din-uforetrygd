@@ -7,23 +7,20 @@ type AzurePayload = {
   preferred_username: string
 }
 
-export const getAzureUserPayload = () =>
-  // biome-ignore lint/suspicious/noAsyncPromiseExecutor: TODO: refaktorer
-  new Promise<AzurePayload>(async (resolve, reject) => {
-    if (process.env.NODE_ENV !== 'production') {
-      return resolve({
-        NAVident: 'NAVident',
-        name: 'name',
-        preferred_username: 'preferred_username',
-      })
+export const getAzureUserPayload = async (): Promise<AzurePayload> => {
+  if (process.env.NODE_ENV !== 'production') {
+    return {
+      NAVident: 'NAVident',
+      name: 'name',
+      preferred_username: 'preferred_username',
     }
+  }
 
-    const clientHeaders = await headers()
-    const token = getToken(clientHeaders)
-    const parse = parseAzureUserToken(token as string)
-    if (parse.ok) {
-      return resolve(parse)
-    } else {
-      return reject(parse.error)
-    }
-  })
+  const clientHeaders = await headers()
+  const token = getToken(clientHeaders)
+  const parse = parseAzureUserToken(token as string)
+  if (parse.ok) {
+    return parse
+  }
+  throw parse.error
+}
