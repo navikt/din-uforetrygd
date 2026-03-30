@@ -27,9 +27,9 @@
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.5.3",
     "@grafana/faro-web-sdk": "^2.3.0",
-    "@navikt/aksel-icons": "^8.6.0",
-    "@navikt/ds-css": "^8.6.0",
-    "@navikt/ds-react": "^8.6.0",
+    "@navikt/aksel-icons": "^8.8.0",
+    "@navikt/ds-css": "^8.8.0",
+    "@navikt/ds-react": "^8.8.0",
     "@navikt/nav-dekoratoren-moduler": "~3.6.2",
     "@navikt/oasis": "^4.1.4",
     "@navikt/steng-for-regulering": "^0.0.7",
