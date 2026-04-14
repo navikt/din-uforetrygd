@@ -1,4 +1,4 @@
-name: Automerge Dependabot PRer for Inntektsplanleggeren
+name: Automerge Dependabot PRer for Din uføretrygd
 
 on:
   schedule:
@@ -13,13 +13,13 @@ jobs:
       statuses: read
       contents: write
     steps:
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
         id: app-token
         with:
           app-id: ${{ vars.TEAM_UFORE_APP_ID }}
           private-key: ${{ secrets.TEAM_UFORE_PRIVATE_KEY }}
       - name: Automerge Dependabot PRs
-        uses: navikt/automerge-dependabot@v1.4
+        uses: navikt/automerge-dependabot@a8509d20101f618c831b5eb13f28df6b4274607b # v1.4
         with:
           token: ${{ steps.app-token.outputs.token }}
           blackout-periods: 'Sat,Sun,Dec 24-Jan 2'

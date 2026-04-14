@@ -26,10 +26,10 @@ jobs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Bruk node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
@@ -51,7 +51,7 @@ jobs:
         run: npm prune --production
 
       - name: docker-build-push
-        uses: nais/docker-build-push@v0
+        uses: nais/docker-build-push@cd5ec5663feb0e05c3fa374d1fb442605b046c6b # v0
         id: docker-build-push
         with:
           team: ufore
@@ -78,7 +78,7 @@ jobs:
       id-token: write
       security-events: write
     steps:
-      - uses: nais/login@v0
+      - uses: nais/login@d6ab5d83f735e9f155eb9d7d29cd20ae46820ea9 # v0
         with:
           team: ufore
       - name: Run Trivy vulnerability scanner
@@ -90,7 +90,7 @@ jobs:
           severity: 'HIGH,CRITICAL'
           limit-severities-for-sarif: true
       - name: Upload results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4
         with:
           sarif_file: 'trivy.sarif'
 
@@ -103,10 +103,10 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Deploy
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1 # v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: din-uforetrygd-frontend/.nais/prod-borger.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
@@ -133,10 +133,10 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Deploy
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@fa754451577294aae42872a69b888b3470478ec1 # v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: din-uforetrygd-frontend/.nais/prod-veileder.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
