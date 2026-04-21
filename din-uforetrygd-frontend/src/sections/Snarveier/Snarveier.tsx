@@ -1,5 +1,6 @@
 import {
   BulletListIcon,
+  CardIcon,
   EnvelopeClosedIcon,
   FolderFileIcon,
   ParagraphIcon,
@@ -105,6 +106,15 @@ const getLinks = async (
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
+    visInnloggingsModal: false,
+  },
+  {
+    href: 'https://www.nav.no/honnorkort#mangler-honnorkort',
+    title: 'Honnørkort',
+    description: 'Bestill nytt honnørkort',
+    icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    showFor: true,
+    showFullmaktWarning: false,
     visInnloggingsModal: false,
   },
   ...(featureVisRegelverksendringerUt2026
