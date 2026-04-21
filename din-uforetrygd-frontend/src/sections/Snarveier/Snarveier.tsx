@@ -113,7 +113,7 @@ const getLinks = async (
     title: 'Honnørkort',
     description: 'Bestill nytt honnørkort',
     icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: true,
+    showFor: matchSome([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
   },
