@@ -14,6 +14,7 @@ export default function InitializeFaro({ url }: Props) {
 
   try {
     const faro = initializeFaro({
+      paused: window.location.hostname.includes('localhost'),
       url: url,
       app: {
         name: 'din-uforetrygd',
