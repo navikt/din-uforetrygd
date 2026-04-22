@@ -12,7 +12,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: "#uføre-varsling-test"
+          channel: "#team-uføre-alerts"
           iconEmoji: ":trygdebeistet:"
           username: "Trygdebeistet"
           sendResolved: true
