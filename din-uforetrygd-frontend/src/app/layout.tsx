@@ -16,6 +16,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
   const mode = getEnv('MODE') as 'borger' | 'veileder'
   const faroUrl = getEnv('NEXT_PUBLIC_FARO_URL')
+  const appName = getEnv('NAIS_APP_NAME')
 
   const Decorator = await fetchDecoratorReact({
     env: decoratorEnv,
@@ -42,7 +43,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <main className="main-content" id="maincontent" tabIndex={-1}>
               {children}
             </main>
-            <InitializeFaro url={faroUrl} />
+            <InitializeFaro url={faroUrl} appName={appName} />
           </Theme>
         </body>
       </html>
@@ -69,7 +70,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
             <script src="https://widget.uxsignals.com/embed.js" async></script>
             <FullmaktModal />
-            <InitializeFaro url={faroUrl} />
+            <InitializeFaro url={faroUrl} appName={appName} />
           </div>
         </Theme>
       </body>

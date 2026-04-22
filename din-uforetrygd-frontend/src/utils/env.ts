@@ -29,6 +29,7 @@ export type Env =
   | 'LINK_REGELVERKSENDRINGER'
   | 'REPRESENTASJON_BANNER'
   | 'NEXT_PUBLIC_FARO_URL'
+  | 'NAIS_APP_NAME'
 
 export default function getEnv(env: Env) {
   noStore()
