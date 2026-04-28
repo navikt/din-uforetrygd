@@ -12,7 +12,7 @@ spec:
         - apiURL:
             key: apiUrl
             name: slack-webhook
-          channel: "#uføre-varsling-test"
+          channel: "#team-uføre-alerts"
           iconEmoji: ":trygdebeistet:"
           username: "Trygdebeistet"
           sendResolved: true
@@ -23,8 +23,8 @@ spec:
             {{ range .Alerts -}}
             {{ .Annotations.message }}
             {{ end }}
-            {{ if .CommonAnnotations.action }}:elasticsearch: <{{ .CommonAnnotations.action }}|Sjekk logger i Kibana>{{ end }}
-            {{ if .CommonAnnotations.dashboard_url }}:grafana: <{{ .CommonAnnotations.dashboard_url }}|Grafana dashboard>{{ end }}
+            {{ if .CommonAnnotations.action }}:elasticsearch: <{{ .CommonAnnotations.action }}|Sjekk logger i Kibana (siste time)>{{ end }}
+            {{ if .CommonAnnotations.dashboard_url }}:grafana: <{{ .CommonAnnotations.dashboard_url }}?from={{ sub (index .Alerts 0).StartsAt.Unix 3600 }}000&to={{ add (index .Alerts 0).StartsAt.Unix 3600 }}000|Grafana dashboard>{{ end }}
             {{ end }}
           color: |-
             {{ if eq .Status "firing" -}}
@@ -56,6 +56,6 @@ spec:
         matchType: "="
         value: "slack"
     groupInterval: 10s
-    groupWait: 5s
+    groupWait: 1m
     receiver: ufore-alerts-receiver
     repeatInterval: 12h

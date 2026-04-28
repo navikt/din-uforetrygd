@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Heading, VStack } from '@navikt/ds-react'
+import { Alert, Heading, VStack } from '@navikt/ds-react'
 import { initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
@@ -11,7 +11,6 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskr
 import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import './layout.css'
 import type React from 'react'
-import { LukkbarAlert } from '@/components/Alert/LukkbarAlert'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
@@ -46,16 +45,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               Din uføretrygd
             </Heading>
           </VStack>
-          {mode === 'borger' && (
-            <LukkbarAlert variant="info" cookieNavn="regelendring-2026-alert">
-              <Heading size="small">Nye regler for uføretrygd i 2026</Heading>
-              <BodyLong size="medium">
-                Det kommer nye regler for uføretrygd i 2026, blant annet endring av inntektsgrensen. Vi informerer deg
-                så snart vi vet mer. Nav.no, Din uføretrygd og inntektsplanleggeren vil bli oppdatert. De som får
-                endring i uføretrygden sin på grunn av regelendringene, vil få brev om dette.
-              </BodyLong>
-            </LukkbarAlert>
-          )}
+
           <ForsideBehandlingKort
             behandling={
               initResponse.uforetrygdResponse.behandling

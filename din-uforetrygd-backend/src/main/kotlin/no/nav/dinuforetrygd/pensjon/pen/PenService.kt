@@ -12,9 +12,9 @@ class PenService(val penClient: PenClient) {
             .map { mapSakSammendragToSak(it) }
     }
 
-    fun getVedtakssammendrag(pid: String) = penClient.getVedtakssammendragResponse(pid)
+    suspend fun getVedtakssammendrag(pid: String) = penClient.getVedtakssammendragResponse(pid)
 
-    fun getSumAvForventedeInntekter(pid: String): Long? =
+    suspend fun getSumAvForventedeInntekter(pid: String): Long? =
         penClient.getForventedeInntekterResponse(pid).sumAvForventedeInntekter
 
     private fun mapSakSammendragToSak(sakSammendrag: SakSammendrag): Sak {

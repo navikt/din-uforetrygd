@@ -5,18 +5,20 @@ import logger from '@/utils/logger'
 
 interface Props {
   url: string | undefined
+  appName: string | undefined
 }
 
-export default function InitializeFaro({ url }: Props) {
+export default function InitializeFaro({ url, appName }: Props) {
   if (typeof window === 'undefined' || faro.api || !url) {
     return null
   }
 
   try {
-    const faro = initializeFaro({
+    initializeFaro({
+      paused: window.location.hostname.includes('localhost'),
       url: url,
       app: {
-        name: 'din-uforetrygd',
+        name: appName,
       },
       instrumentations: [...getWebInstrumentations()],
       beforeSend: (event: TransportItem) => {

@@ -27,6 +27,7 @@ interface ILink {
 
 export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
   const relevantLinks = filterShowFor(props.visningskriterier, props.links)
+
   return (
     <>
       {relevantLinks.length > 0 && (

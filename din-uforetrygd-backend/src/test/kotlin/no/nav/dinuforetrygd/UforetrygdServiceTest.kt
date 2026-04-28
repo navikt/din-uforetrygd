@@ -1,9 +1,9 @@
 package no.nav.dinuforetrygd
 
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
 import no.nav.dinuforetrygd.fullmakt.HarRepresentasjonsforhold
@@ -57,19 +57,20 @@ class UforetrygdServiceTest {
         every { tokenService.getInnloggingstype() } returns Innloggingstype.LEVEL4
         every { tokenService.determineLoggedInUser() } returns ""
         every { SecurityContextUtil.isFullmakt() } returns false
-        every { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
+        coEvery { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
+        coEvery { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
         every { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
-        every { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
+
     }
 
     @Test
     fun `should return a response with no sak or vedtak when there is no sak`() {
         every { penService.getSaker(any()) } returns emptyList()
-        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.hentForsideData(PID)
-        verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
-        verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
+        coVerify(exactly = 0) { penService.getVedtakssammendrag(PID) }
+        coVerify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
         assertEquals(PID, response.pid)
         assertNull(response.sak)
@@ -80,11 +81,11 @@ class UforetrygdServiceTest {
     @Test
     fun `should return a response with no sak or vedtak when there is no uforesak`() {
         every { penService.getSaker(any()) } returns emptyList()
-        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.hentForsideData(PID)
-        verify(exactly = 0) { penService.getVedtakssammendrag(PID) }
-        verify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
+        coVerify(exactly = 0) { penService.getVedtakssammendrag(PID) }
+        coVerify(exactly = 0) { penService.getSumAvForventedeInntekter(PID) }
 
         assertEquals(PID, response.pid)
         assertNull(response.sak)
@@ -95,13 +96,13 @@ class UforetrygdServiceTest {
     @Test
     fun `should return a response with uforesak and no vedtak, when there is no vedtakssammendrag`() {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
-        every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
-        every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        coEvery { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
+        coEvery { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.hentForsideData(PID)
-        verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
-        verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
+        coVerify(exactly = 1) { penService.getVedtakssammendrag(PID) }
+        coVerify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
         assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
@@ -115,9 +116,9 @@ class UforetrygdServiceTest {
             Sak(Sakstatus.LOPENDE, 1L),
             Sak(Sakstatus.AVSLUTTET, 1L)
         )
-        every { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
-        every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        coEvery { penService.getVedtakssammendrag(any()) } returns VedtakssammendragResponse(false, null)
+        coEvery { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
 
         val response = uforetrygdService.hentForsideData(PID)
 
@@ -154,14 +155,14 @@ class UforetrygdServiceTest {
         )
 
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
-        every { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
-        every { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        every { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
+        coEvery { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
+        coEvery { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
+        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
         every { inntektskomponentenService.getAretsInntektFraSkatt(any()) } returns inntektFraSkatt
 
         val response = uforetrygdService.hentForsideData(PID)
-        verify(exactly = 1) { penService.getVedtakssammendrag(PID) }
-        verify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
+        coVerify(exactly = 1) { penService.getVedtakssammendrag(PID) }
+        coVerify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
         assertNotNull(response.sak)
         assertTrue(response.hasIverksattVedtak)
