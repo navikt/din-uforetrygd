@@ -32,6 +32,9 @@ spec:
     failureThreshold: 5
     timeout: 1
   observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
     logging:
       destinations:
         - id: elastic
