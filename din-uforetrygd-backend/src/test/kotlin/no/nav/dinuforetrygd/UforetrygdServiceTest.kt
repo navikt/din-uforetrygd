@@ -59,7 +59,7 @@ class UforetrygdServiceTest {
         every { SecurityContextUtil.isFullmakt() } returns false
         coEvery { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
         coEvery { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
-        every { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
+        coEvery { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
 
     }
 

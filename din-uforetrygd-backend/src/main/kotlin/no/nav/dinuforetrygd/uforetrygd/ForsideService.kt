@@ -34,7 +34,11 @@ class ForsideService(
         withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {
 
             val uforeSak = penService.getSaker(pid).velgSak()
-            if (uforeSak == null) return@withContext lagUforetrygdResponse(pid, uforeSak, harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()))
+            if (uforeSak == null) return@withContext lagUforetrygdResponse(
+                pid = pid,
+                sak = uforeSak,
+                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()),
+                isVerge = isUforetrygdVerge(pid))
 
 
             val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
@@ -56,6 +60,8 @@ class ForsideService(
                 }
             }
 
+            val isVergeDeferred = async { isUforetrygdVerge(pid) }
+
             val harGammelFullmaktEllerVeilderDeferred = async { harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()) }
 
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
@@ -63,6 +69,7 @@ class ForsideService(
             val forsideData = forsideDataDeferred.await()
             val journalposter = journalposterDeferred.await()
             val harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilderDeferred.await()
+            val isVerge = isVergeDeferred.await()
 
             var inntektFraSkatt = 0.0
 
@@ -81,7 +88,8 @@ class ForsideService(
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
                 journalposter = journalposter,
-                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder
+                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder,
+                isVerge = isVerge
             )
         }
     }
@@ -112,6 +120,7 @@ class ForsideService(
         behandling: Behandling? = null,
         journalposter: List<Journalpost> = emptyList(),
         harGammelFullmaktEllerVeilder: Boolean,
+        isVerge: Boolean
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
@@ -122,7 +131,7 @@ class ForsideService(
         uforevedtak = uforevedtak,
         journalposter = journalposter,
         behandling = behandling,
-        isVerge = isUforetrygdVerge(pid)
+        isVerge = isVerge
     )
 
     private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
@@ -148,6 +157,6 @@ class ForsideService(
         else
             fullmaktClient.harBprofFullmaktmottager(pid)?.value ?: false
 
-    private fun isUforetrygdVerge(pid: String): Boolean =
+    suspend private fun isUforetrygdVerge(pid: String): Boolean =
         !SecurityContextUtil.isFullmakt() && fullmaktClient.harRepresentasjonsforhold(pid, UFORETRYGD_VERGE_TYPER)?.value ?: false
 }

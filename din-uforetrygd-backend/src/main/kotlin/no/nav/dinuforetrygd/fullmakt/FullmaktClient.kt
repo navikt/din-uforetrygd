@@ -96,7 +96,7 @@ class FullmaktClient(
         }
     }
 
-    fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
+    suspend fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
         return try {
             tokenService.getEgressToken(scope, audience, representantPid, AppId.PENSJON_FULLMAKT).let {
                 webClient
@@ -113,7 +113,7 @@ class FullmaktClient(
                     .bodyToMono(HarRepresentasjonsforhold::class.java)
                     .retryWhen(retryOnTimeout)
                     .withMdcContext()
-                    .block()
+                    .awaitSingle()
             }
 
         } catch (e: WebClientResponseException) {
