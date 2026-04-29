@@ -16,6 +16,8 @@ I IntelliJ kan du velge `edit configurations` ved siden av run-knappen.
 * Sett `local` i  active profiles
 * Huk av for Enable EnvFile og legge til `/private/tmp/uforetrygd.env`
 
+Får du problemer med at maven ikke finner avhengigheter, kan det hende du må legge inn Maven-konfigurasjon i `settings.xml`. Se [Maven settings](../onboarding/mavensettings.md) for mer informasjon.
+
 Nå skal du kunne kjøre backend lokalt.
 
 For å kjøre requests mot backend må du ha access tokens. Dette kan du hente her:
