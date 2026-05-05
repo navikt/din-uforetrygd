@@ -42,3 +42,9 @@ body {
   flex-direction: column;
   min-height: 100dvh;
 }
+
+.info-alert {
+  .aksel-alert__wrapper {
+    max-width: unset;
+  }
+}

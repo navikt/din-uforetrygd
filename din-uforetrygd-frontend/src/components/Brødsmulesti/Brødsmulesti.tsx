@@ -13,6 +13,7 @@ const allePaths: Record<string, Brødsmuler> = {
   minside: { tittel: 'Min side', url: '/minside' },
   '': { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
+  'kommende-utbetalinger': { tittel: 'Kommende utbetalinger', url: '/uforetrygd/selvbetjening/kommende-utbetalinger' },
 }
 
 interface Props {
