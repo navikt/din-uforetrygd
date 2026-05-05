@@ -185,7 +185,7 @@ export const mockData = {
     ],
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
-      status: 'AVSLAG',
+      status: 'INNVILGET',
       beregning: { nettoUforetrygdPerManed: 123456 },
       dato: '2025-12-14',
       avslattForutgaendeMedlemskap: true,

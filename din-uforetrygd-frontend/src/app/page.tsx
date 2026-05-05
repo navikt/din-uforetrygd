@@ -2,7 +2,7 @@ import { Alert, BodyLong, Heading, Link, VStack } from '@navikt/ds-react'
 import { initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
-import type { Innloggingstype, Visningskriterier } from '@/const'
+import { type Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader/RelevanteSoknader'
@@ -19,6 +19,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
+import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -46,15 +47,17 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             </Heading>
           </VStack>
 
-          <Alert variant="info" role="alert" className={'info-alert'}>
-            <Heading size="small" level="2">
-              Informasjon om kommende utbetalinger
-            </Heading>
-            <BodyLong size="medium">
-              Du finner informasjon om utbetalinger i mai og juni og informasjon om justering av grunnbeløpet{' '}
-              <Link href="/uforetrygd/selvbetjening/kommende-utbetalinger">her</Link>.
-            </BodyLong>
-          </Alert>
+          {matchSome([Visningskriterier.Uforetrygd])(visningskriterier) && (
+            <Alert variant="info" role="alert" className={'info-alert'}>
+              <Heading size="small" level="2">
+                Informasjon om kommende utbetalinger
+              </Heading>
+              <BodyLong size="medium">
+                Du finner informasjon om utbetalinger i mai og juni og informasjon om justering av grunnbeløpet{' '}
+                <Link href="/uforetrygd/selvbetjening/kommende-utbetalinger">her</Link>.
+              </BodyLong>
+            </Alert>
+          )}
 
           <ForsideBehandlingKort
             behandling={
