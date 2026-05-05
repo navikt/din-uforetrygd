@@ -1,4 +1,4 @@
-import { Alert, Heading, VStack } from '@navikt/ds-react'
+import { Alert, BodyLong, Heading, Link, VStack } from '@navikt/ds-react'
 import { initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
@@ -45,6 +45,16 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               Din uføretrygd
             </Heading>
           </VStack>
+
+          <Alert variant="info" role="alert" className={'info-alert'}>
+            <Heading size="small" level="2">
+              Informasjon om kommende utbetalinger
+            </Heading>
+            <BodyLong size="medium">
+              Du finner informasjon om utbetalinger i mai og juni og informasjon om justering av grunnbeløpet{' '}
+              <Link href="/uforetrygd/selvbetjening/kommende-utbetalinger">her</Link>.
+            </BodyLong>
+          </Alert>
 
           <ForsideBehandlingKort
             behandling={
