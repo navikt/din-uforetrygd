@@ -1,7 +1,7 @@
+import { stengForReguleringMiddleware } from '@navikt/steng-for-regulering/express'
 import express from 'express'
 import next from 'next'
 import { initialize } from 'unleash-client'
-import { stengForReguleringMiddleware } from '@navikt/steng-for-regulering/express'
 
 const isDev = process.env.NODE_ENV !== 'production'
 const PORT = process.env.PORT || 3000
@@ -15,7 +15,7 @@ const unleashEnv = process.env.UNLEASH_SERVER_API_ENV
 
 const unleash = initialize({
   disableAutoStart: !(unleashToken && unleashUrl),
-  url: `${unleashUrl}/api`,
+  url: unleashUrl,
   appName: 'din-uforetrygd-frontend',
   environment: unleashEnv,
   customHeaders: {
