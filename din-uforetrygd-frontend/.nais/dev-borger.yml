@@ -121,6 +121,8 @@ spec:
       value: https://www.nav.no/regelendring-uforetrygd
     - name: LINK_DOKUMENTOVERSIKT
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
+    - name: LINK_REPRESENTASJON_TILLEGGSDATA
+      value: https://borger.ansatt.dev.nav.no/representasjon-tilleggsdata
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: dev-gcp:ufore:din-uforetrygd-backend
     - name: REPRESENTASJON_BANNER

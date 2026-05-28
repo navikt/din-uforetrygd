@@ -25,6 +25,7 @@ export const mockData = {
     },
     innloggingstype: 'LEVEL3',
     harGammelFullmaktmottaker: false,
+    verge: true,
     journalposter: [
       {
         id: '453972899',

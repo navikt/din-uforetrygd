@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import no.nav.dinuforetrygd.fullmakt.FullmaktClient
 import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
+import no.nav.dinuforetrygd.fullmakt.HarRepresentasjonsforhold
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
@@ -58,6 +59,8 @@ class UforetrygdServiceTest {
         every { SecurityContextUtil.isFullmakt() } returns false
         coEvery { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
         coEvery { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
+        coEvery { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
+
     }
 
     @Test

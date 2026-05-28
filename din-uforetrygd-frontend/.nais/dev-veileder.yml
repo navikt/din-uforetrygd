@@ -125,6 +125,8 @@ spec:
       value: https://www.nav.no/regelendring-uforetrygd
     - name: LINK_DOKUMENTOVERSIKT
       value: https://www.ansatt.dev.nav.no/dokumentarkiv
+    - name: LINK_REPRESENTASJON_TILLEGGSDATA
+      value: https://veileder.ansatt.dev.nav.no/representasjon-tilleggsdata?pid=PID
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: api://dev-gcp.ufore.din-uforetrygd-backend/.default
     - name: UNLEASH_SERVER_API_URL

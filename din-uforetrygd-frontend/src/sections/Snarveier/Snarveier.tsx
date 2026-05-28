@@ -4,6 +4,7 @@ import {
   EnvelopeClosedIcon,
   FolderFileIcon,
   ParagraphIcon,
+  NotePencilIcon,
   PersonTallShortIcon,
   PlusMinusSlashIcon,
   WalletIcon,
@@ -13,7 +14,7 @@ import type React from 'react'
 import type { components } from '@/api/api'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
-import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
@@ -85,6 +86,15 @@ const getLinks = async (
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
     showFullmaktWarning: false,
+    visInnloggingsModal: false,
+  },
+  {
+    href: await getUrl({ urlFromEnv: 'LINK_REPRESENTASJON_TILLEGGSDATA', pid: pid }),
+    title: 'Administrer vergeforhold',
+    description: 'Spesifiser brevadresse for vergemål ',
+    icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    showFor: matchAll([Visningskriterier.ErVerge]),
+    showFullmaktWarning: true,
     visInnloggingsModal: false,
   },
   {

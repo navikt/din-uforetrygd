@@ -12,7 +12,8 @@ data class UforetrygdResponse(
     val innloggingstype: Innloggingstype,
     val harGammelFullmaktmottaker: Boolean,
     val journalposter: List<Journalpost> = emptyList(),
-    val behandling: Behandling? = null
+    val behandling: Behandling? = null,
+    val isVerge: Boolean
 )
 
 data class DittUforevedtak(
