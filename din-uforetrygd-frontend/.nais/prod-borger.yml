@@ -118,7 +118,7 @@ spec:
     - name: REPRESENTASJON_BANNER
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
     - name: LINK_REPRESENTASJON_TILLEGGSDATA
-      value: TODO
+      value: https://www.nav.no/representasjon-tilleggsdata
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
     - name: NEXT_PUBLIC_FARO_URL
