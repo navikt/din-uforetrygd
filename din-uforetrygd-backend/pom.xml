@@ -19,7 +19,7 @@
         <kotlinx-coroutines.version>1.11.0</kotlinx-coroutines.version>
         <jackson-version>2.21.3</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <logback.version>1.5.32</logback.version>
+        <logback.version>1.5.33</logback.version>
         <logback-access.version>2.0.12</logback-access.version>
         <micrometer.version>1.16.5</micrometer.version>
         <!-- TODO: Fjern når spring-boot-starter-parent inkluderer Netty >= 4.2.13 (CVE-2026-42577, CVE-2026-42584, CVE-2026-42579, CVE-2026-42581) -->
