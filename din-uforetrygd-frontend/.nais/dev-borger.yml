@@ -109,8 +109,6 @@ spec:
       value: https://pensjon-selvbetjening-familieforhold-frontend-borger-q2.intern.dev.nav.no/pensjon/selvbetjening/familieforhold/?context=ut
     - name: LINK_FULLMAKTER
       value: https://www.intern.dev.nav.no/person/pdl-fullmakt-ui
-    - name: LINK_BPROF_FULLMAKTER
-      value: https://bytt-bruker-frontend-borger-q2.ansatt.dev.nav.no/pensjon/selvbetjening/bytt-bruker/pensjonfullmakt
     - name: LINK_ETTERSENDE
       value: https://www.ansatt.dev.nav.no/ettersende#uforetrygd
     - name: LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD

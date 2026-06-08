@@ -7,7 +7,7 @@ export const RepresentasjonBanner = () => {
     <div className={styles.representasjonBannerWrapper}>
       <representasjon-banner
         className={styles.representasjonBanner}
-        representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"
+        representasjonstyper="UFORETRYGD_LES, UFORETRYGD_SKIRV, VERGE_UFORETRYGD_LES, VERGE_UFORETRYGD_SKIRV"
         redirectTo={`${window.location.origin}/uforetrygd/selvbetjening`}
       ></representasjon-banner>
     </div>

@@ -24,7 +24,6 @@ export const mockData = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL3',
-    harGammelFullmaktmottaker: false,
     verge: true,
     journalposter: [
       {
@@ -213,7 +212,6 @@ export const mockData = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [
       {
         id: '45397299',
@@ -257,7 +255,6 @@ export const mockData = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
   'har-lopende': {
@@ -267,7 +264,6 @@ export const mockData = {
     hasIverksattVedtak: false,
     uforevedtak: null,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
   'sak-behandling': {
@@ -277,7 +273,6 @@ export const mockData = {
     hasIverksattVedtak: false,
     uforevedtak: null,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
   'ufore-behandling': {
@@ -301,7 +296,6 @@ export const mockData = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
   'ingen-uforesak': {
@@ -315,7 +309,6 @@ export const mockData = {
     kompensasjonsgrad: 65,
     nettoUtbetalingMnd: 20000,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
   'ufore-uten-datoer': {
@@ -339,7 +332,6 @@ export const mockData = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
   },
 }

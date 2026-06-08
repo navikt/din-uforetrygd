@@ -36,7 +36,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
         </Heading>
         <SnarveiPanel
           links={
-            await getLinks(pid, uforetrygdResponse.harGammelFullmaktmottaker!, featureVisRegelverksendringerUt2026)
+            await getLinks(pid, featureVisRegelverksendringerUt2026)
           }
           visningskriterier={visningskriterier}
           pid={pid}
@@ -49,7 +49,6 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
 
 const getLinks = async (
   pid: string | undefined,
-  bprofFullmakt: boolean,
   featureVisRegelverksendringerUt2026: boolean
 ) => [
   {
@@ -99,7 +98,7 @@ const getLinks = async (
   },
   {
     href: await getUrl({
-      urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER',
+      urlFromEnv: 'LINK_FULLMAKTER',
       pid: pid,
     }),
     title: 'Dine fullmakter',
