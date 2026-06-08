@@ -13,22 +13,24 @@ import org.mockito.Mockito.`when`
 import org.slf4j.MDC
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 
-class FullmaktClientTest : WebClientTest() {
+class RepresentasjonClientTest : WebClientTest() {
     val tokenService = Mockito.mock(TokenService::class.java)
-    lateinit var fullmaktClient: FullmaktClient
+    lateinit var representasjonClient: RepresentasjonClient
 
     @BeforeEach
     override fun setup() {
         super.setup()
-        fullmaktClient = FullmaktClient(
+        representasjonClient = RepresentasjonClient(
             baseUrl = baseUrl,
             webClient = WebClient.create(),
             scope = "",
             audience = "",
             tokenService = tokenService,
         )
-        `when`(tokenService.getEgressToken("", "", PID_FULLMEKTIG, AppId.PENSJON_FULLMAKT)).thenReturn("")
+        `when`(tokenService.getEgressToken("", "", PID_REPRESENTANT, AppId.PENSJON_REPRESENTASJON)).thenReturn("")
         MDC.put("x", "y")
     }
 
@@ -41,20 +43,22 @@ class FullmaktClientTest : WebClientTest() {
     fun `should return RepresentasjonsforholdValidity when 200 response from hasValidRepresentasjonsforhold`() {
         prepare(hasValidRepresentasjonsforholdResponse200())
         assertEquals(
-            RepresentasjonsforholdValidity(true, "Navn Navnesen", "fnr_kryptert", PID_FULLMAKTSGIVER),
-            fullmaktClient.hasValidRepresentasjonsforhold(PID_FULLMAKTSGIVER, PID_FULLMEKTIG)
+            RepresentasjonsforholdValidity(true, "Navn Navnesen", "fnr_kryptert", PID_REPRESENTERT),
+            representasjonClient.hasValidRepresentasjonsforhold(PID_REPRESENTERT, PID_REPRESENTANT)
         )
         val request = takeRequest()
+        val json = request.body.readUtf8()
 
+        val body: ValidRepresentasjonsforholdRequest =
+            jacksonObjectMapper().readValue(json)
+
+        assertEquals(PID_REPRESENTERT, body.representertPid)
+        assertEquals(PID_REPRESENTANT, body.representantPid)
         assertEquals(
-            "/representasjon/hasValidRepresentasjonsforhold?" +
-                    "validRepresentasjonstyper=PENSJON_FULLSTENDIG" +
-                    "&validRepresentasjonstyper=PENSJON_BEGRENSET" +
-                    "&validRepresentasjonstyper=UFORETRYGD_LES" +
-                    "&includeFullmaktsgiverNavn=false",
-            request.path
+            listOf("UFORETRYGD_LES", "UFORETRYGD_SKRIV", "VERGE_UFORETRYGD_LES", "VERGE_UFORETRYGD_SKRIV"),
+            body.validRepresentasjonstyper
         )
-        assertEquals(PID_FULLMAKTSGIVER, request.getHeader("fullmaktsgiverPid"))
+        assertEquals(false, body.includeRepresentertNavn)
     }
 
     private fun hasValidRepresentasjonsforholdResponse200(): MockResponse {
@@ -63,16 +67,16 @@ class FullmaktClientTest : WebClientTest() {
                 """
                     {
                         "hasValidRepresentasjonsforhold": true,
-                        "fullmaktsgiverNavn": "Navn Navnesen",
-                        "fullmaktsgiverFnrKryptert": "fnr_kryptert",
-                        "fullmaktsgiverFnr": $PID_FULLMAKTSGIVER
+                        "representertNavn": "Navn Navnesen",
+                        "representertPidKryptert": "fnr_kryptert",
+                        "representertPid": $PID_REPRESENTERT
                     }
                 """.trimIndent()
             )
     }
 
     companion object {
-        const val PID_FULLMEKTIG = "00000000001"
-        const val PID_FULLMAKTSGIVER = "10000000000"
+        const val PID_REPRESENTANT = "00000000001"
+        const val PID_REPRESENTERT = "10000000000"
     }
 }

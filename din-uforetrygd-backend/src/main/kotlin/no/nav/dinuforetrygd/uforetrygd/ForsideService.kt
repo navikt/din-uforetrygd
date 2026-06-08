@@ -4,8 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import no.nav.dinuforetrygd.fullmakt.FullmaktClient
-import no.nav.dinuforetrygd.fullmakt.FullmaktClient.Companion.UFORETRYGD_VERGE_TYPER
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient.Companion.VALID_VERGE_TYPER
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service
 class ForsideService(
     private val penService: PenService,
     private val tokenService: TokenService,
-    private val fullmaktClient: FullmaktClient,
+    private val representasjonClient: RepresentasjonClient,
     private val journalpostService: JournalpostService,
     private val inntektskomponentenService: InntektskomponentenService,
     private val penClient: PenClient
@@ -37,7 +37,6 @@ class ForsideService(
             if (uforeSak == null) return@withContext lagUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
-                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()),
                 isVerge = isUforetrygdVerge(pid))
 
 
@@ -62,13 +61,10 @@ class ForsideService(
 
             val isVergeDeferred = async { isUforetrygdVerge(pid) }
 
-            val harGammelFullmaktEllerVeilderDeferred = async { harGammelFullmaktEllerVeilder(pid, tokenService.getInnloggingstype()) }
-
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
             val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
             val forsideData = forsideDataDeferred.await()
             val journalposter = journalposterDeferred.await()
-            val harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilderDeferred.await()
             val isVerge = isVergeDeferred.await()
 
             var inntektFraSkatt = 0.0
@@ -88,7 +84,6 @@ class ForsideService(
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
                 journalposter = journalposter,
-                harGammelFullmaktEllerVeilder = harGammelFullmaktEllerVeilder,
                 isVerge = isVerge
             )
         }
@@ -119,14 +114,12 @@ class ForsideService(
         uforevedtak: DittUforevedtak? = null,
         behandling: Behandling? = null,
         journalposter: List<Journalpost> = emptyList(),
-        harGammelFullmaktEllerVeilder: Boolean,
         isVerge: Boolean
     ) = UforetrygdResponse(
         pid = pid,
         loggetInnSom = tokenService.determineLoggedInUser(),
         sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
-        harGammelFullmaktmottaker = harGammelFullmaktEllerVeilder,
         hasIverksattVedtak = hasIverksattVedtak,
         uforevedtak = uforevedtak,
         journalposter = journalposter,
@@ -151,12 +144,6 @@ class ForsideService(
             hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
 
-    suspend private fun harGammelFullmaktEllerVeilder(pid: String, innloggingstype: Innloggingstype): Boolean =
-        if (SecurityContextUtil.isFullmakt() || innloggingstype == Innloggingstype.NAV || innloggingstype == Innloggingstype.SYSTEM)
-            false // Kaller ikke fullmakt dersom fullmaktscenario eller saksbehandler
-        else
-            fullmaktClient.harBprofFullmaktmottager(pid)?.value ?: false
-
     suspend private fun isUforetrygdVerge(pid: String): Boolean =
-        !SecurityContextUtil.isFullmakt() && fullmaktClient.harRepresentasjonsforhold(pid, UFORETRYGD_VERGE_TYPER)?.value ?: false
+        !SecurityContextUtil.isFullmakt() && representasjonClient.harRepresentasjonsforhold(pid, VALID_VERGE_TYPER)?.value ?: false
 }

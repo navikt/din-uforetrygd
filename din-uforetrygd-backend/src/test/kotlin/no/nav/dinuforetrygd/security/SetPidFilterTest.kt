@@ -244,7 +244,7 @@ class SetPidFilterTest{
         `when`(request.cookies).thenReturn(arrayOf(Cookie("nav-obo", pidFullmaktsgiver)))
         `when`(tokenService.determineTokenType()).thenReturn(TokenService.TokenType.TOKEN_X)
         `when`(tokenService.determineRequestingPid()).thenReturn(pidFullmektig)
-        `when`(authorizationService.checkBorgerTilgang(any())).thenThrow(NoFullmaktPresentException())
+        `when`(authorizationService.checkBorgerTilgang(any())).thenThrow(NoRepresentasjonPresentException())
 
         filter.doFilter(request, response, filterChain)
 

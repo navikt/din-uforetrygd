@@ -4,8 +4,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.dinuforetrygd.fullmakt.FullmaktClient
-import no.nav.dinuforetrygd.fullmakt.HarBprofFullmaktmottakereResponse
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
 import no.nav.dinuforetrygd.fullmakt.HarRepresentasjonsforhold
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
@@ -30,14 +29,14 @@ import java.time.LocalDate
 class UforetrygdServiceTest {
     val penService = mockk<PenService>()
     val tokenService = mockk<TokenService>()
-    val fullmaktClient = mockk<FullmaktClient>()
+    val representasjonClient = mockk<RepresentasjonClient>()
     val journalpostService = mockk<JournalpostService>()
     val inntektskomponentenService = mockk<InntektskomponentenService>()
     val penClient = mockk<PenClient>()
     val uforetrygdService = ForsideService(
         penService = penService,
         tokenService = tokenService,
-        fullmaktClient = fullmaktClient,
+        representasjonClient = representasjonClient,
         journalpostService = journalpostService,
         inntektskomponentenService = inntektskomponentenService,
         penClient = penClient,
@@ -57,9 +56,8 @@ class UforetrygdServiceTest {
         every { tokenService.getInnloggingstype() } returns Innloggingstype.LEVEL4
         every { tokenService.determineLoggedInUser() } returns ""
         every { SecurityContextUtil.isFullmakt() } returns false
-        coEvery { fullmaktClient.harBprofFullmaktmottager(any()) } returns HarBprofFullmaktmottakereResponse(false)
         coEvery { penClient.hentForsideData(any(), any()) } returns HentForsideDataResponse(null, emptyList())
-        coEvery { fullmaktClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
+        coEvery { representasjonClient.harRepresentasjonsforhold(any(), any())} returns HarRepresentasjonsforhold(false)
 
     }
 
