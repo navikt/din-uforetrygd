@@ -15,7 +15,7 @@ const unleashEnv = process.env.UNLEASH_SERVER_API_ENV
 
 const unleash = initialize({
   disableAutoStart: !(unleashToken && unleashUrl),
-  url: unleashUrl,
+  url: unleashUrl ?? '',
   appName: 'din-uforetrygd-frontend',
   environment: unleashEnv,
   customHeaders: {
