@@ -62,7 +62,6 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "^3.8.3",
     "typescript": "^6",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.8"
   },
   "overrides": {
