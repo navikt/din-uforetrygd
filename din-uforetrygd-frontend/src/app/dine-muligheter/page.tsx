@@ -1,17 +1,15 @@
-import { redirect } from "next/navigation";
-import DineMuligheter from "@/sections/DineMuligheter/DineMuligheter";
-import { isEnabled } from "@/utils/unleash";
+import { redirect } from 'next/navigation'
+import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
+import { isEnabled } from '@/utils/unleash'
 
 const DineMuligheterPage = async () => {
-  const dineMuligheterIsEnabled = await isEnabled(
-    "din-uforetrygd.dine-muligheter",
-  );
+  const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
 
   if (dineMuligheterIsEnabled) {
-    return <DineMuligheter />;
+    return <DineMuligheter />
   }
   // TODO: Vise noe informasjon til brukere som ikke har fått varsel?
-  redirect("/");
-};
+  redirect('/')
+}
 
-export default DineMuligheterPage;
+export default DineMuligheterPage
