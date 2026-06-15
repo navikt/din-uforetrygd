@@ -3,6 +3,7 @@
 import { FolderFileIcon } from '@navikt/aksel-icons'
 import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
+import { ACCORDION_APNET_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import type React from 'react'
 import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
@@ -44,7 +45,7 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
             <ExpansionCard.Title
               size="small"
               className={styles.dokumenterCardTitle}
-              onClick={() => umami('accordion åpnet', { tekst: 'Dokumenter knyttet til saken din' })}
+              onClick={() => umami(ACCORDION_APNET_EVENT, { tittel: 'Dokumenter knyttet til saken din' })}
             >
               Dokumenter knyttet til saken din
             </ExpansionCard.Title>

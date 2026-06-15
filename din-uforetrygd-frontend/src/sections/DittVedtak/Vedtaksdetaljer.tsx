@@ -1,6 +1,7 @@
 'use client'
 
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react'
+import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
 import type { components } from '@/api/api'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
@@ -114,7 +115,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                     <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
                     <HelpText
                       title="Hvor kommer registrert forventet inntekt fra?"
-                      onClick={() => umami('hjelpetekst åpnet', { tekst: 'Registrert forventet inntekt' })}
+                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Registrert forventet inntekt' })}
                     >
                       Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra
                       opplysninger vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og
@@ -136,7 +137,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                     <BodyShort>Inntektsgrense</BodyShort>
                     <HelpText
                       title="Hva er inntektsgrense?"
-                      onClick={() => umami('hjelpetekst åpnet', { tekst: 'Inntektsgrense' })}
+                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Inntektsgrense' })}
                     >
                       Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
                       &nbsp;kroner. Bruk{' '}

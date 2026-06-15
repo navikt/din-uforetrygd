@@ -2,6 +2,7 @@
 
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons'
 import { Box, VStack } from '@navikt/ds-react'
+import { ACCORDION_APNET_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import { useState } from 'react'
 import { umami } from '@/utils/umami'
 import styles from './readmoretile.module.css'
@@ -18,7 +19,7 @@ export const ReadMoreTile: React.FC<IReadMoreTileProps> = (props) => {
       setIsOpen(false)
     } else {
       setIsOpen(true)
-      umami('accordion åpnet', { tekst: 'Dokument' })
+      umami(ACCORDION_APNET_EVENT, { tittel: 'Dokument' })
     }
   }
 
