@@ -6,7 +6,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "outDir": "dist"
+    "rootDir": "server",
+    "outDir": "dist",
+    "types": ["node"]
   },
   "include": ["server/**/*.ts"],
   "exclude": ["node_modules"]

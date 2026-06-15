@@ -46,7 +46,7 @@ jobs:
         run: cd din-uforetrygd-frontend && npm run check
 
       - name: Bygg med node
-        run: cd din-uforetrygd-frontend && npm ci && npm run build
+        run: cd din-uforetrygd-frontend && npm run build
         env:
           FARO_TELEMETRY_URL: 'https://telemetry.ekstern.dev.nav.no/collect'
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
