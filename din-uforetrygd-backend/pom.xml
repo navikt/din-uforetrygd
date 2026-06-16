@@ -28,7 +28,7 @@
         <tomcat.version>11.0.22</tomcat.version>
         <!-- Test -->
         <mockk.version>1.14.11</mockk.version>
-        <mockwebserver.version>5.3.2</mockwebserver.version>
+        <mockwebserver.version>5.4.0</mockwebserver.version>
     </properties>
     <dependencies>
         <dependency>
