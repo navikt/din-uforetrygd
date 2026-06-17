@@ -6,7 +6,7 @@ export const getUforeVarslerOboToken = async () => {
   return getOboToken(getEnv('UFORE_VARSLER_SCOPE')!)
 }
 
-const getDinUføretrygdBackendOboToken = async () => {
+export const getDinUforetrygdBackendOboToken = async () => {
   return getOboToken(getEnv('DIN_UFORETRYGD_BACKEND_SCOPE')!)
 }
 
@@ -32,4 +32,3 @@ const getOboToken = async (scope: string): Promise<string> => {
   return obo.token
 }
 
-export default getDinUføretrygdBackendOboToken

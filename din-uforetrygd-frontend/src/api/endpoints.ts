@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noConsole: TODO Vi bruker console for logging, bør fikse sånn at vi kan bruke logger */
 import createClient from 'openapi-fetch'
 import type { components, paths } from '@/api/api'
-import getDinUføretrygdBackendOboToken, { getUforeVarslerOboToken } from '@/api/getOboToken'
+import { getDinUforetrygdBackendOboToken, getUforeVarslerOboToken } from '@/api/getOboToken'
 import fetchLogger from '@/utils/fetchLogger'
 import { getFullmaktCookie } from './getFullmaktCookie'
 
@@ -20,7 +20,7 @@ type BackendError = {
 }
 
 export const initate = async (pid: string | undefined) => {
-  const oboToken = await getDinUføretrygdBackendOboToken().catch((error) => {
+  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
   })
 
@@ -51,7 +51,7 @@ export const initate = async (pid: string | undefined) => {
 }
 
 export const hentSaksoversikt = async (saksid: number, pid: string | undefined) => {
-  const oboToken = await getDinUføretrygdBackendOboToken().catch((error) => {
+  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
     return
   })
