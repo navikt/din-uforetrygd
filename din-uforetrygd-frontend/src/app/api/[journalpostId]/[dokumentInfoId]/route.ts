@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import type { NextRequest } from 'next/server'
-import getOboToken from '@/api/getOboToken'
+import getDinUføretrygdBackendOboToken from '@/api/getOboToken'
 
 export async function GET(
   request: NextRequest,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   const baseUrl = process.env.DIN_UFORETRYGD_BACKEND
   const { journalpostId, dokumentInfoId } = await params
-  const token = await getOboToken()
+  const token = await getDinUføretrygdBackendOboToken()
   const variantformat = request.nextUrl.searchParams.get('variantformat')
   const pid = request.nextUrl.searchParams.get('pid')
   const requestHeaders: Record<string, string> = { Authorization: `Bearer ${token}` }

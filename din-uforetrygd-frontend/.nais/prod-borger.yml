@@ -69,6 +69,8 @@ spec:
       value: prod
     - name: DIN_UFORETRYGD_BACKEND
       value: http://din-uforetrygd-backend
+    - name: UFORE_VARSLER
+      value: http://ufore-varsler
     - name: LINK_SOKNAD_GRADERT_UFORE
       value: https://www.nav.no/fyllut/nav120901
     - name: LINK_SOKNAD_UFORE
@@ -111,6 +113,8 @@ spec:
       value: https://www.nav.no/no/nav-og-samfunn/kontakt-nav/relatert-informasjon/finn-ditt-nav-kontor
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: prod-gcp:ufore:din-uforetrygd-backend
+    - name: UFORE_VARSLER_SCOPE
+      value: prod-gcp:ufore:ufore-varsler
     - name: LINK_REGELVERKSENDRINGER
       value: https://www.nav.no/regelendring-uforetrygd
     - name: LINK_DOKUMENTOVERSIKT

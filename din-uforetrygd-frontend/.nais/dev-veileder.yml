@@ -81,6 +81,8 @@ spec:
       value: dev
     - name: DIN_UFORETRYGD_BACKEND
       value: http://din-uforetrygd-backend
+    - name: UFORE_VARSLER
+      value: http://ufore-varsler
     - name: LINK_SOKNAD_GRADERT_UFORE
       value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120901?sub=paper
     - name: LINK_SOKNAD_UFORE
@@ -129,6 +131,8 @@ spec:
       value: https://veileder.ansatt.dev.nav.no/representasjon-tilleggsdata?pid=PID
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: api://dev-gcp.ufore.din-uforetrygd-backend/.default
+    - name: UFORE_VARSLER_SCOPE
+      value: api://dev-gcp.ufore.ufore-varsler/.default
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
     - name: NEXT_PUBLIC_FARO_URL
