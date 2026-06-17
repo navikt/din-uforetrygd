@@ -26,7 +26,8 @@ const DineMuligheter = () => {
           </Heading>
         </HStack>
         <BodyShort weight="semibold">
-          I tillegg til uføretrygden kan du jobbe, studere eller gjøre andre aktiviteter hvis du har mulighet.
+          I tillegg til uføretrygden kan du jobbe, studere eller gjøre andre aktiviteter hvis du har mulighet. Du
+          beholder retten til uføretrygd.
         </BodyShort>
         <VStack gap={'space-12'}>
           <ExpansionCard aria-label="Vi kan hjelpe deg">
