@@ -77,6 +77,8 @@ spec:
       value: dev
     - name: DIN_UFORETRYGD_BACKEND
       value: http://din-uforetrygd-backend
+    - name: UFORE_VARSLER
+      value: http://ufore-varsler
     - name: LINK_SOKNAD_GRADERT_UFORE
       value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut/nav120901
     - name: LINK_SOKNAD_UFORE
@@ -125,6 +127,8 @@ spec:
       value: https://borger.ansatt.dev.nav.no/representasjon-tilleggsdata
     - name: DIN_UFORETRYGD_BACKEND_SCOPE
       value: dev-gcp:ufore:din-uforetrygd-backend
+    - name: UFORE_VARSLER_SCOPE
+      value: dev-gcp:ufore:ufore-varsler
     - name: REPRESENTASJON_BANNER
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
     - name: UNLEASH_SERVER_API_URL

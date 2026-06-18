@@ -2,7 +2,15 @@ import { getToken, requestOboToken, validateToken } from '@navikt/oasis'
 import { headers } from 'next/headers'
 import getEnv from '@/utils/env'
 
-const getOboToken = async (): Promise<string> => {
+export const getUforeVarslerOboToken = async () => {
+  return getOboToken(getEnv('UFORE_VARSLER_SCOPE')!)
+}
+
+export const getDinUforetrygdBackendOboToken = async () => {
+  return getOboToken(getEnv('DIN_UFORETRYGD_BACKEND_SCOPE')!)
+}
+
+const getOboToken = async (scope: string): Promise<string> => {
   if (process.env.NODE_ENV !== 'production') {
     return process.env.ACCESS_TOKEN!
   }
@@ -15,7 +23,7 @@ const getOboToken = async (): Promise<string> => {
   if (!validation.ok) {
     throw validation.error
   }
-  const obo = await requestOboToken(token, getEnv('DIN_UFORETRYGD_BACKEND_SCOPE')!)
+  const obo = await requestOboToken(token, scope)
 
   if (!obo.ok) {
     throw obo.error
@@ -24,4 +32,3 @@ const getOboToken = async (): Promise<string> => {
   return obo.token
 }
 
-export default getOboToken
