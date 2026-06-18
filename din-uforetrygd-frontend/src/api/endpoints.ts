@@ -90,7 +90,9 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
     Authorization: `Bearer ${oboToken}`,
   }
 
-  const response = await fetch(`${process.env.UFORE_VARSLER}/api/varsler/status`, { headers })
+  const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
+
+  const response = await fetch(`${url}/api/varsler/status`, { headers })
   if (!response.ok) return false
 
   const json = await response.json()

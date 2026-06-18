@@ -7,7 +7,6 @@
     "local": "concurrently --kill-others-on-fail \"node server/server.ts \"",
     "dev": "concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts\" \"next dev\"",
     "dev:avsluttet": "MOCK_SCENARIO=avsluttet concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts avsluttet\" \"next dev --port 3001\"",
-    "dev:forbidden": "MOCK_SCENARIO=forbidden concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts forbidden\" \"next dev --port 3002\"",
     "dev:gradert": "MOCK_SCENARIO=gradert concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts gradert\" \"next dev --port 3003\"",
     "dev:lopende": "MOCK_SCENARIO=har-lopende concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts har-lopende\" \"next dev --port 3004\"",
     "dev:sak-behandling": "MOCK_SCENARIO=sak-behandling concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts sak-behandling\" \"next dev --port 3005\"",

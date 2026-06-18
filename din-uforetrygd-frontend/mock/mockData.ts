@@ -1,9 +1,10 @@
-export const mockData = {
+import type { components } from '../src/api/api'
+
+export const mockData: Record<string, components['schemas']['UforetrygdResponse']> = {
   default: {
     pid: '81549300',
     loggetInnSom: '81549300',
     sak: {
-      type: 'UFORETRYGD',
       status: 'LOPENDE',
       sakId: 519023581092,
     },
@@ -188,7 +189,7 @@ export const mockData = {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'INNVILGET',
       beregning: { nettoUforetrygdPerManed: 123456 },
-      dato: '2025-12-14',
+      mottattDato: '2025-12-14',
       avslattForutgaendeMedlemskap: true,
     },
   },
@@ -214,6 +215,7 @@ export const mockData = {
     },
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
+    verge: false,
     journalposter: [
       {
         id: '45397299',
@@ -228,13 +230,6 @@ export const mockData = {
         ],
       },
     ],
-  },
-  forbidden: {
-    timestamp: '2024-09-09T13:26:24.519032',
-    status: 403,
-    error: 'FORBIDDEN',
-    message: 'LOGIN_LEVEL_TOO_LOW',
-    path: '/api/initiate',
   },
   gradert: {
     pid: '81549300',
@@ -258,6 +253,7 @@ export const mockData = {
     },
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
+    verge: false,
     journalposter: [],
   },
   'har-lopende': {
@@ -265,20 +261,22 @@ export const mockData = {
     loggetInnSom: '81549300',
     sak: { status: 'LOPENDE' },
     hasIverksattVedtak: false,
-    uforevedtak: null,
+    uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     journalposter: [],
+    verge: false,
   },
   'sak-behandling': {
     pid: '81549300',
     loggetInnSom: '81549300',
     sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: false,
-    uforevedtak: null,
+    uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     journalposter: [],
+    verge: false,
   },
   'ufore-behandling': {
     pid: '81549300',
@@ -302,21 +300,19 @@ export const mockData = {
     },
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
+    verge: false,
     journalposter: [],
   },
   'ingen-uforesak': {
     pid: '81549300',
     loggetInnSom: '81549300',
-    sak: null,
+    sak: undefined,
     hasIverksattVedtak: false,
-    uforevedtak: null,
-    inntektstak: 200000,
-    inntektFraSkatt: 150000,
-    kompensasjonsgrad: 65,
-    nettoUtbetalingMnd: 20000,
+    uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     journalposter: [],
+    verge: false,
   },
   'ufore-uten-datoer': {
     pid: '81549300',
@@ -341,5 +337,6 @@ export const mockData = {
     innloggingstype: 'LEVEL4',
     harGammelFullmaktmottaker: false,
     journalposter: [],
+    verge: false,
   },
 }
