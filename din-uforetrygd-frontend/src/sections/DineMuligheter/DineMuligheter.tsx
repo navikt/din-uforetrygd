@@ -139,7 +139,7 @@ const DineMuligheter = () => {
               </List>
             </ExpansionCard.Content>
           </ExpansionCard>
-          <Button variant={'primary'} as="a" href="/finn-ut-mer">
+          <Button variant={'primary'} as="a" href="dine-muligheter/finn-ut-mer">
             Finn ut mer
           </Button>
         </VStack>

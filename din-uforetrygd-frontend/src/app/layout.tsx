@@ -22,6 +22,8 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     env: decoratorEnv,
     params: {
       context: 'privatperson',
+      chatbot: true,
+      chatbotVisible: false,
     },
   })
 
