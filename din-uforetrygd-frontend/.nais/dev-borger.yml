@@ -64,6 +64,8 @@ spec:
           namespace: personbruker
         - application: din-uforetrygd-backend
           namespace: ufore
+        - application: ufore-varsler
+          namespace: ufore
       external:
         - host: ufore-unleash-api.nav.cloud.nais.io
   filesFrom:
