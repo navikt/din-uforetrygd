@@ -10,11 +10,6 @@ const client = createClient<paths>({
   fetch: fetchLogger,
 })
 
-const uforeVarslerClient = createClient<paths>({
-  baseUrl: process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080',
-  fetch: fetchLogger,
-})
-
 type BackendError = {
   message: string
 }
