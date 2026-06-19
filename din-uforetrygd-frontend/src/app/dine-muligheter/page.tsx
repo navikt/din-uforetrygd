@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/endpoints'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
 import { isEnabled } from '@/utils/unleash'
@@ -10,8 +10,14 @@ const DineMuligheterPage = async () => {
   if (dineMuligheterIsEnabled && harMottattVarsel) {
     return <DineMuligheter />
   }
-  // TODO: Vise noe informasjon til brukere som ikke har fått varsel?
-  redirect('/')
+  return (
+    <VStack width="100%" paddingBlock="space-48">
+      <Alert variant="info">
+        Hei! Så fint at du er interessert i hva du kan gjøre ved siden av uføretrygden. Du har dessverre ikke tilgang
+        til dette området, men du kan lese mer på nav.no om hvilke muligheter du har.
+      </Alert>
+    </VStack>
+  )
 }
 
 export default DineMuligheterPage

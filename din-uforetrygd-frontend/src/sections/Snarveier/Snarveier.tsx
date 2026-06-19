@@ -1,4 +1,5 @@
 import {
+  BriefcaseIcon,
   BulletListIcon,
   CardIcon,
   EnvelopeClosedIcon,
@@ -14,7 +15,7 @@ import type React from 'react'
 import type { components } from '@/api/api'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
-import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { matchAll, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
@@ -23,9 +24,15 @@ interface SnarveierProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
   uforetrygdResponse: components['schemas']['UforetrygdResponse']
+  skalViseDineMuligheter: boolean
 }
 
-export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, pid, uforetrygdResponse }) => {
+export const Snarveier: React.FC<SnarveierProps> = async ({
+  visningskriterier,
+  pid,
+  uforetrygdResponse,
+  skalViseDineMuligheter,
+}) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
 
   return (
@@ -36,7 +43,12 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
         </Heading>
         <SnarveiPanel
           links={
-            await getLinks(pid, uforetrygdResponse.harGammelFullmaktmottaker!, featureVisRegelverksendringerUt2026)
+            await getLinks(
+              pid,
+              uforetrygdResponse.harGammelFullmaktmottaker!,
+              featureVisRegelverksendringerUt2026,
+              skalViseDineMuligheter
+            )
           }
           visningskriterier={visningskriterier}
           pid={pid}
@@ -50,14 +62,25 @@ export const Snarveier: React.FC<SnarveierProps> = async ({ visningskriterier, p
 const getLinks = async (
   pid: string | undefined,
   bprofFullmakt: boolean,
-  featureVisRegelverksendringerUt2026: boolean
+  featureVisRegelverksendringerUt2026: boolean,
+  skalViseDineMuligheter: boolean
 ) => [
+  {
+    href: 'selvbetjening/dine-muligheter',
+    title: 'Dine muligheter',
+    description:
+      'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
+    icon: <BriefcaseIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    showFor: skalViseDineMuligheter,
+    showFullmaktWarning: false,
+    visInnloggingsModal: false,
+  },
   {
     href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: matchNone([Visningskriterier.Uforetrygd]),
+    showFor: matchSome([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
   },
