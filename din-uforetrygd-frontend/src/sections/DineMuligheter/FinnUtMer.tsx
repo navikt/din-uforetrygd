@@ -10,6 +10,7 @@ import {
 } from '@navikt/aksel-icons'
 import { BodyShort, Button, Heading, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
 import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
+import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import getEnv from '@/utils/env'
 
@@ -75,7 +76,7 @@ const FinnUtMer = () => {
                   Du møter først chatbot Frida som har døgnåpent. Fra kl. 9 til 15 på hverdager kan du be Frida om å få
                   chatte med en veileder.
                 </BodyShort>
-                <Button variant={'secondary'} as="a" href="/chat">
+                <Button variant={'secondary'} onClick={() => openChatbot()}>
                   Start chatten
                 </Button>
               </VStack>
