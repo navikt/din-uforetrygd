@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
+import { hentHarMottattVarsel } from '@/api/endpoints'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
 import { isEnabled } from '@/utils/unleash'
-import { hentHarMottattVarsel } from '@/api/endpoints'
 
 const DineMuligheterPage = async () => {
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
