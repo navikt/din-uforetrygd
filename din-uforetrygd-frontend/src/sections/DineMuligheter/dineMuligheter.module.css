@@ -1,0 +1,15 @@
+.rosaContainer {
+  background: var(--ax-bg-meta-purple-soft);
+  max-width: unset;
+  width: 100vw;
+  justify-content: center;
+  display: flex;
+  gap: var(--ax-space-24);
+  padding: var(--ax-space-24) 0;
+}
+
+.rosaContainerContent {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: var(--ax-space-12);
+}

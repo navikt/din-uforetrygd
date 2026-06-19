@@ -31,4 +31,3 @@ const getOboToken = async (scope: string): Promise<string> => {
 
   return obo.token
 }
-
