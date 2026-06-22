@@ -1,5 +1,5 @@
 import { Alert, BodyLong, Heading, Link, VStack } from '@navikt/ds-react'
-import { initate } from '@/api/endpoints'
+import { hentHarMottattVarsel, initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
 import { type Innloggingstype, Visningskriterier } from '@/const'
@@ -20,6 +20,7 @@ import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { isEnabled } from '@/utils/unleash'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -29,6 +30,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
+  const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
+  const harMottattVarsel = await hentHarMottattVarsel()
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -84,7 +87,12 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             pid={params.pid}
             journalposter={uforetrygdResponse.journalposter}
           ></InterneLenker>
-          <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
+          <Snarveier
+            visningskriterier={visningskriterier}
+            pid={params.pid}
+            uforetrygdResponse={uforetrygdResponse}
+            skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
+          />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader
             visningskriterier={visningskriterier}

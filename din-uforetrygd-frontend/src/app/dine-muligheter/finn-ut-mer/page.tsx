@@ -1,17 +1,23 @@
-import { redirect } from 'next/navigation'
+import { Alert, VStack } from '@navikt/ds-react'
+import { hentHarMottattVarsel } from '@/api/endpoints'
 import FinnUtMer from '@/sections/DineMuligheter/FinnUtMer'
 import { isEnabled } from '@/utils/unleash'
 
 const DineMuligheterFinnUtMerPage = async () => {
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
+  const harMottattVarsel = await hentHarMottattVarsel()
 
-  // TODO: Sjekk om bruker har fått varsel
-
-  if (dineMuligheterIsEnabled) {
+  if (dineMuligheterIsEnabled && harMottattVarsel) {
     return <FinnUtMer />
   }
-  // TODO: Vise noe informasjon til brukere som ikke har fått varsel?
-  redirect('/')
+  return (
+    <VStack width="100%" paddingBlock="space-48">
+      <Alert variant="info">
+        Hei! Så fint at du er interessert i hva du kan gjøre ved siden av uføretrygden. Du har dessverre ikke tilgang
+        til dette området, men du kan lese mer på nav.no om hvilke muligheter du har.
+      </Alert>
+    </VStack>
+  )
 }
 
 export default DineMuligheterFinnUtMerPage
