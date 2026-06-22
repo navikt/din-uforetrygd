@@ -85,9 +85,7 @@ const DineMuligheter = () => {
             </ExpansionCardMedIkon>
             <ExpansionCardMedIkon
               ikon={<EarthFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-              tittel="
-                  Du kan ordne ting selv
-            "
+              tittel="Du kan ordne ting selv"
             >
               <VStack gap="space-12">
                 <BodyShort>
@@ -195,7 +193,7 @@ const DineMuligheter = () => {
             </BodyShort>
           </VStack>
           <VStack gap="space-12" justify="center">
-            <Button as="a" href="/finn-ut-mer">
+            <Button as="a" href="dine-muligheter/finn-ut-mer">
               Snakk med oss
             </Button>
           </VStack>

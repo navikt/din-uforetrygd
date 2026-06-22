@@ -8,7 +8,7 @@ import {
   MobileFillIcon,
   PersonSuitFillIcon,
 } from '@navikt/aksel-icons'
-import { BodyShort, Button, Heading, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
+import { BodyShort, Button, Heading, HGrid, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
 import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
@@ -27,11 +27,10 @@ const FinnUtMer = () => {
             Dine muligheter
           </Heading>
         </HStack>
-        {/*<BodyShort weight="semibold">*/}
-        {/*  I tillegg til uføretrygden kan du jobbe, studere eller gjøre andre*/}
-        {/*  aktiviteter hvis du har mulighet.*/}
-        {/*</BodyShort>*/}
-        <VStack gap={'space-12'}>
+        <Heading size="medium" level="3">
+          Kontakt oss for en uforpliktende prat om dine muligheter
+        </Heading>
+        <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
             ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Få oppfølging på lokalt Nav-kontor"
@@ -45,14 +44,18 @@ const FinnUtMer = () => {
                 <List.Item>Sammen med veileder lager du en aktivitetsplan</List.Item>
                 <List.Item>Du kan når som helst avslutte oppfølgingen</List.Item>
               </List>
-              <Button variant={'secondary'} as="a" href="/" arbeidsrettet-oppfolging>
+              {/* TODO: verifiser lenke og finn prod-lenke */}
+              <Button
+                variant={'secondary'}
+                as="a"
+                href="https://start-arbeidsoppfolging.ekstern.dev.nav.no"
+                arbeidsrettet-oppfolging
+              >
                 Les om arbeidsrettet oppfølging
               </Button>
             </VStack>
           </ExpansionCardMedIkon>
-          <Heading size="medium" level="3">
-            Kontakt oss for en uforpliktende prat om dine muligheter
-          </Heading>
+
           <ExpansionCardMedIkon
             ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Chat med oss"
@@ -90,7 +93,7 @@ const FinnUtMer = () => {
               </Button>
             </HStack>
           </ExpansionCardMedIkon>
-        </VStack>
+        </HGrid>
         <Button
           icon={<ArrowLeftIcon />}
           variant={'secondary'}
