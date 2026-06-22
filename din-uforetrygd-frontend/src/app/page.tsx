@@ -30,7 +30,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
-  const harMottattVarsel = await hentHarMottattVarsel()
+  const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)

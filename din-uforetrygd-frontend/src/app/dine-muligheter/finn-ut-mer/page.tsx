@@ -5,10 +5,13 @@ import { isEnabled } from '@/utils/unleash'
 
 const DineMuligheterFinnUtMerPage = async () => {
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
-  const harMottattVarsel = await hentHarMottattVarsel()
 
-  if (dineMuligheterIsEnabled && harMottattVarsel) {
-    return <FinnUtMer />
+  if (dineMuligheterIsEnabled) {
+    const harMottattVarsel = await hentHarMottattVarsel()
+
+    if (harMottattVarsel) {
+      return <FinnUtMer />
+    }
   }
   return (
     <VStack width="100%" paddingBlock="space-48">
