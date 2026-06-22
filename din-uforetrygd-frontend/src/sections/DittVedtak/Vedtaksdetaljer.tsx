@@ -14,9 +14,16 @@ interface VedtaksdetaljerProps {
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number
+  regelverksendringerJuli2026: boolean
 }
 
-export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger, arstall }: VedtaksdetaljerProps) {
+export function Vedtaksdetaljer({
+  dittUforevedtak,
+  sakId,
+  linkInntektsplanlegger,
+  arstall,
+  regelverksendringerJuli2026,
+}: VedtaksdetaljerProps) {
   const uforegrad = dittUforevedtak.uforegrad
   const uforetidspunkt =
     dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
@@ -148,7 +155,10 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
-                <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
+                {/* TODO: spørsmålstegn */}
+                <Table.DataCell>
+                  {regelverksendringerJuli2026 ? <>Reduksjonsprosent</> : <>Kompensasjonsgrad</>}
+                </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                   {dittUforevedtak?.kompensasjonsgrad} prosent
                 </Table.DataCell>
