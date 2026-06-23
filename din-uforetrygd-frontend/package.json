@@ -26,6 +26,7 @@
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.5.3",
     "@grafana/faro-web-sdk": "^2.7.1",
+    "@highcharts/react": "^5.1.0",
     "@navikt/aksel-icons": "^8.13.0",
     "@navikt/ds-css": "^8.13.0",
     "@navikt/ds-react": "^8.13.0",
