@@ -15,7 +15,7 @@ import type React from 'react'
 import type { components } from '@/api/api'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
-import { matchAll, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
@@ -80,7 +80,7 @@ const getLinks = async (
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: matchSome([Visningskriterier.Uforetrygd]),
+    showFor: matchNone([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
   },

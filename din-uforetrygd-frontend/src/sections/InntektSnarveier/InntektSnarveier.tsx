@@ -1,4 +1,4 @@
-import { FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
+import { CalculatorIcon, FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
 import type React from 'react'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
@@ -34,7 +34,7 @@ const getLinks = async (pid: string | undefined) => [
     href: await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid }),
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
-    icon: <FileTextIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <CalculatorIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
