@@ -117,9 +117,9 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       title="Hvor kommer registrert forventet inntekt fra?"
                       onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Registrert forventet inntekt' })}
                     >
-                      Forventet inntekt kan komme fra dine tidligere registreringer, eller i noen tilfeller fra
-                      opplysninger vi har hentet. Forventet inntekt inkluderer arbeidsinntekt, andre ytelser og
-                      pensjoner du mottar. Du kan endre registrert forventet inntekt i{' '}
+                      Forventet inntekt kommer fra dine tidligere registreringer, eller i noen tilfeller fra
+                      opplysninger vi har hentet. Har du nylig meldt inn inntekt, vil den ikke vises her før den har
+                      blitt behandlet hos oss. Du kan endre registrert forventet inntekt i{' '}
                       <Link href={linkInntektsplanlegger} className={styles.link}>
                         inntektsplanleggeren
                       </Link>
@@ -139,12 +139,7 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                       title="Hva er inntektsgrense?"
                       onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Inntektsgrense' })}
                     >
-                      Vi reduserer uføretrygden din kun for den delen av inntekten din som overstiger {inntektsgrense}
-                      &nbsp;kroner. Bruk{' '}
-                      <Link href={linkInntektsplanlegger} className={styles.link}>
-                        inntektsplanleggeren
-                      </Link>{' '}
-                      for å se hvordan inntekt påvirker utbetalingen av uføretrygden din.
+                      Den årlige inntekten du kan ha, før vi reduserer uføretrygden din
                     </HelpText>
                   </HStack>
                 </Table.DataCell>
@@ -159,7 +154,18 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
-                <Table.DataCell>Inntektstak i {arstall}</Table.DataCell>
+                <Table.DataCell>
+                  <HStack gap="space-4">
+                    <BodyShort>Inntektstak i {arstall}</BodyShort>{' '}
+                    <HelpText
+                      title="Hva er inntektstak?"
+                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Inntektstak' })}
+                    >
+                      Den årlige inntekten du kan ha, før du ikke lenger får utbetalt uføretrygd det aktuelle året.
+                      Inntektstaket er 80 prosent av inntekten du hadde før uførhet, oppjustert til dagens verdi.
+                    </HelpText>
+                  </HStack>
+                </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                   {inntektstak} kr
                 </Table.DataCell>

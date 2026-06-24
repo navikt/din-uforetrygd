@@ -22,7 +22,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
         sakId={sakId}
         linkInntektsplanlegger={linkInntektsplanlegger}
         arstall={new Date().getFullYear()}
-      ></Vedtaksdetaljer>
+      />
     </section>
   )
 }
