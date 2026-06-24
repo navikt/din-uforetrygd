@@ -144,7 +144,7 @@ const getLinks = async (
   {
     href: 'https://www.nav.no/honnorkort#mangler-honnorkort',
     title: 'Honnørkort',
-    description: 'Bestill nytt honnørkort',
+    description: 'Bestill nytt honnørkort hvis det gamle er mistet eller ødelagt',
     icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
