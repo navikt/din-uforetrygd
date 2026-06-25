@@ -34,51 +34,46 @@ const FinnUtMer = () => {
         <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
             ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-            tittel="Dialog med veileder"
+            tittel="Start oppfølging med veileder"
             undertittel="Du beholder retten til uføretrygd"
           >
             <VStack gap="space-24" align={'start'}>
               <List>
-                <List.Item>En veileder kontakter deg for å bli kjent med din situasjon og dine behov</List.Item>
-                <List.Item>Dere kan møtes digitalt, på telefon eller på lokalt Nav-kontor</List.Item>
-                <List.Item>Veileder vurderer ditt behov for oppfølging og hva du har rett til</List.Item>
-                <List.Item>Sammen med veileder lager du en aktivitetsplan</List.Item>
+                <List.Item>Det er uforpliktende og du mister ikke uføretrygden din. </List.Item>
+                <List.Item>
+                  En veileder kontakter deg innen 2 virkedager for å bli kjent med din situasjon og dine behov.
+                </List.Item>
+                <List.Item>Dere kan møtes digitalt, på telefon eller på lokalt Nav-kontor.</List.Item>
+                <List.Item>Sammen med veileder lager du en aktivitetsplan.</List.Item>
                 <List.Item>Du kan når som helst avslutte oppfølgingen</List.Item>
               </List>
               {/* TODO: verifiser lenke og finn prod-lenke */}
               <Dialog>
                 <Dialog.Trigger>
-                  <Button variant={'secondary'}>Start dialog</Button>
+                  <Button variant={'secondary'}>Start oppfølging</Button>
                 </Dialog.Trigger>
-                <Dialog.Popup>
+                <Dialog.Popup position="center">
                   <Dialog.Header>
-                    <Dialog.Title>Klar for å starte dialogen?</Dialog.Title>
+                    <Dialog.Title>Bekreft at du vil starte oppfølging</Dialog.Title>
                     <Dialog.Description>
-                      Når du fortsetter, starter vi arbeidsrettet oppfølging og en dialog med veilederen din
+                      Når du fortsetter, starter du arbeidsrettet oppfølging og en dialog med en veileder.
                     </Dialog.Description>
                   </Dialog.Header>
                   <Divider style={{ margin: '1rem 0' }} />
                   <Dialog.Body>
                     <Heading size={'small'} spacing>
-                      Be om oppfølging hvis du vil
+                      Start oppfølging hvis du vil
                     </Heading>
                     <BodyShort spacing>
                       Det forplikter deg ikke til noe bestemt – du trenger ikke å vite hva du vil eller hva som er mulig
-                      for deg
+                      for deg.
                     </BodyShort>
                     <Heading size={'small'} spacing>
-                      Snakk med en veileder
+                      Vi henter personopplysninger
                     </Heading>
                     <BodyShort spacing>
-                      En veileder lytter til hva du ønsker og hva som passer for deg. Ingen krav, ingen press. Du kan
-                      når som helst avslutte oppfølgingen.
-                    </BodyShort>
-                    <Heading size={'small'} spacing>
-                      Lag en plan i ditt tempo
-                    </Heading>
-                    <BodyShort spacing>
-                      Sett opp mål og aktiviteter sammen. Det kan være jobbprøving, opplæring, kurs, studier eller tett
-                      oppfølging.
+                      Når du starter oppfølgingen, samtykker du til at vi henter opplysninger om din alder, adresse og
+                      oppholdsstatus fra Folkeregisteret.
                     </BodyShort>
                   </Dialog.Body>
                   <Dialog.Footer>
@@ -136,13 +131,7 @@ const FinnUtMer = () => {
             </HStack>
           </ExpansionCardMedIkon>
         </HGrid>
-        <Button
-          icon={<ArrowLeftIcon />}
-          variant={'secondary'}
-          onClick={() => {
-            window.history.back()
-          }}
-        >
+        <Button icon={<ArrowLeftIcon />} as="a" variant="secondary" href="/uforetrygd/selvbetjening/dine-muligheter">
           Gå tilbake
         </Button>
       </VStack>

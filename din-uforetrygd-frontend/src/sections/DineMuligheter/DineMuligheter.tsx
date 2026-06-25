@@ -36,30 +36,30 @@ const DineMuligheter = () => {
         <div className={styles.fargeContainer + ' ' + styles.graContainer}>
           <HGrid gap="space-24" columns={{ md: 2 }} className={styles.fargeContainerContent}>
             <ExpansionCardMedIkon
-              tittel="Vi kan hjelpe deg"
+              tittel="Du kan få veiledning"
               ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             >
               <VStack gap="space-12">
                 <BodyShort weight="semibold">Snakk med en veileder</BodyShort>
                 <List>
-                  <List.Item>om dine behov og ønsker</List.Item>
+                  <List.Item>om det du trenger og har lyst til</List.Item>
                   <List.Item>på telefon, videosamtale eller på ditt lokale kontor</List.Item>
-                  <List.Item>om å samarbeide med helsetjenester, barnevern og skole</List.Item>
+                  <List.Item>om arbeidsrettet oppfølging eller det du har lyst til å få til</List.Item>
                 </List>
               </VStack>
             </ExpansionCardMedIkon>
             <ExpansionCardMedIkon
               ikon={<HatSchoolFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-              tittel="Jobb, studier og kompetanse"
+              tittel="Snakk med oss om jobb, utdanning og muligheter"
             >
               <VStack gap="space-12">
-                <BodyShort weight="semibold">Studier</BodyShort>
+                <BodyShort weight="semibold">Utdanning</BodyShort>
                 <List>
-                  <List.Item>fullføre videregående skole</List.Item>
+                  <List.Item>videregående skole</List.Item>
                   <List.Item>få tilrettelegging på studiested</List.Item>
                   <List.Item>finn et studie du har lyst til å begynne på</List.Item>
                 </List>
-                <BodyShort weight="semibold">Jobb og kompetanse</BodyShort>
+                <BodyShort weight="semibold">Jobb og muligheter</BodyShort>
                 <List>
                   <List.Item>CV, søknad intervju, finne jobb</List.Item>
                   <List.Item>få tilrettelegging på jobb</List.Item>
@@ -70,16 +70,13 @@ const DineMuligheter = () => {
             </ExpansionCardMedIkon>
             <ExpansionCardMedIkon
               ikon={<PiggybankFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-              tittel="Økonomisk rådgivning"
+              tittel="Snakk med oss om økonomi"
             >
-              <BodyShort weight="semibold" spacing>
-                Du kan få rådgivning om:
-              </BodyShort>
               <List>
                 <List.Item>inntekt og uføretrygd</List.Item>
                 <List.Item>budsjett, lavere utgifter</List.Item>
                 <List.Item>bolig og depositum</List.Item>
-                <List.Item>Husbanken og bostøtte</List.Item>
+                <List.Item>Husbanken: startlån og bostøtte</List.Item>
                 <List.Item>økonomisk sosialhjelp</List.Item>
                 <List.Item>gjeld, namsmann og gjeldsordning</List.Item>
               </List>
@@ -93,11 +90,11 @@ const DineMuligheter = () => {
                   Du trenger ikke kontakte oss om du ønsker å jobbe eller studere. Her finner du nyttig informasjon som
                   kan hjelpe deg på veien:
                 </BodyShort>
-                <BodyShort weight="semibold">Studier</BodyShort>
+                <BodyShort weight="semibold">Utdanning</BodyShort>
                 <List>
                   <List.Item>
                     <Link href="https://utdanning.no/interessevelgeren/" target="_blank">
-                      finn et studie
+                      utforsk utdanning
                     </Link>
                   </List.Item>
                   <List.Item>
@@ -197,10 +194,11 @@ const DineMuligheter = () => {
         >
           <VStack gap="space-12">
             <Heading size="large" level="3">
-              Vi kan hjelpe deg med å utforske mulighetene dine.
+              Snakk med oss om dine muligheter
             </Heading>
             <BodyShort>
-              Ta kontakt med en veileder, det er uforpliktende og du beholder retten til uføretrygd.{' '}
+              Få hjelp av en veileder til å utforske mulighetene dine. Det er uforpliktende og du beholder retten til
+              uføretrygd.
             </BodyShort>
           </VStack>
           <VStack gap="space-12" justify="center">
