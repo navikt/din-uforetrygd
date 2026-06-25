@@ -13,19 +13,17 @@ interface Uføretrygdendring {
 }
 
 export default function InntektSimulering() {
+  const uføretrygdFør = 303143
+  const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 303143 }
   const valgmuligheterMap = new Map<number, Uføretrygdendring>([
-    [0, { uføretrygdFør: 303143, uføretrygdEtter: 303143 }],
-    [50000, { uføretrygdFør: 303143, uføretrygdEtter: 303143 }],
-    [150000, { uføretrygdFør: 303143, uføretrygdEtter: 293727 }],
-    [200000, { uføretrygdFør: 303143, uføretrygdEtter: 258728 }],
+    [0, defaultMulighet],
+    [50000, { uføretrygdFør, uføretrygdEtter: 303143 }],
+    [150000, { uføretrygdFør, uføretrygdEtter: 293727 }],
+    [200000, { uføretrygdFør, uføretrygdEtter: 258728 }],
   ])
 
   const [valgtInntekt, setValgtInntekt] = useState(0)
-  const [valgt, setValgt] = useState<Uføretrygdendring>({ uføretrygdFør: 303143, uføretrygdEtter: 303143 })
-
-  const finnSumÅrlig = () => valgt.uføretrygdEtter + valgtInntekt
-  const finnForskjellUføretrygd = () => valgt.uføretrygdEtter - valgt.uføretrygdFør
-  const finnForskjellSumÅrlig = () => valgt.uføretrygdEtter + valgtInntekt - valgt.uføretrygdFør
+  const [valgt, setValgt] = useState<Uføretrygdendring>(defaultMulighet)
 
   return (
     <HGrid columns={{ md: 2 }} gap="space-36">
@@ -53,7 +51,7 @@ export default function InntektSimulering() {
         </Chips>
       </VStack>
       <VStack gap="space-36">
-        <Box background="neutral-soft" padding="space-12" borderRadius="8" width="100%">
+        <Box background="neutral-soft" padding="space-12" borderRadius="8">
           <VStack gap="space-8">
             <HStack justify="space-between">
               <BodyShort>Saras ekstrainntekt</BodyShort>
@@ -66,8 +64,8 @@ export default function InntektSimulering() {
                 <BodyShort weight="semibold">{`${formatInntekt(valgt.uføretrygdEtter)} kr`}</BodyShort>
                 <BodyShort
                   weight="semibold"
-                  style={{ fontSize: '16px' }}
-                >{`-${formatInntekt(Math.abs(finnForskjellUføretrygd()))} kr`}</BodyShort>
+                  size="small"
+                >{`-${formatInntekt(Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør))} kr`}</BodyShort>
               </VStack>
             </HStack>
             <Divider />
@@ -75,11 +73,11 @@ export default function InntektSimulering() {
             <HStack justify="space-between">
               <BodyShort weight="semibold">Sum årlig</BodyShort>
               <VStack align="end">
-                <BodyShort weight="semibold">{`${formatInntekt(finnSumÅrlig())} kr`}</BodyShort>
+                <BodyShort weight="semibold">{`${formatInntekt(valgt.uføretrygdEtter + valgtInntekt)} kr`}</BodyShort>
                 <BodyShort
                   weight="semibold"
-                  style={{ fontSize: '16px' }}
-                >{`+${formatInntekt(finnForskjellSumÅrlig())} kr`}</BodyShort>
+                  size="small"
+                >{`+${formatInntekt(valgt.uføretrygdEtter + valgtInntekt - valgt.uføretrygdFør)} kr`}</BodyShort>
               </VStack>
             </HStack>
           </VStack>
