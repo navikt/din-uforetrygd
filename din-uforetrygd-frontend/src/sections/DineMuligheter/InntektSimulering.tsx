@@ -53,8 +53,9 @@ export default function InntektSimulering() {
         </Chips>
       </VStack>
       <VStack gap="space-36">
-        <Box background="neutral-soft" padding="space-12" borderRadius="8">
-          <VStack gap="space-8">
+        <Box background="neutral-soft" padding="space-16" borderRadius="8">
+          <VStack gap="space-16">
+            {/*mer space*/}
             <HStack justify="space-between">
               <BodyShort>Saras ekstrainntekt</BodyShort>
               <BodyShort weight="semibold">{`${formatInntekt(valgtInntekt)} kr`}</BodyShort>

@@ -8,6 +8,8 @@
 
 .rosaContainer {
   background: var(--ax-bg-meta-purple-soft);
+  border-bottom: 1px solid var(--ax-border-meta-purple-subtle);
+  border-top: 1px solid var(--ax-border-meta-purple-subtle);
 }
 
 .graContainer {
