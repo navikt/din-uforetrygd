@@ -4,7 +4,9 @@ import { BodyShort, Box, Chips, HGrid, HStack, Label, LinkCard, VStack } from '@
 import { useState } from 'react'
 import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGraf'
 import Divider from '@/sections/ForsideBehandling/Divider'
+import getEnv from '@/utils/env'
 import { formatInntekt } from '@/utils/formatter/formatter'
+import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './dineMuligheter.module.css'
 
 interface Uføretrygdendring {
@@ -84,7 +86,8 @@ export default function InntektSimulering() {
         </Box>
         <LinkCard>
           <LinkCard.Title>
-            <LinkCard.Anchor href="inntektsplanleggeren">
+            {/* TODO: pid må med i veileder-modus. Se InntektSnarveier */}
+            <LinkCard.Anchor href={getEnv('LINK_INNTEKTSPLANLEGGER') || ''}>
               Gå til inntektsplanleggeren for å se dine tall
             </LinkCard.Anchor>
           </LinkCard.Title>
