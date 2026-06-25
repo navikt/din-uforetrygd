@@ -29,3 +29,7 @@
 .dineMuligheterWrapper > * {
   padding-inline: var(--ax-space-12);
 }
+
+.inntektSimuleringChips > li {
+  width: 100%;
+}

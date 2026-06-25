@@ -7,9 +7,10 @@ import {
   PersonGroupFillIcon,
   PiggybankFillIcon,
 } from '@navikt/aksel-icons'
-import { BodyLong, BodyShort, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
+import { BodyLong, BodyShort, Box, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
+import InntektSimulering from '@/sections/DineMuligheter/InntektSimulering'
 import getEnv from '@/utils/env'
 import styles from './dineMuligheter.module.css'
 
@@ -162,22 +163,32 @@ const DineMuligheter = () => {
           </HGrid>
         </div>
         <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>
-          <VStack gap="space-12" className={styles.fargeContainerContent}>
-            <Heading size="large" level="3">
-              Sara (24) fikk hjelp til å finne jobb
-            </Heading>
-            <BodyLong size="medium">
-              Historie fra virkeligheten: slik fikk uføre Sara hjelp til å finne deltidsjobb
-            </BodyLong>
-            {/*<video controls>*/}
-            {/*  <source src="/videos/sara-jobb.mp4" type="video/mp4" />*/}
-            {/*</video>*/}
-          </VStack>
+          <HGrid columns={{ md: 2 }} gap="space-12" className={styles.fargeContainerContent}>
+            <VStack gap="space-12">
+              <Heading size="large" level="3">
+                Sara (24) fikk hjelp til å finne jobb
+              </Heading>
+              <BodyLong size="medium">
+                Historie fra virkeligheten: slik fikk uføre Sara hjelp til å finne deltidsjobb
+              </BodyLong>
+            </VStack>
+            <Box background="brand-magenta-strong" height="200px" padding="space-48" borderRadius="8">
+              <VStack align="center" justify="center">
+                <BodyShort size="medium" textColor="contrast">
+                  Video
+                </BodyShort>
+              </VStack>
+            </Box>
+          </HGrid>
         </div>
       </div>
-      <Heading size="large" level="3">
-        Velg ulik inntekt for å se hvordan det kan påvirke uføretrygden til Sara
-      </Heading>
+      <VStack gap="space-16">
+        <Heading size="large" level="3">
+          Velg ulik inntekt for å se hvordan det kan påvirke uføretrygden til Sara
+        </Heading>
+        <InntektSimulering />
+      </VStack>
+
       <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>
         <HGrid
           gap={{ xs: 'space-24', md: 'space-48', lg: 'space-64' }}

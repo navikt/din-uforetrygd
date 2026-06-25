@@ -31,7 +31,7 @@ const FinnUtMer = () => {
         <Heading size="medium" level="3">
           Kontakt oss for en uforpliktende prat om dine muligheter
         </Heading>
-        <HStack justify={'space-around'}>
+        <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
             ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Dialog med veileder"
@@ -98,9 +98,6 @@ const FinnUtMer = () => {
               </Dialog>
             </VStack>
           </ExpansionCardMedIkon>
-        </HStack>
-
-        <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
             ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Chat med oss"
