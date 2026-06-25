@@ -1,4 +1,4 @@
-import { CalculatorIcon, FileTextIcon, WalletIcon } from '@navikt/aksel-icons'
+import { CalculatorIcon, WalletIcon } from '@navikt/aksel-icons'
 import type React from 'react'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
