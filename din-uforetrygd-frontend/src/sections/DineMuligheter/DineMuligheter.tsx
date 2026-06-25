@@ -40,7 +40,6 @@ const DineMuligheter = () => {
               ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             >
               <VStack gap="space-12">
-                <BodyShort weight="semibold">Snakk med en veileder</BodyShort>
                 <List>
                   <List.Item>om det du trenger og har lyst til</List.Item>
                   <List.Item>på telefon, videosamtale eller på ditt lokale kontor</List.Item>
