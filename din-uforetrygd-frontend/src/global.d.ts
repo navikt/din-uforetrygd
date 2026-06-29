@@ -3,6 +3,8 @@ declare module '*.module.css' {
   export default classes
 }
 
+declare module '*.css' {}
+
 declare namespace React {
   namespace JSX {
     interface IntrinsicElements {

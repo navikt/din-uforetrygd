@@ -1,0 +1,37 @@
+.fargeContainer {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  justify-content: center;
+  display: flex;
+  padding: var(--ax-space-48) 0;
+}
+
+.rosaContainer {
+  background: var(--ax-bg-meta-purple-soft);
+  border-bottom: 1px solid var(--ax-border-meta-purple-subtle);
+  border-top: 1px solid var(--ax-border-meta-purple-subtle);
+}
+
+.graContainer {
+  background: var(--ax-bg-neutral-soft);
+}
+
+.fargeContainerContent {
+  max-width: var(--content-width);
+  width: 100%;
+  padding-inline: var(--ax-space-12);
+}
+
+.dineMuligheterWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dineMuligheterWrapper > * {
+  padding-inline: var(--ax-space-12);
+}
+
+.inntektSimuleringChips > li {
+  width: 100%;
+}

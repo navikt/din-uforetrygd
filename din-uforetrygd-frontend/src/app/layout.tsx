@@ -5,7 +5,7 @@ import Script from 'next/script'
 import getEnv from '@/utils/env'
 import '../global.css'
 import './layout.css'
-import '@navikt/ds-tokens'
+import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
@@ -22,6 +22,8 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     env: decoratorEnv,
     params: {
       context: 'privatperson',
+      chatbot: true,
+      chatbotVisible: false,
     },
   })
 

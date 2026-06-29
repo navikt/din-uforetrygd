@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noConsole: TODO Vi bruker console for logging, bør fikse sånn at vi kan bruke logger */
 import createClient from 'openapi-fetch'
 import type { components, paths } from '@/api/api'
-import getOboToken from '@/api/getOboToken'
+import { getDinUforetrygdBackendOboToken, getUforeVarslerOboToken } from '@/api/getOboToken'
 import fetchLogger from '@/utils/fetchLogger'
 import { getFullmaktCookie } from './getFullmaktCookie'
 
@@ -15,7 +15,7 @@ type BackendError = {
 }
 
 export const initate = async (pid: string | undefined) => {
-  const oboToken = await getOboToken().catch((error) => {
+  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
   })
 
@@ -46,7 +46,7 @@ export const initate = async (pid: string | undefined) => {
 }
 
 export const hentSaksoversikt = async (saksid: number, pid: string | undefined) => {
-  const oboToken = await getOboToken().catch((error) => {
+  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
     return
   })
@@ -78,4 +78,23 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
       }
       return { saksoversiktResponse: res.data as components['schemas']['SaksoversiktResponse'] }
     })
+}
+
+export const hentHarMottattVarsel = async (): Promise<boolean> => {
+  const oboToken = await getUforeVarslerOboToken().catch((error) => {
+    console.error('Error: ', error)
+    return
+  })
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${oboToken}`,
+  }
+
+  const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
+
+  const response = await fetch(`${url}/api/varsler/status`, { headers })
+  if (!response.ok) return false
+
+  const json = await response.json()
+  return json.harMottattVarsel
 }

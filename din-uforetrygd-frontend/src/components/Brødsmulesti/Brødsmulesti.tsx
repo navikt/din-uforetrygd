@@ -14,6 +14,8 @@ const allePaths: Record<string, Brødsmuler> = {
   '': { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
   'kommende-utbetalinger': { tittel: 'Kommende utbetalinger', url: '/uforetrygd/selvbetjening/kommende-utbetalinger' },
+  'dine-muligheter': { tittel: 'Dine muligheter', url: '/uforetrygd/selvbetjening/dine-muligheter' },
+  'finn-ut-mer': { tittel: 'Finn ut mer', url: '/uforetrygd/selvbetjening/dine-muligheter/finn-ut-mer' },
 }
 
 interface Props {

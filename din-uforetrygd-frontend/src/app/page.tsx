@@ -1,8 +1,8 @@
-import { Alert, BodyLong, Heading, Link, VStack } from '@navikt/ds-react'
-import { initate } from '@/api/endpoints'
+import { Alert, Heading, VStack } from '@navikt/ds-react'
+import { hentHarMottattVarsel, initate } from '@/api/endpoints'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
-import { type Innloggingstype, Visningskriterier } from '@/const'
+import type { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader/RelevanteSoknader'
@@ -19,7 +19,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
-import { matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { isEnabled } from '@/utils/unleash'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -29,6 +29,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
+  const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
+  const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -46,18 +48,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
               Din uføretrygd
             </Heading>
           </VStack>
-
-          {matchSome([Visningskriterier.Uforetrygd])(visningskriterier) && (
-            <Alert variant="info" role="alert" className={'info-alert'}>
-              <Heading size="small" level="2">
-                Informasjon om kommende utbetalinger
-              </Heading>
-              <BodyLong size="medium">
-                Du finner informasjon om utbetalinger i mai og juni og informasjon om justering av grunnbeløpet{' '}
-                <Link href="/uforetrygd/selvbetjening/kommende-utbetalinger">her</Link>.
-              </BodyLong>
-            </Alert>
-          )}
 
           <ForsideBehandlingKort
             behandling={
@@ -84,7 +74,12 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             pid={params.pid}
             journalposter={uforetrygdResponse.journalposter}
           ></InterneLenker>
-          <Snarveier visningskriterier={visningskriterier} pid={params.pid} uforetrygdResponse={uforetrygdResponse} />
+          <Snarveier
+            visningskriterier={visningskriterier}
+            pid={params.pid}
+            uforetrygdResponse={uforetrygdResponse}
+            skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
+          />
           <MeldeFra visningskriterier={visningskriterier} />
           <RelevanteSoknader
             visningskriterier={visningskriterier}

@@ -6,12 +6,12 @@ export const getVisningskriterier = (init: components['schemas']['UforetrygdResp
   const visningskriterier: Visningskriterier[] = []
 
   if (init.verge) {
-      visningskriterier.push(Visningskriterier.ErVerge)
+    visningskriterier.push(Visningskriterier.ErVerge)
   }
 
   if (!sak || sak.status === 'OPPRETTET') {
-      visningskriterier.push(Visningskriterier.IngenUforesak)
-      return visningskriterier
+    visningskriterier.push(Visningskriterier.IngenUforesak)
+    return visningskriterier
   }
 
   if (init.hasIverksattVedtak) {
