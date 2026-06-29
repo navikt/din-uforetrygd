@@ -1,6 +1,6 @@
 'use client'
 
-import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, Table, VStack } from '@navikt/ds-react'
+import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
 import type { components } from '@/api/api'
@@ -14,9 +14,16 @@ interface VedtaksdetaljerProps {
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number
+  regelverksendringerJuli2026: boolean
 }
 
-export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger, arstall }: VedtaksdetaljerProps) {
+export function Vedtaksdetaljer({
+  dittUforevedtak,
+  sakId,
+  linkInntektsplanlegger,
+  arstall,
+  regelverksendringerJuli2026,
+}: VedtaksdetaljerProps) {
   const uforegrad = dittUforevedtak.uforegrad
   const uforetidspunkt =
     dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
@@ -148,7 +155,36 @@ export function Vedtaksdetaljer({ dittUforevedtak, sakId, linkInntektsplanlegger
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
-                <Table.DataCell>Kompensasjonsgrad</Table.DataCell>
+                <Table.DataCell>
+                  {regelverksendringerJuli2026 ? (
+                    <HStack gap="space-4">
+                      <BodyShort>Reduksjonsprosent</BodyShort>
+                      <HelpText
+                        title="Hva er reduksjonsprosent?"
+                        onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'reduksjonsprosent' })}
+                      >
+                        <BodyShort spacing>
+                          Vi trekker en prosent lik reduksjonsprosenten fra uføretrygden av hver krone du tjener over
+                          inntektsgrensen din.
+                        </BodyShort>
+
+                        <BodyShort spacing>Eksempel:</BodyShort>
+                        <List>
+                          <List.Item>Kim har en reduksjonsprosent på 70 prosent.</List.Item>
+                          <List.Item>
+                            For hver krone Kim tjener over inntektsgrensen, trekker vi 70 øre fra uføretrygden til Kim.
+                          </List.Item>
+                          <List.Item>Hvis Kim tjener 10 000 kroner, trekkes 7 000 kroner fra uføretrygden.</List.Item>
+                          <List.Item>
+                            Kim beholder lønnen sin på 10 000 kroner, i tillegg til 3 000 kroner i uføretrygden.
+                          </List.Item>
+                        </List>
+                      </HelpText>
+                    </HStack>
+                  ) : (
+                    <>Kompensasjonsgrad</>
+                  )}
+                </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                   {dittUforevedtak?.kompensasjonsgrad} prosent
                 </Table.DataCell>

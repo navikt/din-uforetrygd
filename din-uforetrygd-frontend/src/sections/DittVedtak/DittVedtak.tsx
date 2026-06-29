@@ -1,6 +1,7 @@
 import type { components } from '@/api/api'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { getUrl } from '@/utils/getUrl/getUrl'
+import { isEnabled } from '@/utils/unleash'
 
 interface IDittVedtak {
   pid?: string
@@ -10,6 +11,8 @@ interface IDittVedtak {
 }
 
 export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedtak, dittUforevedtak, sakId }) => {
+  const regelverksendringerJuli2026 = await isEnabled('inntektsplanleggeren.regelverksendringer.tekst')
+
   if (!hasIverksattVedtak) {
     return null
   }
@@ -22,6 +25,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
         sakId={sakId}
         linkInntektsplanlegger={linkInntektsplanlegger}
         arstall={new Date().getFullYear()}
+        regelverksendringerJuli2026={regelverksendringerJuli2026}
       />
     </section>
   )
