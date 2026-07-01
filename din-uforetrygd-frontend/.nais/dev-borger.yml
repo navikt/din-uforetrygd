@@ -43,8 +43,6 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
-    frontend:
-      enabled: true
     logging:
       destinations:
         - id: elastic
@@ -137,7 +135,7 @@ spec:
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
-    - name: NEXT_PUBLIC_FARO_URL
+    - name: FARO_URL
       value: https://telemetry.ekstern.dev.nav.no/collect
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

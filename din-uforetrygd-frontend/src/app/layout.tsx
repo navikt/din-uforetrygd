@@ -15,7 +15,7 @@ import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPay
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
   const mode = getEnv('MODE') as 'borger' | 'veileder'
-  const faroUrl = getEnv('NEXT_PUBLIC_FARO_URL')
+  const faroUrl = getEnv('FARO_URL')
   const appName = getEnv('NAIS_APP_NAME')
 
   const Decorator = await fetchDecoratorReact({

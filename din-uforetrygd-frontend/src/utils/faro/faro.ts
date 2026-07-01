@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import { faro, getWebInstrumentations, initializeFaro, type TransportItem } from '@grafana/faro-web-sdk'
+import { useEffect } from 'react'
 
 interface Props {
   url: string | undefined
@@ -10,26 +10,30 @@ interface Props {
 
 export default function InitializeFaro({ url, appName }: Props) {
   useEffect(() => {
-    if (faro.api || !url || !appName) {
+    if (faro.config || !url || !appName) {
       return
     }
 
-    initializeFaro({
-      paused: window.location.hostname.includes('localhost'),
-      url: url,
-      app: {
-        name: appName,
-      },
-      instrumentations: [...getWebInstrumentations()],
-      beforeSend: (event: TransportItem) => {
-        if (event.meta?.page?.url) {
-          const pageUrl = new URL(event.meta.page.url)
-          pageUrl.search = ''
-          event.meta.page.url = pageUrl.toString()
-        }
-        return event
-      },
-    })
+    try {
+      initializeFaro({
+        paused: window.location.hostname.includes('localhost'),
+        url: url,
+        app: {
+          name: appName,
+        },
+        instrumentations: [...getWebInstrumentations()],
+        beforeSend: (event: TransportItem) => {
+          if (event.meta?.page?.url) {
+            const pageUrl = new URL(event.meta.page.url)
+            pageUrl.search = ''
+            event.meta.page.url = pageUrl.toString()
+          }
+          return event
+        },
+      })
+    } catch (e) {
+      console.warn('Faro initialiseringen feilet', e)
+    }
   }, [url, appName])
 
   return null

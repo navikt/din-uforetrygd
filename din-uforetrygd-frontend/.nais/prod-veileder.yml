@@ -128,7 +128,7 @@ spec:
       value: api://prod-gcp.ufore.ufore-varsler/.default
     - name: UNLEASH_SERVER_API_URL
       value: https://ufore-unleash-api.nav.cloud.nais.io/api
-    - name: NEXT_PUBLIC_FARO_URL
+    - name: FARO_URL
       value: https://telemetry.nav.no/collect
 
   envFrom:

@@ -30,7 +30,7 @@ export type Env =
   | 'LINK_REGELVERKSENDRINGER'
   | 'REPRESENTASJON_BANNER'
   | 'LINK_REPRESENTASJON_TILLEGGSDATA'
-  | 'NEXT_PUBLIC_FARO_URL'
+  | 'FARO_URL'
   | 'NAIS_APP_NAME'
 
 export default function getEnv(env: Env) {
