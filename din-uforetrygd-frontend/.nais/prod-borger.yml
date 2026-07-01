@@ -44,6 +44,8 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
+    frontend:
+      enabled: true
     logging:
       destinations:
         - id: elastic

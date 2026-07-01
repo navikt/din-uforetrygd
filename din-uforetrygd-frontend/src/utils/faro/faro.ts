@@ -1,7 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
 import { faro, getWebInstrumentations, initializeFaro, type TransportItem } from '@grafana/faro-web-sdk'
-import logger from '@/utils/logger'
 
 interface Props {
   url: string | undefined
@@ -9,11 +9,11 @@ interface Props {
 }
 
 export default function InitializeFaro({ url, appName }: Props) {
-  if (typeof window === 'undefined' || faro.api || !url) {
-    return null
-  }
+  useEffect(() => {
+    if (faro.api || !url || !appName) {
+      return
+    }
 
-  try {
     initializeFaro({
       paused: window.location.hostname.includes('localhost'),
       url: url,
@@ -30,9 +30,7 @@ export default function InitializeFaro({ url, appName }: Props) {
         return event
       },
     })
-  } catch (e: any) {
-    logger.error({ message: e.message })
-    return null
-  }
+  }, [url, appName])
+
   return null
 }
