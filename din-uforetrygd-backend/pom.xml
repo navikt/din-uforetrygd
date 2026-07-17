@@ -20,7 +20,7 @@
         <jackson-version>2.22.1</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <logback.version>1.5.38</logback.version>
-        <logback-access.version>2.0.12</logback-access.version>
+        <logback-access.version>2.0.13</logback-access.version>
         <micrometer.version>1.17.0</micrometer.version>
         <!-- Test -->
         <mockk.version>1.14.11</mockk.version>
