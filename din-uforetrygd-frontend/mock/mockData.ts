@@ -25,7 +25,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL3',
-    harGammelFullmaktmottaker: false,
     verge: true,
     journalposter: [
       {
@@ -214,7 +213,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     verge: false,
     journalposter: [
       {
@@ -252,7 +250,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     verge: false,
     journalposter: [],
   },
@@ -263,7 +260,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
     verge: false,
   },
@@ -274,7 +270,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
     verge: false,
   },
@@ -299,7 +294,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     verge: false,
     journalposter: [],
   },
@@ -310,7 +304,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
     verge: false,
   },
@@ -335,7 +328,6 @@ export const mockData: Record<string, components['schemas']['UforetrygdResponse'
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    harGammelFullmaktmottaker: false,
     journalposter: [],
     verge: false,
   },

@@ -1,7 +1,7 @@
 package no.nav.dinuforetrygd.security
 
 import jakarta.servlet.http.Cookie
-import no.nav.dinuforetrygd.fullmakt.FullmaktClient
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
 import no.nav.dinuforetrygd.fullmakt.RepresentasjonsforholdValidity
 import no.nav.dinuforetrygd.person.PersonService
 import no.nav.dinuforetrygd.person.pdl.PdlAdressebeskyttelsesgradering
@@ -26,7 +26,7 @@ class AuthorizationServiceTest {
     private val tokenService = mock(TokenService::class.java)
     private val skjermingClient = mock(SkjermingClient::class.java)
     private val personService = mock(PersonService::class.java)
-    private val fullmaktClient = mock(FullmaktClient::class.java)
+    private val representasjonClient = mock(RepresentasjonClient::class.java)
 
     private val authorizationService = AuthorizationService(
         strengtFortroligAdresseGroupId,
@@ -39,7 +39,7 @@ class AuthorizationServiceTest {
         tokenService,
         skjermingClient,
         personService,
-        fullmaktClient
+        representasjonClient
     )
     //---------------------------
     // -- Veileder/saksbehandler
@@ -304,7 +304,7 @@ class AuthorizationServiceTest {
         val resourcePid = "12345678905"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", "fnr_kryptert", resourcePid))
+        `when` (representasjonClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", "fnr_kryptert", resourcePid))
         `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(false)
         val authenticatedUserDetails = authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie)
         assertEquals(resourcePid,authenticatedUserDetails.pid)
@@ -318,9 +318,9 @@ class AuthorizationServiceTest {
         val respourcePidKryptert = "fnr_kryptert"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie", respourcePidKryptert)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", respourcePidKryptert, resourcePid))
+        `when` (representasjonClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(true,"Ole Brum", respourcePidKryptert, resourcePid))
         `when` (personService.hasAdressebeskyttelse(respourcePidKryptert)).thenReturn(true)
-        assertThrows<NoFullmaktPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
+        assertThrows<NoRepresentasjonPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
     }
 
     @Test
@@ -329,8 +329,8 @@ class AuthorizationServiceTest {
         val resourcePid = "12345678905"
         val navOnBehalfOfCCookie = Cookie("navOnBehalfOfCookie",resourcePid)
         `when` (tokenService.determineRequestingPid()).thenReturn(subjectPid)
-        `when` (fullmaktClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(false,null, "fnr_kryptert", ""))
+        `when` (representasjonClient.hasValidRepresentasjonsforhold(resourcePid, subjectPid)).thenReturn(RepresentasjonsforholdValidity(false,null, "fnr_kryptert", ""))
         `when` (personService.hasAdressebeskyttelse(resourcePid)).thenReturn(false)
-        assertThrows<NoFullmaktPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
+        assertThrows<NoRepresentasjonPresentException> { authorizationService.checkBorgerTilgang(navOnBehalfOfCCookie) }
     }
 }

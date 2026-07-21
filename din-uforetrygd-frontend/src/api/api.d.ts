@@ -146,7 +146,6 @@ export interface components {
       uforevedtak?: components['schemas']['DittUforevedtak']
       /** @enum {string} */
       innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
-      harGammelFullmaktmottaker?: boolean
       journalposter: components['schemas']['Journalpost'][]
       behandling?: components['schemas']['Behandling']
       verge: boolean

@@ -7,8 +7,12 @@ export const RepresentasjonBanner = () => {
     <div className={styles.representasjonBannerWrapper}>
       <representasjon-banner
         className={styles.representasjonBanner}
-        representasjonstyper="PENSJON_FULLSTENDIG,PENSJON_BEGRENSET,UFORETRYGD_LES"
+        representasjonstyper="UFORETRYGD_LES,UFORETRYGD_SKRIV,VERGE_UFORETRYGD_LES,VERGE_UFORETRYGD_SKRIV"
         redirectTo={`${window.location.origin}/uforetrygd/selvbetjening`}
+        breadcrumbs={JSON.stringify([
+            { url: "https://www.nav.no/minside", title: "Min side" },
+            { url: "https://www.nav.no/uforetrygd/selvbetjening", title: "Din uføretrygd" },
+        ])}
       ></representasjon-banner>
     </div>
   )

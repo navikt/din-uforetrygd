@@ -1,6 +1,6 @@
 package no.nav.dinuforetrygd.fullmakt
 
-class FullmaktException : RuntimeException {
+class RepresentasjonException : RuntimeException {
     constructor(
         serviceProvider: String,
         serviceIdentifier: String,

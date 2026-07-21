@@ -45,7 +45,6 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           links={
             await getLinks(
               pid,
-              uforetrygdResponse.harGammelFullmaktmottaker!,
               featureVisRegelverksendringerUt2026,
               skalViseDineMuligheter
             )
@@ -61,7 +60,6 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
 
 const getLinks = async (
   pid: string | undefined,
-  bprofFullmakt: boolean,
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean
 ) => [
@@ -122,7 +120,7 @@ const getLinks = async (
   },
   {
     href: await getUrl({
-      urlFromEnv: bprofFullmakt ? 'LINK_BPROF_FULLMAKTER' : 'LINK_FULLMAKTER',
+      urlFromEnv: 'LINK_FULLMAKTER',
       pid: pid,
     }),
     title: 'Dine fullmakter',

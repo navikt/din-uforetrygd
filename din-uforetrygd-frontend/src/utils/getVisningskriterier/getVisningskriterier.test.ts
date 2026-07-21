@@ -7,7 +7,6 @@ const defaultUforeResponse: components['schemas']['UforetrygdResponse'] = {
   pid: '81549300',
   loggetInnSom: '81549300',
   innloggingstype: 'LEVEL4',
-  harGammelFullmaktmottaker: false,
   sak: undefined,
   hasIverksattVedtak: false,
   uforevedtak: undefined,

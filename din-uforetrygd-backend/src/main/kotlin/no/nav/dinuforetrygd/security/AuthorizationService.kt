@@ -1,8 +1,8 @@
 package no.nav.dinuforetrygd.security
 
 import jakarta.servlet.http.Cookie
-import no.nav.dinuforetrygd.fullmakt.FullmaktClient
-import no.nav.dinuforetrygd.fullmakt.FullmaktException
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonException
 import no.nav.dinuforetrygd.fullmakt.RepresentasjonsforholdValidity
 import no.nav.dinuforetrygd.person.PersonService
 import no.nav.dinuforetrygd.person.pdl.PdlAdressebeskyttelsesgradering
@@ -24,7 +24,7 @@ class AuthorizationService(
     private val tokenService: TokenService,
     private val skjermingClient: SkjermingClient,
     private val personService: PersonService,
-    private val fullmaktClient: FullmaktClient
+    private val representasjonClient: RepresentasjonClient
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(AuthorizationService::class.java)
@@ -39,8 +39,8 @@ class AuthorizationService(
         val requestingPid = tokenService.determineRequestingPid()
         if (navOnBehalfOfCookie != null) {
             val fullmaktsgiverKryptertPid = navOnBehalfOfCookie.value
-            val representasjonsforholdValidity = haandterFullmakt(fullmaktsgiverKryptertPid, requestingPid)
-            return AuthenticatedUserDetails(representasjonsforholdValidity.fullmaktsgiverFnr, representasjonsforholdValidity.hasValidRepresentasjonsforhold)
+            val representasjonsforholdValidity = haandterRepresentasjon(fullmaktsgiverKryptertPid, requestingPid)
+            return AuthenticatedUserDetails(representasjonsforholdValidity.representertPid, representasjonsforholdValidity.hasValidRepresentasjonsforhold)
         }else {
             checkAdressebeskyttelseAndLoginLevel(requestingPid)
             return AuthenticatedUserDetails(requestingPid, false)
@@ -102,24 +102,24 @@ class AuthorizationService(
         }
     }
 
-    private fun haandterFullmakt(fullmaktsgiverPid: String, requestingPid: String): RepresentasjonsforholdValidity {
+    private fun haandterRepresentasjon(representertPid: String, requestingPid: String): RepresentasjonsforholdValidity {
         try {
-            val harGyldigFullmakt = fullmaktClient.hasValidRepresentasjonsforhold(fullmaktsgiverPid, requestingPid)
-            if (harGyldigFullmakt == null || !harGyldigFullmakt.hasValidRepresentasjonsforhold) {
+            val harGyldigRepresentasjon = representasjonClient.hasValidRepresentasjonsforhold(representertPid, requestingPid)
+            if (harGyldigRepresentasjon == null || !harGyldigRepresentasjon.hasValidRepresentasjonsforhold) {
                 log.info("Fullmaktsforhold er ikke funnet. Nekter adgang")
-                throw NoFullmaktPresentException()
+                throw NoRepresentasjonPresentException()
             }
 
-            if(personService.hasAdressebeskyttelse(harGyldigFullmakt.fullmaktsgiverFnr)) {
+            if(personService.hasAdressebeskyttelse(harGyldigRepresentasjon.representertPid)) {
                 log.info("Fullmaktsforhold for bruker med adressebeskyttelse. Nekter adgang")
-                throw NoFullmaktPresentException()
+                throw NoRepresentasjonPresentException()
             }
 
-            return harGyldigFullmakt
-        } catch (e: FullmaktException) {
+            return harGyldigRepresentasjon
+        } catch (e: RepresentasjonException) {
             log.error("Noe gikk galt ved kall til fullmakt. Nekter adgang")
             log.warn("FullmaktException: ${e.message}")
-            throw NoFullmaktPresentException()
+            throw NoRepresentasjonPresentException()
         }
     }
 }

@@ -30,7 +30,7 @@ class SetPidFilter(
         } catch (e: Exception) {
             val path = request.requestURI
             when (e) {
-                is NoFullmaktPresentException -> response.errorResponse(ErrorCode.NO_FULLMAKT_PRESENT, path, HttpStatus.FORBIDDEN)
+                is NoRepresentasjonPresentException -> response.errorResponse(ErrorCode.NO_FULLMAKT_PRESENT, path, HttpStatus.FORBIDDEN)
                 is LoginLevelTooLowException -> response.errorResponse(ErrorCode.LOGIN_LEVEL_TOO_LOW, path, HttpStatus.FORBIDDEN)
                 is VeilederUnauthorizedException -> response.errorResponse(ErrorCode.VEILEDER_UNAUTHORIZED, path, HttpStatus.FORBIDDEN)
                 is PidNotSpecifiedException -> response.errorResponse(ErrorCode.NO_PID_PRESENT, path, HttpStatus.BAD_REQUEST)
