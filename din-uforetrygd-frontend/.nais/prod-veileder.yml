@@ -29,15 +29,8 @@ spec:
     periodSeconds: 20
     failureThreshold: 5
     timeout: 1
-  observability:
-    autoInstrumentation:
-      enabled: true
-      runtime: nodejs
-    logging:
-      destinations:
-        - id: elastic
-        - id: loki
   azure:
+    enabled: true
     sidecar:
       autoLogin: true
       enabled: true
@@ -51,8 +44,15 @@ spec:
           - id: "7845a796-1516-4d14-b500-fd65c001f35c" #BRUKERHJELPA
           - id: "959ead5b-99b5-466b-a0ff-5fdbc687517b" #VEILEDER
           - id: "70ef8e7f-7456-4298-95e0-b13c0ef2422b" #OKONOMI
-      enabled: true
       tenant: nav.no
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   accessPolicy:
     outbound:
       rules:

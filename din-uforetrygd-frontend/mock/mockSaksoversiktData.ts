@@ -1,7 +1,7 @@
-import { components } from '../src/api/api'
+import type { SaksoversiktResponse } from '../src/api/endpoints'
 import { BehandlingType, Status } from '../src/sections/ForsideBehandling/forsideBehandlingUtil'
 
-export const mockSaksoversiktData: Record<string, components['schemas']['SaksoversiktResponse']> = {
+export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
   default: {
     aktiveBehandlinger: [
       {

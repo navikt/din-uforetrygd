@@ -1,12 +1,12 @@
-import type { components } from '@/api/api'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
+import { DittUforevedtak } from '@/api/endpoints'
 
 interface IDittVedtak {
   pid?: string
   hasIverksattVedtak: boolean
-  dittUforevedtak?: components['schemas']['DittUforevedtak']
+  dittUforevedtak?: DittUforevedtak
   sakId?: string
 }
 

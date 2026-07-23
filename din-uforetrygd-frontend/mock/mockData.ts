@@ -1,6 +1,6 @@
-import type { components } from '../src/api/api'
+import type { UforetrygdResponse } from '../src/api/endpoints'
 
-export const mockData: Record<string, components['schemas']['UforetrygdResponse']> = {
+export const mockData: Record<string, UforetrygdResponse> = {
   default: {
     pid: '81549300',
     loggetInnSom: '81549300',

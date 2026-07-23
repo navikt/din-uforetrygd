@@ -3,14 +3,14 @@
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
-import type { components } from '@/api/api'
+import { DittUforevedtak } from '@/api/endpoints'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
 
 interface VedtaksdetaljerProps {
-  dittUforevedtak: components['schemas']['DittUforevedtak']
+  dittUforevedtak: DittUforevedtak
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number

@@ -1,7 +1,7 @@
-import type { components } from '@/api/api'
+import type { UforetrygdResponse } from '@/api/endpoints'
 import { Visningskriterier } from '@/const'
 
-export const getVisningskriterier = (init: components['schemas']['UforetrygdResponse']) => {
+export const getVisningskriterier = (init: UforetrygdResponse) => {
   const sak = init.sak
   const visningskriterier: Visningskriterier[] = []
 

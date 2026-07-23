@@ -1,4 +1,4 @@
-import type { components } from '@/api/api'
+import type { Behandling, Etteroppgjor, SaksoversiktResponse } from '@/api/endpoints'
 import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export interface SaksoversiktType {
@@ -27,14 +27,14 @@ export interface StegType {
   dato?: string
 }
 
-export const mapTilSaksoversiktType = (fra: components['schemas']['SaksoversiktResponse']): SaksoversiktType => {
+export const mapTilSaksoversiktType = (fra: SaksoversiktResponse): SaksoversiktType => {
   return {
     aktiveBehandlinger: fra.aktiveBehandlinger.map((aktivBehandling) => mapTilBehandling(aktivBehandling)),
     avsluttedeBehandlinger: fra.avsluttedeBehandlinger.map((it) => mapTilBehandling(it)),
   }
 }
 
-const mapTilBehandling = (fra: components['schemas']['Behandling']): SaksoversiktBehandling => {
+const mapTilBehandling = (fra: Behandling): SaksoversiktBehandling => {
   return {
     tittel: lagBehandlingTittel(fra.type, fra.etteroppgjor?.arstall),
     mottattDato: fra.mottattDato,
@@ -130,7 +130,7 @@ function lagBehandlingTittel(type: BehandlingType, etteroppgjorArstall?: number 
   }
 }
 
-function lagEtteroppgjørRad(etteroppgjør: components['schemas']['Etteroppgjor']): EtteroppgjorType {
+function lagEtteroppgjørRad(etteroppgjør: Etteroppgjor): EtteroppgjorType {
   return {
     tilbakekreving: etteroppgjør.type === 'TILBAKEKR' ? Math.abs(etteroppgjør.avviksbelop) : 0,
     etterbetaling: etteroppgjør.type === 'ETTERBET' ? Math.abs(etteroppgjør.avviksbelop) : 0,

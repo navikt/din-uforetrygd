@@ -1,11 +1,11 @@
-import type { components } from '@/api/api'
 import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 import { DokumenterView } from './DokumenterView'
+import { Journalpost } from '@/api/endpoints'
 
 interface IDokumenterProps {
   pid?: string
-  journalposter: components['schemas']['Journalpost'][]
+  journalposter: Journalpost[]
 }
 
 export const Dokumenter: React.FC<IDokumenterProps> = (props) => {

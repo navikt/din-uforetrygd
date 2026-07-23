@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local": "concurrently --kill-others-on-fail \"node server/server.ts \"",
+    "local": "concurrently --kill-others-on-fail \"node --env-file=.env.local server/server.ts \"",
     "dev": "concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts\" \"next dev\"",
     "dev:avsluttet": "MOCK_SCENARIO=avsluttet concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts avsluttet\" \"next dev --port 3001\"",
     "dev:gradert": "MOCK_SCENARIO=gradert concurrently --kill-others-on-fail \"bun mock/serverDynamic.ts gradert\" \"next dev --port 3003\"",
@@ -20,8 +20,7 @@
     "check": "eslint src/ ; biome check src/ ; tsc --noEmit",
     "fix": "eslint src/ --fix ; biome check --write src/ --max-diagnostics=none",
     "test": "vitest --run ",
-    "test:playwright": "playwright test",
-    "types:generate": "openapi-typescript https://din-uforetrygd-backend.intern.dev.nav.no/v3/api-docs -o src/api/api.d.ts"
+    "test:playwright": "playwright test"
   },
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.5.3",
@@ -39,7 +38,6 @@
     "express": "^5.2.1",
     "form-data": "~4.0.6",
     "next": "^16.2.9",
-    "openapi-fetch": "^0.17.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "unleash-client": "^6.11.0",
