@@ -29,15 +29,15 @@ export function SaksoversiktBehandlingKort({ behandling, ferdigBehandlet }: Prop
       <ExpansionCard.Header>
         <ExpansionCard.Title>{behandling.tittel}</ExpansionCard.Title>
         <ExpansionCard.Description className={`${ferdigBehandlet ? '' : styles.behandlingDato}`}>
-          <VStack gap="space-8">
-            <BodyShort>{finnStatusTekst()}</BodyShort>
+          <span style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <span>{finnStatusTekst()}</span>
             {behandling.avslattForutgaendeMedlemskap && (
-              <BodyShort weight={'semibold'}>
+              <span style={{ fontWeight: '600' }}>
                 Viktig! Hvis du i stedet for vedtaksbrev har fått et informasjonsbrev, gjelder ikke dette avslaget. I så
                 fall vil du få et vedtak når vi har fått nødvendige opplysninger fra utlandet.
-              </BodyShort>
+              </span>
             )}
-          </VStack>
+          </span>
         </ExpansionCard.Description>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
