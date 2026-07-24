@@ -8,19 +8,14 @@ import {
   PiggybankFillIcon,
 } from '@navikt/aksel-icons'
 import { BodyLong, BodyShort, Box, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
-import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import InntektSimulering from '@/sections/DineMuligheter/InntektSimulering'
-import getEnv from '@/utils/env'
 import styles from './dineMuligheter.module.css'
 
 const DineMuligheter = () => {
-  const mode = getEnv('MODE')
-
   return (
     <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-32', md: 'space-48' }}>
       <VStack gap="space-12" maxWidth={'678px'}>
-        <Brødsmulesti mode={mode} />
         <HStack gap={'space-12'} align="center">
           <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'} />
           <Heading size="large" level="2">

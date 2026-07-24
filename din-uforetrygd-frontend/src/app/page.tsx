@@ -12,7 +12,6 @@ import './layout.css'
 import type React from 'react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { initate } from '@/api/initiate'
-import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -44,7 +43,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <VStack gap="space-12" className={'tittel-wrapper'}>
-            <Brødsmulesti mode={mode} />
             <Heading size="xlarge" level="1">
               Din uføretrygd
             </Heading>
