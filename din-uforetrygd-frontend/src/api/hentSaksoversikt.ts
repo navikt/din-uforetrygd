@@ -21,10 +21,10 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
     headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
   }
 
-  const response = await fetch(`${baseUrl}/api/saksoversikt`, {
+  const queryParams = new URLSearchParams({ saksid: saksid.toString() })
+  const response = await fetch(`${baseUrl}/api/saksoversikt?${queryParams}`, {
     headers,
     cache: 'no-store',
-    body: JSON.stringify({ saksid }),
   })
 
   const json = await response.json()
