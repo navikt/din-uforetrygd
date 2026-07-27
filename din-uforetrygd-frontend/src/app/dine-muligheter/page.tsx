@@ -1,5 +1,5 @@
 import { Alert, VStack } from '@navikt/ds-react'
-import { hentHarMottattVarsel } from '@/api/endpoints'
+import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
 import { isEnabled } from '@/utils/unleash'
 

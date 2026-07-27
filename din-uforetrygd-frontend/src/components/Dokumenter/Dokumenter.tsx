@@ -1,7 +1,7 @@
+import type { Journalpost } from '@/api/initiate'
 import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 import { DokumenterView } from './DokumenterView'
-import { Journalpost } from '@/api/endpoints'
 
 interface IDokumenterProps {
   pid?: string

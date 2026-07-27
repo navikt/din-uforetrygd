@@ -1,7 +1,7 @@
+import type { DittUforevedtak } from '@/api/initiate'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
-import { DittUforevedtak } from '@/api/endpoints'
 
 interface IDittVedtak {
   pid?: string

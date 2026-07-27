@@ -1,4 +1,4 @@
-import type { Behandling, Etteroppgjor, SaksoversiktResponse } from '@/api/endpoints'
+import type { Behandling, Etteroppgjor, SaksoversiktResponse } from '@/api/hentSaksoversikt'
 import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 
 export interface SaksoversiktType {

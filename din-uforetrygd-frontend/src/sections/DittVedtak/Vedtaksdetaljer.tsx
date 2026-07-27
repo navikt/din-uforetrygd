@@ -3,7 +3,7 @@
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
-import { DittUforevedtak } from '@/api/endpoints'
+import type { DittUforevedtak } from '@/api/initiate'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatInntekt } from '@/utils/formatter/formatter'

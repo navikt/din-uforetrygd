@@ -18,10 +18,10 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.next()
 
-  // if (!request.cookies.has(unleashSessionIdKey)) {
-  //   const sessionId = `${Math.floor(Math.random() * 1_000_000_000)}`
-  //   response.cookies.set(unleashSessionIdKey, sessionId, { path: '/' })
-  // }
+  if (!request.cookies.has(unleashSessionIdKey)) {
+    const sessionId = `${Math.floor(Math.random() * 1_000_000_000)}`
+    response.cookies.set(unleashSessionIdKey, sessionId, { path: '/' })
+  }
 
   return response
 }

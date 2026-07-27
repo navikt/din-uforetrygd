@@ -1,4 +1,4 @@
-import type { UforetrygdResponse } from '@/api/endpoints'
+import type { UforetrygdResponse } from '@/api/initiate'
 import { Visningskriterier } from '@/const'
 
 export const getVisningskriterier = (init: UforetrygdResponse) => {

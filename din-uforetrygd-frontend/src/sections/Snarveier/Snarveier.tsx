@@ -12,7 +12,7 @@ import {
 } from '@navikt/aksel-icons'
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
-import type { UforetrygdResponse } from '@/api/endpoints'
+import type { UforetrygdResponse } from '@/api/initiate'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'

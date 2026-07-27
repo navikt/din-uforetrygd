@@ -1,5 +1,5 @@
+import type { Behandling, Beregning } from '@/api/hentSaksoversikt'
 import { formatInntekt } from '@/utils/formatter/formatter'
-import { Behandling, Beregning } from '@/api/endpoints'
 
 export interface ForsideBehandling {
   status: Status

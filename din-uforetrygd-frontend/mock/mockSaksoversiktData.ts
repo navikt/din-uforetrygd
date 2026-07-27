@@ -1,5 +1,5 @@
-import type { SaksoversiktResponse } from '../src/api/endpoints'
 import { BehandlingType, Status } from '../src/sections/ForsideBehandling/forsideBehandlingUtil'
+import { SaksoversiktResponse } from '../src/api/hentSaksoversikt'
 
 export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
   default: {

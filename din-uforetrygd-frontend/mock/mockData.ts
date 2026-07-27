@@ -1,4 +1,4 @@
-import type { UforetrygdResponse } from '../src/api/endpoints'
+import type { UforetrygdResponse } from '../src/api/initiate'
 
 export const mockData: Record<string, UforetrygdResponse> = {
   default: {
