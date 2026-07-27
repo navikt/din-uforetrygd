@@ -23,6 +23,7 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
 
   const response = await fetch(`${baseUrl}/api/saksoversikt`, {
     headers,
+    cache: 'no-store',
     body: JSON.stringify({ saksid }),
   })
 

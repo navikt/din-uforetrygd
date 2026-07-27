@@ -20,7 +20,7 @@ export const initate = async (pid: string | undefined) => {
     headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
   }
 
-  const response = await fetch(`${baseUrl}/api/initiate`, { headers })
+  const response = await fetch(`${baseUrl}/api/initiate`, { headers, cache: 'no-store' })
   const json = await response.json()
 
   if (!response.ok && response.status === 403) {

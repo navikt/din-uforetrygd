@@ -12,7 +12,7 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
 
   const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
 
-  const response = await fetch(`${url}/api/varsler/status`, { headers })
+  const response = await fetch(`${url}/api/varsler/status`, { headers, cache: 'no-store' })
   if (!response.ok) return false
 
   const json = await response.json()
