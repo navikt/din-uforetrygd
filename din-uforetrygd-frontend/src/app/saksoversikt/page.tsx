@@ -1,6 +1,6 @@
 import { Alert } from '@navikt/ds-react'
 import type React from 'react'
-import { hentSaksoversikt } from '@/api/endpoints'
+import { hentSaksoversikt } from '@/api/hentSaksoversikt'
 import { Saksoversikt } from '@/sections/Saksoversikt/Saksoversikt'
 import { mapTilSaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 import getEnv from '@/utils/env'

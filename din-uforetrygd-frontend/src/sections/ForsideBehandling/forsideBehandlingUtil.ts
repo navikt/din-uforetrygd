@@ -1,4 +1,4 @@
-import type { components } from '@/api/api'
+import type { Behandling, Beregning } from '@/api/hentSaksoversikt'
 import { formatInntekt } from '@/utils/formatter/formatter'
 
 export interface ForsideBehandling {
@@ -42,7 +42,7 @@ export interface BeregningRad {
   verdi: string
 }
 
-export function toForsideBehandling(fra: components['schemas']['Behandling']): ForsideBehandling | null {
+export function toForsideBehandling(fra: Behandling): ForsideBehandling | null {
   if (
     fra.type !== BehandlingType.SØKNAD_UFØRETRYGD &&
     fra.type !== BehandlingType.SØKNAD_UNG_UFØR &&
@@ -147,7 +147,7 @@ function lagLenkerInnvilget(behandlingType: BehandlingType): Lenke[] {
   return lenker
 }
 
-function lagBeregning(beregning: components['schemas']['Beregning'] | null, status: Status): BeregningRad[] {
+function lagBeregning(beregning: Beregning | null, status: Status): BeregningRad[] {
   if (status !== Status.INNVILGET || beregning === null) return []
 
   const beregninger: BeregningRad[] = []

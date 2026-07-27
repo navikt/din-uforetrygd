@@ -12,7 +12,7 @@ import {
 } from '@navikt/aksel-icons'
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
-import type { components } from '@/api/api'
+import type { UforetrygdResponse } from '@/api/initiate'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
@@ -23,7 +23,7 @@ import styles from './snarveier.module.css'
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  uforetrygdResponse: components['schemas']['UforetrygdResponse']
+  uforetrygdResponse: UforetrygdResponse
   skalViseDineMuligheter: boolean
 }
 
@@ -42,13 +42,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={
-            await getLinks(
-              pid,
-              featureVisRegelverksendringerUt2026,
-              skalViseDineMuligheter
-            )
-          }
+          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter)}
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}

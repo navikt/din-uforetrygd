@@ -2,7 +2,7 @@ import { FilesIcon } from '@navikt/aksel-icons'
 import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
-import type { components } from '@/api/api'
+import type { Journalpost } from '@/api/initiate'
 import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
 import { Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
@@ -13,7 +13,7 @@ interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
   sakId: string | undefined
   pid?: string
-  journalposter: components['schemas']['Journalpost'][]
+  journalposter: Journalpost[]
 }
 
 export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid, journalposter }) => {

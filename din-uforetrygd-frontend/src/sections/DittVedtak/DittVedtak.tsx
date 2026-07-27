@@ -1,4 +1,4 @@
-import type { components } from '@/api/api'
+import type { DittUforevedtak } from '@/api/initiate'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
@@ -6,7 +6,7 @@ import { isEnabled } from '@/utils/unleash'
 interface IDittVedtak {
   pid?: string
   hasIverksattVedtak: boolean
-  dittUforevedtak?: components['schemas']['DittUforevedtak']
+  dittUforevedtak?: DittUforevedtak
   sakId?: string
 }
 
