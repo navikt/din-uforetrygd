@@ -33,6 +33,11 @@ class UforetrygdController(
 
     private val logger = LoggerFactory.getLogger(UforetrygdController::class.java)
 
+    @GetMapping("dekrypter-pid")
+    fun hentDekryptertPid(): ResponseEntity<PidResponse> {
+        return ResponseEntity.ok(PidResponse(SecurityContextUtil.getPidFromContext()))
+    }
+
     @GetMapping("initiate")
     fun initiateUforetrygd(): ResponseEntity<UforetrygdResponse> {
         val pid = SecurityContextUtil.getPidFromContext()
@@ -93,3 +98,5 @@ data class SaksoversiktResponse(
     val aktiveBehandlinger: List<Behandling>,
     val avsluttedeBehandlinger: List<Behandling>
 )
+
+data class PidResponse(val pid: String)

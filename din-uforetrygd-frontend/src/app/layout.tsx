@@ -10,6 +10,7 @@ import '@navikt/ds-css'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
+import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
 import InitializeFaro from '@/utils/faro/faro'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
 
@@ -43,6 +44,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <Spacer />
               <InternalHeaderUser name={veileder.name} />
             </InternalHeader>
+            <VeilederBorgerinformasjon />
             <main className="main-content" id="maincontent" tabIndex={-1}>
               <Brødsmulesti mode="veileder" />
               {children}

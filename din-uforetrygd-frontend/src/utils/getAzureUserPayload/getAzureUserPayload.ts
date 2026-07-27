@@ -11,7 +11,7 @@ export const getAzureUserPayload = async (): Promise<AzurePayload> => {
   if (process.env.NODE_ENV !== 'production') {
     return {
       NAVident: 'NAVident',
-      name: 'name',
+      name: 'Saksbehandler',
       preferred_username: 'preferred_username',
     }
   }
