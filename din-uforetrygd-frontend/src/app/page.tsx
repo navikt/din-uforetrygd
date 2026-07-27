@@ -87,7 +87,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           />
           <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
           <div className={'ux-signals-container'}>
-            <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'}></div>
+            <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'} suppressHydrationWarning></div>
           </div>
         </EventProvider>
       </>
