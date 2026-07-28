@@ -2,6 +2,7 @@ package no.nav.dinuforetrygd.person.parallellesannheter.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.dinuforetrygd.person.pdl.PdlAdressebskyttelse
+import no.nav.dinuforetrygd.person.pdl.PdlNavn
 
 data class AdressebeskyttelseParallelleSannheterContainer(@JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<PdlAdressebskyttelse>?)
     : ParallelleSannheterContainer<PdlAdressebskyttelse>(adressebeskyttelse) {
@@ -11,7 +12,13 @@ data class AdressebeskyttelseParallelleSannheterContainer(@JsonProperty("adresse
     }
 }
 
-
+data class NavnParallelleSannheterContainer(@JsonProperty("navn") val navn: List<PdlNavn>?)
+    : ParallelleSannheterContainer<PdlNavn>(navn) {
+    override fun lockDecision(): NavnParallelleSannheterContainer {
+        super.lockDecision()
+        return this
+    }
+}
 
 abstract class ParallelleSannheterContainer<T : ParallellSannhet>(protected val parallelleSannheter: List<T>?) {
     protected var decided = false

@@ -11,6 +11,10 @@ class PdlQueryBuilder {
             return getPdlQuery(pid, "/pdl/vergemaalEllerFremtidsfullmakt.graphql")
         }
 
+        fun getPersonQuery(pid: String): PdlPersonQuery {
+            return getPdlQuery(pid, "/pdl/person.graphql")
+        }
+
         private fun getPdlQuery(
             pid: String,
             queryFilePath: String,
