@@ -10,18 +10,13 @@ import {
 } from '@navikt/aksel-icons'
 import { BodyShort, Button, Dialog, Heading, HGrid, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
 import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
-import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import Divider from '@/sections/ForsideBehandling/Divider'
-import getEnv from '@/utils/env'
 
 const FinnUtMer = () => {
-  const mode = getEnv('MODE')
-
   return (
     <section style={{ paddingBottom: '4rem' }}>
       <VStack gap="space-24" align={'start'}>
-        <Brødsmulesti mode={mode} />
         <HStack gap={'space-12'} align="center">
           <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'} />
           <Heading size="large" level="2">

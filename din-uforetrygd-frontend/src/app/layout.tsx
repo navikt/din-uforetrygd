@@ -7,6 +7,7 @@ import '../global.css'
 import './layout.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
+import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import InitializeFaro from '@/utils/faro/faro'
@@ -43,6 +44,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <InternalHeaderUser name={veileder.name} />
             </InternalHeader>
             <main className="main-content" id="maincontent" tabIndex={-1}>
+              <Brødsmulesti mode="veileder" />
               {children}
             </main>
             <InitializeFaro url={faroUrl} appName={appName} />
@@ -65,6 +67,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <Decorator.Header />
             <RepresentasjonBanner />
             <main className="main-content" id="maincontent" tabIndex={-1}>
+              <Brødsmulesti mode="borger" />
               {children}
             </main>
             <Decorator.Footer />

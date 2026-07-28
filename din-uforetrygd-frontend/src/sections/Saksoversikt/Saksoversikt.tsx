@@ -3,17 +3,15 @@
 import { Heading, Pagination, Tabs, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import { useState } from 'react'
-import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { IngenBehandlinger } from '@/sections/Saksoversikt/IngenBehandlinger'
 import { SaksoversiktBehandlingKort } from '@/sections/Saksoversikt/SaksoversiktBehandlingKort'
 import type { SaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 
 interface Saksoversikt {
   saksoversikt: SaksoversiktType
-  mode: string | undefined
 }
 
-export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => {
+export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt }) => {
   const [currentPage, setCurrentPage] = useState(saksoversikt.avsluttedeBehandlinger.length > 0 ? 1 : 0)
   const antallBehandlingerPerSide = 5
   const antallSider = Math.ceil(saksoversikt.avsluttedeBehandlinger.length / antallBehandlingerPerSide)
@@ -21,7 +19,6 @@ export const Saksoversikt: React.FC<Saksoversikt> = ({ saksoversikt, mode }) => 
   return (
     <section>
       <VStack gap="space-24">
-        <Brødsmulesti mode={mode} />
         <Heading size="large" level="2">
           Saksoversikt
         </Heading>

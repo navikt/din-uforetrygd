@@ -22,7 +22,7 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
       saksoversiktResponse.saksoversiktResponse && mapTilSaksoversiktType(saksoversiktResponse.saksoversiktResponse)
 
     if (saksoversikt) {
-      return <Saksoversikt saksoversikt={saksoversikt} mode={mode} />
+      return <Saksoversikt saksoversikt={saksoversikt} />
     } else
       return (
         <section className="main-content">
