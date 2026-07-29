@@ -17,6 +17,7 @@ import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.erRelevant
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,9 +25,9 @@ class ForsideService(
     private val penService: PenService,
     private val tokenService: TokenService,
     private val representasjonClient: RepresentasjonClient,
-    private val journalpostService: JournalpostService,
     private val inntektskomponentenService: InntektskomponentenService,
-    private val penClient: PenClient
+    private val penClient: PenClient,
+    private val journalpostService: JournalpostService,
 ) {
     private val logger: Logger = LoggerFactory.getLogger(ForsideService::class.java)
 
@@ -36,9 +37,9 @@ class ForsideService(
             val uforeSak = penService.getSaker(pid).velgSak()
             if (uforeSak == null) return@withContext lagUforetrygdResponse(
                 pid = pid,
-                sak = uforeSak,
-                isVerge = isUforetrygdVerge(pid))
-
+                sak = null,
+                isVerge = isUforetrygdVerge(pid)
+            )
 
             val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
             val sumAvForventedeInntekterDeferred = async { penService.getSumAvForventedeInntekter(pid) }
@@ -52,19 +53,11 @@ class ForsideService(
                 }
             }
 
-            val journalposterDeferred = async {
-                uforeSak.let {
-                    journalpostService.getJournalPostliste(pid, it.sakId.toString())
-                        .filter { journalpost -> journalpost.dokumenter.isNotEmpty() }
-                }
-            }
-
             val isVergeDeferred = async { isUforetrygdVerge(pid) }
 
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
             val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
             val forsideData = forsideDataDeferred.await()
-            val journalposter = journalposterDeferred.await()
             val isVerge = isVergeDeferred.await()
 
             var inntektFraSkatt = 0.0
@@ -83,7 +76,6 @@ class ForsideService(
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
-                journalposter = journalposter,
                 isVerge = isVerge
             )
         }
@@ -113,7 +105,6 @@ class ForsideService(
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
         behandling: Behandling? = null,
-        journalposter: List<Journalpost> = emptyList(),
         isVerge: Boolean
     ) = UforetrygdResponse(
         pid = pid,
@@ -122,7 +113,6 @@ class ForsideService(
         innloggingstype = tokenService.getInnloggingstype(),
         hasIverksattVedtak = hasIverksattVedtak,
         uforevedtak = uforevedtak,
-        journalposter = journalposter,
         behandling = behandling,
         isVerge = isVerge
     )
@@ -146,4 +136,17 @@ class ForsideService(
 
     suspend private fun isUforetrygdVerge(pid: String): Boolean =
         !SecurityContextUtil.isFullmakt() && representasjonClient.harRepresentasjonsforhold(pid, VALID_VERGE_TYPER)?.value ?: false
+
+    fun hentJournalposter(pid: String): List<Journalpost> = runBlocking {
+        withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {
+
+            val uforeSak = penService.getSaker(pid).minByOrNull { it.status.prioritet }
+                ?: return@withContext emptyList()
+
+            val journalposter = journalpostService.getJournalPostliste(pid, uforeSak.sakId.toString())
+                    .filter { it.dokumenter.isNotEmpty() }
+
+            return@withContext journalposter
+        }
+    }
 }

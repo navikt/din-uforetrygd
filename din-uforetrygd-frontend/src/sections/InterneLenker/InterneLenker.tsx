@@ -1,22 +1,22 @@
 import { FilesIcon } from '@navikt/aksel-icons'
 import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
+import { Suspense } from 'react'
 import type React from 'react'
-import type { Journalpost } from '@/api/initiate'
 import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
 import { Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
+import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
   sakId: string | undefined
   pid?: string
-  journalposter: Journalpost[]
 }
 
-export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid, journalposter }) => {
+export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid }) => {
   const mode = getEnv('MODE')
 
   return (
@@ -45,7 +45,9 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </LinkCardTitle>
               <LinkCardDescription>Behandlinger knyttet til saken din</LinkCardDescription>
             </LinkCard>
-            <Dokumenter pid={pid} journalposter={journalposter!} />
+            <Suspense fallback="TODO: skeleton eller noe">
+              <Dokumenter pid={pid} />
+            </Suspense>
           </VStack>
         </section>
       )}

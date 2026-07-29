@@ -3,6 +3,7 @@ import express from 'express'
 import { mockData } from './mockData'
 import { mockSaksoversiktData } from './mockSaksoversiktData'
 import { mockVarslerData } from './mockVarslerData'
+import { mockJournalposterData } from './mockJournalposterData'
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -21,6 +22,14 @@ app.get('/api/initiate', (req, res) => {
   const data = mockData[requestedScenario] || mockData.default
 
   console.log(`Responding with scenario: ${requestedScenario}`)
+  res.status(200).json(data)
+})
+
+app.get('/api/journalposter', (req, res) => {
+  const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
+  const data = mockJournalposterData[requestedScenario] || mockData.default
+
+  console.log(`Responding with journalposter scenario: ${requestedScenario}`)
   res.status(200).json(data)
 })
 

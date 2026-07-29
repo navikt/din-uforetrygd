@@ -26,164 +26,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     },
     innloggingstype: 'LEVEL3',
     verge: true,
-    journalposter: [
-      {
-        id: '453972899',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-      {
-        id: '453972898',
-        tittel: 'Søknad om alderspensjon',
-        opprettetAv: 'BRUKER',
-        opprettetDato: '2025-03-14T10:36:19',
-        dokumenter: [
-          {
-            tittel: 'Søknad om alderspensjon',
-            dokumentInfoId: '454376701',
-          },
-        ],
-      },
-      {
-        id: '3972899',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-      {
-        id: '453899',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-      {
-        id: '453972',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-      {
-        id: '4539729',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-      {
-        id: '45397299',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          {
-            tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-            dokumentInfoId: '454376702',
-          },
-          {
-            tittel: 'Dine rettigheter og plikter',
-            dokumentInfoId: '454376703',
-          },
-          {
-            tittel: 'Opplysninger brukt i beregningen',
-            dokumentInfoId: '454376704',
-          },
-          {
-            tittel: 'Dette er din månedlige pensjon før skatt',
-            dokumentInfoId: '454376705',
-          },
-        ],
-      },
-    ],
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'INNVILGET',
@@ -214,20 +56,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     },
     innloggingstype: 'LEVEL4',
     verge: false,
-    journalposter: [
-      {
-        id: '45397299',
-        tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
-        opprettetAv: 'NAV',
-        opprettetDato: '2025-03-14T11:36:39',
-        dokumenter: [
-          { tittel: 'Vedtak - innvilgelse av alderspensjon (auto)', dokumentInfoId: '454376702' },
-          { tittel: 'Dine rettigheter og plikter', dokumentInfoId: '454376703' },
-          { tittel: 'Opplysninger brukt i beregningen', dokumentInfoId: '454376704' },
-          { tittel: 'Dette er din månedlige pensjon før skatt', dokumentInfoId: '454376705' },
-        ],
-      },
-    ],
   },
   gradert: {
     pid: '81549300',
@@ -251,7 +79,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     },
     innloggingstype: 'LEVEL4',
     verge: false,
-    journalposter: [],
   },
   'har-lopende': {
     pid: '81549300',
@@ -260,7 +87,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    journalposter: [],
     verge: false,
   },
   'sak-behandling': {
@@ -270,7 +96,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    journalposter: [],
     verge: false,
   },
   'ufore-behandling': {
@@ -295,7 +120,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     },
     innloggingstype: 'LEVEL4',
     verge: false,
-    journalposter: [],
   },
   'ingen-uforesak': {
     pid: '81549300',
@@ -304,7 +128,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    journalposter: [],
     verge: false,
   },
   'ufore-uten-datoer': {
@@ -328,7 +151,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    journalposter: [],
     verge: false,
   },
 }

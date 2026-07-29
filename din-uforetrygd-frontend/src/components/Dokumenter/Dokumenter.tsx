@@ -1,15 +1,16 @@
-import type { Journalpost } from '@/api/initiate'
+import { hentJournalposter } from '@/api/hentJournalposter'
 import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 import { DokumenterView } from './DokumenterView'
 
 interface IDokumenterProps {
   pid?: string
-  journalposter: Journalpost[]
 }
 
-export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
-  const journalposter = props.journalposter.map((journalpost) => {
+export const Dokumenter = async ({ pid }: IDokumenterProps) => {
+  const journalposterResponse = await hentJournalposter(pid)
+
+  const journalposter = journalposterResponse.map((journalpost) => {
     const formattedDate = formatDate(journalpost.opprettetDato)
     if (!formattedDate) throw Error('Invalid date')
 
@@ -30,5 +31,5 @@ export const Dokumenter: React.FC<IDokumenterProps> = (props) => {
     }
   })
 
-  return <DokumenterView pid={props.pid} journalposter={journalposter} />
+  return <DokumenterView pid={pid} journalposter={journalposter} />
 }

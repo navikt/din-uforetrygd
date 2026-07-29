@@ -37,7 +37,6 @@ class UforetrygdServiceTest {
         penService = penService,
         tokenService = tokenService,
         representasjonClient = representasjonClient,
-        journalpostService = journalpostService,
         inntektskomponentenService = inntektskomponentenService,
         penClient = penClient,
     )

@@ -1,9 +1,17 @@
 package no.nav.dinuforetrygd.uforetrygd
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import no.nav.dinuforetrygd.ErrorHandler
 import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.audit.Auditor
+import no.nav.dinuforetrygd.journalpost.Journalpost
+import no.nav.dinuforetrygd.journalpost.JournalpostService
+import no.nav.dinuforetrygd.pensjon.pen.PenService
+import no.nav.dinuforetrygd.security.RequestContextAsyncContext
 import no.nav.dinuforetrygd.security.SecurityContextUtil
+import no.nav.dinuforetrygd.security.SecurityCoroutineContext
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -34,11 +42,29 @@ class UforetrygdController(
                 .body(uforetrygdService.hentForsideData(pid))
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
-                auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+                auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
             } else if (SecurityContextUtil.isFullmakt()) {
-                auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+                auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), pid)
             }
             return response
+        } catch (e: Exception) {
+            throw ErrorHandler.exceptionToErrorResponse(e)
+        }
+    }
+
+    @GetMapping("journalposter")
+    fun hentJournalposter(): ResponseEntity<List<Journalpost>> {
+        val pid = SecurityContextUtil.getPidFromContext()
+        try {
+            val journalposter = uforetrygdService.hentJournalposter(pid)
+
+            if (tokenService.isUserLoggedInAsSaksbehandler()) {
+                auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
+            } else if (SecurityContextUtil.isFullmakt()) {
+                auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), pid)
+            }
+
+            return ResponseEntity.ok(journalposter)
         } catch (e: Exception) {
             throw ErrorHandler.exceptionToErrorResponse(e)
         }
