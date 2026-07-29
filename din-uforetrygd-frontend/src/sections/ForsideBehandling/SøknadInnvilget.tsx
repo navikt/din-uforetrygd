@@ -1,7 +1,7 @@
 'use client'
 
 import { Heading, HelpText, HGrid, HStack, Link } from '@navikt/ds-react'
-import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 import Divider from '@/sections/ForsideBehandling/Divider'
 import { ForsideBehandlingHeader } from '@/sections/ForsideBehandling/ForsideBehandlingHeader'
 import type { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -26,7 +26,7 @@ export const SøknadInnvilget = ({ behandling }: Props) => {
         <Heading size="small">Ny månedlig beregning før skatt</Heading>
         <HelpText
           title={'Om månedlig beregning'}
-          onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Månedlig beregning' })}
+          onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Månedlig beregning' })}
         >
           Dette er ikke beløpet du får utbetalt på konto. Det trekkes skatt, eventuelle lønnstrekk og andre trekk før du
           får det utbetalt.
