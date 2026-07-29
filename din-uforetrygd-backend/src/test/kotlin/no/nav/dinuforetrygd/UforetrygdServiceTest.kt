@@ -39,6 +39,7 @@ class UforetrygdServiceTest {
         representasjonClient = representasjonClient,
         inntektskomponentenService = inntektskomponentenService,
         penClient = penClient,
+        journalpostService = journalpostService
     )
 
     companion object {
