@@ -4,32 +4,23 @@ import { FolderFileIcon } from '@navikt/aksel-icons'
 import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
-import type React from 'react'
+import React, { Suspense, use } from 'react'
 import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { ReadMoreTile } from '@/components/ReadMoreTile/ReadMoreTile'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList/SortablePaginatedList'
+import { formatDate } from '@/utils/formatter/formatter'
+import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 import { umami } from '@/utils/umami'
 import styles from './dokumenterview.module.css'
+import { Journalpost } from '@/api/hentJournalposter'
 
 interface IDokumenterProps {
   pid?: string
-  journalposter: {
-    tittel: string
-    formattedDate: string
-    createdBy?: string
-    sortDate: string
-    id: string
-    dokumenter: {
-      tittel: string
-      dokumentInfoId: string
-      filstorrelse?: number
-      variant?: string
-    }[]
-  }[]
+  journalposterPromise: Promise<Journalpost[]>
 }
 
-export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
+export const DokumenterView: React.FC<IDokumenterProps> = ({ pid, journalposterPromise }) => {
   return (
     <ExpansionCard aria-label="Dokumenter knyttet til saken din">
       <ExpansionCard.Header>
@@ -54,63 +45,84 @@ export const DokumenterView: React.FC<IDokumenterProps> = (props) => {
         </HStack>
       </ExpansionCard.Header>
       <ExpansionCard.Content>
-        <SortablePaginatedList
-          items={props.journalposter}
-          itemsPerPage={6}
-          itemTypeName="dokumenter"
-          renderItemAction={(journalpost) => {
-            const [hoveddokument, ...vedlegg] = journalpost.dokumenter
-            return (
-              <ReadMoreTile
-                key={journalpost.sortDate}
-                content={
-                  <VStack gap="space-16" className={styles.readMoreOpened}>
-                    <DocumentLink
-                      href={getDocumentProxyLink(
-                        journalpost.id,
-                        hoveddokument.dokumentInfoId,
-                        hoveddokument.variant,
-                        props.pid
-                      )}
-                      fileSize={hoveddokument.filstorrelse}
-                    >
-                      Åpne {hoveddokument.tittel.toLowerCase()}
-                    </DocumentLink>
-                    <VStack gap="space-8">
-                      {vedlegg.length > 0 && (
-                        <BodyShort size="medium" weight="semibold">
-                          Vedlegg
-                        </BodyShort>
-                      )}
-                      {vedlegg.map((vedlegg) => (
-                        <DocumentLink
-                          key={vedlegg.dokumentInfoId}
-                          href={getDocumentProxyLink(
-                            journalpost.id,
-                            vedlegg.dokumentInfoId,
-                            vedlegg.variant,
-                            props.pid
-                          )}
-                          fileSize={vedlegg.filstorrelse}
-                        >
-                          {vedlegg.tittel}
-                        </DocumentLink>
-                      ))}
-                    </VStack>
-                  </VStack>
-                }
-              >
-                <BodyShort size="medium" weight="semibold">
-                  {journalpost.tittel}
-                </BodyShort>
-                <BodyShort size="small">
-                  {journalpost.formattedDate} {journalpost.createdBy && `- fra ${journalpost.createdBy}`}
-                </BodyShort>
-              </ReadMoreTile>
-            )
-          }}
-        ></SortablePaginatedList>
+        <Suspense fallback={null}>
+          <DokumenterListe pid={pid} journalposterPromise={journalposterPromise} />
+        </Suspense>
       </ExpansionCard.Content>
     </ExpansionCard>
+  )
+}
+
+const DokumenterListe = ({ pid, journalposterPromise }: IDokumenterProps) => {
+  const råJournalposter = use(journalposterPromise)
+
+  const journalposter = råJournalposter.map((journalpost) => {
+    const formattedDate = formatDate(journalpost.opprettetDato)
+    if (!formattedDate) throw Error('Invalid date')
+
+    return {
+      tittel: journalpost.tittel ?? '',
+      formattedDate: formattedDate,
+      createdBy: mapOpprettetAv(journalpost.opprettetAv),
+      sortDate: journalpost.opprettetDato ?? '',
+      id: journalpost.id ?? '',
+      dokumenter: (journalpost.dokumenter ?? [])
+        .filter((d) => d.tittel !== undefined && d.dokumentInfoId !== undefined)
+        .map((d) => ({
+          tittel: d.tittel as string,
+          dokumentInfoId: d.dokumentInfoId as string,
+          filstorrelse: d.filstorrelse,
+          variant: d.variant as string,
+        })),
+    }
+  })
+
+  return (
+    <SortablePaginatedList
+      items={journalposter}
+      itemsPerPage={6}
+      itemTypeName="dokumenter"
+      renderItemAction={(journalpost) => {
+        const [hoveddokument, ...vedlegg] = journalpost.dokumenter
+        return (
+          <ReadMoreTile
+            key={journalpost.sortDate}
+            content={
+              <VStack gap="space-16" className={styles.readMoreOpened}>
+                <DocumentLink
+                  href={getDocumentProxyLink(journalpost.id, hoveddokument.dokumentInfoId, hoveddokument.variant, pid)}
+                  fileSize={hoveddokument.filstorrelse}
+                >
+                  Åpne {hoveddokument.tittel.toLowerCase()}
+                </DocumentLink>
+                <VStack gap="space-8">
+                  {vedlegg.length > 0 && (
+                    <BodyShort size="medium" weight="semibold">
+                      Vedlegg
+                    </BodyShort>
+                  )}
+                  {vedlegg.map((vedlegg) => (
+                    <DocumentLink
+                      key={vedlegg.dokumentInfoId}
+                      href={getDocumentProxyLink(journalpost.id, vedlegg.dokumentInfoId, vedlegg.variant, pid)}
+                      fileSize={vedlegg.filstorrelse}
+                    >
+                      {vedlegg.tittel}
+                    </DocumentLink>
+                  ))}
+                </VStack>
+              </VStack>
+            }
+          >
+            <BodyShort size="medium" weight="semibold">
+              {journalpost.tittel}
+            </BodyShort>
+            <BodyShort size="small">
+              {journalpost.formattedDate} {journalpost.createdBy && `- fra ${journalpost.createdBy}`}
+            </BodyShort>
+          </ReadMoreTile>
+        )
+      }}
+    />
   )
 }
