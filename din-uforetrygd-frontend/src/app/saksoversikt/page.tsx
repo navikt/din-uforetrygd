@@ -14,7 +14,6 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
   const params = await searchParams
   const saksid = params?.saksid
   const pid = params?.pid
-  const mode = getEnv('MODE')
 
   if (saksid) {
     const saksoversiktResponse = await hentSaksoversikt(saksid, pid)

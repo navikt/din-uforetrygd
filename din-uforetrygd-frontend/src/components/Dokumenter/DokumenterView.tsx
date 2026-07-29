@@ -4,7 +4,9 @@ import { FolderFileIcon } from '@navikt/aksel-icons'
 import { BodyShort, Box, ExpansionCard, Hide, HStack, VStack } from '@navikt/ds-react'
 import { LinkCardIcon } from '@navikt/ds-react/LinkCard'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
-import React, { Suspense, use } from 'react'
+import type React from 'react'
+import { Suspense, use } from 'react'
+import { Journalpost } from '@/api/hentJournalposter'
 import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
 import { getDocumentProxyLink } from '@/components/Dokumenter/utils'
 import { ReadMoreTile } from '@/components/ReadMoreTile/ReadMoreTile'
@@ -13,7 +15,6 @@ import { formatDate } from '@/utils/formatter/formatter'
 import { mapOpprettetAv } from '@/utils/mapOpprettetAv/mapOpprettetAv'
 import { umami } from '@/utils/umami'
 import styles from './dokumenterview.module.css'
-import { Journalpost } from '@/api/hentJournalposter'
 
 interface IDokumenterProps {
   pid?: string
