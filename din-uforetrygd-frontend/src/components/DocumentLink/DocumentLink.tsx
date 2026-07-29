@@ -1,6 +1,6 @@
 import { ExternalLinkIcon } from '@navikt/aksel-icons'
 import { Detail, Link, VStack } from '@navikt/ds-react'
-import { LAST_NED_EVENT } from '@navikt/nav-dekoratoren-moduler'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 import type React from 'react'
 import { readableFileSize } from '@/components/DocumentLink/utils'
 import { umami } from '@/utils/umami'
@@ -21,7 +21,7 @@ export const DocumentLink: React.FC<IDocumentLink> = (props) => {
         className={styles.link}
         onClick={(e) => {
           e.stopPropagation()
-          umami(LAST_NED_EVENT, { type: 'Saksdokument', tema: 'Uføretrygd', tittel: 'Dokument' })
+          umami(Events.LAST_NED, { type: 'Saksdokument', tema: 'Uføretrygd', tittel: 'Dokument' })
         }}
       >
         {props.children}

@@ -1,7 +1,7 @@
 'use client'
 
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
-import { HELPTEXT_VIST_EVENT } from '@navikt/nav-dekoratoren-moduler'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
 import type { DittUforevedtak } from '@/api/initiate'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
@@ -122,7 +122,7 @@ export function Vedtaksdetaljer({
                     <BodyShort>Registrert forventet inntekt i {arstall}</BodyShort>
                     <HelpText
                       title="Hvor kommer registrert forventet inntekt fra?"
-                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Registrert forventet inntekt' })}
+                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Registrert forventet inntekt' })}
                     >
                       Forventet inntekt kommer fra dine tidligere registreringer, eller i noen tilfeller fra
                       opplysninger vi har hentet. Har du nylig meldt inn inntekt, vil den ikke vises her før den har
@@ -144,7 +144,7 @@ export function Vedtaksdetaljer({
                     <BodyShort>Inntektsgrense</BodyShort>
                     <HelpText
                       title="Hva er inntektsgrense?"
-                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Inntektsgrense' })}
+                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Inntektsgrense' })}
                     >
                       Den årlige inntekten du kan ha, før vi reduserer uføretrygden din
                     </HelpText>
@@ -161,7 +161,7 @@ export function Vedtaksdetaljer({
                       <BodyShort>Reduksjonsprosent</BodyShort>
                       <HelpText
                         title="Hva er reduksjonsprosent?"
-                        onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'reduksjonsprosent' })}
+                        onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'reduksjonsprosent' })}
                       >
                         <BodyShort spacing>
                           Vi trekker en prosent lik reduksjonsprosenten fra uføretrygden av hver krone du tjener over
@@ -195,7 +195,7 @@ export function Vedtaksdetaljer({
                     <BodyShort>Inntektstak i {arstall}</BodyShort>{' '}
                     <HelpText
                       title="Hva er inntektstak?"
-                      onClick={() => umami(HELPTEXT_VIST_EVENT, { tekst: 'Inntektstak' })}
+                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Inntektstak' })}
                     >
                       Den årlige inntekten du kan ha, før du ikke lenger får utbetalt uføretrygd det aktuelle året.
                       Inntektstaket er 80 prosent av inntekten du hadde før uførhet, oppjustert til dagens verdi.
