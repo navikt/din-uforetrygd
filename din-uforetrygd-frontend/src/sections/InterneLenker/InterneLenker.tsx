@@ -2,22 +2,22 @@ import { FilesIcon } from '@navikt/aksel-icons'
 import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
-import type { Journalpost } from '@/api/initiate'
-import { Dokumenter } from '@/components/Dokumenter/Dokumenter'
 import { Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
+import { hentJournalposter } from '@/api/hentJournalposter'
+import { DokumenterView } from '@/components/Dokumenter/DokumenterView'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
   sakId: string | undefined
   pid?: string
-  journalposter: Journalpost[]
 }
 
-export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid, journalposter }) => {
+export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid }) => {
   const mode = getEnv('MODE')
+  const journalposterPromise = hentJournalposter(pid)
 
   return (
     <>
@@ -45,7 +45,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </LinkCardTitle>
               <LinkCardDescription>Behandlinger knyttet til saken din</LinkCardDescription>
             </LinkCard>
-            <Dokumenter pid={pid} journalposter={journalposter!} />
+            <DokumenterView pid={pid} journalposterPromise={journalposterPromise} />
           </VStack>
         </section>
       )}

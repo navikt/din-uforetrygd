@@ -51,14 +51,6 @@ export interface Dokument {
   variant?: 'ARKIV' | 'SLADDET'
 }
 
-export interface Journalpost {
-  id?: string
-  tittel?: string
-  opprettetAv?: 'BRUKER' | 'FULLMEKTIG' | 'SAKSBEHANDLER' | 'AUTOMATISK_PROSESS' | 'UKJENT' | 'NAV'
-  opprettetDato?: string
-  dokumenter?: Dokument[]
-}
-
 export interface Sak {
   status?: 'OPPRETTET' | 'TIL_BEHANDLING' | 'AVSLUTTET' | 'LOPENDE'
   sakId?: number
@@ -71,7 +63,6 @@ export interface UforetrygdResponse {
   hasIverksattVedtak: boolean
   uforevedtak?: DittUforevedtak
   innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
-  journalposter: Journalpost[]
   behandling?: Behandling
   verge: boolean
 }

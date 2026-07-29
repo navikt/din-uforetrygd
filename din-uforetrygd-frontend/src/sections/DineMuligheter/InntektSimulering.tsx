@@ -6,7 +6,6 @@ import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGr
 import Divider from '@/sections/ForsideBehandling/Divider'
 import getEnv from '@/utils/env'
 import { formatInntekt } from '@/utils/formatter/formatter'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './dineMuligheter.module.css'
 
 interface Uføretrygdendring {

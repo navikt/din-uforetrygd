@@ -1,6 +1,5 @@
 package no.nav.dinuforetrygd.uforetrygd
 
-import no.nav.dinuforetrygd.journalpost.Journalpost
 import java.time.LocalDate
 
 data class UforetrygdResponse(
@@ -10,7 +9,6 @@ data class UforetrygdResponse(
     val hasIverksattVedtak: Boolean,
     val uforevedtak: DittUforevedtak?,
     val innloggingstype: Innloggingstype,
-    val journalposter: List<Journalpost> = emptyList(),
     val behandling: Behandling? = null,
     val isVerge: Boolean
 )

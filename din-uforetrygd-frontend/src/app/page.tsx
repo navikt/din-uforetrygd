@@ -60,19 +60,14 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
             visningskriterier={visningskriterier}
             pid={params.pid}
             innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-          ></InntektSnarveier>
+          />
           <DittVedtak
             pid={params.pid}
             hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
             dittUforevedtak={uforetrygdResponse.uforevedtak}
             sakId={uforesak?.sakId?.toString()}
           />
-          <InterneLenker
-            visningskriterier={visningskriterier}
-            sakId={uforesak?.sakId?.toString()}
-            pid={params.pid}
-            journalposter={uforetrygdResponse.journalposter}
-          ></InterneLenker>
+          <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()} pid={params.pid} />
           <Snarveier
             visningskriterier={visningskriterier}
             pid={params.pid}

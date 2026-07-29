@@ -10,7 +10,6 @@ const defaultUforeResponse: UforetrygdResponse = {
   sak: undefined,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
-  journalposter: [],
   verge: false,
 }
 
