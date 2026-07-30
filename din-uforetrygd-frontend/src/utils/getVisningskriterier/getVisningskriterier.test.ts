@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import type { Sak, UforetrygdResponse } from '@/api/initiate'
 import { Visningskriterier } from '@/const'
 import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
@@ -9,22 +8,8 @@ const defaultUforeResponse: UforetrygdResponse = {
   innloggingstype: 'LEVEL4',
   sak: undefined,
   hasIverksattVedtak: false,
-  uforevedtak: undefined,
+  uforegrad: undefined,
   erVerge: false,
-}
-
-const uforevedtak: DittUforevedtak = {
-  uforegrad: 100,
-  virkFom: '2024-12-01',
-  uforetidspunkt: '2020-10-01',
-  inntektsgrense: 49611,
-  sumAvForventedeInntekter: 150000,
-  hasBarnetilleggFellesBarn: false,
-  hasBarnetilleggSaerkullsbarn: false,
-  hasGjenlevendeTillegg: false,
-  hasVarigTilrettelagtArbeid: false,
-  inntektFraSkatt: 1000,
-  nettoUtbetalingMnd: 1200,
 }
 
 const uforesak: Sak = {
@@ -35,34 +20,34 @@ const uforeResponse: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: uforesak,
   hasIverksattVedtak: true,
-  uforevedtak: uforevedtak,
+  uforegrad: 100,
 }
 
 const uforeOgSakTilBehanndling: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: true,
-  uforevedtak: uforevedtak,
+  uforegrad: undefined,
 }
 
 const gradertUfoereResponse: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: { ...uforesak },
   hasIverksattVedtak: true,
-  uforevedtak: { ...uforevedtak, uforegrad: 50 },
+  uforegrad: 50,
 }
 
 const sakTilbehandlingAndIngenVedtak: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: false,
-  uforevedtak: undefined,
+  uforegrad: undefined,
 }
 
 const ingenUforesakResponse: UforetrygdResponse = {
   ...defaultUforeResponse,
   hasIverksattVedtak: false,
-  uforevedtak: undefined,
+  uforegrad: undefined,
   sak: undefined,
 }
 
