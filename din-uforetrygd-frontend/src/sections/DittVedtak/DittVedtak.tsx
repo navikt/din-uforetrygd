@@ -21,15 +21,15 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   return (
     <section aria-label="Detaljer om saken din">
-      <Suspense fallback={null}>
-        <Vedtaksdetaljer
-          dittUforevedtakPromise={uforevedtakPromise}
-          sakId={sakId}
-          linkInntektsplanlegger={linkInntektsplanlegger}
-          arstall={new Date().getFullYear()}
-          regelverksendringerJuli2026={regelverksendringerJuli2026}
-        />
-      </Suspense>
+      {/*<Suspense fallback={null}>*/}
+      <Vedtaksdetaljer
+        dittUforevedtakPromise={uforevedtakPromise}
+        sakId={sakId}
+        linkInntektsplanlegger={linkInntektsplanlegger}
+        arstall={new Date().getFullYear()}
+        regelverksendringerJuli2026={regelverksendringerJuli2026}
+      />
+      {/*</Suspense>*/}
     </section>
   )
 }

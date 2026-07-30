@@ -21,6 +21,7 @@ import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import { isEnabled } from '@/utils/unleash'
 import { hentJournalposter } from '@/api/hentJournalposter'
+import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>

@@ -23,9 +23,6 @@ export const hentDittUforevedtak = async (pid?: string): Promise<DittUforevedtak
     console.error('Error: ', error)
   })
 
-  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-  await sleep(1000)
-
   const fullmaktCookie = await getFullmaktCookie()
 
   const headers: Record<string, string> = {
