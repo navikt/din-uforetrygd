@@ -4,6 +4,7 @@ import no.nav.dinuforetrygd.ClientException
 import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.person.parallellesannheter.dto.AdressebeskyttelseParallelleSannheterContainer
+import no.nav.dinuforetrygd.person.parallellesannheter.dto.NavnParallelleSannheterContainer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -43,6 +44,29 @@ class ParallelleSannheterClient(
         }
 
         return AdressebeskyttelseParallelleSannheterContainer(null)
+    }
+
+    fun decideNavn(navnSannheter: NavnParallelleSannheterContainer): NavnParallelleSannheterContainer {
+        val path = "/api/navn"
+        try {
+            return webClient
+                .post()
+                .uri("$url$path")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .bodyValue(navnSannheter)
+                .retrieve()
+                .bodyToMono(NavnParallelleSannheterContainer::class.java)
+                .retryWhen(retryOnTimeout)
+                .withMdcContext()
+                .block()
+                ?.lockDecision()?: NavnParallelleSannheterContainer(null)
+        } catch (e: WebClientResponseException) {
+            handleErrorResponse(e, path)
+        } catch (e: Exception) {
+            handleUnexpectedError(e, path)
+        }
+
+        return NavnParallelleSannheterContainer(null)
     }
 
 

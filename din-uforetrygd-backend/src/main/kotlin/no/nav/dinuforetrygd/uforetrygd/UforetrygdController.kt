@@ -1,17 +1,11 @@
 package no.nav.dinuforetrygd.uforetrygd
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import no.nav.dinuforetrygd.ErrorHandler
 import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.audit.Auditor
 import no.nav.dinuforetrygd.journalpost.Journalpost
-import no.nav.dinuforetrygd.journalpost.JournalpostService
-import no.nav.dinuforetrygd.pensjon.pen.PenService
-import no.nav.dinuforetrygd.security.RequestContextAsyncContext
+import no.nav.dinuforetrygd.person.PersonService
 import no.nav.dinuforetrygd.security.SecurityContextUtil
-import no.nav.dinuforetrygd.security.SecurityCoroutineContext
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -27,11 +21,26 @@ import org.springframework.web.server.ResponseStatusException
 class UforetrygdController(
     private val uforetrygdService: ForsideService,
     private val saksoversiktService: SaksoversiktService,
+    private val personService: PersonService,
     private val tokenService: TokenService,
     private val auditor: Auditor,
 ) {
 
     private val logger = LoggerFactory.getLogger(UforetrygdController::class.java)
+
+    @GetMapping("borgerinfo")
+    fun hentBorgerInfo(): ResponseEntity<BorgerInfoResponse> {
+        val dekryptertPid = SecurityContextUtil.getPidFromContext()
+        val navn = personService.getNavn(dekryptertPid)
+
+        if (tokenService.isUserLoggedInAsSaksbehandler()) {
+            auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+        } else if (SecurityContextUtil.isFullmakt()) {
+            auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+        }
+
+        return ResponseEntity.ok(BorgerInfoResponse(dekryptertPid, navn ?: ""))
+    }
 
     @GetMapping("initiate")
     fun initiateUforetrygd(): ResponseEntity<UforetrygdResponse> {
@@ -93,3 +102,5 @@ data class SaksoversiktResponse(
     val aktiveBehandlinger: List<Behandling>,
     val avsluttedeBehandlinger: List<Behandling>
 )
+
+data class BorgerInfoResponse(val pid: String, val navn: String)

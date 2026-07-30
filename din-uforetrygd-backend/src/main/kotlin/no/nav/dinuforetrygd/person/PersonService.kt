@@ -23,4 +23,13 @@ class PersonService(
             pdlClient.performQueryWithElevatedPriveleges(PdlQueryBuilder.getAdressebeskyttelseQuery(pid)).adressebeskyttelse
         return parallelleSannheterService.decideAdressebeskyttelse(adressebeskyttelse)?.gradering
     }
+
+    fun getNavn(pid: String): String? {
+        pdlClient.performQuery(PdlQueryBuilder.getPersonQuery(pid)).let {
+            val navn = parallelleSannheterService.decideNavn(it.navn)
+            return navn?.let {
+                "${it.fornavn} ${it.mellomnavn?.let { mellomnavn -> "$mellomnavn " } ?: ""}${it.etternavn}"
+            }
+        }
+    }
 }

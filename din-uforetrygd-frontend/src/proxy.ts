@@ -16,7 +16,11 @@ export function proxy(request: NextRequest) {
     },
   })
 
-  const response = NextResponse.next()
+  const pid = request.nextUrl.searchParams.get('pid')
+  const headers = new Headers(request.headers)
+  if (pid) headers.set('x-kryptert-pid', pid)
+
+  const response = NextResponse.next({ request: { headers } })
 
   if (!request.cookies.has(unleashSessionIdKey)) {
     const sessionId = `${Math.floor(Math.random() * 1_000_000_000)}`

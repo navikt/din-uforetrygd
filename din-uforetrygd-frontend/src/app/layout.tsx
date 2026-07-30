@@ -10,8 +10,8 @@ import '@navikt/ds-css'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
+import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
 import InitializeFaro from '@/utils/faro/faro'
-import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
@@ -29,8 +29,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   })
 
   if (mode === 'veileder') {
-    const veileder = await getAzureUserPayload()
-
     return (
       <html lang="no">
         <head>
@@ -38,11 +36,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         </head>
         <body>
           <Theme>
-            <InternalHeader>
-              <InternalHeaderTitle>Din uføretrygd</InternalHeaderTitle>
-              <Spacer />
-              <InternalHeaderUser name={veileder.name} />
-            </InternalHeader>
+            <VeilederBanner />
             <main className="main-content" id="maincontent" tabIndex={-1}>
               <Brødsmulesti mode="veileder" />
               {children}

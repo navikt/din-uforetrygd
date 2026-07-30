@@ -1,6 +1,5 @@
 import { Alert, Heading, VStack } from '@navikt/ds-react'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
-import { VeilederBorgerinformasjon } from '@/components/VeilederBorgerinformasjon/VeilederBorgerinformasjon'
 import type { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
@@ -40,7 +39,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
     return (
       <>
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
-        <VeilederBorgerinformasjon pid={uforetrygdResponse.pid} />
         <EventProvider>
           <VStack gap="space-12" className={'tittel-wrapper'}>
             <Heading size="xlarge" level="1">

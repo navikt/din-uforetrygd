@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 
 data class PdlPerson(
     @JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<PdlAdressebskyttelse>?,
+    @JsonProperty("navn") val navn: List<PdlNavn>?,
     @JsonProperty("vergemaalEllerFremtidsfullmakt") val vergemaalEllerFremtidsfullmakt: List<PdlVergemaalEllerFremtidsfullmakt>?
 )
 
@@ -44,6 +45,14 @@ enum class  PdlAdressebeskyttelsesgradering{
     //No adressebeskyttelse
     UGRADERT;
 }
+
+data class PdlNavn(
+    @JsonProperty("fornavn") val fornavn: String,
+    @JsonProperty("mellomnavn") val mellomnavn: String?,
+    @JsonProperty("etternavn") val etternavn: String,
+    @JsonProperty("metadata") val metadata: PdlMetadata?,
+    @JsonProperty("folkeregistermetadata") override val folkeregistermetadata: PdlFolkeregisterMetadata?
+): ParallellSannhet(metadata, folkeregistermetadata)
 
 
 data class PdlMetadata(
