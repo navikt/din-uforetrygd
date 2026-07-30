@@ -61,6 +61,28 @@ class UforetrygdController(
         }
     }
 
+    @GetMapping("uforevedtak")
+    fun hentUforevedtak(): ResponseEntity<DittUforevedtak> {
+        val pid = SecurityContextUtil.getPidFromContext()
+        try {
+            val uforevedtak = uforetrygdService.hentUforevedtak(pid)
+
+            if (tokenService.isUserLoggedInAsSaksbehandler()) {
+                auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
+            } else if (SecurityContextUtil.isFullmakt()) {
+                auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), pid)
+            }
+
+            if (uforevedtak == null) {
+                // TODO
+            }
+
+            return ResponseEntity.ok(uforevedtak)
+        } catch (e: Exception) {
+            throw ErrorHandler.exceptionToErrorResponse(e)
+        }
+    }
+
     @GetMapping("journalposter")
     fun hentJournalposter(): ResponseEntity<List<Journalpost>> {
         val pid = SecurityContextUtil.getPidFromContext()

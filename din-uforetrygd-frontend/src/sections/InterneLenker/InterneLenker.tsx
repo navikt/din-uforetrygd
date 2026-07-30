@@ -6,18 +6,23 @@ import { Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
-import { hentJournalposter } from '@/api/hentJournalposter'
+import { hentJournalposter, Journalpost } from '@/api/hentJournalposter'
 import { DokumenterView } from '@/components/Dokumenter/DokumenterView'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
   sakId: string | undefined
   pid?: string
+  journalposterPromise: Promise<Journalpost[]>
 }
 
-export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid }) => {
+export const InterneLenker: React.FC<InterneLenkerProps> = async ({
+  visningskriterier,
+  sakId,
+  pid,
+  journalposterPromise,
+}) => {
   const mode = getEnv('MODE')
-  const journalposterPromise = hentJournalposter(pid)
 
   return (
     <>

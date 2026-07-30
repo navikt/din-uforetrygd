@@ -61,6 +61,7 @@ class ForsideService(
 
             var inntektFraSkatt = 0.0
 
+            // TODO: Returner kun hasIverksattVedtak og uforegrad
             if (vedtakssammendragResponse.hasIverksattVedtak) {
                 try {
                     inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
@@ -73,6 +74,7 @@ class ForsideService(
                 pid = pid,
                 sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
+                // TODO: Fjern
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
                 erVerge = erVerge
@@ -134,6 +136,30 @@ class ForsideService(
 
     suspend private fun isUforetrygdVerge(pid: String): Boolean =
         !SecurityContextUtil.isFullmakt() && representasjonClient.harRepresentasjonsforhold(pid, VALID_VERGE_TYPER)?.value ?: false
+
+    fun hentUforevedtak(pid: String): DittUforevedtak? = runBlocking {
+        withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {
+            val uforeSak = penService.getSaker(pid).velgSak()
+                ?: return@withContext null
+
+            val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
+            val sumAvForventedeInntekterDeferred = async { penService.getSumAvForventedeInntekter(pid) }
+
+            val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
+            val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
+
+            if (!vedtakssammendragResponse.hasIverksattVedtak) return@withContext null
+
+            var inntektFraSkatt = 0.0
+            try {
+                inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
+            } catch (e: Exception) {
+                logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
+            }
+
+            return@withContext vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt)
+        }
+    }
 
     fun hentJournalposter(pid: String): List<Journalpost> = runBlocking {
         withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {

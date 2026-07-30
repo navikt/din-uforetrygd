@@ -3,14 +3,15 @@
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
-import type { DittUforevedtak } from '@/api/initiate'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
+import { use } from 'react'
 
 interface VedtaksdetaljerProps {
-  dittUforevedtak: DittUforevedtak
+  dittUforevedtakPromise: Promise<DittUforevedtak | null>
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number
@@ -18,12 +19,19 @@ interface VedtaksdetaljerProps {
 }
 
 export function Vedtaksdetaljer({
-  dittUforevedtak,
+  dittUforevedtakPromise,
   sakId,
   linkInntektsplanlegger,
   arstall,
   regelverksendringerJuli2026,
 }: VedtaksdetaljerProps) {
+  dittUforevedtakPromise.then((hei) => hei?.uforegrad)
+
+  const dittUforevedtak = use(dittUforevedtakPromise)
+  if (!dittUforevedtak) {
+    return null
+  }
+
   const uforegrad = dittUforevedtak.uforegrad
   const uforetidspunkt =
     dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { DittUforevedtak, Sak, UforetrygdResponse } from '@/api/initiate'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
+import type { Sak, UforetrygdResponse } from '@/api/initiate'
 import { Visningskriterier } from '@/const'
 import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 

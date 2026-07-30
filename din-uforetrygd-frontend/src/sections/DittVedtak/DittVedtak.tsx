@@ -1,16 +1,17 @@
-import type { DittUforevedtak } from '@/api/initiate'
-import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
+import { Suspense } from 'react'
+import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 
 interface IDittVedtak {
   pid?: string
   hasIverksattVedtak: boolean
-  dittUforevedtak?: DittUforevedtak
+  uforevedtakPromise: Promise<DittUforevedtak | null>
   sakId?: string
 }
 
-export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedtak, dittUforevedtak, sakId }) => {
+export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedtak, uforevedtakPromise, sakId }) => {
   const regelverksendringerJuli2026 = await isEnabled('inntektsplanleggeren.regelverksendringer.tekst')
 
   if (!hasIverksattVedtak) {
@@ -20,13 +21,15 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   return (
     <section aria-label="Detaljer om saken din">
-      <Vedtaksdetaljer
-        dittUforevedtak={dittUforevedtak!}
-        sakId={sakId}
-        linkInntektsplanlegger={linkInntektsplanlegger}
-        arstall={new Date().getFullYear()}
-        regelverksendringerJuli2026={regelverksendringerJuli2026}
-      />
+      <Suspense fallback={null}>
+        <Vedtaksdetaljer
+          dittUforevedtakPromise={uforevedtakPromise}
+          sakId={sakId}
+          linkInntektsplanlegger={linkInntektsplanlegger}
+          arstall={new Date().getFullYear()}
+          regelverksendringerJuli2026={regelverksendringerJuli2026}
+        />
+      </Suspense>
     </section>
   )
 }
