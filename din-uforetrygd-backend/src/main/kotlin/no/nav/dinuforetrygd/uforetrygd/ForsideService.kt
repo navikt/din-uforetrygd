@@ -17,7 +17,6 @@ import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.util.erRelevant
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
@@ -38,7 +37,7 @@ class ForsideService(
             if (uforeSak == null) return@withContext lagUforetrygdResponse(
                 pid = pid,
                 sak = null,
-                isVerge = isUforetrygdVerge(pid)
+                erVerge = isUforetrygdVerge(pid)
             )
 
             val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
@@ -53,12 +52,12 @@ class ForsideService(
                 }
             }
 
-            val isVergeDeferred = async { isUforetrygdVerge(pid) }
+            val erVergeDeferred = async { isUforetrygdVerge(pid) }
 
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
             val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
             val forsideData = forsideDataDeferred.await()
-            val isVerge = isVergeDeferred.await()
+            val erVerge = erVergeDeferred.await()
 
             var inntektFraSkatt = 0.0
 
@@ -76,7 +75,7 @@ class ForsideService(
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
-                isVerge = isVerge
+                erVerge = erVerge
             )
         }
     }
@@ -105,16 +104,15 @@ class ForsideService(
         hasIverksattVedtak: Boolean = false,
         uforevedtak: DittUforevedtak? = null,
         behandling: Behandling? = null,
-        isVerge: Boolean
+        erVerge: Boolean
     ) = UforetrygdResponse(
         pid = pid,
-        loggetInnSom = tokenService.determineLoggedInUser(),
         sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
         hasIverksattVedtak = hasIverksattVedtak,
         uforevedtak = uforevedtak,
         behandling = behandling,
-        isVerge = isVerge
+        erVerge = erVerge
     )
 
     private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =

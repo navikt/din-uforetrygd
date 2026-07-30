@@ -5,7 +5,7 @@ export const getVisningskriterier = (init: UforetrygdResponse) => {
   const sak = init.sak
   const visningskriterier: Visningskriterier[] = []
 
-  if (init.verge) {
+  if (init.erVerge) {
     visningskriterier.push(Visningskriterier.ErVerge)
   }
 

@@ -58,11 +58,10 @@ export interface Sak {
 
 export interface UforetrygdResponse {
   pid?: string
-  loggetInnSom?: string
   sak?: Sak
   hasIverksattVedtak: boolean
   uforevedtak?: DittUforevedtak
   innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
   behandling?: Behandling
-  verge: boolean
+  erVerge: boolean
 }

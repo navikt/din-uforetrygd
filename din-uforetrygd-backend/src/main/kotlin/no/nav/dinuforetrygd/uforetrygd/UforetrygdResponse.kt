@@ -4,13 +4,12 @@ import java.time.LocalDate
 
 data class UforetrygdResponse(
     val pid: String,
-    val loggetInnSom: String,
     val sak: Sak?,
     val hasIverksattVedtak: Boolean,
     val uforevedtak: DittUforevedtak?,
     val innloggingstype: Innloggingstype,
     val behandling: Behandling? = null,
-    val isVerge: Boolean
+    val erVerge: Boolean
 )
 
 data class DittUforevedtak(
