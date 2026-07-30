@@ -1,12 +1,12 @@
 'use client'
 
 import { Skeleton } from '@navikt/ds-react'
-import { Suspense, use } from 'react'
+import { Suspense, use, type ReactNode } from 'react'
 
 interface Props<T> {
   promise: Promise<T>
-  fallback?: React.ReactNode
-  render: (value: T) => React.ReactNode
+  fallback?: ReactNode
+  render: (value: T) => ReactNode
   width?: string
 }
 
