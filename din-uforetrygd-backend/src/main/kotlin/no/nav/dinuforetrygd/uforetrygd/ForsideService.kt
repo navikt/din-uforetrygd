@@ -41,8 +41,6 @@ class ForsideService(
             )
 
             val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
-            val sumAvForventedeInntekterDeferred = async { penService.getSumAvForventedeInntekter(pid) }
-
             val forsideDataDeferred = async {
                 try {
                     penClient.hentForsideData(pid, uforeSak.sakId)
@@ -51,31 +49,17 @@ class ForsideService(
                     null
                 }
             }
-
             val erVergeDeferred = async { isUforetrygdVerge(pid) }
 
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
-            val sumAvForventedeInntekter = sumAvForventedeInntekterDeferred.await()
             val forsideData = forsideDataDeferred.await()
             val erVerge = erVergeDeferred.await()
-
-            var inntektFraSkatt = 0.0
-
-            // TODO: Returner kun hasIverksattVedtak og uforegrad
-            if (vedtakssammendragResponse.hasIverksattVedtak) {
-                try {
-                    inntektFraSkatt = inntektskomponentenService.getAretsInntektFraSkatt(pid)
-                } catch (e: Exception) {
-                    logger.warn("Feilet i henting av inntekt for sak: " + uforeSak.sakId + " status: " + uforeSak.status, e)
-                }
-            }
 
             return@withContext lagUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
-                // TODO: Fjern
-                uforevedtak = vedtakssammendragResponse.vedtakssammendrag?.toDittUforeVedtak(sumAvForventedeInntekter, inntektFraSkatt),
+                uforegrad = vedtakssammendragResponse.vedtakssammendrag?.uforegrad,
                 behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
                 erVerge = erVerge
             )
@@ -104,7 +88,7 @@ class ForsideService(
         pid: String,
         sak: Sak?,
         hasIverksattVedtak: Boolean = false,
-        uforevedtak: DittUforevedtak? = null,
+        uforegrad: Int? = null,
         behandling: Behandling? = null,
         erVerge: Boolean
     ) = UforetrygdResponse(
@@ -112,7 +96,7 @@ class ForsideService(
         sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
         hasIverksattVedtak = hasIverksattVedtak,
-        uforevedtak = uforevedtak,
+        uforegrad = uforegrad,
         behandling = behandling,
         erVerge = erVerge
     )

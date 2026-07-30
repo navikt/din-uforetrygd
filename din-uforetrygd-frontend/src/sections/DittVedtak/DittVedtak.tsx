@@ -1,7 +1,6 @@
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
-import { Suspense } from 'react'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 
 interface IDittVedtak {
@@ -21,7 +20,6 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
 
   return (
     <section aria-label="Detaljer om saken din">
-      {/*<Suspense fallback={null}>*/}
       <Vedtaksdetaljer
         dittUforevedtakPromise={uforevedtakPromise}
         sakId={sakId}
@@ -29,7 +27,6 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
         arstall={new Date().getFullYear()}
         regelverksendringerJuli2026={regelverksendringerJuli2026}
       />
-      {/*</Suspense>*/}
     </section>
   )
 }

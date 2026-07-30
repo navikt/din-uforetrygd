@@ -21,7 +21,6 @@ import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import { isEnabled } from '@/utils/unleash'
 import { hentJournalposter } from '@/api/hentJournalposter'
-import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -29,12 +28,13 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
-  // TODO: Kjør suspend på initiate også
   const initResponse = await initate(params.pid)
   const uforetrygdResponse = initResponse.uforetrygdResponse
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
   const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
+
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
+
   const journalposterPromise = hentJournalposter(params.pid)
 
   if (uforetrygdResponse) {

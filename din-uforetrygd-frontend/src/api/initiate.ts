@@ -46,7 +46,7 @@ export interface UforetrygdResponse {
   pid?: string
   sak?: Sak
   hasIverksattVedtak: boolean
-  uforevedtak?: DittUforevedtak
+  uforegrad?: number
   innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
   behandling?: Behandling
   erVerge: boolean

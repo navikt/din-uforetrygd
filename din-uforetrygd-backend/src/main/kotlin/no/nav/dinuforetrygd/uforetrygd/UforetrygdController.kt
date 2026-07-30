@@ -73,10 +73,6 @@ class UforetrygdController(
                 auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), pid)
             }
 
-            if (uforevedtak == null) {
-                // TODO
-            }
-
             return ResponseEntity.ok(uforevedtak)
         } catch (e: Exception) {
             throw ErrorHandler.exceptionToErrorResponse(e)
