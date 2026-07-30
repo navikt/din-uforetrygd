@@ -3,7 +3,6 @@ import type { UforetrygdResponse } from '../src/api/initiate'
 export const mockData: Record<string, UforetrygdResponse> = {
   default: {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: {
       status: 'LOPENDE',
       sakId: 519023581092,
@@ -25,7 +24,7 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL3',
-    verge: true,
+    erVerge: true,
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'INNVILGET',
@@ -36,7 +35,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
   },
   avsluttet: {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'AVSLUTTET' },
     hasIverksattVedtak: false,
     uforevedtak: {
@@ -55,11 +53,10 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   gradert: {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'LOPENDE' },
     hasIverksattVedtak: true,
     uforevedtak: {
@@ -78,29 +75,26 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   'har-lopende': {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'LOPENDE' },
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   'sak-behandling': {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   'ufore-behandling': {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: true,
     uforevedtak: {
@@ -119,20 +113,18 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   'ingen-uforesak': {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: undefined,
     hasIverksattVedtak: false,
     uforevedtak: undefined,
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
   'ufore-uten-datoer': {
     pid: '81549300',
-    loggetInnSom: '81549300',
     sak: { status: 'LOPENDE' },
     hasIverksattVedtak: true,
     uforevedtak: {
@@ -151,6 +143,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
       hasVarigTilrettelagtArbeid: false,
     },
     innloggingstype: 'LEVEL4',
-    verge: false,
+    erVerge: false,
   },
 }

@@ -5,12 +5,11 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskr
 
 const defaultUforeResponse: UforetrygdResponse = {
   pid: '81549300',
-  loggetInnSom: '81549300',
   innloggingstype: 'LEVEL4',
   sak: undefined,
   hasIverksattVedtak: false,
   uforevedtak: undefined,
-  verge: false,
+  erVerge: false,
 }
 
 const uforevedtak: DittUforevedtak = {
