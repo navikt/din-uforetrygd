@@ -73,7 +73,7 @@ class UforetrygdServiceTest {
         assertEquals(PID, response.pid)
         assertNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
-        assertNull(response.uforevedtak)
+        assertNull(response.uforegrad)
     }
 
     @Test
@@ -88,7 +88,7 @@ class UforetrygdServiceTest {
         assertEquals(PID, response.pid)
         assertNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
-        assertNull(response.uforevedtak)
+        assertNull(response.uforegrad)
     }
 
     @Test
@@ -100,11 +100,10 @@ class UforetrygdServiceTest {
 
         val response = uforetrygdService.hentForsideData(PID)
         coVerify(exactly = 1) { penService.getVedtakssammendrag(PID) }
-        coVerify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
         assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
-        assertNull(response.uforevedtak)
+        assertNull(response.uforegrad)
     }
 
     @Test
@@ -122,11 +121,48 @@ class UforetrygdServiceTest {
 
         assertNotNull(response.sak)
         assertFalse(response.hasIverksattVedtak)
-        assertNull(response.uforevedtak)
+        assertNull(response.uforegrad)
     }
 
     @Test
-    fun `should return a response with uforesak and vedtak, when there is vedtakssammendrag`() {
+    fun `should return a response with uforesak and uforegrad, when there is vedtakssammendrag`() {
+        val virkFom = LocalDate.now()
+        val uforetidspunkt = LocalDate.now().minusYears(1)
+        val uforegrad = 50
+        val inntektsgrense = 150_000
+        val inntektstak = 200_000
+        val kompensasjonsgrad = 65.5
+        val nettoUtbetalingMnd = 20_000
+        val vedtakssammendragResponse = VedtakssammendragResponse(
+            hasIverksattVedtak = true,
+            vedtakssammendrag = Vedtakssammendrag(
+                uforegrad = uforegrad,
+                virkFom = virkFom,
+                uforetidspunkt = uforetidspunkt,
+                inntektsgrense = inntektsgrense,
+                hasBarnetilleggFellesBarn = false,
+                hasBarnetilleggSaerkullsbarn = false,
+                hasGjenlevendeTillegg = false,
+                hasVarigTilrettelagtArbeid = false,
+                inntektstak = inntektstak,
+                kompensasjonsgrad = kompensasjonsgrad,
+                nettoUtbetalingMnd = nettoUtbetalingMnd
+            )
+        )
+
+        every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
+        coEvery { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
+
+        val response = uforetrygdService.hentForsideData(PID)
+        coVerify(exactly = 1) { penService.getVedtakssammendrag(PID) }
+
+        assertNotNull(response.sak)
+        assertTrue(response.hasIverksattVedtak)
+        assertEquals(uforegrad, response.uforegrad)
+    }
+
+    @Test
+    fun `should return a uforevedak, when there is vedtakssammendrag`() {
         val virkFom = LocalDate.now()
         val uforetidspunkt = LocalDate.now().minusYears(1)
         val uforegrad = 50
@@ -155,28 +191,24 @@ class UforetrygdServiceTest {
         every { penService.getSaker(any()) } returns listOf(Sak(Sakstatus.LOPENDE, 1L))
         coEvery { penService.getVedtakssammendrag(any()) } returns vedtakssammendragResponse
         coEvery { penService.getSumAvForventedeInntekter(any()) } returns FORVENTET_INNTEKT
-        coEvery { journalpostService.getJournalPostliste(any(), any()) } returns mockJournalPostliste()
         every { inntektskomponentenService.getAretsInntektFraSkatt(any()) } returns inntektFraSkatt
 
-        val response = uforetrygdService.hentForsideData(PID)
+        val response = uforetrygdService.hentUforevedtak(PID)
         coVerify(exactly = 1) { penService.getVedtakssammendrag(PID) }
         coVerify(exactly = 1) { penService.getSumAvForventedeInntekter(PID) }
 
-        assertNotNull(response.sak)
-        assertTrue(response.hasIverksattVedtak)
-        assertEquals(uforegrad, response.uforevedtak?.uforegrad)
-        assertEquals(virkFom, response.uforevedtak?.virkFom)
-        assertEquals(uforetidspunkt, response.uforevedtak?.uforetidspunkt)
-        assertEquals(FORVENTET_INNTEKT, response.uforevedtak?.sumAvForventedeInntekter)
-        assertEquals(inntektsgrense, response.uforevedtak?.inntektsgrense)
-        assertEquals(response.uforevedtak!!.inntektstak, inntektstak)
-        assertEquals(response.uforevedtak!!.kompensasjonsgrad, kompensasjonsgrad)
-        assertEquals(response.uforevedtak!!.nettoUtbetalingMnd, nettoUtbetalingMnd)
-        assertEquals(response.uforevedtak!!.inntektFraSkatt, inntektFraSkatt)
-        assertFalse(response.uforevedtak!!.hasBarnetilleggFellesBarn)
-        assertFalse(response.uforevedtak!!.hasBarnetilleggSaerkullsbarn)
-        assertFalse(response.uforevedtak!!.hasGjenlevendeTillegg)
-        assertFalse(response.uforevedtak!!.hasVarigTilrettelagtArbeid)
+        assertEquals(virkFom, response?.virkFom)
+        assertEquals(uforetidspunkt, response?.uforetidspunkt)
+        assertEquals(FORVENTET_INNTEKT, response?.sumAvForventedeInntekter)
+        assertEquals(inntektsgrense, response?.inntektsgrense)
+        assertEquals(response!!.inntektstak, inntektstak)
+        assertEquals(response.kompensasjonsgrad, kompensasjonsgrad)
+        assertEquals(response.nettoUtbetalingMnd, nettoUtbetalingMnd)
+        assertEquals(response.inntektFraSkatt, inntektFraSkatt)
+        assertFalse(response.hasBarnetilleggFellesBarn)
+        assertFalse(response.hasBarnetilleggSaerkullsbarn)
+        assertFalse(response.hasGjenlevendeTillegg)
+        assertFalse(response.hasVarigTilrettelagtArbeid)
     }
 
     fun mockJournalPostliste(): List<Journalpost> {

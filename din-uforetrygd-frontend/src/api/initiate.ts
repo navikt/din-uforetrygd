@@ -2,6 +2,7 @@ import { type BackendError, baseUrl } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Behandling } from '@/api/hentSaksoversikt'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
@@ -29,21 +30,6 @@ export const initate = async (pid: string | undefined) => {
   return { uforetrygdResponse: json as UforetrygdResponse }
 }
 
-export interface DittUforevedtak {
-  uforegrad: number
-  virkFom?: string
-  uforetidspunkt?: string
-  inntektsgrense?: number
-  inntektstak?: number
-  inntektFraSkatt: number
-  kompensasjonsgrad?: number
-  nettoUtbetalingMnd: number
-  sumAvForventedeInntekter?: number
-  hasBarnetilleggFellesBarn: boolean
-  hasBarnetilleggSaerkullsbarn: boolean
-  hasGjenlevendeTillegg: boolean
-  hasVarigTilrettelagtArbeid: boolean
-}
 export interface Dokument {
   tittel?: string
   dokumentInfoId?: string
@@ -60,7 +46,7 @@ export interface UforetrygdResponse {
   pid?: string
   sak?: Sak
   hasIverksattVedtak: boolean
-  uforevedtak?: DittUforevedtak
+  uforegrad?: number
   innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
   behandling?: Behandling
   erVerge: boolean

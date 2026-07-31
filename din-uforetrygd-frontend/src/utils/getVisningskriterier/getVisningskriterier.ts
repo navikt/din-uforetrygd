@@ -15,7 +15,7 @@ export const getVisningskriterier = (init: UforetrygdResponse) => {
   }
 
   if (init.hasIverksattVedtak) {
-    if (init.uforevedtak?.uforegrad !== 100) {
+    if (init.uforegrad && init.uforegrad !== 100) {
       visningskriterier.push(Visningskriterier.GradertUfore)
     }
     visningskriterier.push(Visningskriterier.Uforetrygd)

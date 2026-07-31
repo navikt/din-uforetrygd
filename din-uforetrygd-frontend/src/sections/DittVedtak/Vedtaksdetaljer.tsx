@@ -3,14 +3,16 @@
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
 import { format, parseISO } from 'date-fns'
-import type { DittUforevedtak } from '@/api/initiate'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
+import React from 'react'
+import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
 
 interface VedtaksdetaljerProps {
-  dittUforevedtak: DittUforevedtak
+  dittUforevedtakPromise: Promise<DittUforevedtak | null>
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number
@@ -18,24 +20,31 @@ interface VedtaksdetaljerProps {
 }
 
 export function Vedtaksdetaljer({
-  dittUforevedtak,
+  dittUforevedtakPromise,
   sakId,
   linkInntektsplanlegger,
   arstall,
   regelverksendringerJuli2026,
 }: VedtaksdetaljerProps) {
-  const uforegrad = dittUforevedtak.uforegrad
-  const uforetidspunkt =
-    dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
-  const uforetrygdInnvilget = dittUforevedtak.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
-  const inntektsgrense = formatInntekt(dittUforevedtak.inntektsgrense) ?? 0
-  const inntektstak = formatInntekt(dittUforevedtak.inntektstak) ?? 0
-  const inntektFraSkatt = formatInntekt(dittUforevedtak.inntektFraSkatt)
-  const sumAvForventedeInntekter = formatInntekt(dittUforevedtak.sumAvForventedeInntekter) ?? 0
-  const hasVarigTilrettelagtArbeid = dittUforevedtak.hasVarigTilrettelagtArbeid
-  const hasBarnetilleggFellesBarn = dittUforevedtak.hasBarnetilleggFellesBarn
-  const hasBarnetilleggSaerkullsbarn = dittUforevedtak.hasBarnetilleggSaerkullsbarn
-  const hasGjenlevendeTillegg = dittUforevedtak.hasGjenlevendeTillegg
+  const promise = dittUforevedtakPromise
+
+  // const dittUforevedtak = use(dittUforevedtakPromise)
+  // if (!dittUforevedtak) {
+  //   return null
+  // }
+  //
+  // const uforegrad = dittUforevedtak.uforegrad
+  // const uforetidspunkt =
+  //   dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
+  // const uforetrygdInnvilget = dittUforevedtak.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
+  // const inntektsgrense = formatInntekt(dittUforevedtak.inntektsgrense) ?? 0
+  // const inntektstak = formatInntekt(dittUforevedtak.inntektstak) ?? 0
+  // const inntektFraSkatt = formatInntekt(dittUforevedtak.inntektFraSkatt)
+  // const sumAvForventedeInntekter = formatInntekt(dittUforevedtak.sumAvForventedeInntekter) ?? 0
+  // const hasVarigTilrettelagtArbeid = dittUforevedtak.hasVarigTilrettelagtArbeid
+  // const hasBarnetilleggFellesBarn = dittUforevedtak.hasBarnetilleggFellesBarn
+  // const hasBarnetilleggSaerkullsbarn = dittUforevedtak.hasBarnetilleggSaerkullsbarn
+  // const hasGjenlevendeTillegg = dittUforevedtak.hasGjenlevendeTillegg
 
   return (
     <Box>
@@ -53,41 +62,58 @@ export function Vedtaksdetaljer({
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Uføregrad</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {uforegrad} prosent
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.uforegrad} /> prosent
                 </Table.DataCell>
               </Table.Row>
-              {(hasGjenlevendeTillegg || hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn) && (
-                <Table.Row shadeOnHover={false}>
-                  <Table.DataCell>Tillegg</Table.DataCell>
-                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                    {getTilleggsoppsummeringTekst(
-                      hasGjenlevendeTillegg,
-                      hasBarnetilleggFellesBarn,
-                      hasBarnetilleggSaerkullsbarn
-                    )}
-                  </Table.DataCell>
-                </Table.Row>
-              )}
+              <SkeletonLoader
+                promise={promise}
+                fallback={<></>}
+                render={(verdi) =>
+                  (verdi!.hasGjenlevendeTillegg ||
+                    verdi!.hasBarnetilleggFellesBarn ||
+                    verdi!.hasBarnetilleggSaerkullsbarn) && (
+                    <Table.Row shadeOnHover={false}>
+                      <Table.DataCell>Tillegg</Table.DataCell>
+                      <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
+                        {getTilleggsoppsummeringTekst(
+                          verdi!.hasGjenlevendeTillegg,
+                          verdi!.hasBarnetilleggFellesBarn,
+                          verdi!.hasBarnetilleggSaerkullsbarn
+                        )}
+                      </Table.DataCell>
+                    </Table.Row>
+                  )
+                }
+              />
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Uføretidspunkt</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {uforetidspunkt}
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.uforetidspunkt} />
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Innvilget fra</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {uforetrygdInnvilget}
+                  <SkeletonLoader
+                    promise={promise}
+                    render={(verdi) => verdi?.virkFom && format(parseISO(verdi.virkFom), 'dd.MM.yyyy')}
+                  />
                 </Table.DataCell>
               </Table.Row>
-              {hasVarigTilrettelagtArbeid && (
-                <Table.Row shadeOnHover={false}>
-                  <Table.DataCell>Tiltak</Table.DataCell>
-                  <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                    <BodyShort>Varig tilrettelagt arbeid</BodyShort>
-                  </Table.DataCell>
-                </Table.Row>
-              )}
+              <SkeletonLoader
+                promise={promise}
+                fallback={<></>}
+                render={(verdi) =>
+                  verdi?.hasVarigTilrettelagtArbeid && (
+                    <Table.Row shadeOnHover={false}>
+                      <Table.DataCell>Tiltak</Table.DataCell>
+                      <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
+                        <BodyShort>Varig tilrettelagt arbeid</BodyShort>
+                      </Table.DataCell>
+                    </Table.Row>
+                  )
+                }
+              />
             </Table.Body>
           </Table>
         </VStack>
@@ -101,19 +127,25 @@ export function Vedtaksdetaljer({
             <Table.Body>
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>
-                  {getManedligBeregnetYtelseTekst(
-                    hasGjenlevendeTillegg,
-                    hasBarnetilleggFellesBarn || hasBarnetilleggSaerkullsbarn
-                  )}
+                  <SkeletonLoader
+                    width="10rem"
+                    promise={promise}
+                    render={(verdi) =>
+                      getManedligBeregnetYtelseTekst(
+                        verdi!.hasGjenlevendeTillegg,
+                        verdi!.hasBarnetilleggFellesBarn || verdi!.hasBarnetilleggSaerkullsbarn
+                      )
+                    }
+                  />
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {formatInntekt(dittUforevedtak?.nettoUtbetalingMnd)} kr
+                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.nettoUtbetalingMnd)} /> kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Registrert inntekt hos Skatteetaten hittil i år</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {inntektFraSkatt} kr
+                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.inntektFraSkatt)} /> kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -135,7 +167,11 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {sumAvForventedeInntekter} kr
+                  <SkeletonLoader
+                    promise={promise}
+                    render={(verdi) => formatInntekt(verdi?.sumAvForventedeInntekter)}
+                  />{' '}
+                  kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -151,7 +187,7 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {inntektsgrense} kr
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.inntektsgrense} /> kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -186,7 +222,7 @@ export function Vedtaksdetaljer({
                   )}
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {dittUforevedtak?.kompensasjonsgrad} prosent
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.kompensasjonsgrad} /> prosent
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -203,7 +239,7 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  {inntektstak} kr
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.inntektstak} /> kr
                 </Table.DataCell>
               </Table.Row>
             </Table.Body>

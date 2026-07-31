@@ -6,7 +6,7 @@ data class UforetrygdResponse(
     val pid: String,
     val sak: Sak?,
     val hasIverksattVedtak: Boolean,
-    val uforevedtak: DittUforevedtak?,
+    val uforegrad: Int?,
     val innloggingstype: Innloggingstype,
     val behandling: Behandling? = null,
     val erVerge: Boolean
