@@ -24,7 +24,7 @@ export const initate = async (pid: string | undefined) => {
   const response = await fetch(`${baseUrl}/api/initiate`, { headers, cache: 'no-store' })
   const json = await response.json().catch(() => undefined)
 
-  if (!response.ok && response.status === 403) {
+  if (!response.ok) {
     return { backendError: json as BackendError }
   }
   return { uforetrygdResponse: json as UforetrygdResponse }
