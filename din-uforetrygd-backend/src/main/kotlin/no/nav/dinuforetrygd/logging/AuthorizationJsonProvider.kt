@@ -4,10 +4,6 @@ import ch.qos.logback.access.common.spi.IAccessEvent
 import tools.jackson.core.JsonGenerator
 import com.nimbusds.jwt.JWTParser
 import net.logstash.logback.composite.AbstractJsonProvider
-import no.nav.dinuforetrygd.util.LOGGED_IN_PID
-import no.nav.dinuforetrygd.util.Masker
-import no.nav.dinuforetrygd.util.NAV_IDENT
-import no.nav.dinuforetrygd.util.OBO_PID
 
 class AuthorizationJsonProvider : AbstractJsonProvider<IAccessEvent>() {
 

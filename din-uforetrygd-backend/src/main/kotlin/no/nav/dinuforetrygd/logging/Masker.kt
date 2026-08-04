@@ -1,4 +1,4 @@
-package no.nav.dinuforetrygd.util
+package no.nav.dinuforetrygd.logging
 
 class Masker {
     companion object {

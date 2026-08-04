@@ -8,7 +8,7 @@ import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
 import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.AzureAdService
-import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
+import no.nav.dinuforetrygd.logging.NAV_CALL_ID_HEADER
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value

@@ -18,7 +18,6 @@ import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandl
 import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
-import EventProvider from '@/utils/dataContextProvider/EventContextProvider'
 import { isEnabled } from '@/utils/unleash'
 import { hentJournalposter } from '@/api/hentJournalposter'
 
@@ -44,54 +43,49 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
     return (
       <>
         <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
-        <EventProvider>
-          <VStack gap="space-12" className={'tittel-wrapper'}>
-            <Heading size="xlarge" level="1">
-              Din uføretrygd
-            </Heading>
-          </VStack>
+        <VStack gap="space-12" className={'tittel-wrapper'}>
+          <Heading size="xlarge" level="1">
+            Din uføretrygd
+          </Heading>
+        </VStack>
 
-          <ForsideBehandlingKort
-            behandling={
-              initResponse.uforetrygdResponse.behandling
-                ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
-                : null
-            }
-            visningskriterier={visningskriterier}
-          />
-          <InntektSnarveier
-            visningskriterier={visningskriterier}
-            pid={params.pid}
-            innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-          />
-          <DittVedtak
-            pid={params.pid}
-            hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
-            uforevedtakPromise={uforevedtakPromise}
-            sakId={uforesak?.sakId?.toString()}
-          />
-          <InterneLenker
-            visningskriterier={visningskriterier}
-            sakId={uforesak?.sakId?.toString()}
-            pid={params.pid}
-            journalposterPromise={journalposterPromise}
-          />
-          <Snarveier
-            visningskriterier={visningskriterier}
-            pid={params.pid}
-            uforetrygdResponse={uforetrygdResponse}
-            skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
-          />
-          <MeldeFra visningskriterier={visningskriterier} />
-          <RelevanteSoknader
-            visningskriterier={visningskriterier}
-            innloggingstype={uforetrygdResponse.innloggingstype}
-          />
-          <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
-          <div className={'ux-signals-container'}>
-            <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'} suppressHydrationWarning></div>
-          </div>
-        </EventProvider>
+        <ForsideBehandlingKort
+          behandling={
+            initResponse.uforetrygdResponse.behandling
+              ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+              : null
+          }
+          visningskriterier={visningskriterier}
+        />
+        <InntektSnarveier
+          visningskriterier={visningskriterier}
+          pid={params.pid}
+          innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
+        />
+        <DittVedtak
+          pid={params.pid}
+          hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
+          uforevedtakPromise={uforevedtakPromise}
+          sakId={uforesak?.sakId?.toString()}
+        />
+        <InterneLenker
+          visningskriterier={visningskriterier}
+          sakId={uforesak?.sakId?.toString()}
+          pid={params.pid}
+          journalposterPromise={journalposterPromise}
+        />
+        <Snarveier
+          visningskriterier={visningskriterier}
+          pid={params.pid}
+          uforetrygdResponse={uforetrygdResponse}
+          skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
+        />
+        <MeldeFra visningskriterier={visningskriterier} />
+        <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={uforetrygdResponse.innloggingstype} />
+        <KanVaereAktueltForDeg visningskriterier={visningskriterier} />
+        <div className={'ux-signals-container'}>
+          <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'} suppressHydrationWarning></div>
+        </div>
       </>
     )
   } else {

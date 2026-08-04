@@ -5,7 +5,7 @@ import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumen
 import type { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { showMinIdModal } from '@/utils/showMinIdModal/showMinIdModal'
+import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
 import styles from './snarveiPanel.module.css'
 
 interface ISnarveiPanelProps {

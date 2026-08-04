@@ -3,7 +3,6 @@ package no.nav.dinuforetrygd.uforetrygd
 import no.nav.dinuforetrygd.pensjon.pen.PenClient
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
 import no.nav.dinuforetrygd.pensjon.pen.VedtakStatus
-import no.nav.dinuforetrygd.util.erRelevant
 import org.springframework.stereotype.Service
 
 @Service

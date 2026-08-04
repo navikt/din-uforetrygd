@@ -1,4 +1,4 @@
-package no.nav.dinuforetrygd.util
+package no.nav.dinuforetrygd.uforetrygd
 
 import no.nav.dinuforetrygd.pensjon.pen.Krav
 import no.nav.dinuforetrygd.pensjon.pen.Vedtak
