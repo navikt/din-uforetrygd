@@ -1,12 +1,16 @@
 import { expect, test } from '@playwright/test'
+import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Lopende uforesak uten vedtak', () => {
-  test('Viser ingen kort for bruker uten vedtak men med lopende ufore', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('')
-    await expect(page.locator('body')).toBeVisible()
+    await dismissCookieBanner(page)
+  })
+
+  test('Viser ingen kort for bruker uten vedtak men med lopende ufore', async ({ page }) => {
     await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
 
-    const dittVedtak = page.getByText('Kort om saken din')
-    await expect(dittVedtak).not.toBeVisible()
+    const vedtakSection = page.locator('section[aria-label="Detaljer om saken din"]')
+    await expect(vedtakSection).toHaveCount(0)
   })
 })

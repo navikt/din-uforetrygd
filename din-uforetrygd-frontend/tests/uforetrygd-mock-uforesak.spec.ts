@@ -1,16 +1,18 @@
 import { expect, test } from '@playwright/test'
+import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Uforetrygd Content and Status Display', () => {
-  test('should display main page content correctly', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('')
+    await dismissCookieBanner(page)
+  })
 
-    await expect(page).toHaveTitle('Din uføretrygd')
+  test('should display main page content correctly', async ({ page }) => {
+    await expect(page).toHaveTitle('Din uføretrygd - nav.no')
     await expect(page.locator('body')).toBeVisible()
   })
 
   test('Bekreft at riktige lenker og paneler vises til bruker', async ({ page }) => {
-    await page.goto('')
-
     //Lenkeboks
     const inntektsplanlegger = page.getByText('Meld fra om endring i inntekt')
     const ettersendDokumentasjon = page.getByText('Ettersend dokumentasjon')

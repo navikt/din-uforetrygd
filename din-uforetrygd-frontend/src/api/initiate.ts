@@ -1,4 +1,4 @@
-import { type BackendError, baseUrl } from '@/api/common'
+import { type BackendError, baseUrl, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Behandling } from '@/api/hentSaksoversikt'
@@ -17,8 +17,9 @@ export const initate = async (pid: string | undefined) => {
     Cookie: fullmaktCookie as string,
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
+  const mockScenario = await getMockScenario()
+  if (mockScenario) {
+    headers['X-Mock-Scenario'] = mockScenario
   }
 
   const response = await fetch(`${baseUrl}/api/initiate`, { headers, cache: 'no-store' })

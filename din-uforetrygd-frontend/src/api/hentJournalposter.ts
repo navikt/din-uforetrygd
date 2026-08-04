@@ -1,4 +1,4 @@
-import { baseUrl } from '@/api/common'
+import { baseUrl, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import { Dokument } from '@/api/initiate'
@@ -16,8 +16,9 @@ export const hentJournalposter = async (pid?: string): Promise<Journalpost[]> =>
     Cookie: fullmaktCookie as string,
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    headers['X-Mock-Scenario'] = process.env.MOCK_SCENARIO || 'default'
+  const mockScenario = await getMockScenario()
+  if (mockScenario) {
+    headers['X-Mock-Scenario'] = mockScenario
   }
 
   const response = await fetch(`${baseUrl}/api/journalposter`, { headers, cache: 'no-store' })

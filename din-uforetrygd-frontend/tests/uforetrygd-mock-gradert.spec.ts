@@ -1,25 +1,25 @@
 import { expect, test } from '@playwright/test'
+import { dismissCookieBanner, getValueCellByLabel } from './test-helpers'
 
 test.describe('Gradert ufore scenario', () => {
-  test('displays main heading and gradert uføretrygd information', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('')
-    await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
+    await dismissCookieBanner(page)
+  })
 
-    await expect(page.getByText('Uføregrad: 50 prosent')).toBeVisible()
+  test('displays main heading and gradert uføretrygd information', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /Din uføretrygd/i })).toBeVisible()
+    await expect(getValueCellByLabel(page, 'Uføregrad')).toHaveText('50 prosent')
   })
 
   test('displays current vedtak details with dates', async ({ page }) => {
-    await page.goto('')
-
-    await expect(page.getByText('Uføretidspunkt: 01.10.2020')).toBeVisible()
-    await expect(page.getByText('Uføretrygd innvilget fra: 01.12.2024')).toBeVisible()
-    await expect(page.getByText('Registrert forventet inntekt: 0 kr')).toBeVisible()
-    await expect(page.getByText('Inntektsgrense: 49 611 kr').first()).toBeVisible()
+    await expect(getValueCellByLabel(page, 'Uføretidspunkt')).toHaveText('01.10.2020')
+    await expect(getValueCellByLabel(page, 'Innvilget fra')).toHaveText('01.12.2024')
+    await expect(getValueCellByLabel(page, /Registrert forventet inntekt/i)).toHaveText('0 kr')
+    await expect(getValueCellByLabel(page, 'Inntektsgrense')).toHaveText('49 611 kr')
   })
 
   test('displays appropriate lenkekort for gradert ufore', async ({ page }) => {
-    await page.goto('')
-
     const inntektsplanlegger = page.getByText('Meld fra om endring i inntekt')
     const ettersendDokumentasjon = page.getByText('Ettersend dokumentasjon')
 

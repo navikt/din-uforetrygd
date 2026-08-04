@@ -1,19 +1,31 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const scenarios = [
-  { name: 'uforesak', port: 3000, testFile: '**/uforetrygd-mock-uforesak.spec.ts' },
-  { name: 'avsluttet', port: 3001, testFile: '**/uforetrygd-mock-avsluttet.spec.ts' },
-  { name: 'forbidden', port: 3002, testFile: '**/uforetrygd-mock-forbidden.spec.ts' },
-  { name: 'gradert', port: 3003, testFile: '**/uforetrygd-mock-gradert.spec.ts' },
-  { name: 'lopende-uten-vedtak', port: 3004, testFile: '**/uforetrygd-mock-lopende-uten-vedtak.spec.ts' },
+  { name: 'uforesak', mockScenario: 'default', testFile: '**/uforetrygd-mock-uforesak.spec.ts' },
+  { name: 'avsluttet', mockScenario: 'avsluttet', testFile: '**/uforetrygd-mock-avsluttet.spec.ts' },
+  { name: 'forbidden', mockScenario: 'forbidden', testFile: '**/uforetrygd-mock-forbidden.spec.ts' },
+  { name: 'gradert', mockScenario: 'gradert', testFile: '**/uforetrygd-mock-gradert.spec.ts' },
+  {
+    name: 'lopende-uten-vedtak',
+    mockScenario: 'har-lopende',
+    testFile: '**/uforetrygd-mock-lopende-uten-vedtak.spec.ts',
+  },
   {
     name: 'sak-til-behandling-ingen-ufore',
-    port: 3005,
+    mockScenario: 'sak-behandling',
     testFile: '**/uforetrygd-mock-sak-til-behandling-ingen-ufore.spec.ts',
   },
-  { name: 'ufore-og-behandling', port: 3006, testFile: '**/uforetrygd-mock-ufore-og-behandling.spec.ts' },
-  { name: 'ingen-uforesak', port: 3007, testFile: '**/uforetrygd-mock-ingen-uforesak.spec.ts' },
-  { name: 'ufore-uten-datoer', port: 3008, testFile: '**/uforetrygd-mock-ufore-uten-datoer.spec.ts' },
+  {
+    name: 'ufore-og-behandling',
+    mockScenario: 'ufore-behandling',
+    testFile: '**/uforetrygd-mock-ufore-og-behandling.spec.ts',
+  },
+  { name: 'ingen-uforesak', mockScenario: 'ingen-uforesak', testFile: '**/uforetrygd-mock-ingen-uforesak.spec.ts' },
+  {
+    name: 'ufore-uten-datoer',
+    mockScenario: 'ufore-uten-datoer',
+    testFile: '**/uforetrygd-mock-ufore-uten-datoer.spec.ts',
+  },
 ]
 
 const browsers = [
@@ -29,7 +41,10 @@ const projects = scenarios.flatMap((scenario) =>
     testMatch: scenario.testFile,
     use: {
       ...browser.device,
-      baseURL: `http://localhost:${scenario.port}/uforetrygd/selvbetjening`,
+      baseURL: 'http://localhost:3000/uforetrygd/selvbetjening',
+      extraHTTPHeaders: {
+        'x-mock-scenario': scenario.mockScenario,
+      },
     },
   }))
 )
@@ -39,7 +54,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 1,
-  workers: 3,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { open: 'never' }], // never auto-open
@@ -51,7 +66,7 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
   webServer: {
-    command: 'npm run dev:all',
+    command: 'npm run dev:playwright',
     url: 'http://localhost:3000/uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
