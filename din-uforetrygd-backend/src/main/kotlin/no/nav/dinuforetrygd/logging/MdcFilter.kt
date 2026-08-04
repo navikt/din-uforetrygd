@@ -4,12 +4,6 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import no.nav.dinuforetrygd.security.TokenService
-import no.nav.dinuforetrygd.util.LOGGED_IN_PID
-import no.nav.dinuforetrygd.util.Masker
-import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
-import no.nav.dinuforetrygd.util.NAV_CALL_ID_MDC
-import no.nav.dinuforetrygd.util.NAV_IDENT
-import no.nav.dinuforetrygd.util.OBO_PID
 import org.slf4j.MDC
 import org.springframework.core.annotation.Order
 import org.springframework.security.core.context.SecurityContextHolder

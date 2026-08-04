@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getDocumentProxyLink } from './utils'
+import { getDocumentProxyLink } from './getDocumentProxyLink'
 
 describe('getDocumentProxyLink', () => {
   it('returns proxy link without query params when none provided', () => {

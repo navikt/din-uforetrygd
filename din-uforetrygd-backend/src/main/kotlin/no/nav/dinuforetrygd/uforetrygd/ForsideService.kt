@@ -14,7 +14,6 @@ import no.nav.dinuforetrygd.security.RequestContextAsyncContext
 import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.SecurityCoroutineContext
 import no.nav.dinuforetrygd.security.TokenService
-import no.nav.dinuforetrygd.util.erRelevant
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

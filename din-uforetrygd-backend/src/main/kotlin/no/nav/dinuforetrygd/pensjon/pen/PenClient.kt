@@ -9,7 +9,7 @@ import no.nav.dinuforetrygd.configuration.getCallIdFromMdc
 import no.nav.dinuforetrygd.configuration.retryOnTimeout
 import no.nav.dinuforetrygd.configuration.withMdcContext
 import no.nav.dinuforetrygd.security.TokenService
-import no.nav.dinuforetrygd.util.NAV_CALL_ID_HEADER
+import no.nav.dinuforetrygd.logging.NAV_CALL_ID_HEADER
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
