@@ -34,7 +34,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
-
   const journalposterPromise = hentJournalposter(params.pid)
 
   if (uforetrygdResponse) {

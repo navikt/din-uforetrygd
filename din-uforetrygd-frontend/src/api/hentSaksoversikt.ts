@@ -28,7 +28,7 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
   })
 
   const json = await response.json().catch(() => undefined)
-  if (!response.ok && response.status === 403) {
+  if (!response.ok) {
     return { backendError: json as BackendError }
   }
   return { saksoversiktResponse: json as SaksoversiktResponse }
