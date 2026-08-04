@@ -1,7 +1,7 @@
 export function getTilleggsoppsummeringTekst(
-  hasGjenlevendeTillegg: boolean,
-  hasBarnetilleggFellesBarn: boolean,
-  hasBarnetilleggSaerkullsbarn: boolean
+  hasGjenlevendeTillegg?: boolean,
+  hasBarnetilleggFellesBarn?: boolean,
+  hasBarnetilleggSaerkullsbarn?: boolean
 ): string {
   const parts: string[] = []
   if (hasGjenlevendeTillegg) parts.push('gjenlevendetillegg')
@@ -14,7 +14,7 @@ export function getTilleggsoppsummeringTekst(
   return result.charAt(0).toUpperCase() + result.slice(1)
 }
 
-export function getManedligBeregnetYtelseTekst(hasGjenlevendeTillegg: boolean, hasBarnetillegg: boolean): string {
+export function getManedligBeregnetYtelseTekst(hasGjenlevendeTillegg?: boolean, hasBarnetillegg?: boolean): string {
   return 'Månedlig beregnet uføretrygd'.concat(
     hasBarnetillegg && hasGjenlevendeTillegg
       ? ', barne- og gjenlevendetillegg'

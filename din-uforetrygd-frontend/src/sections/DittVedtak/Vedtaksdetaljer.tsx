@@ -28,24 +28,6 @@ export function Vedtaksdetaljer({
 }: VedtaksdetaljerProps) {
   const promise = dittUforevedtakPromise
 
-  // const dittUforevedtak = use(dittUforevedtakPromise)
-  // if (!dittUforevedtak) {
-  //   return null
-  // }
-  //
-  // const uforegrad = dittUforevedtak.uforegrad
-  // const uforetidspunkt =
-  //   dittUforevedtak.uforetidspunkt && format(parseISO(dittUforevedtak.uforetidspunkt), 'dd.MM.yyyy')
-  // const uforetrygdInnvilget = dittUforevedtak.virkFom && format(parseISO(dittUforevedtak.virkFom), 'dd.MM.yyyy')
-  // const inntektsgrense = formatInntekt(dittUforevedtak.inntektsgrense) ?? 0
-  // const inntektstak = formatInntekt(dittUforevedtak.inntektstak) ?? 0
-  // const inntektFraSkatt = formatInntekt(dittUforevedtak.inntektFraSkatt)
-  // const sumAvForventedeInntekter = formatInntekt(dittUforevedtak.sumAvForventedeInntekter) ?? 0
-  // const hasVarigTilrettelagtArbeid = dittUforevedtak.hasVarigTilrettelagtArbeid
-  // const hasBarnetilleggFellesBarn = dittUforevedtak.hasBarnetilleggFellesBarn
-  // const hasBarnetilleggSaerkullsbarn = dittUforevedtak.hasBarnetilleggSaerkullsbarn
-  // const hasGjenlevendeTillegg = dittUforevedtak.hasGjenlevendeTillegg
-
   return (
     <Box>
       <HGrid gap={{ xs: 'space-32', md: 'space-0 space-40' }} columns={{ md: 2 }}>
@@ -69,16 +51,16 @@ export function Vedtaksdetaljer({
                 promise={promise}
                 fallback={<></>}
                 render={(verdi) =>
-                  (verdi!.hasGjenlevendeTillegg ||
-                    verdi!.hasBarnetilleggFellesBarn ||
-                    verdi!.hasBarnetilleggSaerkullsbarn) && (
+                  (verdi?.hasGjenlevendeTillegg ||
+                    verdi?.hasBarnetilleggFellesBarn ||
+                    verdi?.hasBarnetilleggSaerkullsbarn) && (
                     <Table.Row shadeOnHover={false}>
                       <Table.DataCell>Tillegg</Table.DataCell>
                       <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                         {getTilleggsoppsummeringTekst(
-                          verdi!.hasGjenlevendeTillegg,
-                          verdi!.hasBarnetilleggFellesBarn,
-                          verdi!.hasBarnetilleggSaerkullsbarn
+                          verdi.hasGjenlevendeTillegg,
+                          verdi.hasBarnetilleggFellesBarn,
+                          verdi.hasBarnetilleggSaerkullsbarn
                         )}
                       </Table.DataCell>
                     </Table.Row>
@@ -132,8 +114,8 @@ export function Vedtaksdetaljer({
                     promise={promise}
                     render={(verdi) =>
                       getManedligBeregnetYtelseTekst(
-                        verdi!.hasGjenlevendeTillegg,
-                        verdi!.hasBarnetilleggFellesBarn || verdi!.hasBarnetilleggSaerkullsbarn
+                        verdi?.hasGjenlevendeTillegg,
+                        verdi?.hasBarnetilleggFellesBarn || verdi?.hasBarnetilleggSaerkullsbarn
                       )
                     }
                   />
