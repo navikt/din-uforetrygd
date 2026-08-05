@@ -2,14 +2,13 @@
 
 import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
-import { format, parseISO } from 'date-fns'
+import React from 'react'
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
-import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
-import { formatInntekt } from '@/utils/formatter/formatter'
-import { umami } from '@/utils/umami'
-import React from 'react'
 import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
+import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
+import { formatDate, formatInntekt } from '@/utils/formatter/formatter'
+import { umami } from '@/utils/umami'
 
 interface VedtaksdetaljerProps {
   dittUforevedtakPromise: Promise<DittUforevedtak | null>
@@ -70,16 +69,16 @@ export function Vedtaksdetaljer({
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Uføretidspunkt</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.uforetidspunkt} />
+                  <SkeletonLoader
+                    promise={promise}
+                    render={(verdi) => verdi?.uforetidspunkt && formatDate(verdi.uforetidspunkt)}
+                  />
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>Innvilget fra</Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader
-                    promise={promise}
-                    render={(verdi) => verdi?.virkFom && format(parseISO(verdi.virkFom), 'dd.MM.yyyy')}
-                  />
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.virkFom && formatDate(verdi.virkFom)} />
                 </Table.DataCell>
               </Table.Row>
               <SkeletonLoader
