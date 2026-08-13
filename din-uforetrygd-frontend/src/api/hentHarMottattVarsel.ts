@@ -1,4 +1,5 @@
 import { headers } from 'next/headers'
+import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getUforeVarslerOboToken } from '@/api/getOboToken'
 import getEnv from '@/utils/env'
 
@@ -11,11 +12,13 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
   })
 
   const nextHeaders = await headers()
-
   const body = mode === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
+
+  const fullmaktCookie = await getFullmaktCookie()
 
   const headere: Record<string, string> = {
     Authorization: `Bearer ${oboToken}`,
+    Cookie: fullmaktCookie as string,
   }
 
   const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
