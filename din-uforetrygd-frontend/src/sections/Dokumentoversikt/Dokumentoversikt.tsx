@@ -5,17 +5,17 @@ import type { Journalpost } from '@/api/hentJournalposter'
 import { DocumentLink } from '@/components/DocumentLink/DocumentLink'
 import { readableFileSize } from '@/components/DocumentLink/utils'
 import { SortablePaginatedList } from '@/components/SortablePaginatedList/SortablePaginatedList'
-import { getDocumentProxyLink } from '@/sections/SaksDokumenter/getDocumentProxyLink'
-import { mapOpprettetAv } from '@/sections/SaksDokumenter/mapOpprettetAv'
+import { getDocumentProxyLink } from '@/sections/Dokumentoversikt/getDocumentProxyLink'
+import { mapOpprettetAv } from '@/sections/Dokumentoversikt/mapOpprettetAv'
 import { formatDate } from '@/utils/formatter/formatter'
-import styles from './SaksDokumenter.module.css'
+import styles from './Dokumentoversikt.module.css'
 
-interface SaksDokumenterProps {
+interface DokumentoversiktProps {
   pid?: string
   raaJournalposter: Journalpost[]
 }
 
-export const SaksDokumenter = ({ pid, raaJournalposter }: SaksDokumenterProps) => {
+export const Dokumentoversikt = ({ pid, raaJournalposter }: DokumentoversiktProps) => {
   const journalposter = raaJournalposter.map((journalpost) => {
     const formattedDate = formatDate(journalpost.opprettetDato)
     if (!formattedDate) throw Error('Invalid date')
