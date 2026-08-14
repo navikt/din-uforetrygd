@@ -12,7 +12,12 @@ import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCar
 import InntektSimulering from '@/sections/DineMuligheter/InntektSimulering'
 import styles from './dineMuligheter.module.css'
 
-const DineMuligheter = () => {
+interface Props {
+  pid?: string | undefined
+  mode: 'veileder' | 'borger'
+}
+
+const DineMuligheter = ({ pid, mode }: Props) => {
   return (
     <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-32', md: 'space-48' }}>
       <VStack gap="space-12" maxWidth={'678px'}>
@@ -154,7 +159,11 @@ const DineMuligheter = () => {
               </ExpansionCardMedIkon>
             </VStack>
             <VStack>
-              <Button variant={'primary'} as="a" href="dine-muligheter/finn-ut-mer">
+              <Button
+                variant={'primary'}
+                as="a"
+                href={`dine-muligheter/finn-ut-mer${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+              >
                 Snakk med oss
               </Button>
             </VStack>
