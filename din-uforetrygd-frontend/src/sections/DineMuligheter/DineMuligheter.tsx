@@ -212,7 +212,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
             </BodyShort>
           </VStack>
           <VStack gap="space-12" justify="center">
-            <Button as="a" href="dine-muligheter/finn-ut-mer">
+            <Button as="a" href={`dine-muligheter/finn-ut-mer${mode === 'veileder' ? `?pid=${pid}` : ''}`} >
               Snakk med oss
             </Button>
           </VStack>
