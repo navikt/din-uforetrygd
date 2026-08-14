@@ -1,11 +1,11 @@
 import { hentJournalposter } from '@/api/hentJournalposter'
 import { Dokumentoversikt } from '@/sections/Dokumentoversikt/Dokumentoversikt'
 
-interface DokumenterPageProps {
+interface DokumentoversiktPageProps {
   searchParams: Promise<{ pid?: string }>
 }
 
-const DokumenterPage = async ({ searchParams }: DokumenterPageProps) => {
+const DokumentoversiktPage = async ({ searchParams }: DokumentoversiktPageProps) => {
   const params = await searchParams
   const pid = params?.pid
   const raaJournalposter = await hentJournalposter(pid)
@@ -13,4 +13,4 @@ const DokumenterPage = async ({ searchParams }: DokumenterPageProps) => {
   return <Dokumentoversikt pid={pid} raaJournalposter={raaJournalposter} />
 }
 
-export default DokumenterPage
+export default DokumentoversiktPage
