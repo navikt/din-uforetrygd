@@ -19,6 +19,7 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
   const headere: Record<string, string> = {
     Authorization: `Bearer ${oboToken}`,
     Cookie: fullmaktCookie as string,
+    'Content-Type': 'application/json',
   }
 
   const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
