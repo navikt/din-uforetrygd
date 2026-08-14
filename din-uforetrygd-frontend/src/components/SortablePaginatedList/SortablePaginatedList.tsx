@@ -74,7 +74,6 @@ export const SortablePaginatedList = <T extends ISortableItem>({
       </ul>
       {showPagination && (
         <Pagination
-          className={styles.pagination}
           prevNextTexts={paginatorSize !== 'xsmall'}
           page={pageState}
           onPageChange={setPageState}
@@ -95,7 +94,7 @@ const SortablePaginatedListHeading: React.FC<ISortablePaginatedListHeadingProps>
         <Heading size="xsmall" level="3">
           Viser {props.paginatedItemsLength} av {props.itemsLength} {props.itemTypeName}
         </Heading>
-        <Select label="Sorter etter" hideLabel size="small" onChange={props.handleSort} style={{ maxWidth: '150px' }}>
+        <Select label="Sorter etter" hideLabel onChange={props.handleSort} style={{ maxWidth: '300px' }}>
           <option value="desc">Nyeste først</option>
           <option value="asc">Eldste først</option>
         </Select>

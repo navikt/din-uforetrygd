@@ -9,8 +9,8 @@ import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskr
 import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import './layout.css'
 import type React from 'react'
-import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { hentDittUforevedtak } from '@/api/hentDittUforevedtak'
+import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { initate } from '@/api/initiate'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
@@ -19,7 +19,6 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { isEnabled } from '@/utils/unleash'
-import { hentJournalposter } from '@/api/hentJournalposter'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -33,7 +32,6 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
-  const journalposterPromise = hentJournalposter(params.pid)
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -68,12 +66,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           uforevedtakPromise={uforevedtakPromise}
           sakId={uforesak?.sakId?.toString()}
         />
-        <InterneLenker
-          visningskriterier={visningskriterier}
-          sakId={uforesak?.sakId?.toString()}
-          pid={params.pid}
-          journalposterPromise={journalposterPromise}
-        />
+        <InterneLenker visningskriterier={visningskriterier} sakId={uforesak?.sakId?.toString()} pid={params.pid} />
         <Snarveier
           visningskriterier={visningskriterier}
           pid={params.pid}

@@ -1,4 +1,4 @@
-import { FilesIcon } from '@navikt/aksel-icons'
+import { FilesIcon, FolderFileIcon } from '@navikt/aksel-icons'
 import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
@@ -6,22 +6,14 @@ import { Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
-import { hentJournalposter, Journalpost } from '@/api/hentJournalposter'
-import { DokumenterView } from '@/components/Dokumenter/DokumenterView'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
   sakId: string | undefined
   pid?: string
-  journalposterPromise: Promise<Journalpost[]>
 }
 
-export const InterneLenker: React.FC<InterneLenkerProps> = async ({
-  visningskriterier,
-  sakId,
-  pid,
-  journalposterPromise,
-}) => {
+export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid }) => {
   const mode = getEnv('MODE')
 
   return (
@@ -50,7 +42,23 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({
               </LinkCardTitle>
               <LinkCardDescription>Behandlinger knyttet til saken din</LinkCardDescription>
             </LinkCard>
-            <DokumenterView pid={pid} journalposterPromise={journalposterPromise} />
+            <LinkCard>
+              <Hide below="sm" asChild>
+                <Box asChild borderRadius="12" padding="space-8" className={styles.iconBox}>
+                  <LinkCardIcon>
+                    <FolderFileIcon className={styles.snarveiIcon} fontSize="2rem" />
+                  </LinkCardIcon>
+                </Box>
+              </Hide>
+              <LinkCardTitle>
+                <LinkCardAnchor
+                  href={`/uforetrygd/selvbetjening/dokumenter${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+                >
+                  Dokumenter knyttet til saken din
+                </LinkCardAnchor>
+              </LinkCardTitle>
+              <LinkCardDescription>Brev og informasjon om din uføretrygd</LinkCardDescription>
+            </LinkCard>
           </VStack>
         </section>
       )}
