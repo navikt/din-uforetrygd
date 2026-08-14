@@ -15,7 +15,6 @@ interface VedtaksdetaljerProps {
   sakId?: string
   linkInntektsplanlegger: string | undefined
   arstall: number
-  regelverksendringerJuli2026: boolean
 }
 
 export function Vedtaksdetaljer({
@@ -23,7 +22,6 @@ export function Vedtaksdetaljer({
   sakId,
   linkInntektsplanlegger,
   arstall,
-  regelverksendringerJuli2026,
 }: VedtaksdetaljerProps) {
   const promise = dittUforevedtakPromise
 
@@ -173,34 +171,30 @@ export function Vedtaksdetaljer({
               </Table.Row>
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>
-                  {regelverksendringerJuli2026 ? (
-                    <HStack gap="space-4">
-                      <BodyShort>Reduksjonsprosent</BodyShort>
-                      <HelpText
-                        title="Hva er reduksjonsprosent?"
-                        onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'reduksjonsprosent' })}
-                      >
-                        <BodyShort spacing>
-                          Vi trekker en prosent lik reduksjonsprosenten fra uføretrygden av hver krone du tjener over
-                          inntektsgrensen din.
-                        </BodyShort>
+                  <HStack gap="space-4">
+                    <BodyShort>Reduksjonsprosent</BodyShort>
+                    <HelpText
+                      title="Hva er reduksjonsprosent?"
+                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'reduksjonsprosent' })}
+                    >
+                      <BodyShort spacing>
+                        Vi trekker en prosent lik reduksjonsprosenten fra uføretrygden av hver krone du tjener over
+                        inntektsgrensen din.
+                      </BodyShort>
 
-                        <BodyShort spacing>Eksempel:</BodyShort>
-                        <List>
-                          <List.Item>Kim har en reduksjonsprosent på 70 prosent.</List.Item>
-                          <List.Item>
-                            For hver krone Kim tjener over inntektsgrensen, trekker vi 70 øre fra uføretrygden til Kim.
-                          </List.Item>
-                          <List.Item>Hvis Kim tjener 10 000 kroner, trekkes 7 000 kroner fra uføretrygden.</List.Item>
-                          <List.Item>
-                            Kim beholder lønnen sin på 10 000 kroner, i tillegg til 3 000 kroner i uføretrygden.
-                          </List.Item>
-                        </List>
-                      </HelpText>
-                    </HStack>
-                  ) : (
-                    <>Kompensasjonsgrad</>
-                  )}
+                      <BodyShort spacing>Eksempel:</BodyShort>
+                      <List>
+                        <List.Item>Kim har en reduksjonsprosent på 70 prosent.</List.Item>
+                        <List.Item>
+                          For hver krone Kim tjener over inntektsgrensen, trekker vi 70 øre fra uføretrygden til Kim.
+                        </List.Item>
+                        <List.Item>Hvis Kim tjener 10 000 kroner, trekkes 7 000 kroner fra uføretrygden.</List.Item>
+                        <List.Item>
+                          Kim beholder lønnen sin på 10 000 kroner, i tillegg til 3 000 kroner i uføretrygden.
+                        </List.Item>
+                      </List>
+                    </HelpText>
+                  </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
                   <SkeletonLoader promise={promise} render={(verdi) => verdi?.kompensasjonsgrad} /> prosent
