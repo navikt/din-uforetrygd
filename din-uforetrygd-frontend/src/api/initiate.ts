@@ -2,7 +2,6 @@ import { type BackendError, baseUrl, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Behandling } from '@/api/hentSaksoversikt'
-import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
