@@ -7,6 +7,7 @@ import styles from './brødsmulesti.module.css'
 const PATHS: Record<string, { tittel: string; url: string }> = {
   '': { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
+  dokumenter: { tittel: 'Dokumenter knyttet til saken din', url: '/uforetrygd/selvbetjening/dokumenter' },
   'kommende-utbetalinger': { tittel: 'Kommende utbetalinger', url: '/uforetrygd/selvbetjening/kommende-utbetalinger' },
   'dine-muligheter': { tittel: 'Dine muligheter', url: '/uforetrygd/selvbetjening/dine-muligheter' },
   'finn-ut-mer': { tittel: 'Finn ut mer', url: '/uforetrygd/selvbetjening/dine-muligheter/finn-ut-mer' },
