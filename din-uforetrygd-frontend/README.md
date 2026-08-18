@@ -20,6 +20,8 @@ For å få kontakt med Unleash lokalt må miljøvariablen `UNLEASH_SERVER_API_TO
 
 ### Playwright-testar
 
+Installasjon av dependencies: `npx playwright install`
+
 `playwright.config.ts` angir webServer.command, som startar mock server
 `workers: 1` – diverre fungerer ikkje parallellkøyring av testane p.t.
 
