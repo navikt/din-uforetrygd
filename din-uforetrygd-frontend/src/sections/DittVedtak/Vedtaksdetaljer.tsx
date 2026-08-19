@@ -166,7 +166,7 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.inntektsgrense} /> kr
+                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.inntektsgrense)} /> kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -214,7 +214,7 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.inntektstak} /> kr
+                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.inntektstak)} /> kr
                 </Table.DataCell>
               </Table.Row>
             </Table.Body>

@@ -20,15 +20,26 @@ app.use(
 
 app.get('/api/initiate', (req, res) => {
   const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
-  const data = mockData[requestedScenario] || mockData.default
 
   console.log(`Responding with scenario: ${requestedScenario}`)
-  res.status(200).json(data)
+
+  if (requestedScenario === 'forbidden') {
+    res.status(403).json({
+      timestamp: new Date().toISOString(),
+      status: 403,
+      error: 'FORBIDDEN',
+      message: 'LOGIN_LEVEL_TOO_LOW',
+      path: '/api/initiate',
+    })
+  } else {
+    const data = mockData[requestedScenario] || mockData.default
+    res.status(200).json(data)
+  }
 })
 
 app.get('/api/journalposter', (req, res) => {
   const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
-  const data = mockJournalposterData[requestedScenario] || mockData.default
+  const data = mockJournalposterData[requestedScenario] || mockJournalposterData.default
 
   console.log(`Responding with journalposter scenario: ${requestedScenario}`)
   res.status(200).json(data)
