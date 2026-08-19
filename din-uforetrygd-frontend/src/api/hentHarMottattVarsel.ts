@@ -2,6 +2,7 @@ import { headers } from 'next/headers'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getUforeVarslerOboToken } from '@/api/getOboToken'
 import getEnv from '@/utils/env'
+import { getMockScenario } from '@/api/common'
 
 export const hentHarMottattVarsel = async (): Promise<boolean> => {
   const mode = getEnv('MODE') as 'borger' | 'veileder'
@@ -20,6 +21,11 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
     Authorization: `Bearer ${oboToken}`,
     Cookie: fullmaktCookie as string,
     'Content-Type': 'application/json',
+  }
+
+  const mockScenario = await getMockScenario()
+  if (mockScenario) {
+    headere['X-Mock-Scenario'] = mockScenario
   }
 
   const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'

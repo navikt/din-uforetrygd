@@ -62,7 +62,7 @@ app.get('/api/saksoversikt', (req, res) => {
   res.status(200).json(data)
 })
 
-app.get('/api/varsler/status', (req, res) => {
+app.post('/api/varsler/status', (req, res) => {
   const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
   const data = mockVarslerData[requestedScenario] || mockVarslerData.default
 
