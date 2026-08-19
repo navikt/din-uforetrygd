@@ -8,8 +8,8 @@ import {
   MobileFillIcon,
   PersonSuitFillIcon,
 } from '@navikt/aksel-icons'
-import {BodyShort, Button, Dialog, Heading, HGrid, HStack, LinkCard, List, VStack} from '@navikt/ds-react'
-import {openChatbot} from '@navikt/nav-dekoratoren-moduler'
+import { BodyShort, Button, Dialog, Heading, HGrid, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
+import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import Divider from '@/sections/ForsideBehandling/Divider'
 
@@ -20,10 +20,10 @@ interface FinnUtMerProps {
 
 const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
   return (
-    <section style={{paddingBottom: '4rem'}}>
+    <section style={{ paddingBottom: '4rem' }}>
       <VStack gap="space-24" align={'start'}>
         <HStack gap={'space-12'} align="center">
-          <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'}/>
+          <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'} />
           <Heading size="large" level="2">
             Dine muligheter
           </Heading>
@@ -31,9 +31,9 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
         <Heading size="medium" level="3">
           Kontakt oss for en uforpliktende prat om dine muligheter
         </Heading>
-        <HGrid gap={'space-12'} columns={{md: 2}}>
+        <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
-            ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'}/>}
+            ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Start oppfølging med veileder"
             undertittel="Du beholder retten til uføretrygd"
           >
@@ -59,7 +59,7 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
                       Når du fortsetter, starter du arbeidsrettet oppfølging og en dialog med en veileder.
                     </Dialog.Description>
                   </Dialog.Header>
-                  <Divider style={{margin: '1rem 0'}}/>
+                  <Divider style={{ margin: '1rem 0' }} />
                   <Dialog.Body>
                     <Heading size={'small'} spacing>
                       Start oppfølging hvis du vil
@@ -94,7 +94,7 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
             </VStack>
           </ExpansionCardMedIkon>
           <ExpansionCardMedIkon
-            ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'}/>}
+            ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Chat med oss"
             undertittel="Døgnåpen"
           >
@@ -110,28 +110,33 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
           </ExpansionCardMedIkon>
           <LinkCard aria-label="Skriv til oss" size={'small'}>
             <LinkCard.Icon>
-              <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'}/>
+              <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
             </LinkCard.Icon>
             <LinkCard.Title>Skriv til oss</LinkCard.Title>
             <LinkCard.Description>Svar innen 1–2 dager</LinkCard.Description>
           </LinkCard>
           <ExpansionCardMedIkon
-            ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'}/>}
+            ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Ring oss"
             undertittel="Hverdager 09–15"
           >
             <HStack justify={'space-between'} align="center">
               <VStack>
-                <Heading size="medium">55 55 33 33</Heading>
+                <Heading size="medium">55 55 33 30</Heading>
                 <BodyShort size="medium">Hverdager 09-15</BodyShort>
               </VStack>
-              <Button variant={'secondary'} as="a" href="tel:55 55 33 33">
+              <Button variant={'secondary'} as="a" href="tel:55 55 33 30">
                 Ring nå
               </Button>
             </HStack>
           </ExpansionCardMedIkon>
         </HGrid>
-        <Button icon={<ArrowLeftIcon/>} as="a" variant="secondary" href={ `/uforetrygd/selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`}>
+        <Button
+          icon={<ArrowLeftIcon />}
+          as="a"
+          variant="secondary"
+          href={`/uforetrygd/selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+        >
           Gå tilbake
         </Button>
       </VStack>
