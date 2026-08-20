@@ -3,5 +3,15 @@
 # Fungerer for mac.. (pga /private/tmp/)
 currentDir=$(pwd)
 cd /private/tmp/
-env-fetch ufore din-uforetrygd-backend azure,tokenx uforetrygd.env
+
+nais secret get \
+    "$(nais app env din-uforetrygd-backend --environment dev-gcp --output json \
+              | jq -r '[.[] | select(.name | test("^(AZURE_)")) | .source.name] | unique[]')" \
+    --environment dev-gcp --with-values --reason "Testmiljø" --output json | jq -r '.data[] | "\(.key)=\(.value)"' > uforetrygd.env
+
+nais secret get \
+    "$(nais app env din-uforetrygd-backend --environment dev-gcp --output json \
+              | jq -r '[.[] | select(.name | test("^(TOKEN_X_)")) | .source.name] | unique[]')" \
+    --environment dev-gcp --with-values --reason "Testmiljø" --output json | jq -r '.data[] | "\(.key)=\(.value)"' >> uforetrygd.env
+
 cd $currentDir
