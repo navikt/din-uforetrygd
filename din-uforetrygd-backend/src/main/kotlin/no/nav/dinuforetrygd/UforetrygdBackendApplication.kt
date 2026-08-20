@@ -2,7 +2,6 @@ package no.nav.dinuforetrygd
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import java.io.File
 
 @SpringBootApplication
 class MinUføretrygdApplication
@@ -17,9 +16,7 @@ fun fetchSecretsLokalt() {
         ?.split(",")
         ?.contains("local") == true
 
-    val secretsFile = File("/tmp/uforetrygd.env")
-
-    if (isLocal && !secretsFile.exists()) {
+    if (isLocal) {
         ProcessBuilder("./din-uforetrygd-backend/fetch-secrets.sh")
             .inheritIO()
             .start()
