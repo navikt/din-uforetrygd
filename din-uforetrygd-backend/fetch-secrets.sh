@@ -4,7 +4,12 @@
 envFile="/tmp/uforetrygd.env"
 reason="Kjøre din-uforetrygd-backend lokalt"
 
-nais login --nais -y
+accessToken=$(printf 'n\n' | nais auth print-access-token --nais 2>/dev/null)
+
+# Logg inn hvis output ikke inneholder gyldig JWT
+if [[ ! "$accessToken" =~ ^eyJ[^.]+\.[^.]+\..+ ]]; then
+  nais login --nais -y
+fi
 
 echo "Henter AzureAd secrets..."
 nais secret get \
