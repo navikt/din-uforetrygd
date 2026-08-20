@@ -25,8 +25,8 @@ envFileContainsRequiredSecretPrefixes() {
   return 0
 }
 
-if envFileContainsRequiredSecretPrefixes; then
-  echo "Secrets finnes allerede i $envFile. Kjør ./$appName/fetch-secrets.sh manuelt for å hente secrets på nytt."
+if [[ "$1" != "--force" ]] && envFileContainsRequiredSecretPrefixes; then
+  echo "Secrets finnes allerede i $envFile. Kjør fetch-secrets.sh med --force for å hente secrets på nytt."
   exit 0
 fi
 
