@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Henter TokenX- og AzureAd-secrets for din-uforetrygd-backend og lagrer de under /tmp/ - her slettes alt ved restart av maskinen
 
 envFile="/tmp/uforetrygd.env"
