@@ -8,14 +8,21 @@ import java.io.File
 class MinUføretrygdApplication
 
 fun main(args: Array<String>) {
+    fetchSecretsLokalt()
+    runApplication<MinUføretrygdApplication>(*args)
+}
+
+fun fetchSecretsLokalt() {
+    val isLocal = System.getProperty("spring.profiles.active")
+        ?.split(",")
+        ?.contains("local") == true
+
     val secretsFile = File("/tmp/uforetrygd.env")
 
-    if (!secretsFile.exists()) {
+    if (isLocal && !secretsFile.exists()) {
         ProcessBuilder("./din-uforetrygd-backend/fetch-secrets.sh")
             .inheritIO()
             .start()
             .waitFor()
     }
-
-    runApplication<MinUføretrygdApplication>(*args)
 }
