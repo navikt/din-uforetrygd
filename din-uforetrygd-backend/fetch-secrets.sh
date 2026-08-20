@@ -1,5 +1,4 @@
 # Henter TokenX- og AzureAd-secrets for din-uforetrygd-backend og lagrer de under /tmp/ - her slettes alt ved restart av maskinen
-# Sett opp 2run configuration" til å "Enable EnvFile" - og pek på rett fil
 
 envFile="/tmp/uforetrygd.env"
 reason="Kjøre din-uforetrygd-backend lokalt"

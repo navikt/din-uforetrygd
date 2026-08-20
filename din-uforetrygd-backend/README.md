@@ -11,7 +11,6 @@ Skriptet lagrer miljøvariablene i mappen `/tmp` og fjernes når maskinen slåes
 
 I IntelliJ kan du velge `edit configurations` ved siden av run-knappen.
 * Sett `local` i  active profiles
-* Huk av for Enable EnvFile og legge til `/tmp/uforetrygd.env`
 
 Får du problemer med at maven ikke finner avhengigheter, kan det hende du må legge inn Maven-konfigurasjon i `settings.xml`. Se [Maven settings](../onboarding/mavensettings.md) for mer informasjon.
 
