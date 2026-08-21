@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 envFile=".env.local"
+appName="din-uforetrygd-frontend"
+sourceName="$appName-unleash-api-token"
+reason="Kjøre $appName lokalt"
+team="ufore"
+environment="dev-gcp"
 
 touch "$envFile"
 
@@ -8,23 +14,22 @@ updateEnvVariable() {
   local key="$1"
   local value="$2"
 
+  # Oppdater eksisterende verdi hvis den finnes, ellers legg til ny variabel
   if grep -q "^$key=" "$envFile"; then
-    # Oppdater eksisterende verdi
     sed -i.bak "s|^$key=.*|$key=$value|" "$envFile"
     rm -f "$envFile.bak"
   else
-    # Legg til ny variabel
     echo "${key}=${value}" >> "$envFile"
   fi
 }
 
 echo "Henter secrets for Unleash..."
 
-nais secret get din-uforetrygd-frontend-unleash-api-token \
-  --team ufore \
-  --environment dev-gcp \
+nais secret get "$sourceName" \
+  --team "$team" \
+  --environment "$environment" \
   --with-values \
-  --reason "Kjøre appen lokalt" \
+  --reason "$reason" \
   --output json |
   jq -r '.data[] | "\(.key)=\(.value)"' |
   while IFS='=' read -r key value; do

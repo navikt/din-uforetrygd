@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Henter TokenX- og AzureAd-secrets for din-uforetrygd-backend og lagrer dem under /tmp/.
 # Innholdet i /tmp slettes ved restart av maskinen.
