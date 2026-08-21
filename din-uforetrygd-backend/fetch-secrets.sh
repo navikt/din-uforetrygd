@@ -12,7 +12,6 @@ environment="dev-gcp"
 declare -A secretPrefixes=(
   ["AzureAd"]="AZURE"
   ["TokenX"]="TOKEN_X"
-#  ["Unleash"]="UNLEASH"
 )
 
 envFileContainsRequiredSecretPrefixes() {
