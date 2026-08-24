@@ -15,6 +15,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   let definitions: ClientFeaturesResponse
   try {
     definitions = await getDefinitions({
+      url: `${process.env.UNLEASH_SERVER_API_URL}/api/client/features`,
       fetchOptions: {
         next: { revalidate: 15 }, // cache i 15 sek
         signal: AbortSignal.timeout(3000),

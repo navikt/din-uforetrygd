@@ -9,10 +9,11 @@ const app = next({ dev: isDev })
 const handle = app.getRequestHandler()
 const server = express()
 
-const unleashUrl = process.env.UNLEASH_SERVER_API_URL
+// Dette Unleash-oppsettet brukes kun for stengForReguleringMiddleware
+// Unleash for resten av appen ligger i utils/unleash.ts
+const unleashUrl = `${process.env.UNLEASH_SERVER_API_URL}/api`
 const unleashToken = process.env.UNLEASH_SERVER_API_TOKEN
 const unleashEnv = process.env.UNLEASH_SERVER_API_ENV
-
 const unleash = initialize({
   disableAutoStart: !(unleashToken && unleashUrl),
   url: unleashUrl ?? '',

@@ -133,8 +133,6 @@ spec:
       value: api://dev-gcp.ufore.din-uforetrygd-backend/.default
     - name: UFORE_VARSLER_SCOPE
       value: api://dev-gcp.ufore.ufore-varsler/.default
-    - name: UNLEASH_SERVER_API_URL
-      value: https://ufore-unleash-api.nav.cloud.nais.io/api
     - name: FARO_URL
       value: https://telemetry.ekstern.dev.nav.no/collect
   envFrom:
