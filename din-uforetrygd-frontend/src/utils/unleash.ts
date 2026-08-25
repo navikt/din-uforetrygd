@@ -29,7 +29,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   const { toggles } = evaluateFlags(definitions, {
     sessionId,
   })
-  const flags = flagsClient(toggles)
+  const flags = flagsClient(toggles, { url: `${process.env.UNLEASH_SERVER_API_URL}/api` })
   const isEnabled = flags.isEnabled(toggle)
 
   // Ikke blokkerende rapportering tilbake til Unleash
