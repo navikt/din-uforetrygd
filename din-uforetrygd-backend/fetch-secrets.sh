@@ -1,7 +1,62 @@
-# Henter secrets for din-uforetrygd-backend og lagrer de under /private/tmp/ - her slettes alt ved restart av mac
-# Sett opp 2run configuration" til å "Enable EnvFile" - og pek på rett fil
-# Fungerer for mac.. (pga /private/tmp/)
-currentDir=$(pwd)
-cd /private/tmp/
-env-fetch ufore din-uforetrygd-backend azure,tokenx uforetrygd.env
-cd $currentDir
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Henter TokenX- og AzureAd-secrets for din-uforetrygd-backend og lagrer dem under /tmp/.
+# Innholdet i /tmp slettes ved restart av maskinen.
+
+envFile="/tmp/uforetrygd.env"
+appName="din-uforetrygd-backend"
+reason="Kjøre $appName lokalt"
+team="ufore"
+environment="dev-gcp"
+
+declare -A secretPrefixes=(
+  ["AzureAd"]="AZURE"
+  ["TokenX"]="TOKEN_X"
+)
+
+envFileContainsRequiredSecretPrefixes() {
+  [[ -f "$envFile" ]] || return 1
+
+  for prefix in "${secretPrefixes[@]}"; do
+    grep -q "^${prefix}" "$envFile" || return 1
+  done
+
+  return 0
+}
+
+if [[ "${1:-}" != "--force" ]] && envFileContainsRequiredSecretPrefixes; then
+  echo "Secrets finnes allerede i $envFile. Kjør fetch-secrets.sh med --force for å hente secrets på nytt."
+  exit 0
+fi
+
+accessToken=$(printf 'n\n' | nais auth print-access-token --nais 2>/dev/null)
+
+# Logg inn hvis output ikke inneholder en gyldig JWT.
+if [[ ! "$accessToken" =~ ^eyJ[^.]+\.[^.]+\..+ ]]; then
+  nais login --nais -y
+fi
+
+: > "$envFile"
+
+for secretName in "${!secretPrefixes[@]}"; do
+  prefix="${secretPrefixes[$secretName]}"
+
+  echo "Henter secrets for $secretName..."
+
+  nais secret get \
+    "$(nais app env "$appName" \
+        --team "$team" \
+        --environment "$environment" \
+        --output json \
+      | jq -r --arg prefix "$prefix" \
+          'map(select(.name | startswith($prefix)) | .source.name) | unique[]')" \
+    --team "$team" \
+    --environment "$environment" \
+    --with-values \
+    --reason "$reason" \
+    --output json \
+  | jq -r '.data[] | "\(.key)=\(.value)"' >> "$envFile"
+done
+
+echo "Lagret secrets i $envFile"
