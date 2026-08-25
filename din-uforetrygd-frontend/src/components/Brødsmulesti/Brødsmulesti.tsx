@@ -10,7 +10,7 @@ const PATHS: Record<string, { tittel: string; url: string }> = {
   dokumenter: { tittel: 'Dokumenter knyttet til saken din', url: '/uforetrygd/selvbetjening/dokumenter' },
   'kommende-utbetalinger': { tittel: 'Kommende utbetalinger', url: '/uforetrygd/selvbetjening/kommende-utbetalinger' },
   'dine-muligheter': { tittel: 'Dine muligheter', url: '/uforetrygd/selvbetjening/dine-muligheter' },
-  'finn-ut-mer': { tittel: 'Finn ut mer', url: '/uforetrygd/selvbetjening/dine-muligheter/finn-ut-mer' },
+  'snakk-med-oss': { tittel: 'Snakk med oss', url: '/uforetrygd/selvbetjening/dine-muligheter/snakk-med-oss' },
 }
 
 const MIN_SIDE = { tittel: 'Min side', url: '/minside' }
