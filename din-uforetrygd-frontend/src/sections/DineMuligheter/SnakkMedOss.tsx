@@ -80,25 +80,21 @@ const SnakkMedOss = ({ pid, mode }: Props) => {
             </LinkCard.Title>
             <LinkCard.Description>Du får svar innen 1–2 dager</LinkCard.Description>
           </LinkCard>
-          <ExpansionCardMedIkon
-            ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-            tittel="Start uforpliktende oppfølging"
-            undertittel="Med en veileder på ditt lokale Nav-kontor"
-          >
-            <VStack gap="space-24" align="start">
-              <List>
-                <List.Item>
-                  En veileder på ditt lokale Nav-kontor kontakter deg så raskt som mulig for å bli kjent med din
-                  situasjon og dine behov.
-                </List.Item>
-                <List.Item>Dere kan møtes digitalt, på telefon eller på Nav-kontoret.</List.Item>
-                <List.Item>Du kan når som helst avslutte oppfølgingen.</List.Item>
-              </List>
-              {erFullmakt ? (
-                <Button variant={'secondary'} as="a" href={startArbeidsoppfølgingLenke} data-fullmakt-modal={true}>
-                  Start oppfølging
-                </Button>
-              ) : (
+          {!erFullmakt && (
+            <ExpansionCardMedIkon
+              ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+              tittel="Start uforpliktende oppfølging"
+              undertittel="Med en veileder på ditt lokale Nav-kontor"
+            >
+              <VStack gap="space-24" align="start">
+                <List>
+                  <List.Item>
+                    En veileder på ditt lokale Nav-kontor kontakter deg så raskt som mulig for å bli kjent med din
+                    situasjon og dine behov.
+                  </List.Item>
+                  <List.Item>Dere kan møtes digitalt, på telefon eller på Nav-kontoret.</List.Item>
+                  <List.Item>Du kan når som helst avslutte oppfølgingen.</List.Item>
+                </List>
                 <Dialog>
                   <Dialog.Trigger>
                     <Button>Start oppfølging</Button>
@@ -138,9 +134,9 @@ const SnakkMedOss = ({ pid, mode }: Props) => {
                     </Dialog.Footer>
                   </Dialog.Popup>
                 </Dialog>
-              )}
-            </VStack>
-          </ExpansionCardMedIkon>
+              </VStack>
+            </ExpansionCardMedIkon>
+          )}
         </HGrid>
         <Button
           icon={<ArrowLeftIcon />}
