@@ -13,12 +13,12 @@ import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import Divider from '@/sections/ForsideBehandling/Divider'
 
-interface FinnUtMerProps {
+interface Props {
   pid?: string | undefined
   mode: 'veileder' | 'borger'
 }
 
-const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
+const SnakkMedOss = ({ pid, mode }: Props) => {
   return (
     <section style={{ paddingBottom: '4rem' }}>
       <VStack gap="space-24" align={'start'}>
@@ -144,4 +144,4 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
   )
 }
 
-export default FinnUtMer
+export default SnakkMedOss

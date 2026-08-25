@@ -162,7 +162,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
               <Button
                 variant={'primary'}
                 as="a"
-                href={`dine-muligheter/finn-ut-mer${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+                href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
               >
                 Snakk med oss
               </Button>
@@ -212,7 +212,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
             </BodyShort>
           </VStack>
           <VStack gap="space-12" justify="center">
-            <Button as="a" href={`dine-muligheter/finn-ut-mer${mode === 'veileder' ? `?pid=${pid}` : ''}`} >
+            <Button as="a" href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}>
               Snakk med oss
             </Button>
           </VStack>

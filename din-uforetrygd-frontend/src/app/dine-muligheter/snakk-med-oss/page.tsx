@@ -1,14 +1,14 @@
 import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
-import FinnUtMer from '@/sections/DineMuligheter/FinnUtMer'
+import SnakkMedOss from '@/sections/DineMuligheter/SnakkMedOss'
+import getEnv from '@/utils/env'
 import { isEnabled } from '@/utils/unleash'
-import getEnv from "@/utils/env";
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
 }
 
-const DineMuligheterFinnUtMerPage = async ({ searchParams }: Props) => {
+const DineMuligheterSnakkMedOssPage = async ({ searchParams }: Props) => {
   const params = await searchParams
   const mode = getEnv('MODE') as 'borger' | 'veileder'
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
@@ -17,7 +17,7 @@ const DineMuligheterFinnUtMerPage = async ({ searchParams }: Props) => {
     const harMottattVarsel = await hentHarMottattVarsel()
 
     if (harMottattVarsel) {
-      return <FinnUtMer pid={params.pid} mode={mode} />
+      return <SnakkMedOss pid={params.pid} mode={mode} />
     }
   }
   return (
@@ -30,4 +30,4 @@ const DineMuligheterFinnUtMerPage = async ({ searchParams }: Props) => {
   )
 }
 
-export default DineMuligheterFinnUtMerPage
+export default DineMuligheterSnakkMedOssPage
