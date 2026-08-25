@@ -126,6 +126,8 @@ spec:
       value: api://prod-gcp.ufore.ufore-varsler/.default
     - name: FARO_URL
       value: https://telemetry.nav.no/collect
+    - name: LINK_SKRIV_TIL_OSS
+      value: https://innboks.nav.no/s/
 
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

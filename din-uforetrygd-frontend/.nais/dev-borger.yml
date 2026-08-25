@@ -133,5 +133,7 @@ spec:
       value: https://representasjon-banner-frontend-borger-q2.ekstern.dev.nav.no/pensjon/selvbetjening/representasjon
     - name: FARO_URL
       value: https://telemetry.ekstern.dev.nav.no/collect
+    - name: LINK_SKRIV_TIL_OSS
+      value: https://innboks.dev.nav.no/s/
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token

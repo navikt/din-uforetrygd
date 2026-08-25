@@ -12,6 +12,8 @@ import { BodyShort, Button, Dialog, Heading, HGrid, HStack, LinkCard, List, VSta
 import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import Divider from '@/sections/ForsideBehandling/Divider'
+import useIsFullmakt from '@/hooks/useIsFullmakt'
+import getEnv from '@/utils/env'
 
 interface FinnUtMerProps {
   pid?: string | undefined
@@ -19,6 +21,10 @@ interface FinnUtMerProps {
 }
 
 const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
+  const erFullmakt = useIsFullmakt()
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  const skrivTilOssLenke = getEnv('LINK_SKRIV_TIL_OSS')!
+
   return (
     <section style={{ paddingBottom: '4rem' }}>
       <VStack gap="space-24" align={'start'}>
@@ -48,51 +54,58 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
                 <List.Item>Du kan når som helst avslutte oppfølgingen</List.Item>
               </List>
               {/* TODO: verifiser lenke og finn prod-lenke */}
-              <Dialog>
-                <Dialog.Trigger>
-                  <Button variant={'secondary'}>Start oppfølging</Button>
-                </Dialog.Trigger>
-                <Dialog.Popup position="center">
-                  <Dialog.Header>
-                    <Dialog.Title>Bekreft at du vil starte oppfølging</Dialog.Title>
-                    <Dialog.Description>
-                      Når du fortsetter, starter du arbeidsrettet oppfølging og en dialog med en veileder.
-                    </Dialog.Description>
-                  </Dialog.Header>
-                  <Divider style={{ margin: '1rem 0' }} />
-                  <Dialog.Body>
-                    <Heading size={'small'} spacing>
-                      Start oppfølging hvis du vil
-                    </Heading>
-                    <BodyShort spacing>
-                      Det forplikter deg ikke til noe bestemt – du trenger ikke å vite hva du vil eller hva som er mulig
-                      for deg.
-                    </BodyShort>
-                    <Heading size={'small'} spacing>
-                      Vi henter personopplysninger
-                    </Heading>
-                    <BodyShort spacing>
-                      Når du starter oppfølgingen, samtykker du til at vi henter opplysninger om din alder, adresse og
-                      oppholdsstatus fra Folkeregisteret.
-                    </BodyShort>
-                  </Dialog.Body>
-                  <Dialog.Footer>
-                    <Dialog.CloseTrigger>
-                      <Button variant={'secondary'}>Avbryt</Button>
-                    </Dialog.CloseTrigger>
-                    <Button
-                      variant={'primary'}
-                      as="a"
-                      href="https://start-arbeidsoppfolging.ekstern.dev.nav.no"
-                      arbeidsrettet-oppfolging
-                    >
-                      Ja, start nå
-                    </Button>
-                  </Dialog.Footer>
-                </Dialog.Popup>
-              </Dialog>
+              {erFullmakt ? (
+                <Button
+                  variant={'secondary'}
+                  as="a"
+                  href="https://start-arbeidsoppfolging.ekstern.dev.nav.no"
+                  data-fullmakt-modal={true}
+                >
+                  Start oppfølging
+                </Button>
+              ) : (
+                <Dialog>
+                  <Dialog.Trigger>
+                    <Button variant={'secondary'}>Start oppfølging</Button>
+                  </Dialog.Trigger>
+                  <Dialog.Popup position="center">
+                    <Dialog.Header>
+                      <Dialog.Title>Bekreft at du vil starte oppfølging</Dialog.Title>
+                      <Dialog.Description>
+                        Når du fortsetter, starter du arbeidsrettet oppfølging og en dialog med en veileder.
+                      </Dialog.Description>
+                    </Dialog.Header>
+                    <Divider style={{ margin: '1rem 0' }} />
+                    <Dialog.Body>
+                      <Heading size={'small'} spacing>
+                        Start oppfølging hvis du vil
+                      </Heading>
+                      <BodyShort spacing>
+                        Det forplikter deg ikke til noe bestemt – du trenger ikke å vite hva du vil eller hva som er
+                        mulig for deg.
+                      </BodyShort>
+                      <Heading size={'small'} spacing>
+                        Vi henter personopplysninger
+                      </Heading>
+                      <BodyShort spacing>
+                        Når du starter oppfølgingen, samtykker du til at vi henter opplysninger om din alder, adresse og
+                        oppholdsstatus fra Folkeregisteret.
+                      </BodyShort>
+                    </Dialog.Body>
+                    <Dialog.Footer>
+                      <Dialog.CloseTrigger>
+                        <Button variant={'secondary'}>Avbryt</Button>
+                      </Dialog.CloseTrigger>
+                      <Button variant={'primary'} as="a" href="https://start-arbeidsoppfolging.ekstern.dev.nav.no">
+                        Ja, start nå
+                      </Button>
+                    </Dialog.Footer>
+                  </Dialog.Popup>
+                </Dialog>
+              )}
             </VStack>
           </ExpansionCardMedIkon>
+
           <ExpansionCardMedIkon
             ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Chat med oss"
@@ -108,13 +121,19 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
               </Button>
             </VStack>
           </ExpansionCardMedIkon>
+
           <LinkCard aria-label="Skriv til oss" size={'small'}>
             <LinkCard.Icon>
               <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
             </LinkCard.Icon>
-            <LinkCard.Title>Skriv til oss</LinkCard.Title>
+            <LinkCard.Title>
+              <LinkCard.Anchor href={skrivTilOssLenke} data-fullmakt-modal={true}>
+                Skriv til oss
+              </LinkCard.Anchor>
+            </LinkCard.Title>
             <LinkCard.Description>Svar innen 1–2 dager</LinkCard.Description>
           </LinkCard>
+
           <ExpansionCardMedIkon
             ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             tittel="Ring oss"
