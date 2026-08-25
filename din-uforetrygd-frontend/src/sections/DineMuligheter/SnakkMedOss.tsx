@@ -28,47 +28,83 @@ const SnakkMedOss = ({ pid, mode }: Props) => {
             Dine muligheter
           </Heading>
         </HStack>
-        <Heading size="medium" level="3">
-          Kontakt oss for en uforpliktende prat om dine muligheter
-        </Heading>
+        <BodyShort weight="semibold" size="large">
+          Kontakt oss for en uforpliktende prat om mulighetene dine. Du beholder retten til uføretrygd.
+        </BodyShort>
         <HGrid gap={'space-12'} columns={{ md: 2 }}>
           <ExpansionCardMedIkon
-            ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-            tittel="Start oppfølging med veileder"
-            undertittel="Du beholder retten til uføretrygd"
+            ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+            tittel="Ring oss"
+            undertittel="Hverdager 09–15"
           >
-            <VStack gap="space-24" align={'start'}>
+            <HStack align="center" justify="space-between" gap="space-24">
+              <VStack maxWidth="55%" gap="space-8" align="start">
+                <Heading size="medium">55 55 33 30</Heading>
+                <BodyShort>Du kommer direkte til en veileder som kan uføretrygd</BodyShort>
+              </VStack>
+              <VStack justify="end">
+                <Button as="a" href="tel:55 55 33 30">
+                  Ring nå
+                </Button>
+              </VStack>
+            </HStack>
+          </ExpansionCardMedIkon>
+          <ExpansionCardMedIkon
+            ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
+            tittel="Chat med oss"
+            undertittel="Døgnåpen"
+          >
+            <VStack gap={'space-24'} align="start">
+              <BodyShort>
+                Du kan velge om du vil snakke med NavBot (døgnåpen) eller en veileder (kl. 9–15 på hverdager).
+              </BodyShort>
+              <Button onClick={() => openChatbot()}>Start chatten</Button>
+            </VStack>
+          </ExpansionCardMedIkon>
+          <LinkCard aria-label="Skriv til oss" size={'small'}>
+            <LinkCard.Icon>
+              <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
+            </LinkCard.Icon>
+            <LinkCard.Title>Skriv til oss</LinkCard.Title>
+            <LinkCard.Description>Du får svar innen 1–2 dager</LinkCard.Description>
+          </LinkCard>
+          <ExpansionCardMedIkon
+            ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+            tittel="Start uforpliktende oppfølging"
+            undertittel="Med en veileder på ditt lokale Nav-kontor"
+          >
+            <VStack gap="space-24" align="start">
               <List>
-                <List.Item>Det er uforpliktende og du mister ikke uføretrygden din. </List.Item>
                 <List.Item>
-                  En veileder kontakter deg innen 2 virkedager for å bli kjent med din situasjon og dine behov.
+                  En veileder på ditt lokale Nav-kontor kontakter deg så raskt som mulig for å bli kjent med din
+                  situasjon og dine behov.
                 </List.Item>
-                <List.Item>Dere kan møtes digitalt, på telefon eller på lokalt Nav-kontor.</List.Item>
-                <List.Item>Sammen med veileder lager du en aktivitetsplan.</List.Item>
-                <List.Item>Du kan når som helst avslutte oppfølgingen</List.Item>
+                <List.Item>Dere kan møtes digitalt, på telefon eller på Nav-kontoret.</List.Item>
+                <List.Item>Du kan når som helst avslutte oppfølgingen.</List.Item>
               </List>
               {/* TODO: verifiser lenke og finn prod-lenke */}
               <Dialog>
                 <Dialog.Trigger>
-                  <Button variant={'secondary'}>Start oppfølging</Button>
+                  <Button>Start oppfølging</Button>
                 </Dialog.Trigger>
                 <Dialog.Popup position="center">
                   <Dialog.Header>
                     <Dialog.Title>Bekreft at du vil starte oppfølging</Dialog.Title>
-                    <Dialog.Description>
-                      Når du fortsetter, starter du arbeidsrettet oppfølging og en dialog med en veileder.
+                    <Dialog.Description style={{ marginTop: '1rem' }}>
+                      Trykker du "Ja, start nå" blir du kontaktet av en veileder og starter det vi kaller arbeidsrettet
+                      oppfølging. Du forplikter deg ikke til noe ved å starte oppfølging.
                     </Dialog.Description>
                   </Dialog.Header>
                   <Divider style={{ margin: '1rem 0' }} />
                   <Dialog.Body>
-                    <Heading size={'small'} spacing>
+                    <Heading size="xsmall" spacing>
                       Start oppfølging hvis du vil
                     </Heading>
                     <BodyShort spacing>
                       Det forplikter deg ikke til noe bestemt – du trenger ikke å vite hva du vil eller hva som er mulig
                       for deg.
                     </BodyShort>
-                    <Heading size={'small'} spacing>
+                    <Heading size="xsmall" spacing>
                       Vi henter personopplysninger
                     </Heading>
                     <BodyShort spacing>
@@ -78,10 +114,10 @@ const SnakkMedOss = ({ pid, mode }: Props) => {
                   </Dialog.Body>
                   <Dialog.Footer>
                     <Dialog.CloseTrigger>
-                      <Button variant={'secondary'}>Avbryt</Button>
+                      <Button variant="secondary">Avbryt</Button>
                     </Dialog.CloseTrigger>
                     <Button
-                      variant={'primary'}
+                      variant="primary"
                       as="a"
                       href="https://start-arbeidsoppfolging.ekstern.dev.nav.no"
                       arbeidsrettet-oppfolging
@@ -92,43 +128,6 @@ const SnakkMedOss = ({ pid, mode }: Props) => {
                 </Dialog.Popup>
               </Dialog>
             </VStack>
-          </ExpansionCardMedIkon>
-          <ExpansionCardMedIkon
-            ikon={<Chat2FillIcon color={'#7342B6'} fontSize={'3rem'} />}
-            tittel="Chat med oss"
-            undertittel="Døgnåpen"
-          >
-            <VStack gap={'space-24'} align="start">
-              <BodyShort>
-                Du møter først chatbot Frida som har døgnåpent. Fra kl. 9 til 15 på hverdager kan du be Frida om å få
-                chatte med en veileder.
-              </BodyShort>
-              <Button variant={'secondary'} onClick={() => openChatbot()}>
-                Start chatten
-              </Button>
-            </VStack>
-          </ExpansionCardMedIkon>
-          <LinkCard aria-label="Skriv til oss" size={'small'}>
-            <LinkCard.Icon>
-              <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
-            </LinkCard.Icon>
-            <LinkCard.Title>Skriv til oss</LinkCard.Title>
-            <LinkCard.Description>Svar innen 1–2 dager</LinkCard.Description>
-          </LinkCard>
-          <ExpansionCardMedIkon
-            ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
-            tittel="Ring oss"
-            undertittel="Hverdager 09–15"
-          >
-            <HStack justify={'space-between'} align="center">
-              <VStack>
-                <Heading size="medium">55 55 33 30</Heading>
-                <BodyShort size="medium">Hverdager 09-15</BodyShort>
-              </VStack>
-              <Button variant={'secondary'} as="a" href="tel:55 55 33 30">
-                Ring nå
-              </Button>
-            </HStack>
           </ExpansionCardMedIkon>
         </HGrid>
         <Button
