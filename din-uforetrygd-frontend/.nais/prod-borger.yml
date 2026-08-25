@@ -123,5 +123,9 @@ spec:
       value: https://www.nav.no/representasjon-tilleggsdata
     - name: FARO_URL
       value: https://telemetry.nav.no/collect
+    - name: LINK_SKRIV_TIL_OSS
+      value: https://innboks.nav.no/s/
+    - name: LINK_START_ARBEIDSOPPFOLGING
+      value: https://start-arbeidsoppfolging.nav.no
   envFrom:
     - secret: din-uforetrygd-frontend-unleash-api-token
