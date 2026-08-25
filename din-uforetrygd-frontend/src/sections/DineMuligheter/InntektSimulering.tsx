@@ -33,7 +33,6 @@ export default function InntektSimulering() {
           inntektTall={[0, valgtInntekt]}
           uføretrygdTall={[valgt.uføretrygdFør, valgt.uføretrygdEtter]}
         />
-
         <Label>Klikk på inntektene</Label>
         <Chips className={styles.inntektSimuleringChips}>
           <HGrid columns={2} gap="space-12">
@@ -56,12 +55,12 @@ export default function InntektSimulering() {
           <VStack gap="space-16">
             {/*mer space*/}
             <HStack justify="space-between">
-              <BodyShort>Saras ekstrainntekt</BodyShort>
+              <BodyShort>Kims ekstrainntekt</BodyShort>
               <BodyShort weight="semibold">{`${formatInntekt(valgtInntekt)} kr`}</BodyShort>
             </HStack>
             <Divider />
             <HStack justify="space-between">
-              <BodyShort>Saras uføretrygd (100%)</BodyShort>
+              <BodyShort>Kims uføretrygd (100%)</BodyShort>
               <VStack align="end">
                 <BodyShort weight="semibold">{`${formatInntekt(valgt.uføretrygdEtter)} kr`}</BodyShort>
                 <BodyShort

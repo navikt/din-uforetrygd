@@ -20,7 +20,7 @@ interface Props {
 const DineMuligheter = ({ pid, mode }: Props) => {
   return (
     <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-32', md: 'space-48' }}>
-      <VStack gap="space-12" maxWidth={'678px'}>
+      <VStack gap="space-12">
         <HStack gap={'space-12'} align="center">
           <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'} />
           <Heading size="large" level="2">
@@ -28,8 +28,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
           </Heading>
         </HStack>
         <BodyShort>
-          I tillegg til uføretrygden kan du jobbe, studere eller gjøre andre aktiviteter hvis du har mulighet. Du
-          beholder retten til uføretrygd.
+          I tillegg til uføretrygden kan du jobbe, ta utdanning eller gjøre andre aktiviteter hvis du har mulighet. Du beholder retten til uføretrygd.
         </BodyShort>
       </VStack>
       <div>
@@ -37,14 +36,16 @@ const DineMuligheter = ({ pid, mode }: Props) => {
           <VStack gap="space-44" className={styles.fargeContainerContent}>
             <VStack gap="space-24">
               <ExpansionCardMedIkon
-                tittel="Du kan få veiledning"
+                tittel="Veiledning"
                 ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               >
                 <VStack gap="space-12">
+                  <BodyShort weight="semibold">Du kan få veiledning</BodyShort>
                   <List>
-                    <List.Item>om det du trenger og har lyst til</List.Item>
-                    <List.Item>på telefon, videosamtale eller på ditt lokale kontor</List.Item>
-                    <List.Item>om arbeidsrettet oppfølging eller det du har lyst til å få til</List.Item>
+                    <List.Item>om arbeidsrettet oppfølging</List.Item>
+                    <List.Item>om det du trenger</List.Item>
+                    <List.Item>om det du har lyst til å få til</List.Item>
+                    <List.Item>på telefon, videosamtale eller på ditt lokale Nav kontor</List.Item>
                   </List>
                 </VStack>
               </ExpansionCardMedIkon>
@@ -74,9 +75,9 @@ const DineMuligheter = ({ pid, mode }: Props) => {
               >
                 <List>
                   <List.Item>inntekt og uføretrygd</List.Item>
-                  <List.Item>budsjett, lavere utgifter</List.Item>
+                  <List.Item>budsjett og utgifter</List.Item>
                   <List.Item>bolig og depositum</List.Item>
-                  <List.Item>Husbanken: startlån og bostøtte</List.Item>
+                  <List.Item>startlån og bostøtte fra Husbanken</List.Item>
                   <List.Item>økonomisk sosialhjelp</List.Item>
                   <List.Item>gjeld, namsmann og gjeldsordning</List.Item>
                 </List>
@@ -87,8 +88,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
               >
                 <VStack gap="space-12">
                   <BodyShort>
-                    Du trenger ikke kontakte oss om du ønsker å jobbe eller studere. Her finner du nyttig informasjon
-                    som kan hjelpe deg på veien:
+                    Vi hjelper deg gjerne, men du trenger ikke kontakte oss om du ønsker å jobbe eller ta utdanning. Her finner du nyttig informasjon som kan hjelpe deg på veien:
                   </BodyShort>
                   <BodyShort weight="semibold">Utdanning</BodyShort>
                   <List>
@@ -170,13 +170,13 @@ const DineMuligheter = ({ pid, mode }: Props) => {
           </VStack>
         </div>
         <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>
-          <HGrid columns={{ md: 2 }} gap="space-12" className={styles.fargeContainerContent}>
+          <HGrid columns={{ md: 2 }} gap="space-32" className={styles.fargeContainerContent}>
             <VStack gap="space-12" justify="center">
               <Heading size="large" level="3">
-                Sara (24) fikk hjelp til å finne jobb
+                Veilederne våre forteller
               </Heading>
               <BodyLong size="medium">
-                Historie fra virkeligheten: slik fikk uføre Sara hjelp til å finne deltidsjobb
+                Se hvordan et møte på Nav-kontoret kan være, og hva de kan hjelp med.
               </BodyLong>
             </VStack>
             <Box background="brand-magenta-strong" height="200px" padding="space-48" borderRadius="8">
@@ -186,12 +186,13 @@ const DineMuligheter = ({ pid, mode }: Props) => {
                 </BodyShort>
               </VStack>
             </Box>
+            <Button variant="secondary">Se filmen</Button>
           </HGrid>
         </div>
       </div>
       <VStack gap={{ xs: 'space-16', md: 'space-48' }}>
         <Heading size="large" level="3">
-          Velg ulik inntekt for å se hvordan det kan påvirke uføretrygden til Sara
+          Se hvordan Kims inntekt kan påvirke uføretrygden
         </Heading>
         <InntektSimulering />
       </VStack>
