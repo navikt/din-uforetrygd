@@ -22,8 +22,10 @@ interface FinnUtMerProps {
 
 const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
   const erFullmakt = useIsFullmakt()
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  // biome-ignore lint/style/noNonNullAssertion: Finnes
   const skrivTilOssLenke = getEnv('LINK_SKRIV_TIL_OSS')!
+  // biome-ignore lint/style/noNonNullAssertion: Finnes
+  const startArbeidsoppfølgingLenke = getEnv('LINK_START_ARBEIDSOPPFOLGING')!
 
   return (
     <section style={{ paddingBottom: '4rem' }}>
@@ -53,14 +55,8 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
                 <List.Item>Sammen med veileder lager du en aktivitetsplan.</List.Item>
                 <List.Item>Du kan når som helst avslutte oppfølgingen</List.Item>
               </List>
-              {/* TODO: verifiser lenke og finn prod-lenke */}
               {erFullmakt ? (
-                <Button
-                  variant={'secondary'}
-                  as="a"
-                  href="https://start-arbeidsoppfolging.ekstern.dev.nav.no"
-                  data-fullmakt-modal={true}
-                >
+                <Button variant={'secondary'} as="a" href={startArbeidsoppfølgingLenke} data-fullmakt-modal={true}>
                   Start oppfølging
                 </Button>
               ) : (
@@ -96,7 +92,7 @@ const FinnUtMer = ({ pid, mode }: FinnUtMerProps) => {
                       <Dialog.CloseTrigger>
                         <Button variant={'secondary'}>Avbryt</Button>
                       </Dialog.CloseTrigger>
-                      <Button variant={'primary'} as="a" href="https://start-arbeidsoppfolging.ekstern.dev.nav.no">
+                      <Button variant={'primary'} as="a" href={startArbeidsoppfølgingLenke}>
                         Ja, start nå
                       </Button>
                     </Dialog.Footer>

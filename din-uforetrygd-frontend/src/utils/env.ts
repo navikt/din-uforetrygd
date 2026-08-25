@@ -32,6 +32,7 @@ export type Env =
   | 'FARO_URL'
   | 'NAIS_APP_NAME'
   | 'LINK_SKRIV_TIL_OSS'
+  | 'LINK_START_ARBEIDSOPPFOLGING'
 
 export default function getEnv(env: Env) {
   noStore()
