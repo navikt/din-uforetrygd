@@ -1,10 +1,10 @@
 'use client'
 
 import {
-  EarthFillIcon,
   HandShakeHeartFillIcon,
   HatSchoolFillIcon,
   PersonGroupFillIcon,
+  PersonPencilFillIcon,
   PiggybankFillIcon,
 } from '@navikt/aksel-icons'
 import { BodyLong, BodyShort, Box, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
@@ -84,7 +84,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
                 </List>
               </ExpansionCardMedIkon>
               <ExpansionCardMedIkon
-                ikon={<EarthFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+                ikon={<PersonPencilFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Du kan ordne ting selv"
               >
                 <VStack gap="space-12">

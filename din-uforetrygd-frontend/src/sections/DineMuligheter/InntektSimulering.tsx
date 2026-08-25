@@ -1,9 +1,8 @@
 'use client'
 
-import { BodyShort, Box, Chips, HGrid, HStack, InfoCard, Label, LinkCard, VStack } from '@navikt/ds-react'
+import { BodyShort, Chips, HGrid, InfoCard, Label, LinkCard, VStack } from '@navikt/ds-react'
 import { useState } from 'react'
 import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGraf'
-import Divider from '@/sections/ForsideBehandling/Divider'
 import getEnv from '@/utils/env'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import styles from './dineMuligheter.module.css'
@@ -31,12 +30,12 @@ export default function InntektSimulering({ pid }: Props) {
   const [valgt, setValgt] = useState<Uføretrygdendring>(defaultMulighet)
 
   const forklaringAvGraf = () => {
+    if (valgtInntekt === 0)
+      return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
+
     const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
     const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
     const sumEkstra = valgtInntekt - uføretrygdForskjell
-
-    if (valgtInntekt === 0)
-      return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(sumÅrligUtbetaling)} kr i uføretrygd i året.`
 
     const reduksjonsTekst =
       uføretrygdForskjell === 0
@@ -73,7 +72,7 @@ export default function InntektSimulering({ pid }: Props) {
             ))}
           </HGrid>
         </Chips>
-        <InfoCard data-olor="info" size="small">
+        <InfoCard data-color="info" size="small">
           <InfoCard.Message icon="">
             <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
           </InfoCard.Message>
