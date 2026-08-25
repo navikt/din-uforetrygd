@@ -34,7 +34,7 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall }: 
   return (
     <Chart
       margin={[100, 0]}
-      height={450}
+      height={400}
       title=""
       credits=""
       options={{
@@ -51,7 +51,7 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall }: 
           align: 'left',
           verticalAlign: 'top',
           itemStyle: {
-            fontSize: '18px',
+            fontSize: '16px',
             cursor: 'auto',
           },
         },
@@ -90,8 +90,8 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall }: 
           formatter: ({ value }: { value: string | number }) => formaterYAkseNummer(value.toString()),
         }}
       />
-      <ColumnSeries data={inntektTall} name="Saras inntekt" color={GRØNN_FARGE} options={COLUMN_STYLE} />
-      <ColumnSeries data={uføretrygdTall} name="Saras uføretrygd" color={BLÅ_FARGE} options={COLUMN_STYLE} />
+      <ColumnSeries data={inntektTall} name="Kims inntekt" color={GRØNN_FARGE} options={COLUMN_STYLE} />
+      <ColumnSeries data={uføretrygdTall} name="Kims uføretrygd" color={BLÅ_FARGE} options={COLUMN_STYLE} />
     </Chart>
   )
 }
