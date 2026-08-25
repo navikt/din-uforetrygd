@@ -13,7 +13,11 @@ interface Uføretrygdendring {
   uføretrygdEtter: number
 }
 
-export default function InntektSimulering() {
+interface Props {
+  pid?: string
+}
+
+export default function InntektSimulering({ pid }: Props) {
   const uføretrygdFør = 303143
   const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 303143 }
   const valgmuligheterMap = new Map<number, Uføretrygdendring>([
@@ -86,9 +90,8 @@ export default function InntektSimulering() {
         </Box>
         <LinkCard>
           <LinkCard.Title>
-            {/* TODO: pid må med i veileder-modus. Se InntektSnarveier */}
-            <LinkCard.Anchor href={getEnv('LINK_INNTEKTSPLANLEGGER') || ''}>
-              Gå til inntektsplanleggeren for å se dine tall
+            <LinkCard.Anchor href={`${getEnv('LINK_INNTEKTSPLANLEGGER')}${pid && `?pid=${pid}`}`}>
+            Gå til inntektsplanleggeren for å se dine tall
             </LinkCard.Anchor>
           </LinkCard.Title>
         </LinkCard>

@@ -193,7 +193,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
         <Heading size="large" level="3">
           Velg ulik inntekt for å se hvordan det kan påvirke uføretrygden til Sara
         </Heading>
-        <InntektSimulering />
+        <InntektSimulering pid={mode === 'veileder' ? pid : undefined} />
       </VStack>
 
       <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>
