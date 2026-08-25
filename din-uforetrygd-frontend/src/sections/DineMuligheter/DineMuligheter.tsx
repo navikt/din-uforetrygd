@@ -194,7 +194,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
         <Heading size="large" level="3">
           Se hvordan Kims inntekt kan påvirke uføretrygden
         </Heading>
-        <InntektSimulering />
+        <InntektSimulering pid={mode === 'veileder' ? pid : undefined} />
       </VStack>
 
       <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>
