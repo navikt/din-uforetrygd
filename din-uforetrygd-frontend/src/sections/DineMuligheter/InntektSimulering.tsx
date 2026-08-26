@@ -56,6 +56,11 @@ export default function InntektSimulering({ pid }: Props) {
           inntektTall={[0, valgtInntekt]}
           uføretrygdTall={[valgt.uføretrygdFør, valgt.uføretrygdEtter]}
         />
+        <InfoCard data-color="info" size="small">
+          <InfoCard.Message icon="">
+            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
+          </InfoCard.Message>
+        </InfoCard>
         <Label>Klikk på inntektene</Label>
         <Chips className={styles.inntektSimuleringChips}>
           <HGrid columns={2} gap="space-12">
@@ -72,11 +77,6 @@ export default function InntektSimulering({ pid }: Props) {
             ))}
           </HGrid>
         </Chips>
-        <InfoCard data-color="info" size="small">
-          <InfoCard.Message icon="">
-            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
-          </InfoCard.Message>
-        </InfoCard>
       </VStack>
       <VStack gap="space-36">
         <LinkCard>
