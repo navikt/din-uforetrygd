@@ -15,9 +15,10 @@ import styles from './dineMuligheter.module.css'
 interface Props {
   pid?: string | undefined
   mode: 'veileder' | 'borger'
+  inntektsplanleggerLenke: string
 }
 
-const DineMuligheter = ({ pid, mode }: Props) => {
+const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
   return (
     <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-32', md: 'space-48' }}>
       <VStack gap="space-12">
@@ -188,7 +189,7 @@ const DineMuligheter = ({ pid, mode }: Props) => {
         <Heading size="large" level="3">
           Se hvordan Kims inntekt kan påvirke uføretrygden
         </Heading>
-        <InntektSimulering pid={mode === 'veileder' ? pid : undefined} />
+        <InntektSimulering pid={mode === 'veileder' ? pid : undefined} inntektsplanleggerLenke={inntektsplanleggerLenke} />
       </VStack>
 
       <div className={styles.fargeContainer + ' ' + styles.rosaContainer}>

@@ -11,13 +11,22 @@ interface Props {
 const DineMuligheterSnakkMedOssPage = async ({ searchParams }: Props) => {
   const params = await searchParams
   const mode = getEnv('MODE') as 'borger' | 'veileder'
+  const skrivTilOssLenke = getEnv('LINK_SKRIV_TIL_OSS')!
+  const startArbeidsoppfølgingLenke = getEnv('LINK_START_ARBEIDSOPPFOLGING')!
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
 
   if (dineMuligheterIsEnabled) {
     const harMottattVarsel = await hentHarMottattVarsel()
 
     if (harMottattVarsel) {
-      return <SnakkMedOss pid={params.pid} mode={mode} />
+      return (
+        <SnakkMedOss
+          pid={params.pid}
+          mode={mode}
+          skrivTilOssLenke={skrivTilOssLenke}
+          startArbeidsoppfølgingLenke={startArbeidsoppfølgingLenke}
+        />
+      )
     }
   }
   return (
