@@ -3,7 +3,6 @@
 import { BodyShort, Chips, HGrid, InfoCard, Label, LinkCard, VStack } from '@navikt/ds-react'
 import { useState } from 'react'
 import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGraf'
-import getEnv from '@/utils/env'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import styles from './dineMuligheter.module.css'
 
@@ -14,9 +13,10 @@ interface Uføretrygdendring {
 
 interface Props {
   pid?: string
+  inntektsplanleggerLenke: string
 }
 
-export default function InntektSimulering({ pid }: Props) {
+export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Props) {
   const uføretrygdFør = 300000
   const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 300000 }
   const valgmuligheterMap = new Map<number, Uføretrygdendring>([
@@ -81,7 +81,7 @@ export default function InntektSimulering({ pid }: Props) {
       <VStack gap="space-36">
         <LinkCard>
           <LinkCard.Title>
-            <LinkCard.Anchor href={`${getEnv('LINK_INNTEKTSPLANLEGGER')}${pid && `?pid=${pid}`}`}>
+            <LinkCard.Anchor href={`${inntektsplanleggerLenke}${pid ? `?pid=${pid}` : ``}`}>
               Se dine tall i inntektsplanleggeren
             </LinkCard.Anchor>
           </LinkCard.Title>
