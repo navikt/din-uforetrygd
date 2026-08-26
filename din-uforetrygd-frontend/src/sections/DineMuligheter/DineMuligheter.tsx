@@ -1,10 +1,10 @@
 'use client'
 
 import {
-  EarthFillIcon,
   HandShakeHeartFillIcon,
   HatSchoolFillIcon,
   PersonGroupFillIcon,
+  PersonPencilFillIcon,
   PiggybankFillIcon,
 } from '@navikt/aksel-icons'
 import { BodyLong, BodyShort, Box, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
@@ -28,7 +28,8 @@ const DineMuligheter = ({ pid, mode }: Props) => {
           </Heading>
         </HStack>
         <BodyShort>
-          I tillegg til uføretrygden kan du jobbe, ta utdanning eller gjøre andre aktiviteter hvis du har mulighet. Du beholder retten til uføretrygd.
+          I tillegg til uføretrygden kan du jobbe, ta utdanning eller gjøre andre aktiviteter hvis du har mulighet. Du
+          beholder retten til uføretrygd.
         </BodyShort>
       </VStack>
       <div>
@@ -83,12 +84,13 @@ const DineMuligheter = ({ pid, mode }: Props) => {
                 </List>
               </ExpansionCardMedIkon>
               <ExpansionCardMedIkon
-                ikon={<EarthFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+                ikon={<PersonPencilFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Du kan ordne ting selv"
               >
                 <VStack gap="space-12">
                   <BodyShort>
-                    Vi hjelper deg gjerne, men du trenger ikke kontakte oss om du ønsker å jobbe eller ta utdanning. Her finner du nyttig informasjon som kan hjelpe deg på veien:
+                    Vi hjelper deg gjerne, men du trenger ikke kontakte oss om du ønsker å jobbe eller ta utdanning. Her
+                    finner du nyttig informasjon som kan hjelpe deg på veien:
                   </BodyShort>
                   <BodyShort weight="semibold">Utdanning</BodyShort>
                   <List>
@@ -175,17 +177,9 @@ const DineMuligheter = ({ pid, mode }: Props) => {
               <Heading size="large" level="3">
                 Veilederne våre forteller
               </Heading>
-              <BodyLong size="medium">
-                Se hvordan et møte på Nav-kontoret kan være, og hva de kan hjelp med.
-              </BodyLong>
+              <BodyLong size="medium">Se hvordan et møte på Nav-kontoret kan være, og hva de kan hjelp med.</BodyLong>
             </VStack>
-            <Box background="brand-magenta-strong" height="200px" padding="space-48" borderRadius="8">
-              <VStack align="center" justify="center">
-                <BodyShort size="medium" textColor="contrast">
-                  Video
-                </BodyShort>
-              </VStack>
-            </Box>
+            <Box background="brand-magenta-strong" height="200px" padding="space-48" borderRadius="8"></Box>
             <Button variant="secondary">Se filmen</Button>
           </HGrid>
         </div>

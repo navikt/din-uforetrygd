@@ -76,7 +76,7 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall }: 
         stackLabels={{
           enabled: true,
           formatter(this: Highcharts.StackItemObject) {
-            return `Sum ${formatInntekt(this.total)} kr`
+            return `${formatInntekt(this.total)} kr`
           },
           style: {
             fontSize: FONT_SIZE,
