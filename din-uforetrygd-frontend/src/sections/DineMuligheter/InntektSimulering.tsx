@@ -50,16 +50,19 @@ export default function InntektSimulering({ pid }: Props) {
   const [valgtInntekt, setValgtInntekt] = useState(0)
   const [valgt, setValgt] = useState<Uføretrygdendring>(defaultMulighet)
   const forklaringAvGraf = lagForklaringAvGraf(valgtInntekt, valgt)
-
-
+  const grafIntroId = 'inntekt-simulering-graf-intro'
 
   return (
     <HGrid columns={{ md: 2 }} gap="space-36">
       <VStack gap="space-16" justify="start">
+        <BodyShort id={grafIntroId} size="small" className={styles.srOnly}>
+          Grafen viser summen av Kims inntekt og uforetrygd uten inntekt og med valgt inntekt.
+        </BodyShort>
         <InntektSimuleringGraf
           inntektTall={[0, valgtInntekt]}
           uføretrygdTall={[valgt.uføretrygdFør, valgt.uføretrygdEtter]}
           description={forklaringAvGraf}
+          descriptionId={grafIntroId}
         />
         <Label>Klikk på inntektene</Label>
         <Chips className={styles.inntektSimuleringChips}>
@@ -83,7 +86,7 @@ export default function InntektSimulering({ pid }: Props) {
           </InfoCard.Message>
         </InfoCard>
         <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
-          Oppdatert grafbeskrivelse. {forklaringAvGraf}
+          {forklaringAvGraf}
         </div>
       </VStack>
       <VStack gap="space-36">

@@ -22,9 +22,10 @@ interface Props {
   inntektTall: number[]
   uføretrygdTall: number[]
   description: string
+  descriptionId: string
 }
 
-export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, description }: Props) {
+export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, description, descriptionId }: Props) {
   const formaterYAkseNummer = (value: string) => {
     if (value.length > 3) {
       return formatInntekt(Number.parseInt(value.substring(0, value.length - 3), 10))
@@ -33,7 +34,7 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
   }
 
   return (
-    <div aria-label={description} role="img">
+    <div aria-describedby={descriptionId} aria-label={description} aria-roledescription="søylediagram" role="img">
       <Chart
         margin={[100, 0]}
         height={400}
