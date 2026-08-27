@@ -21,77 +21,80 @@ const COLUMN_STYLE = {
 interface Props {
   inntektTall: number[]
   uføretrygdTall: number[]
+  description: string
 }
 
-export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall }: Props) {
+export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, description }: Props) {
   const formaterYAkseNummer = (value: string) => {
     if (value.length > 3) {
       return formatInntekt(Number.parseInt(value.substring(0, value.length - 3), 10))
     }
-    return formatInntekt(Number.parseInt(value))
+    return formatInntekt(Number.parseInt(value, 10))
   }
 
   return (
-    <Chart
-      margin={[100, 0]}
-      height={400}
-      title=""
-      credits=""
-      options={{
-        palette: {
-          colorScheme: 'light',
-        },
-        plotOptions: {
-          column: {
-            stacking: 'normal',
+    <div aria-label={description} role="img">
+      <Chart
+        margin={[100, 0]}
+        height={400}
+        title=""
+        credits=""
+        options={{
+          palette: {
+            colorScheme: 'light',
           },
-        },
-        legend: {
-          x: -8,
-          align: 'left',
-          verticalAlign: 'top',
-          itemStyle: {
-            fontSize: '16px',
-            cursor: 'auto',
+          plotOptions: {
+            column: {
+              stacking: 'normal',
+            },
           },
-        },
-      }}
-    >
-      <XAxis
-        categories={['Uten inntekt', 'Med inntekt']}
-        labels={{ style: { fontSize: FONT_SIZE, fontWeight: '600' } }}
-      />
-      <YAxis
-        min={0}
-        max={500000}
-        maxPadding={0.1}
-        title={{
-          align: 'high',
-          offset: -40,
-          rotation: 0,
-          text: 'Tusen kroner',
-          y: -30,
-          style: { fontSize: FONT_SIZE, fontFamily: FONT_FAMILY },
-        }}
-        stackLabels={{
-          enabled: true,
-          formatter(this: Highcharts.StackItemObject) {
-            return `${formatInntekt(this.total)} kr`
-          },
-          style: {
-            fontSize: FONT_SIZE,
-            fontWeight: '600',
-            fontFamily: FONT_FAMILY,
-            align: 'center',
+          legend: {
+            x: -8,
+            align: 'left',
+            verticalAlign: 'top',
+            itemStyle: {
+              fontSize: '16px',
+              cursor: 'auto',
+            },
           },
         }}
-        labels={{
-          style: { fontSize: FONT_SIZE, fontFamily: FONT_FAMILY },
-          formatter: ({ value }: { value: string | number }) => formaterYAkseNummer(value.toString()),
-        }}
-      />
-      <ColumnSeries data={inntektTall} name="Kims inntekt" color={GRØNN_FARGE} options={COLUMN_STYLE} />
-      <ColumnSeries data={uføretrygdTall} name="Kims uføretrygd" color={BLÅ_FARGE} options={COLUMN_STYLE} />
-    </Chart>
+      >
+        <XAxis
+          categories={['Uten inntekt', 'Med inntekt']}
+          labels={{ style: { fontSize: FONT_SIZE, fontWeight: '600' } }}
+        />
+        <YAxis
+          min={0}
+          max={500000}
+          maxPadding={0.1}
+          title={{
+            align: 'high',
+            offset: -40,
+            rotation: 0,
+            text: 'Tusen kroner',
+            y: -30,
+            style: { fontSize: FONT_SIZE, fontFamily: FONT_FAMILY },
+          }}
+          stackLabels={{
+            enabled: true,
+            formatter(this: Highcharts.StackItemObject) {
+              return `${formatInntekt(this.total)} kr`
+            },
+            style: {
+              fontSize: FONT_SIZE,
+              fontWeight: '600',
+              fontFamily: FONT_FAMILY,
+              align: 'center',
+            },
+          }}
+          labels={{
+            style: { fontSize: FONT_SIZE, fontFamily: FONT_FAMILY },
+            formatter: ({ value }: { value: string | number }) => formaterYAkseNummer(value.toString()),
+          }}
+        ></YAxis>
+        <ColumnSeries data={inntektTall} name="Kims inntekt" color={GRØNN_FARGE} options={COLUMN_STYLE} />
+        <ColumnSeries data={uføretrygdTall} name="Kims uføretrygd" color={BLÅ_FARGE} options={COLUMN_STYLE} />
+      </Chart>
+    </div>
   )
 }

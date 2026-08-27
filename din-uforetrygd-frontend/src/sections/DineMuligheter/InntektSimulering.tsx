@@ -16,6 +16,27 @@ interface Props {
   pid?: string
 }
 
+const lagForklaringAvGraf = (valgtInntekt: number, valgt: Uføretrygdendring) => {
+  if (valgtInntekt === 0) {
+    return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
+  }
+
+  const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
+  const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
+  const sumEkstra = valgtInntekt - uføretrygdForskjell
+
+  const reduksjonsTekst =
+    uføretrygdForskjell === 0
+      ? 'reduseres ikke uføretrygden.'
+      : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
+
+  return (
+    `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
+    `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
+    `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
+  )
+}
+
 export default function InntektSimulering({ pid }: Props) {
   const uføretrygdFør = 300000
   const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 300000 }
@@ -28,26 +49,9 @@ export default function InntektSimulering({ pid }: Props) {
 
   const [valgtInntekt, setValgtInntekt] = useState(0)
   const [valgt, setValgt] = useState<Uføretrygdendring>(defaultMulighet)
+  const forklaringAvGraf = lagForklaringAvGraf(valgtInntekt, valgt)
 
-  const forklaringAvGraf = () => {
-    if (valgtInntekt === 0)
-      return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
 
-    const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
-    const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
-    const sumEkstra = valgtInntekt - uføretrygdForskjell
-
-    const reduksjonsTekst =
-      uføretrygdForskjell === 0
-        ? 'reduseres ikke uføretrygden.'
-        : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
-
-    return (
-      `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
-      `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
-      `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
-    )
-  }
 
   return (
     <HGrid columns={{ md: 2 }} gap="space-36">
@@ -55,6 +59,7 @@ export default function InntektSimulering({ pid }: Props) {
         <InntektSimuleringGraf
           inntektTall={[0, valgtInntekt]}
           uføretrygdTall={[valgt.uføretrygdFør, valgt.uføretrygdEtter]}
+          description={forklaringAvGraf}
         />
         <Label>Klikk på inntektene</Label>
         <Chips className={styles.inntektSimuleringChips}>
@@ -74,14 +79,17 @@ export default function InntektSimulering({ pid }: Props) {
         </Chips>
         <InfoCard data-color="info" size="small">
           <InfoCard.Message icon="">
-            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
+            <BodyShort size="small">{forklaringAvGraf}</BodyShort>
           </InfoCard.Message>
         </InfoCard>
+        <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
+          Oppdatert grafbeskrivelse. {forklaringAvGraf}
+        </div>
       </VStack>
       <VStack gap="space-36">
         <LinkCard>
           <LinkCard.Title>
-            <LinkCard.Anchor href={`${getEnv('LINK_INNTEKTSPLANLEGGER')}${pid && `?pid=${pid}`}`}>
+            <LinkCard.Anchor href={`${getEnv('LINK_INNTEKTSPLANLEGGER')}${pid ? `?pid=${pid}` : ''}`}>
               Se dine tall i inntektsplanleggeren
             </LinkCard.Anchor>
           </LinkCard.Title>
