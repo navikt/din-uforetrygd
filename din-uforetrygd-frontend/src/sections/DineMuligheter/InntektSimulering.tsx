@@ -17,24 +17,24 @@ interface Props {
 }
 
 const lagForklaringAvGraf = (valgtInntekt: number, valgt: Uføretrygdendring) => {
-    if (valgtInntekt === 0) {
-        return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
-    }
+  if (valgtInntekt === 0) {
+    return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
+  }
 
-    const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
-    const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
-    const sumEkstra = valgtInntekt - uføretrygdForskjell
+  const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
+  const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
+  const sumEkstra = valgtInntekt - uføretrygdForskjell
 
-    const reduksjonsTekst =
-        uføretrygdForskjell === 0
-            ? 'reduseres ikke uføretrygden.'
-            : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
+  const reduksjonsTekst =
+    uføretrygdForskjell === 0
+      ? 'reduseres ikke uføretrygden.'
+      : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
 
-    return (
-        `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
-        `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
-        `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
-    )
+  return (
+    `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
+    `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
+    `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
+  )
 }
 
 export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Props) {
@@ -66,11 +66,6 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
         />
         <InfoCard data-color="info" size="small">
           <InfoCard.Message icon="">
-            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
-          </InfoCard.Message>
-        </InfoCard>
-        <InfoCard data-color="info" size="small">
-          <InfoCard.Message icon="">
             <BodyShort size="small">{forklaringAvGraf}</BodyShort>
           </InfoCard.Message>
         </InfoCard>
@@ -90,9 +85,9 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
             ))}
           </HGrid>
         </Chips>
-          <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
-              {forklaringAvGraf}
-          </div>
+        <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
+          {forklaringAvGraf}
+        </div>
       </VStack>
       <VStack gap="space-36">
         <LinkCard>
