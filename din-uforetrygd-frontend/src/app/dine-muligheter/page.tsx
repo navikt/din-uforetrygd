@@ -11,12 +11,13 @@ interface Props {
 const DineMuligheterPage = async ({ searchParams }: Props) => {
   const params = await searchParams
   const mode = getEnv('MODE') as 'borger' | 'veileder'
+  const inntektsplanleggerLenke = getEnv('LINK_INNTEKTSPLANLEGGER')!
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
 
   if (dineMuligheterIsEnabled) {
     const harMottattVarsel = await hentHarMottattVarsel()
     if (harMottattVarsel) {
-      return <DineMuligheter pid={params.pid} mode={mode} />
+      return <DineMuligheter pid={params.pid} mode={mode} inntektsplanleggerLenke={inntektsplanleggerLenke} />
     }
   }
 

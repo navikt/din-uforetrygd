@@ -13,19 +13,16 @@ import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import Divider from '@/sections/ForsideBehandling/Divider'
 import useIsFullmakt from '@/hooks/useIsFullmakt'
-import getEnv from '@/utils/env'
 
 interface Props {
   pid?: string | undefined
   mode: 'veileder' | 'borger'
+  skrivTilOssLenke: string
+  startArbeidsoppfølgingLenke: string
 }
 
-const SnakkMedOss = ({ pid, mode }: Props) => {
+const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke }: Props) => {
   const erFullmakt = useIsFullmakt()
-  // biome-ignore lint/style/noNonNullAssertion: Finnes
-  const skrivTilOssLenke = getEnv('LINK_SKRIV_TIL_OSS')!
-  // biome-ignore lint/style/noNonNullAssertion: Finnes
-  const startArbeidsoppfølgingLenke = getEnv('LINK_START_ARBEIDSOPPFOLGING')!
 
   return (
     <section style={{ paddingBottom: '4rem' }}>

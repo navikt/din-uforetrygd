@@ -3,7 +3,6 @@
 import { BodyShort, Chips, HGrid, InfoCard, Label, LinkCard, VStack } from '@navikt/ds-react'
 import { useState } from 'react'
 import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGraf'
-import getEnv from '@/utils/env'
 import { formatInntekt } from '@/utils/formatter/formatter'
 import styles from './dineMuligheter.module.css'
 
@@ -14,30 +13,31 @@ interface Uføretrygdendring {
 
 interface Props {
   pid?: string
+  inntektsplanleggerLenke: string
 }
 
 const lagForklaringAvGraf = (valgtInntekt: number, valgt: Uføretrygdendring) => {
-  if (valgtInntekt === 0) {
-    return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
-  }
+    if (valgtInntekt === 0) {
+        return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
+    }
 
-  const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
-  const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
-  const sumEkstra = valgtInntekt - uføretrygdForskjell
+    const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
+    const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
+    const sumEkstra = valgtInntekt - uføretrygdForskjell
 
-  const reduksjonsTekst =
-    uføretrygdForskjell === 0
-      ? 'reduseres ikke uføretrygden.'
-      : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
+    const reduksjonsTekst =
+        uføretrygdForskjell === 0
+            ? 'reduseres ikke uføretrygden.'
+            : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
 
-  return (
-    `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
-    `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
-    `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
-  )
+    return (
+        `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
+        `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
+        `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
+    )
 }
 
-export default function InntektSimulering({ pid }: Props) {
+export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Props) {
   const uføretrygdFør = 300000
   const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 300000 }
   const valgmuligheterMap = new Map<number, Uføretrygdendring>([
@@ -64,6 +64,16 @@ export default function InntektSimulering({ pid }: Props) {
           description={forklaringAvGraf}
           descriptionId={grafIntroId}
         />
+        <InfoCard data-color="info" size="small">
+          <InfoCard.Message icon="">
+            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
+          </InfoCard.Message>
+        </InfoCard>
+        <InfoCard data-color="info" size="small">
+          <InfoCard.Message icon="">
+            <BodyShort size="small">{forklaringAvGraf}</BodyShort>
+          </InfoCard.Message>
+        </InfoCard>
         <Label>Klikk på inntektene</Label>
         <Chips className={styles.inntektSimuleringChips}>
           <HGrid columns={2} gap="space-12">
@@ -80,19 +90,14 @@ export default function InntektSimulering({ pid }: Props) {
             ))}
           </HGrid>
         </Chips>
-        <InfoCard data-color="info" size="small">
-          <InfoCard.Message icon="">
-            <BodyShort size="small">{forklaringAvGraf}</BodyShort>
-          </InfoCard.Message>
-        </InfoCard>
-        <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
-          {forklaringAvGraf}
-        </div>
+          <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
+              {forklaringAvGraf}
+          </div>
       </VStack>
       <VStack gap="space-36">
         <LinkCard>
           <LinkCard.Title>
-            <LinkCard.Anchor href={`${getEnv('LINK_INNTEKTSPLANLEGGER')}${pid ? `?pid=${pid}` : ''}`}>
+            <LinkCard.Anchor href={`${inntektsplanleggerLenke}${pid ? `?pid=${pid}` : ``}`}>
               Se dine tall i inntektsplanleggeren
             </LinkCard.Anchor>
           </LinkCard.Title>
