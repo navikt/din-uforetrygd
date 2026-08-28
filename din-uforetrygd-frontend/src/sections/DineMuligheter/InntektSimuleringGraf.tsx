@@ -21,11 +21,10 @@ const COLUMN_STYLE = {
 interface Props {
   inntektTall: number[]
   uføretrygdTall: number[]
-  description: string
   descriptionId: string
 }
 
-export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, description, descriptionId }: Props) {
+export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, descriptionId }: Props) {
   const formaterYAkseNummer = (value: string) => {
     if (value.length > 3) {
       return formatInntekt(Number.parseInt(value.substring(0, value.length - 3), 10))
@@ -34,7 +33,7 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
   }
 
   return (
-    <div aria-describedby={descriptionId} aria-label={description} aria-roledescription="søylediagram" role="img">
+    <div aria-describedby={descriptionId} aria-roledescription="søylediagram" role="img">
       <Chart
         margin={[100, 0]}
         height={400}
@@ -47,6 +46,12 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
           plotOptions: {
             column: {
               stacking: 'normal',
+              pointPadding: 0.1,
+              groupPadding: 0.1,
+              maxPointWidth: 200,
+              borderWidth: 5,
+              borderColor: 'white',
+              borderRadius: 10,
             },
           },
           legend: {
