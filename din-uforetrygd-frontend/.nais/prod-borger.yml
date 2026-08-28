@@ -56,6 +56,9 @@ spec:
         - application: din-uforetrygd-backend
           cluster: prod-gcp
           namespace: ufore
+        - application: ufore-varsler
+          cluster: prod-gcp
+          namespace: ufore
       external:
         - host: ufore-unleash-api.nav.cloud.nais.io
   filesFrom:
