@@ -35,3 +35,32 @@
 .inntektSimuleringChips > li {
   width: 100%;
 }
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.forklaringOppdatert {
+  will-change: opacity;
+  animation: forklaringFadeUtInn 400ms ease-in;
+}
+
+@keyframes forklaringFadeUtInn {
+  0% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

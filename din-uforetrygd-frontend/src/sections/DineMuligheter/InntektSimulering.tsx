@@ -16,6 +16,38 @@ interface Props {
   inntektsplanleggerLenke: string
 }
 
+const lagForklaringAvGraf = (valgtInntekt: number, valgt: Uføretrygdendring) => {
+  if (valgtInntekt === 0) {
+    return (
+      <>
+        Hvis Kim ikke har inntekt, får Kim <strong>{formatInntekt(valgt.uføretrygdEtter)}&nbsp;kr</strong> i uføretrygd
+        i året.
+      </>
+    )
+  }
+
+  const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
+  const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
+  const sumEkstra = valgtInntekt - uføretrygdForskjell
+
+  const reduksjonsTekst =
+    uføretrygdForskjell === 0 ? (
+      'reduseres ikke uføretrygden.'
+    ) : (
+      <>
+        reduseres uføretrygden med <strong>{formatInntekt(uføretrygdForskjell)}&nbsp;kr</strong>.
+      </>
+    )
+
+  return (
+    <>
+      Hvis Kim har <strong>{formatInntekt(valgtInntekt)}&nbsp;kr</strong> i årlig inntekt, {reduksjonsTekst} Kim får{' '}
+      <strong>{formatInntekt(sumEkstra)}&nbsp;kr</strong> ekstra. Uføretrygd og inntekt blir til sammen{' '}
+      <strong>{formatInntekt(sumÅrligUtbetaling)}&nbsp;kr</strong> i året.
+    </>
+  )
+}
+
 export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Props) {
   const uføretrygdFør = 300000
   const defaultMulighet = { uføretrygdFør, uføretrygdEtter: 300000 }
@@ -28,37 +60,23 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
 
   const [valgtInntekt, setValgtInntekt] = useState(0)
   const [valgt, setValgt] = useState<Uføretrygdendring>(defaultMulighet)
-
-  const forklaringAvGraf = () => {
-    if (valgtInntekt === 0)
-      return `Hvis Kim ikke har inntekt, får Kim ${formatInntekt(valgt.uføretrygdEtter)} kr i uføretrygd i året.`
-
-    const uføretrygdForskjell = Math.abs(valgt.uføretrygdEtter - valgt.uføretrygdFør)
-    const sumÅrligUtbetaling = valgt.uføretrygdEtter + valgtInntekt
-    const sumEkstra = valgtInntekt - uføretrygdForskjell
-
-    const reduksjonsTekst =
-      uføretrygdForskjell === 0
-        ? 'reduseres ikke uføretrygden.'
-        : `reduseres uføretrygden med ${formatInntekt(uføretrygdForskjell)} kr.`
-
-    return (
-      `Hvis Kim har ${formatInntekt(valgtInntekt)} kr i årlig inntekt, ${reduksjonsTekst} ` +
-      `Kim får ${formatInntekt(sumEkstra)} kr ekstra. ` +
-      `Uføretrygd og inntekt blir til sammen ${formatInntekt(sumÅrligUtbetaling)} kr i året.`
-    )
-  }
+  const forklaringAvGraf = lagForklaringAvGraf(valgtInntekt, valgt)
+  const grafIntroId = 'inntekt-simulering-graf-intro'
 
   return (
     <HGrid columns={{ md: 2 }} gap="space-36">
       <VStack gap="space-16" justify="start">
+        <BodyShort id={grafIntroId} size="small" className={styles.srOnly}>
+          Grafen viser summen av Kims inntekt og uforetrygd uten inntekt og med valgt inntekt.
+        </BodyShort>
         <InntektSimuleringGraf
           inntektTall={[0, valgtInntekt]}
           uføretrygdTall={[valgt.uføretrygdFør, valgt.uføretrygdEtter]}
+          descriptionId={grafIntroId}
         />
-        <InfoCard data-color="info" size="small">
+        <InfoCard key={valgtInntekt} className={`${styles.forklaringOppdatert}`} data-color="info" size="small">
           <InfoCard.Message icon="">
-            <BodyShort size="small">{forklaringAvGraf()}</BodyShort>
+            <BodyShort size="small">{forklaringAvGraf}</BodyShort>
           </InfoCard.Message>
         </InfoCard>
         <Label>Klikk på inntektene</Label>
@@ -69,6 +87,10 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
                 key={key}
                 selected={valgtInntekt === key}
                 onClick={() => {
+                  if (valgtInntekt === key) {
+                    return
+                  }
+
                   setValgtInntekt(key)
                   setValgt(value)
                 }}
@@ -77,6 +99,9 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
             ))}
           </HGrid>
         </Chips>
+        <div className={styles.srOnly} role="status" aria-live="assertive" aria-atomic="true">
+          {forklaringAvGraf}
+        </div>
       </VStack>
       <VStack gap="space-36">
         <LinkCard>
