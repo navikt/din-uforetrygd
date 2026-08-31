@@ -99,7 +99,7 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
             ))}
           </HGrid>
         </Chips>
-        <div className={styles.srOnly} role="alert" aria-live="assertive" aria-atomic="true">
+        <div className={styles.srOnly} role="status" aria-live="assertive" aria-atomic="true">
           {forklaringAvGraf}
         </div>
       </VStack>

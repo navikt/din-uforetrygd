@@ -11,10 +11,8 @@ interface Props {
   children: ReactNode
 }
 export default function ExpansionCardMedIkon({ ikon, tittel, undertittel = '', children }: Props) {
-  const ariaLabel = undertittel ? `${tittel}. ${undertittel}` : tittel
-
   return (
-    <ExpansionCard aria-label={ariaLabel} size="small">
+    <ExpansionCard aria-label={tittel} size="small">
       <ExpansionCard.Header>
         <HStack wrap={false} gap="space-16" align="center">
           <div>{ikon}</div>
