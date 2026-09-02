@@ -17,18 +17,21 @@
 }
 
 .fargeContainerContent {
-  max-width: var(--content-width);
+  max-width: var(--slim-content-width);
   width: 100%;
   padding-inline: var(--ax-space-12);
 }
 
-.dineMuligheterWrapper {
+.dineMuligheterWrapper,
+.snakkMedOssWrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
+  max-width: var(--slim-content-width);
 }
 
-.dineMuligheterWrapper > * {
+.dineMuligheterWrapper > *,
+.snakkMedOssWrapper > * {
   padding-inline: var(--ax-space-12);
 }
 
@@ -62,5 +65,23 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+.ringKnappWrapper {
+  align-items: end;
+}
+
+@media (min-width: 768px) {
+  .dineMuligheterWrapper a[role="button"] {
+    max-width: 21rem;
+  }
+
+  .snakkMedOssWrapper a[role="button"] {
+    max-width: fit-content;
+  }
+
+  .ringKnappWrapper {
+    align-items: start;
   }
 }
