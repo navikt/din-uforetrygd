@@ -64,7 +64,7 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
   const grafIntroId = 'inntekt-simulering-graf-intro'
 
   return (
-    <HGrid columns={{ md: 2 }} gap="space-36">
+    <HGrid gap="space-36">
       <VStack gap="space-16" justify="start">
         <BodyShort id={grafIntroId} size="small" className={styles.srOnly}>
           Grafen viser summen av Kims inntekt og uforetrygd uten inntekt og med valgt inntekt.
@@ -79,31 +79,32 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
             <BodyShort size="small">{forklaringAvGraf}</BodyShort>
           </InfoCard.Message>
         </InfoCard>
-        <Label>Klikk på inntektene</Label>
-        <Chips className={styles.inntektSimuleringChips}>
-          <HGrid columns={2} gap="space-12">
-            {Array.from(valgmuligheterMap, ([key, value]) => (
-              <Chips.Toggle
-                key={key}
-                selected={valgtInntekt === key}
-                onClick={() => {
-                  if (valgtInntekt === key) {
-                    return
-                  }
-
-                  setValgtInntekt(key)
-                  setValgt(value)
-                }}
-                style={{ justifyContent: 'start' }}
-              >{`${formatInntekt(key)} kr`}</Chips.Toggle>
-            ))}
-          </HGrid>
-        </Chips>
+      </VStack>
+      <VStack gap={{ sm: 'space-24', md: 'space-36' }} className={styles.chipsKolonne}>
+        <VStack gap="space-16">
+          <Label>Klikk på inntektene</Label>
+          <Chips className={styles.inntektSimuleringChips}>
+            <HGrid columns={2} gap="space-12">
+              {Array.from(valgmuligheterMap, ([key, value]) => (
+                <Chips.Toggle
+                  key={key}
+                  selected={valgtInntekt === key}
+                  onClick={() => {
+                    if (valgtInntekt === key) {
+                      return
+                    }
+                    setValgtInntekt(key)
+                    setValgt(value)
+                  }}
+                  style={{ justifyContent: 'start' }}
+                >{`${formatInntekt(key)} kr`}</Chips.Toggle>
+              ))}
+            </HGrid>
+          </Chips>
+        </VStack>
         <div className={styles.srOnly} role="status" aria-live="assertive" aria-atomic="true">
           {forklaringAvGraf}
         </div>
-      </VStack>
-      <VStack gap="space-36">
         <LinkCard>
           <LinkCard.Title>
             <LinkCard.Anchor href={`${inntektsplanleggerLenke}${pid ? `?pid=${pid}` : ``}`}>
