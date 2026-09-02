@@ -80,7 +80,7 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
           </InfoCard.Message>
         </InfoCard>
       </VStack>
-      <VStack gap={{ sm: 'space-24', md: 'space-36' }} className={styles.chipsKolonne}>
+      <VStack gap={{ xs: 'space-24', md: 'space-36' }} className={styles.chipsKolonne}>
         <VStack gap="space-16">
           <Label>Klikk på inntektene</Label>
           <Chips className={styles.inntektSimuleringChips}>
