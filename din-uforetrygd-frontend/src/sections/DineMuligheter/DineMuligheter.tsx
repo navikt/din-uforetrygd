@@ -34,8 +34,8 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
         </BodyShort>
       </VStack>
       <div className={`${styles.fargeContainer} ${styles.graContainer}`}>
-        <VStack gap="space-44" className={styles.fargeContainerContent}>
-          <VStack gap={{ sm: 'space-12', md: 'space-24' }}>
+        <VStack gap={{ xs: 'space-32', md: 'space-40' }} className={styles.fargeContainerContent}>
+          <VStack gap={{ xs: 'space-12', md: 'space-24' }}>
             <ExpansionCardMedIkon
               tittel="Veiledning"
               ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
@@ -54,7 +54,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
               ikon={<HatSchoolFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               tittel="Snakk med oss om jobb, utdanning og muligheter"
             >
-              <HGrid gap="space-12" columns={{ sm: 1, md: 2 }}>
+              <HGrid gap="space-12" columns={{ xs: 1, md: 2 }}>
                 <VStack gap="space-12">
                   <BodyShort weight="semibold">Utdanning</BodyShort>
                   <List>
@@ -78,7 +78,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
               ikon={<PiggybankFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               tittel="Snakk med oss om økonomi"
             >
-              <HGrid gap="space-8" columns={{ sm: 1, md: 2 }}>
+              <HGrid gap="space-8" columns={{ xs: 1, md: 2 }}>
                 <List>
                   <List.Item>inntekt og uføretrygd</List.Item>
                   <List.Item>budsjett og utgifter</List.Item>
@@ -100,7 +100,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
                   Vi hjelper deg gjerne, men du trenger ikke kontakte oss om du ønsker å jobbe eller ta utdanning. Her
                   finner du nyttig informasjon som kan hjelpe deg på veien:
                 </BodyShort>
-                <HGrid columns={{ sm: 1, md: 2 }}>
+                <HGrid columns={{ xs: 1, md: 2 }}>
                   <VStack gap="space-12">
                     <BodyShort weight="semibold">Utdanning</BodyShort>
                     <List>

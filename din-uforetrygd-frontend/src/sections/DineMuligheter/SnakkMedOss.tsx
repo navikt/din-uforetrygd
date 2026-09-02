@@ -39,7 +39,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
         </BodyShort>
         <div className={`${styles.fargeContainer} ${styles.graContainer}`}>
           <VStack gap="space-44" className={styles.fargeContainerContent}>
-            <VStack gap={{ sm: 'space-12', md: 'space-24' }}>
+            <VStack gap={{ xs: 'space-12', md: 'space-24' }}>
               <ExpansionCardMedIkon
                 ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Ring oss"
