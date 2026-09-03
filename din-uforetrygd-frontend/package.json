@@ -73,7 +73,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
-    "typescript": "^6",
+    "typescript": "^7",
     "vitest": "^4.1.11"
   },
   "overrides": {
