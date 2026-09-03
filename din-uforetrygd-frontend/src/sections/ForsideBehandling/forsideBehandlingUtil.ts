@@ -43,7 +43,6 @@ export interface BeregningRad {
 }
 
 export function toForsideBehandling(fra: Behandling, visBarnetillegg: boolean): ForsideBehandling | null {
-            console.log('visBarnetillegg:', visBarnetillegg)
   if (
     fra.type !== BehandlingType.SØKNAD_UFØRETRYGD &&
     fra.type !== BehandlingType.SØKNAD_UNG_UFØR &&
