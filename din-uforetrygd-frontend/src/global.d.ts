@@ -5,6 +5,11 @@ declare module '*.module.css' {
 
 declare module '*.css' {}
 
+declare module '*.svg' {
+  const source: import('next/image').StaticImageData
+  export default source
+}
+
 declare namespace React {
   namespace JSX {
     interface IntrinsicElements {
