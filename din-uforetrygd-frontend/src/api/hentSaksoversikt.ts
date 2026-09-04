@@ -43,6 +43,7 @@ export interface Etteroppgjor {
 
 export interface Beregning {
   nettoUforetrygdPerManed: number
+  nettoBarnetilleggPerManed: number
 }
 
 export interface Behandling {
