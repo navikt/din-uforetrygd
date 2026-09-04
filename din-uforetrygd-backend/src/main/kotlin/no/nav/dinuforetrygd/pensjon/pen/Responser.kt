@@ -49,7 +49,7 @@ enum class VedtakStatus {
 
 data class Beregning(
     val nettoUforetrygdPerManed: Int,
-    val nettoBarnetilleggPerManed: Int
+    val nettoBarnetilleggPerManed: Int?
 )
 
 data class Krav(
