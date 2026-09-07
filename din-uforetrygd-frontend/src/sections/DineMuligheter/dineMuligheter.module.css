@@ -72,6 +72,38 @@
   align-items: end;
 }
 
+.fortellingKarusell {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.fortellingKarusell::-webkit-scrollbar {
+  display: none;
+}
+
+.fortellingSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.fortellingBilde {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fortellingKarusell {
+    scroll-behavior: auto;
+  }
+}
+
 @media (min-width: 768px) {
   .dineMuligheterWrapper a[role="button"] {
     max-width: 21rem;

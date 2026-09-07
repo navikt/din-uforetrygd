@@ -9,6 +9,7 @@ import {
 } from '@navikt/aksel-icons'
 import { BodyShort, Button, Heading, HGrid, HStack, Link, List, VStack } from '@navikt/ds-react'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
+import FortellingKarusell from '@/sections/DineMuligheter/FortellingKarusell'
 import InntektSimulering from '@/sections/DineMuligheter/InntektSimulering'
 import styles from './dineMuligheter.module.css'
 
@@ -187,8 +188,9 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
       </div>
       <VStack gap={{ xs: 'space-16', md: 'space-48' }}>
         <Heading size="large" level="3" className={styles.headingKolonne}>
-          Se hvordan Kims inntekt kan påvirke uføretrygden
+          Jobbe ved siden av uføretrygd? Slik funker det for Kim
         </Heading>
+          <FortellingKarusell />
         <InntektSimulering
           pid={mode === 'veileder' ? pid : undefined}
           inntektsplanleggerLenke={inntektsplanleggerLenke}
