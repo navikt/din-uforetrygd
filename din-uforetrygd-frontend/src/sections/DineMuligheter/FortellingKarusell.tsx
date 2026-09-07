@@ -33,7 +33,7 @@ const slides = [
 ]
 
 export default function FortellingKarusell() {
-  const [karusellState, setKarusellState] = useState(1)
+  const [karusellPage, setKarusellPage] = useState(1)
   const karusellRef = useRef<HTMLDivElement>(null)
 
   const scrollToPage = (page: number) => {
@@ -42,7 +42,6 @@ export default function FortellingKarusell() {
     if (!karusell || !slide) return
 
     karusell.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' })
-    setKarusellState(page)
   }
 
   const oppdaterKarusellState = () => {
@@ -50,7 +49,7 @@ export default function FortellingKarusell() {
     if (!karusell || karusell.clientWidth === 0) return
 
     const page = Math.round(karusell.scrollLeft / karusell.clientWidth) + 1
-    setKarusellState(Math.min(Math.max(page, 1), slides.length))
+    setKarusellPage(Math.min(Math.max(page, 1), slides.length))
   }
 
   return (
@@ -72,7 +71,7 @@ export default function FortellingKarusell() {
           ))}
         </section>
       </Box>
-      <Pagination page={karusellState} count={slides.length} onPageChange={scrollToPage} />
+      <Pagination page={karusellPage} count={slides.length} onPageChange={scrollToPage} />
     </VStack>
   )
 }
