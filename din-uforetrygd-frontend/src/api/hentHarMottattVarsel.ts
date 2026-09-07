@@ -1,8 +1,8 @@
 import { headers } from 'next/headers'
+import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getUforeVarslerOboToken } from '@/api/getOboToken'
 import getEnv from '@/utils/env'
-import { getMockScenario } from '@/api/common'
 
 export const hentHarMottattVarsel = async (): Promise<boolean> => {
   const mode = getEnv('MODE') as 'borger' | 'veileder'

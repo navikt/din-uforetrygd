@@ -30,6 +30,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const uforetrygdResponse = initResponse.uforetrygdResponse
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
   const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
+  const barnetilleggIsEnabled = await isEnabled('din-uforetrygd.barnetillegg')
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
 
@@ -50,7 +51,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <ForsideBehandlingKort
           behandling={
             initResponse.uforetrygdResponse.behandling
-              ? toForsideBehandling(initResponse.uforetrygdResponse.behandling)
+              ? toForsideBehandling(initResponse.uforetrygdResponse.behandling, barnetilleggIsEnabled)
               : null
           }
           visningskriterier={visningskriterier}

@@ -31,7 +31,7 @@ data class Behandling(
             avslattForutgaendeMedlemskap = vedtak.avslattForutgaendeMedlemskap,
             ferdigstiltDato = vedtak.vedtaksdato,
             etteroppgjor = vedtak.etteroppgjor?.let { Etteroppgjør.fraPenEtteroppgjør(it) },
-            beregning = vedtak.beregning?.let { Beregning(it.nettoUforetrygdPerManed) },
+            beregning = vedtak.beregning?.let { Beregning(it.nettoUforetrygdPerManed, it.nettoBarnetilleggPerManed) },
         )
 
         private fun finnType(krav: Krav, vedtakstype: String? = null): BehandlingType {
@@ -67,6 +67,7 @@ data class Behandling(
 
 data class Beregning(
     val nettoUforetrygdPerManed: Int,
+    val nettoBarnetilleggPerManed: Int?,
 )
 
 data class Etteroppgjør(
