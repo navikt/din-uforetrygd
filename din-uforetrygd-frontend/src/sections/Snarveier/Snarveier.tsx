@@ -13,10 +13,11 @@ import {
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
+import { sjekkRepresentasjonsforhold } from '@/api/sjekkRepresentasjonsforhold'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
-import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
@@ -36,7 +37,9 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
   const mode = getEnv('MODE') as 'borger' | 'veileder'
+  const harRepresentasjon = await sjekkRepresentasjonsforhold(pid || '')
 
+  console.log('har', harRepresentasjon)
   return (
     <section aria-label="Snarveier">
       <VStack gap="space-20">
@@ -44,7 +47,9 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, mode)}
+          links={
+            await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, mode, harRepresentasjon)
+          }
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -58,7 +63,8 @@ const getLinks = async (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean,
-  mode: 'borger' | 'veileder'
+  mode: 'borger' | 'veileder',
+  harRepresentasjon: boolean
 ) => [
   {
     href: `selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`,
@@ -111,7 +117,7 @@ const getLinks = async (
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: matchAll([Visningskriterier.ErVerge]),
+    showFor: harRepresentasjon,
     showFullmaktWarning: true,
     visInnloggingsModal: false,
   },

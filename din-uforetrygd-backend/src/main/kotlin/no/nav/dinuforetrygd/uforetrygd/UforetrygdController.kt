@@ -3,6 +3,8 @@ package no.nav.dinuforetrygd.uforetrygd
 import no.nav.dinuforetrygd.ErrorHandler
 import no.nav.dinuforetrygd.SakNotFoundException
 import no.nav.dinuforetrygd.audit.Auditor
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
+import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient.Companion.VALID_VERGE_TYPER
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.person.PersonService
 import no.nav.dinuforetrygd.security.SecurityContextUtil
@@ -19,11 +21,12 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 @RequestMapping("api")
 class UforetrygdController(
-    private val uforetrygdService: ForsideService,
+    private val forsideService: ForsideService,
     private val saksoversiktService: SaksoversiktService,
     private val personService: PersonService,
     private val tokenService: TokenService,
     private val auditor: Auditor,
+    private val representasjonClient: RepresentasjonClient,
 ) {
 
     private val logger = LoggerFactory.getLogger(UforetrygdController::class.java)
@@ -48,7 +51,7 @@ class UforetrygdController(
         try {
             val response = ResponseEntity
                 .status(HttpStatus.OK)
-                .body(uforetrygdService.hentForsideData(pid))
+                .body(forsideService.hentForsideData(pid))
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
                 auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
@@ -65,7 +68,7 @@ class UforetrygdController(
     fun hentUforevedtak(): ResponseEntity<DittUforevedtak> {
         val pid = SecurityContextUtil.getPidFromContext()
         try {
-            val uforevedtak = uforetrygdService.hentUforevedtak(pid)
+            val uforevedtak = forsideService.hentUforevedtak(pid)
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
                 auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
@@ -83,7 +86,7 @@ class UforetrygdController(
     fun hentJournalposter(): ResponseEntity<List<Journalpost>> {
         val pid = SecurityContextUtil.getPidFromContext()
         try {
-            val journalposter = uforetrygdService.hentJournalposter(pid)
+            val journalposter = forsideService.hentJournalposter(pid)
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
                 auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), pid)
@@ -114,6 +117,22 @@ class UforetrygdController(
         }
     }
 
+    @GetMapping("representasjonsforhold")
+    fun harRepresentasjonsforhold(): ResponseEntity<Boolean> {
+        try {
+            val harRepresentasjonsforhold = !SecurityContextUtil.isFullmakt()
+                    && representasjonClient.harRepresentasjonsforhold(SecurityContextUtil.getPidFromContext(), VALID_VERGE_TYPER)?.value ?: false
+
+            if (tokenService.isUserLoggedInAsSaksbehandler()) {
+                auditor.auditInternalUserRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+            } else if (SecurityContextUtil.isFullmakt()) {
+                auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
+            }
+            return ResponseEntity.ok(harRepresentasjonsforhold)
+        } catch (e: Exception) {
+            throw ErrorHandler.exceptionToErrorResponse(e)
+        }
+    }
 }
 
 data class SaksoversiktResponse(

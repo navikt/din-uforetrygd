@@ -5,10 +5,6 @@ export const getVisningskriterier = (init: UforetrygdResponse) => {
   const sak = init.sak
   const visningskriterier: Visningskriterier[] = []
 
-  if (init.erVerge) {
-    visningskriterier.push(Visningskriterier.ErVerge)
-  }
-
   if (!sak || sak.status === 'OPPRETTET') {
     visningskriterier.push(Visningskriterier.IngenUforesak)
     return visningskriterier
