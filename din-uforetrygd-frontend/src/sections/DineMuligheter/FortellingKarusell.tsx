@@ -41,7 +41,10 @@ export default function FortellingKarusell() {
     const slide = karusell?.children.item(page - 1) as HTMLElement | null
     if (!karusell || !slide) return
 
-    karusell.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' })
+    karusell.scrollTo({
+      left: karusell.clientWidth * (page - 1),
+      behavior: 'smooth',
+    })
   }
 
   const oppdaterKarusellState = () => {
