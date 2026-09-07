@@ -66,7 +66,7 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
   webServer: {
-    command: 'npm run dev:playwright',
+    command: 'npm run dev:playwright:msw',
     url: 'http://localhost:3000/uforetrygd/selvbetjening',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

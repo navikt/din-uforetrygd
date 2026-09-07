@@ -16,9 +16,16 @@ export function proxy(request: NextRequest) {
     },
   })
 
-  const pid = request.nextUrl.searchParams.get('pid')
   const headers = new Headers(request.headers)
+
+  const pid = request.nextUrl.searchParams.get('pid')
   if (pid) headers.set('x-kryptert-pid', pid)
+
+  if (process.env.ENABLE_MSW === 'true') {
+    // Sett mock-scenario header basert på URL-parameter eller miljøvariabel
+    const scenario = request.nextUrl.searchParams.get('scenario') ?? process.env.MOCK_SCENARIO ?? 'default'
+    headers.set('x-mock-scenario', scenario)
+  }
 
   const response = NextResponse.next({ request: { headers } })
 

@@ -11,7 +11,7 @@ Sett prettier package til prettier i `node_modules`. Klikk på "Run on 'reformat
 Installere: `npm i`
 
 For å få kontakt med Unleash lokalt må vi hente noen secrets ved å kjøre `./fetch-secrets.sh`. Dette lagrer nødvendige secrets i .env.local. Du kan eventuelt finne token og URL for Unleash på [Ufore sin Unleash](https://ufore-unleash-web.iap.nav.cloud.nais.io) under Project settings > API access, og sette dem selv.
-[Denne koden](https://github.com/navikt/din-uforetrygd/blob/20de619ef3af0361bbc1578515dffccd9bf6ebe7/din-uforetrygd-frontend/src/utils/unleash.ts#L7-L9) må også kommenteres ut.
+Hvis du ønsker å teste med lokale feature flags før du legger de til i Unleash, må vi fjerne kommenteringen i [denne koden](https://github.com/navikt/din-uforetrygd/blob/20de619ef3af0361bbc1578515dffccd9bf6ebe7/din-uforetrygd-frontend/src/utils/unleash.ts#L7-L9).
 
 
 ### Mock backend

@@ -4,10 +4,7 @@ import { after } from 'next/server'
 import type { ClientFeaturesResponse } from 'unleash-client'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
-  /* const isDev = process.env.NODE_ENV !== 'production'
-   if (isDev) {
-     return _localToggles[toggle] ?? false
-   }*/
+  const isMock = process.env.ENABLE_MSW === 'true'
 
   const cookieStore = await cookies()
   const sessionId = cookieStore.get(unleashSessionIdKey)?.value
@@ -16,10 +13,15 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   try {
     definitions = await getDefinitions({
       url: `${process.env.UNLEASH_SERVER_API_URL}/api/client/features`,
-      fetchOptions: {
-        next: { revalidate: 15 }, // cache i 15 sek
-        signal: AbortSignal.timeout(3000),
-      },
+      fetchOptions: isMock
+        ? {
+            cache: 'no-store', // Ikke cache med mock
+            signal: AbortSignal.timeout(3000),
+          }
+        : {
+            next: { revalidate: 15 }, // Cache i 15 sek
+            signal: AbortSignal.timeout(3000),
+          },
     })
   } catch (e) {
     console.error('Henting av feature toggles fra Unleash feilet', e)
@@ -39,8 +41,3 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
 }
 
 export const unleashSessionIdKey = 'unleash-session-id'
-
-type LocalToggles = Record<string, boolean>
-const _localToggles: LocalToggles = {
-  'test-toggle': true,
-}
