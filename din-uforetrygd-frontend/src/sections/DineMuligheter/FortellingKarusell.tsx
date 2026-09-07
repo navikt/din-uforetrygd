@@ -38,8 +38,7 @@ export default function FortellingKarusell() {
 
   const scrollToPage = (page: number) => {
     const karusell = karusellRef.current
-    const slide = karusell?.children.item(page - 1) as HTMLElement | null
-    if (!karusell || !slide) return
+    if (!karusell) return
 
     karusell.scrollTo({
       left: karusell.clientWidth * (page - 1),
