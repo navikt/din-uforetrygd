@@ -1,10 +1,12 @@
 # din-uforetrygd-frontend
 
-### prettier
+## Biome
 
-For automatisk formatering av kode gå til Preferences -> Languages & Framework -> Javascript -> Prettier.
-Klikk på Manual Prettier Configurations.
-Sett prettier package til prettier i `node_modules`. Klikk på "Run on 'reformat code'" og "Run on save"
+Vi bruker [Biome](https://biomejs.dev/) til linting og formatering.
+
+- Kjør `npm run check` for å sjekke formatering, linting og typer.
+- Kjør `npm run fix` for å formatere koden.
+- Installer Biome-pluginen i IntelliJ og slå på formatering ved lagring hvis du vil formatere automatisk.
 
 ## Lokal utvikling
 
@@ -13,12 +15,20 @@ Installere: `npm i`
 For å få kontakt med Unleash lokalt må vi hente noen secrets ved å kjøre `./fetch-secrets.sh`. Dette lagrer nødvendige secrets i .env.local. Du kan eventuelt finne token og URL for Unleash på [Ufore sin Unleash](https://ufore-unleash-web.iap.nav.cloud.nais.io) under Project settings > API access, og sette dem selv.
 Hvis du ønsker å teste med lokale feature flags før du legger de til i Unleash, må vi fjerne kommenteringen i [denne koden](https://github.com/navikt/din-uforetrygd/blob/20de619ef3af0361bbc1578515dffccd9bf6ebe7/din-uforetrygd-frontend/src/utils/unleash.ts#L7-L9).
 
-
 ### Mock backend
 * Kjør `npm run mock` for standard lokal utvikling (starter både Next.js med MSW som serverer mock data).
 * Scenario-skript (`npm run mock:ingen-uforesak`, `npm run mock:avsluttet`, osv.) starter også mock-backend automatisk.
 * Forskjellige scenarioer kan også tested ved å kjøre `npm run mock` og legge til `scenario=<scenario>` i URL'en (f.eks `http://localhost:3000/uforetrygd/selvbetjening?scenario=avsluttet`).
 * Playwright bruker eigen oppstart via `npm run mock:playwright` frå `playwright.config.ts`. 
+
+### Mot lokal backend
+* Start backenden
+* Finn et token og legg det inn i .env.local som `ACCESS_TOKEN`
+  * Borger-token: https://tokenx-token-generator.intern.dev.nav.no/api/obo?aud=dev-gcp:ufore:din-uforetrygd-backend
+  * Veileder-token: https://azure-token-generator.intern.dev.nav.no/api/obo?aud=dev-gcp:ufore:din-uforetrygd-backend
+  * For å generere borger for riktige scenarioer, se [TestBorgere](TestBorgere.md)
+* Kjør `npm run local`
+* Åpne http://localhost:3000/uforetrygd/selvbetjening
 
 ### Playwright-testar
 

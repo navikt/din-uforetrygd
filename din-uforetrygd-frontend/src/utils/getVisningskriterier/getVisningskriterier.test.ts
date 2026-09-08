@@ -9,7 +9,6 @@ const defaultUforeResponse: UforetrygdResponse = {
   sak: undefined,
   hasIverksattVedtak: false,
   uforegrad: undefined,
-  erVerge: false,
 }
 
 const uforesak: Sak = {

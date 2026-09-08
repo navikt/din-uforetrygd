@@ -36,7 +36,6 @@ class UforetrygdServiceTest {
     val uforetrygdService = ForsideService(
         penService = penService,
         tokenService = tokenService,
-        representasjonClient = representasjonClient,
         inntektskomponentenService = inntektskomponentenService,
         penClient = penClient,
         journalpostService = journalpostService
