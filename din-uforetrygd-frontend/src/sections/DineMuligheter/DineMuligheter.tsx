@@ -190,7 +190,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
         <Heading size="large" level="3" className={styles.headingKolonne}>
           Jobbe ved siden av uføretrygd? Slik funker det for Kim
         </Heading>
-          <FortellingKarusell />
+        <FortellingKarusell />
         <InntektSimulering
           pid={mode === 'veileder' ? pid : undefined}
           inntektsplanleggerLenke={inntektsplanleggerLenke}

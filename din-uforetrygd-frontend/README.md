@@ -1,10 +1,12 @@
 # din-uforetrygd-frontend
 
-### prettier
+## Biome
 
-For automatisk formatering av kode gå til Preferences -> Languages & Framework -> Javascript -> Prettier.
-Klikk på Manual Prettier Configurations.
-Sett prettier package til prettier i `node_modules`. Klikk på "Run on 'reformat code'" og "Run on save"
+Vi bruker [Biome](https://biomejs.dev/) til linting og formatering.
+
+- Kjør `npm run check` for å sjekke formatering, linting og typer.
+- Kjør `npm run fix` for å formatere koden.
+- Installer Biome-pluginen i IntelliJ og slå på formatering ved lagring hvis du vil formatere automatisk.
 
 ## Lokal utvikling
 
