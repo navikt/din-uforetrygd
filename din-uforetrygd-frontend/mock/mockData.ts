@@ -91,7 +91,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: true,
     uforegrad: 100,
     innloggingstype: 'LEVEL3',
-    erVerge: true,
     behandling: {
       type: BehandlingType.SØKNAD_BARNETILLEGG,
       status: Status.INNVILGET,
