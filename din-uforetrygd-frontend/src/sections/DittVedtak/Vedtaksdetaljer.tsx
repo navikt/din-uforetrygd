@@ -1,14 +1,13 @@
 'use client'
 
-import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
-import { Events } from '@navikt/nav-dekoratoren-moduler'
-import React from 'react'
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import styles from '@/sections/DittVedtak/dittvedtak.module.css'
 import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatDate, formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
+import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 
 interface VedtaksdetaljerProps {
   dittUforevedtakPromise: Promise<DittUforevedtak | null>

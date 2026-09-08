@@ -3,7 +3,7 @@ import { dismissCookieBanner, getValueCellByLabel } from './test-helpers'
 
 test.describe('Gradert ufore scenario', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=gradert')
     await dismissCookieBanner(page)
   })
 

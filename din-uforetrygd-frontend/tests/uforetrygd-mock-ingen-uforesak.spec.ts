@@ -3,7 +3,7 @@ import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Ingen uforesak', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=ingen-uforesak')
     await dismissCookieBanner(page)
   })
 

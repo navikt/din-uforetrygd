@@ -3,7 +3,7 @@ import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Lopende uforesak uten vedtak', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=har-lopende')
     await dismissCookieBanner(page)
   })
 
