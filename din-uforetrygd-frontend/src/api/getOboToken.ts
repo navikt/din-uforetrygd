@@ -1,18 +1,18 @@
 import { getToken, requestOboToken, validateToken } from '@navikt/oasis'
 import { headers } from 'next/headers'
-import getEnv from '@/utils/env'
+import { serverEnv } from '@/env'
 
 export const getUforeVarslerOboToken = async () => {
-  return getOboToken(getEnv('UFORE_VARSLER_SCOPE')!)
+  return getOboToken(serverEnv.UFORE_VARSLER_SCOPE)
 }
 
 export const getDinUforetrygdBackendOboToken = async () => {
-  return getOboToken(getEnv('DIN_UFORETRYGD_BACKEND_SCOPE')!)
+  return getOboToken(serverEnv.DIN_UFORETRYGD_BACKEND_SCOPE)
 }
 
 const getOboToken = async (scope: string): Promise<string> => {
-  if (process.env.NODE_ENV !== 'production') {
-    return process.env.ACCESS_TOKEN!
+  if (serverEnv.NODE_ENV !== 'production') {
+    return serverEnv.ACCESS_TOKEN || ''
   }
   const clientHeaders = await headers()
   const token = getToken(clientHeaders)

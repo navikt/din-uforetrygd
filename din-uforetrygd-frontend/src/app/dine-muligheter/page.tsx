@@ -1,8 +1,8 @@
 import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
-import getEnv from '@/utils/env'
 import { isEnabled } from '@/utils/unleash'
+import { serverEnv } from '@/env'
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
@@ -10,14 +10,18 @@ interface Props {
 
 const DineMuligheterPage = async ({ searchParams }: Props) => {
   const params = await searchParams
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
-  const inntektsplanleggerLenke = getEnv('LINK_INNTEKTSPLANLEGGER')!
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
 
   if (dineMuligheterIsEnabled) {
     const harMottattVarsel = await hentHarMottattVarsel()
     if (harMottattVarsel) {
-      return <DineMuligheter pid={params.pid} mode={mode} inntektsplanleggerLenke={inntektsplanleggerLenke} />
+      return (
+        <DineMuligheter
+          pid={params.pid}
+          mode={serverEnv.MODE}
+          inntektsplanleggerLenke={serverEnv.LINK_INNTEKTSPLANLEGGER}
+        />
+      )
     }
   }
 

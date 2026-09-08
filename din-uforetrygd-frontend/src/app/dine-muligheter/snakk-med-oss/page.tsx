@@ -1,8 +1,8 @@
 import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import SnakkMedOss from '@/sections/DineMuligheter/SnakkMedOss'
-import getEnv from '@/utils/env'
 import { isEnabled } from '@/utils/unleash'
+import { serverEnv } from '@/env'
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
@@ -10,9 +10,6 @@ interface Props {
 
 const DineMuligheterSnakkMedOssPage = async ({ searchParams }: Props) => {
   const params = await searchParams
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
-  const skrivTilOssLenke = getEnv('LINK_SKRIV_TIL_OSS')!
-  const startArbeidsoppfølgingLenke = getEnv('LINK_START_ARBEIDSOPPFOLGING')!
   const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
 
   if (dineMuligheterIsEnabled) {
@@ -22,9 +19,9 @@ const DineMuligheterSnakkMedOssPage = async ({ searchParams }: Props) => {
       return (
         <SnakkMedOss
           pid={params.pid}
-          mode={mode}
-          skrivTilOssLenke={skrivTilOssLenke}
-          startArbeidsoppfølgingLenke={startArbeidsoppfølgingLenke}
+          mode={serverEnv.MODE}
+          skrivTilOssLenke={serverEnv.LINK_SKRIV_TIL_OSS}
+          startArbeidsoppfølgingLenke={serverEnv.LINK_START_ARBEIDSOPPFOLGING}
         />
       )
     }

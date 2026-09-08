@@ -15,11 +15,11 @@ import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
-import getEnv from '@/utils/env'
 import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { getUrl } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
+import { type ServerEnv, serverEnv } from '@/env'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -35,7 +35,6 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
   skalViseDineMuligheter,
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
 
   return (
     <section aria-label="Snarveier">
@@ -44,7 +43,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, mode)}
+          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, serverEnv.MODE)}
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -58,7 +57,7 @@ const getLinks = async (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean,
-  mode: 'borger' | 'veileder'
+  mode: ServerEnv['MODE']
 ) => [
   {
     href: `selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`,

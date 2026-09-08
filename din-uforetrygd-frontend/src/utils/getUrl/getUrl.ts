@@ -1,5 +1,6 @@
-import getEnv from '@/utils/env'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
+import { serverEnv } from '@/env'
+import getEnv from '@/utils/env'
 
 export interface GetUrlInput {
   urlFromEnv: EnvUrl
@@ -38,11 +39,12 @@ export const getUrl = async ({
   isFullmektig = false,
   innloggingstype = undefined,
 }: GetUrlInput) => {
-  if (getEnv('MODE') === 'veileder' && pid) {
+  if (serverEnv.MODE === 'veileder' && pid) {
     const parse = await getAzureUserPayload()
     return getEnv(urlFromEnv)?.replace('PID', pid).replace('USER', parse.name)
   }
-  if (getEnv('MODE') === 'borger' && urlFromEnv.startsWith('LINK_SOKNAD')) {
+
+  if (serverEnv.MODE === 'borger' && urlFromEnv.startsWith('LINK_SOKNAD')) {
     return isFullmektig || innloggingstype === 'LEVEL3'
       ? `${getEnv(urlFromEnv)}?sub=paper`
       : `${getEnv(urlFromEnv)}?sub=digital`

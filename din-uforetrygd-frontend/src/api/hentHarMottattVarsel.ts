@@ -2,18 +2,16 @@ import { headers } from 'next/headers'
 import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getUforeVarslerOboToken } from '@/api/getOboToken'
-import getEnv from '@/utils/env'
+import { serverEnv } from '@/env'
 
 export const hentHarMottattVarsel = async (): Promise<boolean> => {
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
-
   const oboToken = await getUforeVarslerOboToken().catch((error) => {
     console.error('Error: ', error)
     return
   })
 
   const nextHeaders = await headers()
-  const body = mode === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
+  const body = serverEnv.MODE === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
 
   const fullmaktCookie = await getFullmaktCookie()
 
