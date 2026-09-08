@@ -3,7 +3,7 @@ import { dismissCookieBanner, getValueCellByLabel } from './test-helpers'
 
 test.describe('Ufore uten datoer', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=ufore-uten-datoer')
     await dismissCookieBanner(page)
   })
 

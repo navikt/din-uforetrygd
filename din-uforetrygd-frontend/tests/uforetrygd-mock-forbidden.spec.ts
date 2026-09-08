@@ -3,7 +3,7 @@ import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Forbidden login level scenario', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=forbidden')
     await dismissCookieBanner(page)
   })
 
