@@ -62,7 +62,7 @@ app.get('/api/saksoversikt', (req, res) => {
   res.status(200).json(data)
 })
 
-app.get('/api/representasjonsforhold', (req, res) => {
+app.get('/api/er-verge', (req, res) => {
   const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
   console.log(`Responding with varsler scenario: ${requestedScenario}`)
 

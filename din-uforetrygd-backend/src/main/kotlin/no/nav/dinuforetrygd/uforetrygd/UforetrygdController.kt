@@ -117,10 +117,10 @@ class UforetrygdController(
         }
     }
 
-    @GetMapping("representasjonsforhold")
-    fun harRepresentasjonsforhold(): ResponseEntity<Boolean> {
+    @GetMapping("er-verge")
+    fun erVerge(): ResponseEntity<Boolean> {
         try {
-            val harRepresentasjonsforhold = !SecurityContextUtil.isFullmakt()
+            val erVerge = !SecurityContextUtil.isFullmakt()
                     && representasjonClient.harRepresentasjonsforhold(SecurityContextUtil.getPidFromContext(), VALID_VERGE_TYPER)?.value ?: false
 
             if (tokenService.isUserLoggedInAsSaksbehandler()) {
@@ -128,7 +128,7 @@ class UforetrygdController(
             } else if (SecurityContextUtil.isFullmakt()) {
                 auditor.auditFullmaktRead(tokenService.determineLoggedInUserId(), SecurityContextUtil.getPidFromContext())
             }
-            return ResponseEntity.ok(harRepresentasjonsforhold)
+            return ResponseEntity.ok(erVerge)
         } catch (e: Exception) {
             throw ErrorHandler.exceptionToErrorResponse(e)
         }

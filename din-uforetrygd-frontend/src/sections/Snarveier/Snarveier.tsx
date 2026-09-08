@@ -13,7 +13,7 @@ import {
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
-import { sjekkRepresentasjonsforhold } from '@/api/sjekkRepresentasjonsforhold'
+import { sjekkOmErVerge } from '@/api/sjekkOmErVerge'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import getEnv from '@/utils/env'
@@ -37,9 +37,8 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
   const mode = getEnv('MODE') as 'borger' | 'veileder'
-  const harRepresentasjon = await sjekkRepresentasjonsforhold(pid || '')
+  const erVerge = await sjekkOmErVerge(pid || '')
 
-  console.log('har', harRepresentasjon)
   return (
     <section aria-label="Snarveier">
       <VStack gap="space-20">
@@ -47,9 +46,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={
-            await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, mode, harRepresentasjon)
-          }
+          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, mode, erVerge)}
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -64,7 +61,7 @@ const getLinks = async (
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean,
   mode: 'borger' | 'veileder',
-  harRepresentasjon: boolean
+  erVerge: boolean
 ) => [
   {
     href: `selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`,
@@ -117,7 +114,7 @@ const getLinks = async (
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: harRepresentasjon,
+    showFor: erVerge,
     showFullmaktWarning: true,
     visInnloggingsModal: false,
   },

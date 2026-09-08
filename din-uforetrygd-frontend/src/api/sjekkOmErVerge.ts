@@ -2,7 +2,7 @@ import { baseUrl, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from './getOboToken'
 
-export const sjekkRepresentasjonsforhold = async (kryptertPid: string) => {
+export const sjekkOmErVerge = async (kryptertPid: string) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
     return
@@ -21,13 +21,12 @@ export const sjekkRepresentasjonsforhold = async (kryptertPid: string) => {
     headers['X-Mock-Scenario'] = mockScenario
   }
 
-  const response = await fetch(`${baseUrl}/api/representasjonsforhold`, {
+  const response = await fetch(`${baseUrl}/api/er-verge`, {
     headers,
     cache: 'no-store',
   })
 
   const json = await response.json().catch(() => undefined)
-  console.log('her3', json)
 
   return json as boolean
 }
