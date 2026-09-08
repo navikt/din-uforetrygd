@@ -10,7 +10,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: true,
     uforegrad: 100,
     innloggingstype: 'LEVEL3',
-    erVerge: true,
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'INNVILGET',
@@ -25,7 +24,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforegrad: 100,
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   gradert: {
     pid: '81549300',
@@ -33,7 +31,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: true,
     uforegrad: 50,
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   'har-lopende': {
     pid: '81549300',
@@ -41,14 +38,12 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforegrad: undefined,
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   'sak-behandling': {
     pid: '81549300',
     sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: false,
     uforegrad: undefined,
-    uforevedtak: undefined,
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'MOTTATT',
@@ -57,28 +52,12 @@ export const mockData: Record<string, UforetrygdResponse> = {
       beregning: null,
     },
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   'ufore-behandling': {
     pid: '81549300',
     sak: { status: 'TIL_BEHANDLING' },
     hasIverksattVedtak: true,
     uforegrad: 100,
-    uforevedtak: {
-      uforegrad: 100,
-      virkFom: '2024-12-01',
-      uforetidspunkt: '2020-10-01',
-      inntektsgrense: 49611,
-      inntektstak: 200000,
-      inntektFraSkatt: 150000,
-      kompensasjonsgrad: 65,
-      nettoUtbetalingMnd: 20000,
-      sumAvForventedeInntekter: 0,
-      hasBarnetilleggFellesBarn: false,
-      hasBarnetilleggSaerkullsbarn: false,
-      hasGjenlevendeTillegg: false,
-      hasVarigTilrettelagtArbeid: false,
-    },
     behandling: {
       type: 'SØKNAD_UFØRETRYGD',
       status: 'MOTTATT',
@@ -87,7 +66,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
       beregning: null,
     },
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   'ingen-uforesak': {
     pid: '81549300',
@@ -95,7 +73,6 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: false,
     uforegrad: undefined,
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   'ufore-uten-datoer': {
     pid: '81549300',
@@ -103,15 +80,11 @@ export const mockData: Record<string, UforetrygdResponse> = {
     hasIverksattVedtak: true,
     uforegrad: 100,
     innloggingstype: 'LEVEL4',
-    erVerge: false,
   },
   forbidden: {
     pid: undefined,
-    loggetInnSom: undefined,
     sak: undefined,
     hasIverksattVedtak: false,
-    uforevedtak: undefined,
     innloggingstype: 'LEVEL3',
-    erVerge: false,
   },
 }

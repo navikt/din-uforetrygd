@@ -1,10 +1,10 @@
 import cors from 'cors'
 import express from 'express'
 import { mockData } from './mockData'
-import { mockSaksoversiktData } from './mockSaksoversiktData'
-import { mockVarslerData } from './mockVarslerData'
 import { mockJournalposterData } from './mockJournalposterData'
+import { mockSaksoversiktData } from './mockSaksoversiktData'
 import { mockUforevedtakData } from './mockUforevedtakData'
+import { mockVarslerData } from './mockVarslerData'
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -60,6 +60,15 @@ app.get('/api/saksoversikt', (req, res) => {
 
   console.log(`Responding with saksoversikt scenario: ${requestedScenario}`)
   res.status(200).json(data)
+})
+
+app.get('/api/er-verge', (req, res) => {
+  const requestedScenario = (req.headers['x-mock-scenario'] as string) || 'default'
+  console.log(`Responding with varsler scenario: ${requestedScenario}`)
+
+  const harRepresentasjonsforhold = false
+
+  res.status(200).json(harRepresentasjonsforhold)
 })
 
 app.post('/api/varsler/status', (req, res) => {
