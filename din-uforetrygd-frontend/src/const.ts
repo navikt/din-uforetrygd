@@ -4,7 +4,6 @@ export enum Visningskriterier {
   SakTilBehandling = 'SakTilBehandling',
   AvsluttetUforetrygdSak = 'AvsluttetUforetrygdSak',
   IngenUforesak = 'IngenUforetrygd',
-  ErVerge = 'ErVerge',
 }
 
 export enum Innloggingstype {

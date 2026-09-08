@@ -13,10 +13,11 @@ import {
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
+import { sjekkOmErVerge } from '@/api/sjekkOmErVerge'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
-import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilInnloggaBrukerNavn, leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
@@ -35,6 +36,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
   skalViseDineMuligheter,
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
+  const erVerge = await sjekkOmErVerge(pid || '')
 
   return (
     <section aria-label="Snarveier">
@@ -43,7 +45,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter)}
+          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, erVerge)}
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -56,7 +58,8 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
 const getLinks = async (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
-  skalViseDineMuligheter: boolean
+  skalViseDineMuligheter: boolean,
+  erVerge: boolean
 ) => [
   {
     href: `selvbetjening/dine-muligheter${env('MODE') === 'veileder' ? `?pid=${pid}` : ''}`,
@@ -109,7 +112,7 @@ const getLinks = async (
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: matchAll([Visningskriterier.ErVerge]),
+    showFor: erVerge,
     showFullmaktWarning: true,
     visInnloggingsModal: false,
   },

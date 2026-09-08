@@ -15,27 +15,24 @@
     "lineWidth": 120
   },
   "linter": {
-    "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      },
       "suspicious": {
         "noConsole": "warn"
       }
     }
+  },
+  "assist": {
+    "enabled": false
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
       "semicolons": "asNeeded",
       "trailingCommas": "es5"
-    }
-  },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "organizeImports": "on"
-      }
     }
   }
 }

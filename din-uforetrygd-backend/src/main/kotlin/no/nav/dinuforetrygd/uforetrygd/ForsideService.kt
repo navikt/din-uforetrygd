@@ -4,14 +4,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient
-import no.nav.dinuforetrygd.fullmakt.RepresentasjonClient.Companion.VALID_VERGE_TYPER
 import no.nav.dinuforetrygd.inntektskomponenten.InntektskomponentenService
 import no.nav.dinuforetrygd.journalpost.Journalpost
 import no.nav.dinuforetrygd.journalpost.JournalpostService
 import no.nav.dinuforetrygd.pensjon.pen.*
 import no.nav.dinuforetrygd.security.RequestContextAsyncContext
-import no.nav.dinuforetrygd.security.SecurityContextUtil
 import no.nav.dinuforetrygd.security.SecurityCoroutineContext
 import no.nav.dinuforetrygd.security.TokenService
 import org.slf4j.Logger
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Service
 class ForsideService(
     private val penService: PenService,
     private val tokenService: TokenService,
-    private val representasjonClient: RepresentasjonClient,
     private val inntektskomponentenService: InntektskomponentenService,
     private val penClient: PenClient,
     private val journalpostService: JournalpostService,
@@ -36,7 +32,6 @@ class ForsideService(
             if (uforeSak == null) return@withContext lagUforetrygdResponse(
                 pid = pid,
                 sak = null,
-                erVerge = isUforetrygdVerge(pid)
             )
 
             val vedtakssammendragResponseDeferred = async { penService.getVedtakssammendrag(pid) }
@@ -48,19 +43,16 @@ class ForsideService(
                     null
                 }
             }
-            val erVergeDeferred = async { isUforetrygdVerge(pid) }
 
             val vedtakssammendragResponse = vedtakssammendragResponseDeferred.await()
             val forsideData = forsideDataDeferred.await()
-            val erVerge = erVergeDeferred.await()
 
             return@withContext lagUforetrygdResponse(
                 pid = pid,
                 sak = uforeSak,
                 hasIverksattVedtak = vedtakssammendragResponse.hasIverksattVedtak,
                 uforegrad = vedtakssammendragResponse.vedtakssammendrag?.uforegrad,
-                behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) },
-                erVerge = erVerge
+                behandling = forsideData?.let { finnAktivBehandling(forsideData.apentKrav, forsideData.vedtakIverksattSiste7Dager) }
             )
         }
     }
@@ -89,15 +81,13 @@ class ForsideService(
         hasIverksattVedtak: Boolean = false,
         uforegrad: Int? = null,
         behandling: Behandling? = null,
-        erVerge: Boolean
     ) = UforetrygdResponse(
         pid = pid,
         sak = sak,
         innloggingstype = tokenService.getInnloggingstype(),
         hasIverksattVedtak = hasIverksattVedtak,
         uforegrad = uforegrad,
-        behandling = behandling,
-        erVerge = erVerge
+        behandling = behandling
     )
 
     private fun Vedtakssammendrag.toDittUforeVedtak(sumAvForventedeInntekter: Long?, inntektFraSkatt: Double): DittUforevedtak =
@@ -116,9 +106,6 @@ class ForsideService(
             hasGjenlevendeTillegg = this.hasGjenlevendeTillegg,
             hasVarigTilrettelagtArbeid = this.hasVarigTilrettelagtArbeid,
         )
-
-    suspend private fun isUforetrygdVerge(pid: String): Boolean =
-        !SecurityContextUtil.isFullmakt() && representasjonClient.harRepresentasjonsforhold(pid, VALID_VERGE_TYPER)?.value ?: false
 
     fun hentUforevedtak(pid: String): DittUforevedtak? = runBlocking {
         withContext(Dispatchers.IO + SecurityCoroutineContext() + RequestContextAsyncContext()) {

@@ -1,7 +1,6 @@
 package no.nav.dinuforetrygd.fullmakt
 
 
-import kotlinx.coroutines.reactor.awaitSingle
 import no.nav.dinuforetrygd.security.TokenService
 import no.nav.dinuforetrygd.configuration.AppId
 import no.nav.dinuforetrygd.configuration.retryOnTimeout
@@ -67,7 +66,7 @@ class RepresentasjonClient(
         }
     }
 
-    suspend fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
+    fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
         return try {
             tokenService.getEgressToken(scope, audience, representantPid, AppId.PENSJON_REPRESENTASJON).let {
                 webClient
@@ -84,7 +83,7 @@ class RepresentasjonClient(
                     .bodyToMono(HarRepresentasjonsforhold::class.java)
                     .retryWhen(retryOnTimeout)
                     .withMdcContext()
-                    .awaitSingle()
+                    .block()
             }
 
         } catch (e: WebClientResponseException) {

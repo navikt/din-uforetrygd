@@ -3,7 +3,7 @@ import { dismissCookieBanner } from './test-helpers'
 
 test.describe('Sak til behandling ingen ufore', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('')
+    await page.goto('?scenario=sak-behandling')
     await dismissCookieBanner(page)
   })
 

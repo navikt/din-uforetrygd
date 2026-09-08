@@ -49,5 +49,4 @@ export interface UforetrygdResponse {
   uforegrad?: number
   innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
   behandling?: Behandling
-  erVerge: boolean
 }

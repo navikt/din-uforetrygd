@@ -8,8 +8,7 @@ data class UforetrygdResponse(
     val hasIverksattVedtak: Boolean,
     val uforegrad: Int?,
     val innloggingstype: Innloggingstype,
-    val behandling: Behandling? = null,
-    val erVerge: Boolean
+    val behandling: Behandling? = null
 )
 
 data class DittUforevedtak(
