@@ -5,7 +5,7 @@ import type { ClientFeaturesResponse } from 'unleash-client'
 import { env } from '@/env'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
-  /* const isDev = getServerEnv().NODE_ENV !== 'production'
+  /* const isDev = env('NODE_ENV') !== 'production'
    if (isDev) {
      return _localToggles[toggle] ?? false
    }*/
@@ -16,7 +16,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   let definitions: ClientFeaturesResponse
   try {
     definitions = await getDefinitions({
-      url: `${env().UNLEASH_SERVER_API_URL}/api/client/features`,
+      url: `${env('UNLEASH_SERVER_API_URL')}/api/client/features`,
       fetchOptions: {
         next: { revalidate: 15 }, // cache i 15 sek
         signal: AbortSignal.timeout(3000),
@@ -30,7 +30,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   const { toggles } = evaluateFlags(definitions, {
     sessionId,
   })
-  const flags = flagsClient(toggles, { url: `${env().UNLEASH_SERVER_API_URL}/api` })
+  const flags = flagsClient(toggles, { url: `${env('UNLEASH_SERVER_API_URL')}/api` })
   const isEnabled = flags.isEnabled(toggle)
 
   // Ikke blokkerende rapportering tilbake til Unleash

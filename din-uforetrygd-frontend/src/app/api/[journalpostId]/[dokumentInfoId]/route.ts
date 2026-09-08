@@ -7,7 +7,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ journalpostId: string; dokumentInfoId: string }> }
 ) {
-  const baseUrl = env().DIN_UFORETRYGD_BACKEND
+  const baseUrl = env('DIN_UFORETRYGD_BACKEND')
   const { journalpostId, dokumentInfoId } = await params
   const token = await getDinUforetrygdBackendOboToken()
   const variantformat = request.nextUrl.searchParams.get('variantformat')

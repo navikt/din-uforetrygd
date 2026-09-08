@@ -9,7 +9,7 @@ type AzurePayload = {
 }
 
 export const getAzureUserPayload = async (): Promise<AzurePayload> => {
-  if (env().NODE_ENV !== 'production') {
+  if (env('NODE_ENV') !== 'production') {
     return {
       NAVident: 'NAVident',
       name: 'Saksbehandler',

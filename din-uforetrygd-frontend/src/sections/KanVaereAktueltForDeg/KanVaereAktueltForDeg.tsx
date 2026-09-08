@@ -13,37 +13,37 @@ interface IKanVaereAktueltForDegProps {
 export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (props) => {
   const links = [
     {
-      href: env().LINK_LES_MER_OM_UFORETRYGD,
+      href: env('LINK_LES_MER_OM_UFORETRYGD'),
       text: 'Les om uføretrygd',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: env().LINK_ENDRE_KONTONUMMER,
+      href: env('LINK_ENDRE_KONTONUMMER'),
       text: 'Endre kontonummer',
       showFor: matchAll([Visningskriterier.Uforetrygd]),
       showFullmaktWarning: true,
     },
     {
-      href: env().LINK_PERSONOPPLYSNINGER,
+      href: env('LINK_PERSONOPPLYSNINGER'),
       text: 'Personopplysninger',
       showFor: true,
       showFullmaktWarning: true,
     },
     {
-      href: env().LINK_OKONOMISKE_TILLEGG,
+      href: env('LINK_OKONOMISKE_TILLEGG'),
       text: 'Økonomiske tillegg og andre ordninger',
       showFor: matchAll([Visningskriterier.Uforetrygd]),
       showFullmaktWarning: false,
     },
     {
-      href: env().LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD,
+      href: env('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'),
       text: 'Saksbehandlingstider',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: env().LINK_KLAGE,
+      href: env('LINK_KLAGE'),
       text: 'Klage',
       showFor: true,
       showFullmaktWarning: false,

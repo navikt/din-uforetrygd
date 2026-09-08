@@ -19,9 +19,9 @@ const DineMuligheterSnakkMedOssPage = async ({ searchParams }: Props) => {
       return (
         <SnakkMedOss
           pid={params.pid}
-          mode={env().MODE}
-          skrivTilOssLenke={env().LINK_SKRIV_TIL_OSS}
-          startArbeidsoppfølgingLenke={env().LINK_START_ARBEIDSOPPFOLGING}
+          mode={env('MODE')}
+          skrivTilOssLenke={env('LINK_SKRIV_TIL_OSS')}
+          startArbeidsoppfølgingLenke={env('LINK_START_ARBEIDSOPPFOLGING')}
         />
       )
     }

@@ -40,7 +40,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
     return (
       <>
-        <TaskAnalytics id="03419" shouldRun={env().MODE === 'borger'} />
+        <TaskAnalytics id="03419" shouldRun={env('MODE') === 'borger'} />
         <VStack gap="space-12" className={'tittel-wrapper'}>
           <Heading size="xlarge" level="1">
             Din uføretrygd

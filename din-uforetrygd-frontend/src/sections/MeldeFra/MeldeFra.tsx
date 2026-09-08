@@ -18,7 +18,7 @@ export const MeldeFra: React.FC<IMeldeFra> = ({ visningskriterier }) => {
             <Heading level="2" size="medium">
               Husk å gi oss beskjed om endringer i din situasjon
             </Heading>
-            <Link href={env().LINK_MELD_FRA_OM_ENDRINGER}>
+            <Link href={env('LINK_MELD_FRA_OM_ENDRINGER')}>
               Se hvilke endringer du må si fra om og hvordan du sier fra.
             </Link>
           </VStack>

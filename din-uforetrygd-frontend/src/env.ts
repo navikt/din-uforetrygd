@@ -46,9 +46,15 @@ const serverEnvSchema = z.object({
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>
 
-// Kun tilgjengelig på server siden process.env kun er finnes der
 let serverEnv: ServerEnv | undefined
-export function env(): ServerEnv {
+
+// Kun tilgjengelig på server siden process.env kun er finnes der
+export function env<Key extends keyof ServerEnv>(key: Key): ServerEnv[Key] {
+  const serverEnv = validateEnv()
+  return serverEnv[key]
+}
+
+export const validateEnv = () => {
   serverEnv ??= serverEnvSchema.parse(process.env)
   return serverEnv
 }

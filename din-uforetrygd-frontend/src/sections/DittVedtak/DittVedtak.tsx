@@ -20,7 +20,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
       <Vedtaksdetaljer
         dittUforevedtakPromise={uforevedtakPromise}
         sakId={sakId}
-        linkInntektsplanlegger={leggTilPidHvisVeileder(env().LINK_INNTEKTSPLANLEGGER, pid)}
+        linkInntektsplanlegger={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)}
         arstall={new Date().getFullYear()}
       />
     </section>

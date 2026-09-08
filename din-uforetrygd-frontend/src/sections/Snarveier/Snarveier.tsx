@@ -59,7 +59,7 @@ const getLinks = async (
   skalViseDineMuligheter: boolean
 ) => [
   {
-    href: `selvbetjening/dine-muligheter${env().MODE === 'veileder' ? `?pid=${pid}` : ''}`,
+    href: `selvbetjening/dine-muligheter${env('MODE') === 'veileder' ? `?pid=${pid}` : ''}`,
     title: 'Dine muligheter',
     description:
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
@@ -69,7 +69,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env().LINK_UTBETALINGER, pid)),
+    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid)),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -78,7 +78,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: env().LINK_DOKUMENTOVERSIKT,
+    href: env('LINK_DOKUMENTOVERSIKT'),
     title: 'Se alle dokumentene dine',
     description: 'Alle dokumentene dine',
     icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -87,7 +87,7 @@ const getLinks = async (
     visInnloggingsModal: true,
   },
   {
-    href: env().LINK_SKATTETREKK,
+    href: env('LINK_SKATTETREKK'),
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
     icon: <PlusMinusSlashIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -96,7 +96,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: leggTilPidHvisVeileder(env().LINK_FAMILIEFORHOLD, pid),
+    href: leggTilPidHvisVeileder(env('LINK_FAMILIEFORHOLD'), pid),
     title: 'Familieforhold',
     description: 'Samboerforhold, sivilstand, barn',
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -105,7 +105,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: leggTilPidHvisVeileder(env().LINK_REPRESENTASJON_TILLEGGSDATA, pid),
+    href: leggTilPidHvisVeileder(env('LINK_REPRESENTASJON_TILLEGGSDATA'), pid),
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -114,7 +114,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: env().LINK_FULLMAKTER,
+    href: env('LINK_FULLMAKTER'),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
     icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -123,7 +123,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: env().LINK_ETTERSENDE,
+    href: env('LINK_ETTERSENDE'),
     title: 'Ettersend dokumentasjon',
     description: 'Her kan du ettersende dokumenter om saken din',
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -143,7 +143,7 @@ const getLinks = async (
   ...(featureVisRegelverksendringerUt2026
     ? [
         {
-          href: env().LINK_REGELVERKSENDRINGER,
+          href: env('LINK_REGELVERKSENDRINGER'),
           title: 'Regelverksendringer 2026',
           description: 'Regelendringer for uføretrygd',
           icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,

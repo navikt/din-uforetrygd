@@ -16,7 +16,7 @@ const DineMuligheterPage = async ({ searchParams }: Props) => {
     const harMottattVarsel = await hentHarMottattVarsel()
     if (harMottattVarsel) {
       return (
-        <DineMuligheter pid={params.pid} mode={env().MODE} inntektsplanleggerLenke={env().LINK_INNTEKTSPLANLEGGER} />
+        <DineMuligheter pid={params.pid} mode={env('MODE')} inntektsplanleggerLenke={env('LINK_INNTEKTSPLANLEGGER')} />
       )
     }
   }

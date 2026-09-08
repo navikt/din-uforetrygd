@@ -32,7 +32,7 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
 
 const getLinks = async (pid: string | undefined) => [
   {
-    href: leggTilPidHvisVeileder(env().LINK_INNTEKTSPLANLEGGER, pid),
+    href: leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid),
     title: 'Inntektsplanlegger',
     description: 'Meld fra om endring i inntekt',
     icon: <CalculatorIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -41,7 +41,7 @@ const getLinks = async (pid: string | undefined) => [
     visInnloggingsModal: false,
   },
   {
-    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env().LINK_UTBETALINGER, pid)),
+    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid)),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,

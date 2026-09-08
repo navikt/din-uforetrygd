@@ -1,4 +1,4 @@
-import { env } from './env'
+import { validateEnv } from './env'
 import logger from './utils/logger'
 
 export function onRequestError(
@@ -18,5 +18,5 @@ export function onRequestError(
 }
 
 export function register() {
-  env()
+  validateEnv()
 }

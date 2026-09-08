@@ -8,7 +8,7 @@ import { mockUforevedtakData } from './mockUforevedtakData'
 import { env } from '../src/env'
 
 const app = express()
-const PORT = env().PORT || 8080
+const PORT = env('PORT') || 8080
 
 app.use(
   cors({

@@ -3,17 +3,17 @@ import { headers } from 'next/headers'
 import { env } from '@/env'
 
 export const getUforeVarslerOboToken = async () => {
-  return getOboToken(env().UFORE_VARSLER_SCOPE)
+  return getOboToken(env('UFORE_VARSLER_SCOPE'))
 }
 
 export const getDinUforetrygdBackendOboToken = async () => {
-  return getOboToken(env().DIN_UFORETRYGD_BACKEND_SCOPE)
+  return getOboToken(env('DIN_UFORETRYGD_BACKEND_SCOPE'))
 }
 
 const getOboToken = async (scope: string): Promise<string> => {
-  if (env().NODE_ENV !== 'production') {
+  if (env('NODE_ENV') !== 'production') {
     // biome-ignore lint/style/noNonNullAssertion: Må være tilgjengelig ved utvikling
-    return env().ACCESS_TOKEN!
+    return env('ACCESS_TOKEN')!
   }
   const clientHeaders = await headers()
   const token = getToken(clientHeaders)

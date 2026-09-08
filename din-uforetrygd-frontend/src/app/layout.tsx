@@ -21,7 +21,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
   await connection()
 
   const Decorator = await fetchDecoratorReact({
-    env: env().DECORATOR_ENV,
+    env: env('DECORATOR_ENV'),
     params: {
       context: 'privatperson',
       chatbot: true,
@@ -29,7 +29,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     },
   })
 
-  if (env().MODE === 'veileder') {
+  if (env('MODE') === 'veileder') {
     return (
       <html lang="no">
         <head>
@@ -42,14 +42,14 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <Brødsmulesti mode="veileder" />
               {children}
             </main>
-            <InitializeFaro url={env().FARO_URL} appName={env().NAIS_APP_NAME} />
+            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
           </Theme>
         </body>
       </html>
     )
   }
 
-  const REPRESENTASJON_BANNER = env().REPRESENTASJON_BANNER
+  const REPRESENTASJON_BANNER = env('REPRESENTASJON_BANNER')
   return (
     <html lang="no">
       <head>
@@ -70,7 +70,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
             <script src="https://widget.uxsignals.com/embed.js" async></script>
             <FullmaktModal />
-            <InitializeFaro url={env().FARO_URL} appName={env().NAIS_APP_NAME} />
+            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
           </div>
         </Theme>
       </body>

@@ -33,7 +33,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${env().MODE === 'veileder' ? `&pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${env('MODE') === 'veileder' ? `&pid=${pid}` : ''}`}
                 >
                   Saksoversikt
                 </LinkCardAnchor>
@@ -50,7 +50,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/dokumenter${env().MODE === 'veileder' ? `?pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/dokumenter${env('MODE') === 'veileder' ? `?pid=${pid}` : ''}`}
                 >
                   Dokumenter knyttet til saken din
                 </LinkCardAnchor>
