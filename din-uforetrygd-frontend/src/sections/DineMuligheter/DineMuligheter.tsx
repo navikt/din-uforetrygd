@@ -12,6 +12,7 @@ import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCar
 import FortellingKarusell from '@/sections/DineMuligheter/FortellingKarusell'
 import InntektSimulering from '@/sections/DineMuligheter/InntektSimulering'
 import styles from './dineMuligheter.module.css'
+import Divider from '@/sections/ForsideBehandling/Divider'
 
 interface Props {
   pid?: string | undefined
@@ -21,7 +22,7 @@ interface Props {
 
 const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
   return (
-    <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-32', md: 'space-48' }}>
+    <VStack className={styles.dineMuligheterWrapper} gap={{ xs: 'space-40', md: 'space-64' }}>
       <VStack gap="space-12">
         <HStack gap={'space-12'} align="center">
           <HandShakeHeartFillIcon color={'#7342B6'} fontSize={'3rem'} />
@@ -187,19 +188,20 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
         </VStack>
       </div>
       <VStack gap={{ xs: 'space-16', md: 'space-48' }}>
-        <Heading size="large" level="3" className={styles.headingKolonne}>
+        <Heading size="medium" level="3" className={styles.headingKolonne}>
           Jobbe ved siden av uføretrygd? Slik funker det for Kim
         </Heading>
         <FortellingKarusell />
+        <Divider />
         <InntektSimulering
           pid={mode === 'veileder' ? pid : undefined}
           inntektsplanleggerLenke={inntektsplanleggerLenke}
         />
       </VStack>
 
-      <div className={`${styles.fargeContainer} ${styles.rosaContainer}`}>
+      <div className={`${styles.fargeContainer} ${styles.rosaContainer}`} style={{ paddingBottom: '72px' }}>
         <VStack gap="space-36" className={styles.fargeContainerContent}>
-          <Heading size="large" level="3">
+          <Heading size="medium" level="3">
             Snakk med oss om dine muligheter
           </Heading>
           <BodyShort>

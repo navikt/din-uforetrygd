@@ -8,11 +8,12 @@ interface Props {
   ikon: ReactNode
   tittel: string
   undertittel?: string
+  defaultOpen?: boolean
   children: ReactNode
 }
-export default function ExpansionCardMedIkon({ ikon, tittel, undertittel = '', children }: Props) {
+export default function ExpansionCardMedIkon({ ikon, tittel, undertittel = '', defaultOpen = false, children }: Props) {
   return (
-    <ExpansionCard aria-label={tittel} size="small">
+    <ExpansionCard aria-label={tittel} size="small" defaultOpen={defaultOpen}>
       <ExpansionCard.Header>
         <HStack wrap={false} gap="space-16" align="center">
           <div>{ikon}</div>
