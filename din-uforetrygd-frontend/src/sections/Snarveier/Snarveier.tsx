@@ -15,11 +15,11 @@ import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
+import { env } from '@/env'
 import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilInnloggaBrukerNavn, leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
-import { env } from '@/env'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]

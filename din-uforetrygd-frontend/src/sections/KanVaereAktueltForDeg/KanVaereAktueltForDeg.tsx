@@ -1,10 +1,10 @@
 import { Heading, Link } from '@navikt/ds-react'
 import { LinkList } from '@/components/LinkList/LinkList'
 import { Visningskriterier } from '@/const'
+import { env } from '@/env'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import styles from './kanVaereAktueltForDeg.module.css'
-import { env } from '@/env'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]

@@ -5,13 +5,13 @@ import '../global.css'
 import './layout.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
+import { connection } from 'next/server'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
 import { env } from '@/env'
 import InitializeFaro from '@/utils/faro/faro'
-import { connection } from 'next/server'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   // Miljøvariabler for borger og veileder i injectes runtime til samme bundle.

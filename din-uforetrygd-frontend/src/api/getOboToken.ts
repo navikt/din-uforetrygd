@@ -12,7 +12,8 @@ export const getDinUforetrygdBackendOboToken = async () => {
 
 const getOboToken = async (scope: string): Promise<string> => {
   if (env().NODE_ENV !== 'production') {
-    return env().ACCESS_TOKEN || ''
+    // biome-ignore lint/style/noNonNullAssertion: Må være tilgjengelig ved utvikling
+    return env().ACCESS_TOKEN!
   }
   const clientHeaders = await headers()
   const token = getToken(clientHeaders)

@@ -2,10 +2,10 @@ import { CalculatorIcon, WalletIcon } from '@navikt/aksel-icons'
 import type React from 'react'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
+import { env } from '@/env'
 import { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilInnloggaBrukerNavn, leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import styles from './inntektSnarveier.module.css'
-import { env } from '@/env'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]

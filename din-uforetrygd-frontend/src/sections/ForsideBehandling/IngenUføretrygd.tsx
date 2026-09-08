@@ -1,6 +1,6 @@
 import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
-import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
 import { env } from '@/env'
+import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
 
 export const IngenUføretrygd = () => {
   return (

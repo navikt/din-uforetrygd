@@ -11,6 +11,7 @@ import type React from 'react'
 import { hentDittUforevedtak } from '@/api/hentDittUforevedtak'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { initate } from '@/api/initiate'
+import { env } from '@/env'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -18,7 +19,6 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { isEnabled } from '@/utils/unleash'
-import { env } from '@/env'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>

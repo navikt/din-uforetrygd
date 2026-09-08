@@ -3,9 +3,9 @@ import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
 import { Visningskriterier } from '@/const'
+import { env } from '@/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
-import { env } from '@/env'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]

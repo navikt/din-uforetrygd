@@ -5,16 +5,16 @@ import logger from './utils/logger'
 
 export function proxy(request: NextRequest) {
   const url = new URL(request.url)
-  // logger.info({
-  //   message: `Request ${url.pathname}`,
-  //   http: {
-  //     request: {
-  //       method: request.method,
-  //       host: url.origin,
-  //       path: url.pathname,
-  //     },
-  //   },
-  // })
+  logger.info({
+    message: `Request ${url.pathname}`,
+    http: {
+      request: {
+        method: request.method,
+        host: url.origin,
+        path: url.pathname,
+      },
+    },
+  })
 
   const pid = request.nextUrl.searchParams.get('pid')
   const headers = new Headers(request.headers)

@@ -2,10 +2,10 @@ import { Heading, LinkCard } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { Visningskriterier } from '@/const'
+import { env } from '@/env'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import styles from './relevanteSoknader.module.css'
-import { env } from '@/env'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]

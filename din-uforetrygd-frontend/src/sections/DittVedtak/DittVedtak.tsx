@@ -1,7 +1,7 @@
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
+import { env } from '@/env'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
-import { env } from '@/env'
 
 interface IDittVedtak {
   pid?: string

@@ -1,8 +1,8 @@
 import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
+import { env } from '@/env'
 import SnakkMedOss from '@/sections/DineMuligheter/SnakkMedOss'
 import { isEnabled } from '@/utils/unleash'
-import { env } from '@/env'
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
