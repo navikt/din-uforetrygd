@@ -15,9 +15,10 @@ Hvis du ønsker å teste med lokale feature flags før du legger de til i Unleas
 
 
 ### Mock backend
-* Kjør `npm run dev` for standard lokal utvikling (starter både Next.js og mock-backend).
-* Scenario-skript (`npm run dev:ingen-uforesak`, `npm run dev:avsluttet`, osv.) starter også mock-backend automatisk.
-* Playwright bruker eigen oppstart via `npm run dev:playwright` frå `playwright.config.ts`.
+* Kjør `npm run mock` for standard lokal utvikling (starter både Next.js med MSW som serverer mock data).
+* Scenario-skript (`npm run mock:ingen-uforesak`, `npm run mock:avsluttet`, osv.) starter også mock-backend automatisk.
+* Forskjellige scenarioer kan også tested ved å kjøre `npm run mock` og legge til `scenario=<scenario>` i URL'en (f.eks `http://localhost:3000/uforetrygd/selvbetjening?scenario=avsluttet`).
+* Playwright bruker eigen oppstart via `npm run mock:playwright` frå `playwright.config.ts`. 
 
 ### Playwright-testar
 
