@@ -4,6 +4,7 @@ import { mockJournalposterData } from '../mockJournalposterData'
 import { mockSaksoversiktData } from '../mockSaksoversiktData'
 import { mockUforevedtakData } from '../mockUforevedtakData'
 import { mockVarslerData } from '../mockVarslerData'
+import { mockErVergeData } from '../mockErVergeData'
 import { createDefaultScenarioHandler } from './createDefaultScenarioHandler'
 import { getScenario } from './getScenario'
 
@@ -24,8 +25,9 @@ export const backendHandlers = [
     }
     return HttpResponse.json(mockData[scenario] || mockData.default)
   }),
-  createDefaultScenarioHandler('get', 'http://localhost:8080/api/journalposter', mockJournalposterData),
-  createDefaultScenarioHandler('get', 'http://localhost:8080/api/uforevedtak', mockUforevedtakData),
-  createDefaultScenarioHandler('get', 'http://localhost:8080/api/saksoversikt', mockSaksoversiktData),
-  createDefaultScenarioHandler('post', 'http://localhost:8080/api/varsler/status', mockVarslerData),
+  createDefaultScenarioHandler('get', '/api/journalposter', mockJournalposterData),
+  createDefaultScenarioHandler('get', '/api/uforevedtak', mockUforevedtakData),
+  createDefaultScenarioHandler('get', '/api/saksoversikt', mockSaksoversiktData),
+  createDefaultScenarioHandler('post', '/api/varsler/status', mockVarslerData),
+  createDefaultScenarioHandler('get', '/api/er-verge', mockErVergeData),
 ]
