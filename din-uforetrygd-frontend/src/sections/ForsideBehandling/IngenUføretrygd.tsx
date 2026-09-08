@@ -1,6 +1,6 @@
 import { BodyLong, GuidePanel, Heading, Link, VStack } from '@navikt/ds-react'
 import styles from '@/sections/ForsideBehandling/uforestatusGuidePanel.module.css'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 export const IngenUføretrygd = () => {
   return (
@@ -14,7 +14,7 @@ export const IngenUføretrygd = () => {
             <BodyLong>
               Før du søker om uføretrygd må det være avklart om du har muligheter til å være i arbeid. Det er vi som
               kommer frem til dette i samarbeid med deg. Kontakt{' '}
-              <Link href={serverEnv.LINK_DITT_LOKALE_NAV_KONTOR} className={styles.link}>
+              <Link href={env().LINK_DITT_LOKALE_NAV_KONTOR} className={styles.link}>
                 ditt lokale Nav-kontor
               </Link>{' '}
               for veiledning.

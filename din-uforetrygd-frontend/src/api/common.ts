@@ -1,17 +1,17 @@
 import { headers } from 'next/headers'
-import { serverEnv } from '@/env'
 
-export const baseUrl = serverEnv.NODE_ENV !== 'development' ? serverEnv.DIN_UFORETRYGD_BACKEND : 'http://localhost:8080'
+export const baseUrl =
+  process.env.NODE_ENV !== 'development' ? process.env.DIN_UFORETRYGD_BACKEND : 'http://localhost:8080'
 
 export type BackendError = {
   message: string
 }
 
 export const getMockScenario = async () => {
-  if (serverEnv.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== 'development') {
     return undefined
   }
 
   const clientHeaders = await headers()
-  return clientHeaders.get('x-mock-scenario') || serverEnv.MOCK_SCENARIO || 'default'
+  return clientHeaders.get('x-mock-scenario') || process.env.MOCK_SCENARIO || 'default'
 }

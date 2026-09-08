@@ -5,7 +5,7 @@ import type React from 'react'
 import { Visningskriterier } from '@/const'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
@@ -33,7 +33,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${serverEnv.MODE === 'veileder' ? `&pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${env().MODE === 'veileder' ? `&pid=${pid}` : ''}`}
                 >
                   Saksoversikt
                 </LinkCardAnchor>
@@ -50,7 +50,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/dokumenter${serverEnv.MODE === 'veileder' ? `?pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/dokumenter${env().MODE === 'veileder' ? `?pid=${pid}` : ''}`}
                 >
                   Dokumenter knyttet til saken din
                 </LinkCardAnchor>

@@ -9,12 +9,19 @@ import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 import InitializeFaro from '@/utils/faro/faro'
+import { connection } from 'next/server'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
+  // Miljøvariabler for borger og veileder i injectes runtime til samme bundle.
+  // For at det skal fungere må slå av prerendering ved å vente til en request kommer inn.
+  //  https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables
+  //  https://nextjs.org/docs/app/api-reference/functions/connection
+  await connection()
+
   const Decorator = await fetchDecoratorReact({
-    env: serverEnv.DECORATOR_ENV,
+    env: env().DECORATOR_ENV,
     params: {
       context: 'privatperson',
       chatbot: true,
@@ -22,7 +29,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     },
   })
 
-  if (serverEnv.MODE === 'veileder') {
+  if (env().MODE === 'veileder') {
     return (
       <html lang="no">
         <head>
@@ -35,14 +42,14 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <Brødsmulesti mode="veileder" />
               {children}
             </main>
-            <InitializeFaro url={serverEnv.FARO_URL} appName={serverEnv.NAIS_APP_NAME} />
+            <InitializeFaro url={env().FARO_URL} appName={env().NAIS_APP_NAME} />
           </Theme>
         </body>
       </html>
     )
   }
 
-  const REPRESENTASJON_BANNER = serverEnv.REPRESENTASJON_BANNER
+  const REPRESENTASJON_BANNER = env().REPRESENTASJON_BANNER
   return (
     <html lang="no">
       <head>
@@ -63,7 +70,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
             <script src="https://widget.uxsignals.com/embed.js" async></script>
             <FullmaktModal />
-            <InitializeFaro url={serverEnv.FARO_URL} appName={serverEnv.NAIS_APP_NAME} />
+            <InitializeFaro url={env().FARO_URL} appName={env().NAIS_APP_NAME} />
           </div>
         </Theme>
       </body>

@@ -2,7 +2,7 @@ import { Alert, VStack } from '@navikt/ds-react'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
 import { isEnabled } from '@/utils/unleash'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
@@ -16,11 +16,7 @@ const DineMuligheterPage = async ({ searchParams }: Props) => {
     const harMottattVarsel = await hentHarMottattVarsel()
     if (harMottattVarsel) {
       return (
-        <DineMuligheter
-          pid={params.pid}
-          mode={serverEnv.MODE}
-          inntektsplanleggerLenke={serverEnv.LINK_INNTEKTSPLANLEGGER}
-        />
+        <DineMuligheter pid={params.pid} mode={env().MODE} inntektsplanleggerLenke={env().LINK_INNTEKTSPLANLEGGER} />
       )
     }
   }

@@ -18,7 +18,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { isEnabled } from '@/utils/unleash'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -40,7 +40,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
     return (
       <>
-        <TaskAnalytics id="03419" shouldRun={serverEnv.MODE === 'borger'} />
+        <TaskAnalytics id="03419" shouldRun={env().MODE === 'borger'} />
         <VStack gap="space-12" className={'tittel-wrapper'}>
           <Heading size="xlarge" level="1">
             Din uføretrygd

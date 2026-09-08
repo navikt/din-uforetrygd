@@ -34,7 +34,6 @@ const serverEnvSchema = z.object({
   LINK_SKRIV_TIL_OSS: z.string(),
   LINK_START_ARBEIDSOPPFOLGING: z.string(),
 
-  // Hmmm
   UNLEASH_SERVER_API_URL: z.string().optional(),
   UNLEASH_SERVER_API_TOKEN: z.string().optional(),
   UNLEASH_SERVER_API_ENV: z.string().optional(),
@@ -48,4 +47,8 @@ const serverEnvSchema = z.object({
 export type ServerEnv = z.infer<typeof serverEnvSchema>
 
 // Kun tilgjengelig på server siden process.env kun er finnes der
-export const serverEnv: ServerEnv = serverEnvSchema.parse(process.env)
+let serverEnv: ServerEnv | undefined
+export function env(): ServerEnv {
+  serverEnv ??= serverEnvSchema.parse(process.env)
+  return serverEnv
+}

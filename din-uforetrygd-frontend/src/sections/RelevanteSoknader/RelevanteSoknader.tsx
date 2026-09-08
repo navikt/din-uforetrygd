@@ -5,7 +5,7 @@ import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import styles from './relevanteSoknader.module.css'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
@@ -13,7 +13,7 @@ interface IRelevanteSoknaderProps {
 }
 
 const digitalSøknadHvisHøyInnlogging = (url: string, erFullmektig: boolean, innloggingstype: string): string => {
-  if (serverEnv.MODE === 'veileder') return url
+  if (env().MODE === 'veileder') return url
 
   const søknadPåPapir = `${url}?sub=paper`
   const digitalSøknad = `${url}?sub=digital`
@@ -26,19 +26,19 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
 
   const lenker = [
     {
-      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_UFORE, erFullmektig, innloggingstype),
+      href: digitalSøknadHvisHøyInnlogging(env().LINK_SOKNAD_UFORE, erFullmektig, innloggingstype),
       text: 'Søknad om uføretrygd',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_BARNETILLEGG, erFullmektig, innloggingstype),
+      href: digitalSøknadHvisHøyInnlogging(env().LINK_SOKNAD_BARNETILLEGG, erFullmektig, innloggingstype),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_GRADERT_UFORE, erFullmektig, innloggingstype),
+      href: digitalSøknadHvisHøyInnlogging(env().LINK_SOKNAD_GRADERT_UFORE, erFullmektig, innloggingstype),
       text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
       showFullmaktWarning: false,

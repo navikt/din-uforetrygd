@@ -5,10 +5,10 @@ import { mockSaksoversiktData } from './mockSaksoversiktData'
 import { mockVarslerData } from './mockVarslerData'
 import { mockJournalposterData } from './mockJournalposterData'
 import { mockUforevedtakData } from './mockUforevedtakData'
-import { serverEnv } from '../src/env'
+import { env } from '../src/env'
 
 const app = express()
-const PORT = serverEnv.PORT || 8080
+const PORT = env().PORT || 8080
 
 app.use(
   cors({

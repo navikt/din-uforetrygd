@@ -1,7 +1,7 @@
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 interface IDittVedtak {
   pid?: string
@@ -20,7 +20,7 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
       <Vedtaksdetaljer
         dittUforevedtakPromise={uforevedtakPromise}
         sakId={sakId}
-        linkInntektsplanlegger={leggTilPidHvisVeileder(serverEnv.LINK_INNTEKTSPLANLEGGER, pid)}
+        linkInntektsplanlegger={leggTilPidHvisVeileder(env().LINK_INNTEKTSPLANLEGGER, pid)}
         arstall={new Date().getFullYear()}
       />
     </section>

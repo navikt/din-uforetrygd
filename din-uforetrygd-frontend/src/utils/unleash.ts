@@ -2,10 +2,10 @@ import { evaluateFlags, flagsClient, getDefinitions } from '@unleash/nextjs'
 import { cookies } from 'next/headers'
 import { after } from 'next/server'
 import type { ClientFeaturesResponse } from 'unleash-client'
-import { serverEnv } from '@/env'
+import { env } from '@/env'
 
 export const isEnabled = async (toggle: string): Promise<boolean> => {
-  /* const isDev = serverEnv.NODE_ENV !== 'production'
+  /* const isDev = getServerEnv().NODE_ENV !== 'production'
    if (isDev) {
      return _localToggles[toggle] ?? false
    }*/
@@ -16,7 +16,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   let definitions: ClientFeaturesResponse
   try {
     definitions = await getDefinitions({
-      url: `${serverEnv.UNLEASH_SERVER_API_URL}/api/client/features`,
+      url: `${env().UNLEASH_SERVER_API_URL}/api/client/features`,
       fetchOptions: {
         next: { revalidate: 15 }, // cache i 15 sek
         signal: AbortSignal.timeout(3000),
@@ -30,7 +30,7 @@ export const isEnabled = async (toggle: string): Promise<boolean> => {
   const { toggles } = evaluateFlags(definitions, {
     sessionId,
   })
-  const flags = flagsClient(toggles, { url: `${serverEnv.UNLEASH_SERVER_API_URL}/api` })
+  const flags = flagsClient(toggles, { url: `${env().UNLEASH_SERVER_API_URL}/api` })
   const isEnabled = flags.isEnabled(toggle)
 
   // Ikke blokkerende rapportering tilbake til Unleash
