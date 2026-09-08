@@ -4,44 +4,41 @@ import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './relevanteSoknader.module.css'
+import { serverEnv } from '@/env'
 
 interface IRelevanteSoknaderProps {
   visningskriterier: Visningskriterier[]
   innloggingstype: string
 }
 
+const digitalSøknadHvisHøyInnlogging = (url: string, erFullmektig: boolean, innloggingstype: string): string => {
+  if (serverEnv.MODE === 'veileder') return url
+
+  const søknadPåPapir = `${url}?sub=paper`
+  const digitalSøknad = `${url}?sub=digital`
+
+  return erFullmektig || innloggingstype === 'LEVEL3' ? søknadPåPapir : digitalSøknad
+}
+
 export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ visningskriterier, innloggingstype }) => {
-  const isFullmektig = (await getFullmaktCookie()) !== undefined
+  const erFullmektig = (await getFullmaktCookie()) !== undefined
 
   const lenker = [
     {
-      href: await getUrl({
-        urlFromEnv: 'LINK_SOKNAD_UFORE',
-        isFullmektig: isFullmektig,
-        innloggingstype: innloggingstype,
-      }),
+      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_UFORE, erFullmektig, innloggingstype),
       text: 'Søknad om uføretrygd',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: await getUrl({
-        urlFromEnv: 'LINK_SOKNAD_BARNETILLEGG',
-        isFullmektig: isFullmektig,
-        innloggingstype: innloggingstype,
-      }),
+      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_BARNETILLEGG, erFullmektig, innloggingstype),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
       showFullmaktWarning: false,
     },
     {
-      href: await getUrl({
-        urlFromEnv: 'LINK_SOKNAD_GRADERT_UFORE',
-        isFullmektig: isFullmektig,
-        innloggingstype: innloggingstype,
-      }),
+      href: digitalSøknadHvisHøyInnlogging(serverEnv.LINK_SOKNAD_GRADERT_UFORE, erFullmektig, innloggingstype),
       text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
       showFullmaktWarning: false,
