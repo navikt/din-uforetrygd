@@ -13,7 +13,7 @@ Vi bruker [Biome](https://biomejs.dev/) til linting og formatering.
 Installere: `npm i`
 
 For å få kontakt med Unleash lokalt må vi hente noen secrets ved å kjøre `./fetch-secrets.sh`. Dette lagrer nødvendige secrets i .env.local. Du kan eventuelt finne token og URL for Unleash på [Ufore sin Unleash](https://ufore-unleash-web.iap.nav.cloud.nais.io) under Project settings > API access, og sette dem selv.
-Hvis du ønsker å teste med lokale feature flags før du legger de til i Unleash, må vi fjerne kommenteringen i [denne koden](https://github.com/navikt/din-uforetrygd/blob/20de619ef3af0361bbc1578515dffccd9bf6ebe7/din-uforetrygd-frontend/src/utils/unleash.ts#L7-L9).
+Dette trengs bare hvis du kjører mot lokal backend. Hvis du kjører `npm run mock`, mocker vi også responsen fra Unleash. Da må feature flags legges inn i [denne filen](./mock/msw/unleashHandlers.ts)
 
 ### Mock backend
 * Kjør `npm run mock` for standard lokal utvikling (starter både Next.js med MSW som serverer mock data).

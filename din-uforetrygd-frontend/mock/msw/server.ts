@@ -4,7 +4,6 @@ import { unleashHandlers } from './unleashHandlers'
 
 export const server = setupServer(...backendHandlers, ...unleashHandlers)
 
-// Logging for MSW for å se hvilke nettverkskall som matches og ikke
 server.events.on('request:match', ({ request }) => {
   console.log('[MSW ✅ matched]', request.method, request.url)
 })
