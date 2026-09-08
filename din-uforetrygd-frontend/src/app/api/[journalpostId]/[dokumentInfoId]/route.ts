@@ -1,12 +1,13 @@
 import { redirect } from 'next/navigation'
 import type { NextRequest } from 'next/server'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
+import { serverEnv } from '@/env'
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ journalpostId: string; dokumentInfoId: string }> }
 ) {
-  const baseUrl = process.env.DIN_UFORETRYGD_BACKEND
+  const baseUrl = serverEnv.DIN_UFORETRYGD_BACKEND
   const { journalpostId, dokumentInfoId } = await params
   const token = await getDinUforetrygdBackendOboToken()
   const variantformat = request.nextUrl.searchParams.get('variantformat')

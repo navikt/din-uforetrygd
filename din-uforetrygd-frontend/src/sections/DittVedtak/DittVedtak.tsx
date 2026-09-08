@@ -1,6 +1,7 @@
 import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 import { Vedtaksdetaljer } from '@/sections/DittVedtak/Vedtaksdetaljer'
-import { getUrl } from '@/utils/getUrl/getUrl'
+import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
+import { serverEnv } from '@/env'
 
 interface IDittVedtak {
   pid?: string
@@ -13,14 +14,13 @@ export const DittVedtak: React.FC<IDittVedtak> = async ({ pid, hasIverksattVedta
   if (!hasIverksattVedtak) {
     return null
   }
-  const linkInntektsplanlegger = await getUrl({ urlFromEnv: 'LINK_INNTEKTSPLANLEGGER', pid: pid })
 
   return (
     <section aria-label="Detaljer om saken din">
       <Vedtaksdetaljer
         dittUforevedtakPromise={uforevedtakPromise}
         sakId={sakId}
-        linkInntektsplanlegger={linkInntektsplanlegger}
+        linkInntektsplanlegger={leggTilPidHvisVeileder(serverEnv.LINK_INNTEKTSPLANLEGGER, pid)}
         arstall={new Date().getFullYear()}
       />
     </section>

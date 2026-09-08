@@ -3,8 +3,8 @@ import { LinkList } from '@/components/LinkList/LinkList'
 import { Visningskriterier } from '@/const'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './kanVaereAktueltForDeg.module.css'
+import { serverEnv } from '@/env'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]
@@ -12,37 +12,37 @@ interface IKanVaereAktueltForDegProps {
 
 const links = [
   {
-    href: await getUrl({ urlFromEnv: 'LINK_LES_MER_OM_UFORETRYGD' }),
+    href: serverEnv.LINK_LES_MER_OM_UFORETRYGD,
     text: 'Les om uføretrygd',
     showFor: true,
     showFullmaktWarning: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_ENDRE_KONTONUMMER' }),
+    href: serverEnv.LINK_ENDRE_KONTONUMMER,
     text: 'Endre kontonummer',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_PERSONOPPLYSNINGER' }),
+    href: serverEnv.LINK_PERSONOPPLYSNINGER,
     text: 'Personopplysninger',
     showFor: true,
     showFullmaktWarning: true,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_OKONOMISKE_TILLEGG' }),
+    href: serverEnv.LINK_OKONOMISKE_TILLEGG,
     text: 'Økonomiske tillegg og andre ordninger',
     showFor: matchAll([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD' }),
+    href: serverEnv.LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD,
     text: 'Saksbehandlingstider',
     showFor: true,
     showFullmaktWarning: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_KLAGE' }),
+    href: serverEnv.LINK_KLAGE,
     text: 'Klage',
     showFor: true,
     showFullmaktWarning: false,

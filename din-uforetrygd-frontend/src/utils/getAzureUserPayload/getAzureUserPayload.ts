@@ -1,5 +1,6 @@
 import { getToken, parseAzureUserToken } from '@navikt/oasis'
 import { headers } from 'next/headers'
+import { serverEnv } from '@/env'
 
 type AzurePayload = {
   NAVident: string
@@ -8,7 +9,7 @@ type AzurePayload = {
 }
 
 export const getAzureUserPayload = async (): Promise<AzurePayload> => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (serverEnv.NODE_ENV !== 'production') {
     return {
       NAVident: 'NAVident',
       name: 'Saksbehandler',

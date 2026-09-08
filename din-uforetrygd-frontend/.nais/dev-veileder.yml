@@ -105,12 +105,8 @@ spec:
       value: https://www.ansatt.dev.nav.no/uforetrygd#melde
     - name: LINK_UTBETALINGER
       value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/mineutbetalinger.jsf?simpleMode=true&_brukerId=PID&_loggedOnName=USER&context=ut
-    - name: LINK_BREV
-      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/dininnboks.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_INNTEKTSPLANLEGGER
       value: https://veileder.ansatt.dev.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
-    - name: LINK_SAKER
-      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/saksoversikt.jsf?context=ut&_brukerId=PID&_loggedOnName=USER&simpleMode=true
     - name: LINK_SKATTETREKK
       value: https://sokos-frivillig-skattetrekk-frontend-q2.ansatt.dev.nav.no/utbetaling/skattetrekk
     - name: LINK_FAMILIEFORHOLD

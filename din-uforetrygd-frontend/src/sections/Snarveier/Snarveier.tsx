@@ -16,10 +16,10 @@ import type { UforetrygdResponse } from '@/api/initiate'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { matchAll, matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
-import { getUrl } from '@/utils/getUrl/getUrl'
+import { leggTilInnloggaBrukerNavn, leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
-import { type ServerEnv, serverEnv } from '@/env'
+import { serverEnv } from '@/env'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -43,7 +43,7 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
           Snarveier
         </Heading>
         <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, serverEnv.MODE)}
+          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter)}
           visningskriterier={visningskriterier}
           pid={pid}
           innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
@@ -56,11 +56,10 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
 const getLinks = async (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
-  skalViseDineMuligheter: boolean,
-  mode: ServerEnv['MODE']
+  skalViseDineMuligheter: boolean
 ) => [
   {
-    href: `selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`,
+    href: `selvbetjening/dine-muligheter${serverEnv.MODE === 'veileder' ? `?pid=${pid}` : ''}`,
     title: 'Dine muligheter',
     description:
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
@@ -70,7 +69,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_UTBETALINGER', pid: pid }),
+    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(serverEnv.LINK_UTBETALINGER, pid)),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -79,7 +78,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_DOKUMENTOVERSIKT', pid: pid }),
+    href: serverEnv.LINK_DOKUMENTOVERSIKT,
     title: 'Se alle dokumentene dine',
     description: 'Alle dokumentene dine',
     icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -88,7 +87,7 @@ const getLinks = async (
     visInnloggingsModal: true,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_SKATTETREKK', pid: pid }),
+    href: serverEnv.LINK_SKATTETREKK,
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
     icon: <PlusMinusSlashIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -97,7 +96,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_FAMILIEFORHOLD', pid: pid }),
+    href: leggTilPidHvisVeileder(serverEnv.LINK_FAMILIEFORHOLD, pid),
     title: 'Familieforhold',
     description: 'Samboerforhold, sivilstand, barn',
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -106,7 +105,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_REPRESENTASJON_TILLEGGSDATA', pid: pid }),
+    href: leggTilPidHvisVeileder(serverEnv.LINK_REPRESENTASJON_TILLEGGSDATA, pid),
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -115,10 +114,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({
-      urlFromEnv: 'LINK_FULLMAKTER',
-      pid: pid,
-    }),
+    href: serverEnv.LINK_FULLMAKTER,
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
     icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -127,7 +123,7 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: await getUrl({ urlFromEnv: 'LINK_ETTERSENDE', pid: pid }),
+    href: serverEnv.LINK_ETTERSENDE,
     title: 'Ettersend dokumentasjon',
     description: 'Her kan du ettersende dokumenter om saken din',
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
@@ -147,10 +143,7 @@ const getLinks = async (
   ...(featureVisRegelverksendringerUt2026
     ? [
         {
-          href: await getUrl({
-            urlFromEnv: 'LINK_REGELVERKSENDRINGER',
-            pid: pid,
-          }),
+          href: serverEnv.LINK_REGELVERKSENDRINGER,
           title: 'Regelverksendringer 2026',
           description: 'Regelendringer for uføretrygd',
           icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,
