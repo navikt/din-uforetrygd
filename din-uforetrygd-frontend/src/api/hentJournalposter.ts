@@ -1,7 +1,7 @@
 import { baseUrl, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
-import { Dokument } from '@/api/initiate'
+import type { Dokument } from '@/api/initiate'
 
 export const hentJournalposter = async (pid?: string): Promise<Journalpost[]> => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
