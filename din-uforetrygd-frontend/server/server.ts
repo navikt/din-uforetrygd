@@ -1,5 +1,5 @@
 import { stengForReguleringMiddleware } from '@navikt/steng-for-regulering/express'
-import { unleash } from './initializeUnleash'
+import { unleash } from './initializeUnleash.ts'
 import express from 'express'
 import next from 'next'
 
