@@ -1,9 +1,9 @@
 import {
-  BriefcaseIcon,
   BulletListIcon,
   CardIcon,
   EnvelopeClosedIcon,
   FolderFileIcon,
+  HandShakeHeartIcon,
   NotePencilIcon,
   ParagraphIcon,
   PersonTallShortIcon,
@@ -68,7 +68,7 @@ const getLinks = async (
     title: 'Dine muligheter',
     description:
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
-    icon: <BriefcaseIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <HandShakeHeartIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: skalViseDineMuligheter,
     showFullmaktWarning: false,
     visInnloggingsModal: false,

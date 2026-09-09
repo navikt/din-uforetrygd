@@ -34,7 +34,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
             Dine muligheter
           </Heading>
         </HStack>
-        <BodyShort weight="semibold" size="large">
+        <BodyShort size="large">
           Kontakt oss for en uforpliktende prat om mulighetene dine. Du beholder retten til uføretrygd.
         </BodyShort>
         <div className={`${styles.fargeContainer} ${styles.graContainer}`}>
@@ -44,6 +44,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                 ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Ring oss"
                 undertittel="Hverdager 09–15"
+                defaultOpen
               >
                 <HGrid align="center" gap="space-24" columns={{ xs: 2, md: 1 }}>
                   <VStack gap="space-8" align="start">

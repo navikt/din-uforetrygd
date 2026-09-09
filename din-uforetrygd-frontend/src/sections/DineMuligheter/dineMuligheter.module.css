@@ -98,6 +98,10 @@
   height: auto;
 }
 
+.snakkMedOssWrapper a[role="button"] {
+  max-width: fit-content;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fortellingKarusell {
     scroll-behavior: auto;
@@ -107,10 +111,6 @@
 @media (min-width: 768px) {
   .dineMuligheterWrapper a[role="button"] {
     max-width: 21rem;
-  }
-
-  .snakkMedOssWrapper a[role="button"] {
-    max-width: fit-content;
   }
 
   .ringKnappWrapper {

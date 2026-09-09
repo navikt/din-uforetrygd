@@ -33,6 +33,7 @@ const slides = [
 ]
 
 export default function FortellingKarusell() {
+  const erLitenSkjerm = window.innerWidth < 768
   const [karusellPage, setKarusellPage] = useState(1)
   const karusellRef = useRef<HTMLDivElement>(null)
 
@@ -56,7 +57,12 @@ export default function FortellingKarusell() {
 
   return (
     <VStack gap="space-16" justify="center" align={'center'}>
-      <Box background={'meta-purple-soft'} width={'100%'}>
+      <Box
+        background={'meta-purple-soft'}
+        width={'100%'}
+        paddingInline={{ xs: 'space-24', md: 'space-48' }}
+        paddingBlock={{ xs: 'space-0', md: 'space-24' }}
+      >
         <section
           ref={karusellRef}
           className={styles.fortellingKarusell}
@@ -64,16 +70,22 @@ export default function FortellingKarusell() {
           aria-label="Fortelling om Kim"
         >
           {slides.map((slide) => (
-            <Box className={styles.fortellingSlide} key={slide.tekst}>
+            <VStack className={styles.fortellingSlide} key={slide.tekst} gap="space-24" align="center">
               <Image className={styles.fortellingBilde} src={slide.bilde} alt={slide.alt} />
               <BodyShort size="large" weight="semibold">
                 {slide.tekst}
               </BodyShort>
-            </Box>
+            </VStack>
           ))}
         </section>
       </Box>
-      <Pagination page={karusellPage} count={slides.length} onPageChange={scrollToPage} />
+      <Pagination
+        page={karusellPage}
+        count={slides.length}
+        onPageChange={scrollToPage}
+        prevNextTexts={!erLitenSkjerm}
+        size={erLitenSkjerm ? 'small' : 'medium'}
+      />
     </VStack>
   )
 }
