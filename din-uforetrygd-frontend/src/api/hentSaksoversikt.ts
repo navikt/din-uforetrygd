@@ -1,4 +1,5 @@
-import { type BackendError, baseUrl, getMockScenario } from '@/api/common'
+import { type BackendError, getMockScenario } from '@/api/common'
+import { env } from '@/env'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -23,7 +24,7 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
   }
 
   const queryParams = new URLSearchParams({ saksid: saksid.toString() })
-  const response = await fetch(`${baseUrl}/api/saksoversikt?${queryParams}`, {
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/saksoversikt?${queryParams}`, {
     headers,
     cache: 'no-store',
   })

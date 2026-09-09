@@ -1,6 +1,7 @@
-import { baseUrl, getMockScenario } from '@/api/common'
+import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from './getOboToken'
+import { env } from '@/env'
 
 export const hentBorgerInfo = async (kryptertPid: string) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
@@ -21,7 +22,7 @@ export const hentBorgerInfo = async (kryptertPid: string) => {
     headers['X-Mock-Scenario'] = mockScenario
   }
 
-  const response = await fetch(`${baseUrl}/api/borgerinfo`, {
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/borgerinfo`, {
     headers,
     cache: 'no-store',
   })

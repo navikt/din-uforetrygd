@@ -1,4 +1,5 @@
-import { baseUrl, getMockScenario } from '@/api/common'
+import { getMockScenario } from '@/api/common'
+import { env } from '@/env'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Dokument } from '@/api/initiate'
@@ -21,7 +22,7 @@ export const hentJournalposter = async (pid?: string): Promise<Journalpost[]> =>
     headers['X-Mock-Scenario'] = mockScenario
   }
 
-  const response = await fetch(`${baseUrl}/api/journalposter`, { headers, cache: 'no-store' })
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/journalposter`, { headers, cache: 'no-store' })
   if (!response.ok) return []
   return response.json()
 }

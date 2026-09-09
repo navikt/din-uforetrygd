@@ -26,9 +26,7 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
     headere['X-Mock-Scenario'] = mockScenario
   }
 
-  const url = env('NODE_ENV') !== 'development' ? env('UFORE_VARSLER') : 'http://localhost:8080'
-
-  const response = await fetch(`${url}/api/varsler/status`, {
+  const response = await fetch(`${env('UFORE_VARSLER')}/api/varsler/status`, {
     method: 'POST',
     headers: headere,
     cache: 'no-store',
