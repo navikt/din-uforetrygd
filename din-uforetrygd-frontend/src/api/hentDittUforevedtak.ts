@@ -38,6 +38,7 @@ export const hentDittUforevedtak = async (pid?: string): Promise<DittUforevedtak
   }
 
   const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/uforevedtak`, { headers, cache: 'no-store' })
+
   if (!response.ok) return null
-  return response.json()
+  return response.json().catch(() => null)
 }
