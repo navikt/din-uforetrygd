@@ -2,10 +2,10 @@ import { Box, HGrid, Hide, LinkCard } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
 import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
+import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
 import type { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
 import styles from './snarveiPanel.module.css'
 
 interface ISnarveiPanelProps {

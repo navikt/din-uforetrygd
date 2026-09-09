@@ -1,17 +1,16 @@
 import { Visningskriterier } from '@/const'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './MeldeFra.module.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
 import { Box, Heading, Link, VStack } from '@navikt/ds-react'
+import { env } from '@/env'
 
 interface IMeldeFra {
   visningskriterier: Visningskriterier[]
 }
 
-export const MeldeFra: React.FC<IMeldeFra> = async ({ visningskriterier }) => {
+export const MeldeFra: React.FC<IMeldeFra> = ({ visningskriterier }) => {
   if (visningskriterier.includes(Visningskriterier.Uforetrygd)) {
-    const link = await getUrl({ urlFromEnv: 'LINK_MELD_FRA_OM_ENDRINGER' })
     return (
       <section className={styles.meldeFra}>
         <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
@@ -19,7 +18,9 @@ export const MeldeFra: React.FC<IMeldeFra> = async ({ visningskriterier }) => {
             <Heading level="2" size="medium">
               Husk å gi oss beskjed om endringer i din situasjon
             </Heading>
-            <Link href={link}>Se hvilke endringer du må si fra om og hvordan du sier fra.</Link>
+            <Link href={env('LINK_MELD_FRA_OM_ENDRINGER')}>
+              Se hvilke endringer du må si fra om og hvordan du sier fra.
+            </Link>
           </VStack>
         </Box>
       </section>

@@ -1,6 +1,7 @@
-import { baseUrl, getMockScenario } from '@/api/common'
+import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
+import { env } from '@/env'
 
 export interface DittUforevedtak {
   uforegrad: number
@@ -36,7 +37,7 @@ export const hentDittUforevedtak = async (pid?: string): Promise<DittUforevedtak
     headers['X-Mock-Scenario'] = mockScenario
   }
 
-  const response = await fetch(`${baseUrl}/api/uforevedtak`, { headers, cache: 'no-store' })
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/uforevedtak`, { headers, cache: 'no-store' })
   if (!response.ok) return null
   return response.json()
 }

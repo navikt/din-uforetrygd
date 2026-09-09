@@ -1,26 +1,27 @@
-import { InternalHeader, Spacer, Theme } from '@navikt/ds-react'
-import { InternalHeaderTitle, InternalHeaderUser } from '@navikt/ds-react/InternalHeader'
+import { Theme } from '@navikt/ds-react'
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
-import getEnv from '@/utils/env'
 import '../global.css'
 import './layout.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
+import { connection } from 'next/server'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
+import { env } from '@/env'
 import InitializeFaro from '@/utils/faro/faro'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
-  const decoratorEnv = (getEnv('DECORATOR_ENV') ?? 'prod') as 'dev' | 'prod'
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
-  const faroUrl = getEnv('FARO_URL')
-  const appName = getEnv('NAIS_APP_NAME')
+  // Miljøvariabler for borger og veileder i injectes runtime til samme bundle.
+  // For at det skal fungere må slå av prerendering ved å vente til en request kommer inn.
+  //  https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables
+  //  https://nextjs.org/docs/app/api-reference/functions/connection
+  await connection()
 
   const Decorator = await fetchDecoratorReact({
-    env: decoratorEnv,
+    env: env('DECORATOR_ENV'),
     params: {
       context: 'privatperson',
       chatbot: true,
@@ -28,7 +29,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     },
   })
 
-  if (mode === 'veileder') {
+  if (env('MODE') === 'veileder') {
     return (
       <html lang="no">
         <head>
@@ -41,14 +42,14 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <Brødsmulesti mode="veileder" />
               {children}
             </main>
-            <InitializeFaro url={faroUrl} appName={appName} />
+            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
           </Theme>
         </body>
       </html>
     )
   }
 
-  const REPRESENTASJON_BANNER = getEnv('REPRESENTASJON_BANNER')
+  const REPRESENTASJON_BANNER = env('REPRESENTASJON_BANNER')
   return (
     <html lang="no">
       <head>
@@ -69,7 +70,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
             <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
             <script src="https://widget.uxsignals.com/embed.js" async></script>
             <FullmaktModal />
-            <InitializeFaro url={faroUrl} appName={appName} />
+            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
           </div>
         </Theme>
       </body>

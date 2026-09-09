@@ -1,55 +1,55 @@
 import { Heading, Link } from '@navikt/ds-react'
 import { LinkList } from '@/components/LinkList/LinkList'
 import { Visningskriterier } from '@/const'
+import { env } from '@/env'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import { getUrl } from '@/utils/getUrl/getUrl'
 import styles from './kanVaereAktueltForDeg.module.css'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]
 }
 
-const links = [
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_LES_MER_OM_UFORETRYGD' }),
-    text: 'Les om uføretrygd',
-    showFor: true,
-    showFullmaktWarning: false,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_ENDRE_KONTONUMMER' }),
-    text: 'Endre kontonummer',
-    showFor: matchAll([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: true,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_PERSONOPPLYSNINGER' }),
-    text: 'Personopplysninger',
-    showFor: true,
-    showFullmaktWarning: true,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_OKONOMISKE_TILLEGG' }),
-    text: 'Økonomiske tillegg og andre ordninger',
-    showFor: matchAll([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD' }),
-    text: 'Saksbehandlingstider',
-    showFor: true,
-    showFullmaktWarning: false,
-  },
-  {
-    href: await getUrl({ urlFromEnv: 'LINK_KLAGE' }),
-    text: 'Klage',
-    showFor: true,
-    showFullmaktWarning: false,
-  },
-]
-
 export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (props) => {
+  const links = [
+    {
+      href: env('LINK_LES_MER_OM_UFORETRYGD'),
+      text: 'Les om uføretrygd',
+      showFor: true,
+      showFullmaktWarning: false,
+    },
+    {
+      href: env('LINK_ENDRE_KONTONUMMER'),
+      text: 'Endre kontonummer',
+      showFor: matchAll([Visningskriterier.Uforetrygd]),
+      showFullmaktWarning: true,
+    },
+    {
+      href: env('LINK_PERSONOPPLYSNINGER'),
+      text: 'Personopplysninger',
+      showFor: true,
+      showFullmaktWarning: true,
+    },
+    {
+      href: env('LINK_OKONOMISKE_TILLEGG'),
+      text: 'Økonomiske tillegg og andre ordninger',
+      showFor: matchAll([Visningskriterier.Uforetrygd]),
+      showFullmaktWarning: false,
+    },
+    {
+      href: env('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'),
+      text: 'Saksbehandlingstider',
+      showFor: true,
+      showFullmaktWarning: false,
+    },
+    {
+      href: env('LINK_KLAGE'),
+      text: 'Klage',
+      showFor: true,
+      showFullmaktWarning: false,
+    },
+  ]
+
   const aktueltForDegLenker = filterShowFor(props.visningskriterier, links)
 
   return (

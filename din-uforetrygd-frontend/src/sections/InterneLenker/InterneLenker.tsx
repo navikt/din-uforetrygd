@@ -3,7 +3,7 @@ import { Box, Hide, LinkCard, VStack } from '@navikt/ds-react'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import type React from 'react'
 import { Visningskriterier } from '@/const'
-import getEnv from '@/utils/env'
+import { env } from '@/env'
 import { matchSome } from '@/utils/filterShowFor/filterShowFor'
 import styles from './interneLenker.module.css'
 
@@ -14,8 +14,6 @@ interface InterneLenkerProps {
 }
 
 export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskriterier, sakId, pid }) => {
-  const mode = getEnv('MODE')
-
   return (
     <>
       {matchSome([
@@ -35,7 +33,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${mode === 'veileder' ? `&pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/saksoversikt?saksid=${sakId?.toString()}${env('MODE') === 'veileder' ? `&pid=${pid}` : ''}`}
                 >
                   Saksoversikt
                 </LinkCardAnchor>
@@ -52,7 +50,7 @@ export const InterneLenker: React.FC<InterneLenkerProps> = async ({ visningskrit
               </Hide>
               <LinkCardTitle>
                 <LinkCardAnchor
-                  href={`/uforetrygd/selvbetjening/dokumenter${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+                  href={`/uforetrygd/selvbetjening/dokumenter${env('MODE') === 'veileder' ? `?pid=${pid}` : ''}`}
                 >
                   Dokumenter knyttet til saken din
                 </LinkCardAnchor>

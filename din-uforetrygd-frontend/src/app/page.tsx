@@ -4,7 +4,6 @@ import type { Innloggingstype, Visningskriterier } from '@/const'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
 import { RelevanteSoknader } from '@/sections/RelevanteSoknader/RelevanteSoknader'
-import getEnv from '@/utils/env'
 import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import './layout.css'
@@ -12,6 +11,7 @@ import type React from 'react'
 import { hentDittUforevedtak } from '@/api/hentDittUforevedtak'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { initate } from '@/api/initiate'
+import { env } from '@/env'
 import { DittVedtak } from '@/sections/DittVedtak/DittVedtak'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -36,12 +36,11 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
-    const mode = getEnv('MODE')
     const uforesak = uforetrygdResponse.sak
 
     return (
       <>
-        <TaskAnalytics id="03419" shouldRun={mode === 'borger'} />
+        <TaskAnalytics id="03419" shouldRun={env('MODE') === 'borger'} />
         <VStack gap="space-12" className={'tittel-wrapper'}>
           <Heading size="xlarge" level="1">
             Din uføretrygd

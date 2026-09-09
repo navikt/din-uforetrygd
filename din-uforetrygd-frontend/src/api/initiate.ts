@@ -1,7 +1,8 @@
-import { type BackendError, baseUrl, getMockScenario } from '@/api/common'
+import { type BackendError, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Behandling } from '@/api/hentSaksoversikt'
+import { env } from '@/env'
 
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
@@ -21,7 +22,7 @@ export const initate = async (pid: string | undefined) => {
     headers['X-Mock-Scenario'] = mockScenario
   }
 
-  const response = await fetch(`${baseUrl}/api/initiate`, { headers, cache: 'no-store' })
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/initiate`, { headers, cache: 'no-store' })
   const json = await response.json().catch(() => undefined)
 
   if (!response.ok) {

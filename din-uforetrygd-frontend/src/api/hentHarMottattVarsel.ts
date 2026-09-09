@@ -2,18 +2,16 @@ import { headers } from 'next/headers'
 import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getUforeVarslerOboToken } from '@/api/getOboToken'
-import getEnv from '@/utils/env'
+import { env } from '@/env'
 
 export const hentHarMottattVarsel = async (): Promise<boolean> => {
-  const mode = getEnv('MODE') as 'borger' | 'veileder'
-
   const oboToken = await getUforeVarslerOboToken().catch((error) => {
     console.error('Error: ', error)
     return
   })
 
   const nextHeaders = await headers()
-  const body = mode === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
+  const body = env('MODE') === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
 
   const fullmaktCookie = await getFullmaktCookie()
 
@@ -28,9 +26,7 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
     headere['X-Mock-Scenario'] = mockScenario
   }
 
-  const url = process.env.NODE_ENV !== 'development' ? process.env.UFORE_VARSLER : 'http://localhost:8080'
-
-  const response = await fetch(`${url}/api/varsler/status`, {
+  const response = await fetch(`${env('UFORE_VARSLER')}/api/varsler/status`, {
     method: 'POST',
     headers: headere,
     cache: 'no-store',
