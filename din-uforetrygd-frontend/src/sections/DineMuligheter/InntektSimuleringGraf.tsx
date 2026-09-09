@@ -9,15 +9,17 @@ const GRØNN_FARGE = '#2AA758'
 
 const COLUMN_STYLE = {
   states: {
-    hover: {
-      enabled: false,
-    },
-    inactive: {
-      opacity: 1,
-    },
+    hover: { enabled: false },
+    inactive: { opacity: 1 },
   },
 }
 
+type SeriesWithDivider = Highcharts.Series & {
+  group?: Highcharts.SVGElement
+  dividerGroup?: Highcharts.SVGElement
+  dividerLines?: Highcharts.SVGElement[]
+  dividerFrame?: number
+}
 interface Props {
   inntektTall: number[]
   uføretrygdTall: number[]
@@ -49,8 +51,6 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
               pointPadding: 0.1,
               groupPadding: 0.1,
               maxPointWidth: 200,
-              borderWidth: 5,
-              borderColor: 'white',
               borderRadius: 10,
             },
           },
@@ -61,6 +61,57 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
             itemStyle: {
               fontSize: '16px',
               cursor: 'auto',
+            },
+          },
+          chart: {
+            events: {
+              // legger til den hvite linja mellom inntekt og uføretrygd, og sørger for at den følger animasjonen.
+              render(this: Highcharts.Chart) {
+                const uføretrygd = this.get('uforetrygd') as SeriesWithDivider | undefined
+                if (!uføretrygd?.group) return
+
+                if (!uføretrygd.dividerGroup) {
+                  uføretrygd.dividerGroup = this.renderer.g('stack-dividers').attr({ zIndex: 1 }).add(uføretrygd.group)
+                  uføretrygd.dividerLines = []
+                }
+
+                const syncDividers = () => {
+                  let animerer = false
+
+                  uføretrygd.points.forEach((point, index) => {
+                    const shape = point.shapeArgs
+                    const divider = uføretrygd.dividerLines?.[index]
+                    if (!shape || !divider) return
+
+                    // Read the animated SVG shape, rather than Highcharts' target shape.
+                    const box = point.graphic?.getBBox()
+                    const x = box?.x ?? shape.x
+                    const y = box?.y ?? shape.y
+                    const width = box?.width ?? shape.width
+                    divider.attr({ d: ['M', x, y, 'L', x + width, y] })
+
+                    if (Math.abs(y - shape.y) > 0.1) animerer = true
+                  })
+
+                  if (animerer) uføretrygd.dividerFrame = requestAnimationFrame(syncDividers)
+                }
+
+                uføretrygd.points.forEach((point, index) => {
+                  if (!point.shapeArgs || uføretrygd.dividerLines?.[index]) return
+
+                  const line = this.renderer
+                    .path([])
+                    .attr({ stroke: '#fff', 'stroke-width': 5 })
+                    .add(uføretrygd.dividerGroup)
+                  uføretrygd.dividerLines?.push(line)
+                })
+
+                uføretrygd.dividerLines?.splice(uføretrygd.points.length).forEach((line) => {
+                  line.destroy()
+                })
+                if (uføretrygd.dividerFrame) cancelAnimationFrame(uføretrygd.dividerFrame)
+                syncDividers()
+              },
             },
           },
         }}
@@ -99,7 +150,13 @@ export default function InntektSimuleringGraf({ inntektTall, uføretrygdTall, de
           }}
         ></YAxis>
         <ColumnSeries data={inntektTall} name="Kims inntekt" color={GRØNN_FARGE} options={COLUMN_STYLE} />
-        <ColumnSeries data={uføretrygdTall} name="Kims uføretrygd" color={BLÅ_FARGE} options={COLUMN_STYLE} />
+        <ColumnSeries
+          id="uforetrygd"
+          data={uføretrygdTall}
+          name="Kims uføretrygd"
+          color={BLÅ_FARGE}
+          options={COLUMN_STYLE}
+        />
       </Chart>
     </div>
   )
