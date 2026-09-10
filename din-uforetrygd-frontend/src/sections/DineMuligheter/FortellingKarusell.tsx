@@ -7,7 +7,7 @@ import Bilde1 from './Bilde1.svg'
 import Bilde2 from './Bilde2.svg'
 import Bilde3 from './Bilde3.svg'
 import Bilde4 from './Bilde4.svg'
-import styles from './dineMuligheter.module.css'
+import styles from './fortellingkarusell.module.css'
 
 const slides = [
   {
@@ -33,7 +33,6 @@ const slides = [
 ]
 
 export default function FortellingKarusell() {
-  const erLitenSkjerm = window.innerWidth < 768
   const [karusellPage, setKarusellPage] = useState(1)
   const karusellRef = useRef<HTMLDivElement>(null)
 
@@ -83,8 +82,15 @@ export default function FortellingKarusell() {
         page={karusellPage}
         count={slides.length}
         onPageChange={scrollToPage}
-        prevNextTexts={!erLitenSkjerm}
-        size={erLitenSkjerm ? 'small' : 'medium'}
+        size="small"
+        className={styles.fortellingPagineringMobil}
+      />
+      <Pagination
+        page={karusellPage}
+        count={slides.length}
+        onPageChange={scrollToPage}
+        prevNextTexts
+        className={styles.fortellingPagineringDesktop}
       />
     </VStack>
   )
