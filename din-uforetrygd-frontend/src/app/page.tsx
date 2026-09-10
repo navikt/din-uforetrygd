@@ -26,13 +26,16 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
-  const initResponse = await initate(params.pid)
-  const uforetrygdResponse = initResponse.uforetrygdResponse
-  const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
-  const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
-  const barnetilleggIsEnabled = await isEnabled('din-uforetrygd.barnetillegg')
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
+  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled] = await Promise.all([
+    initate(params.pid),
+    hentHarMottattVarsel(),
+    isEnabled('din-uforetrygd.dine-muligheter'),
+    isEnabled('din-uforetrygd.barnetillegg'),
+  ])
+
+  const uforetrygdResponse = initiateResponse.uforetrygdResponse
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -49,8 +52,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
         <ForsideBehandlingKort
           behandling={
-            initResponse.uforetrygdResponse.behandling
-              ? toForsideBehandling(initResponse.uforetrygdResponse.behandling, barnetilleggIsEnabled)
+            uforetrygdResponse.behandling
+              ? toForsideBehandling(uforetrygdResponse.behandling, barnetilleggIsEnabled)
               : null
           }
           visningskriterier={visningskriterier}
@@ -85,7 +88,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
     return (
       <section className="main-content">
         <Alert variant="error" role="alert">
-          {resolveErrorText(initResponse.backendError?.message)}
+          {resolveErrorText(initiateResponse.backendError?.message)}
         </Alert>
       </section>
     )
