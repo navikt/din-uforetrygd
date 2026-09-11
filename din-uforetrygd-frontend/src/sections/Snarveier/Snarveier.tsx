@@ -13,7 +13,6 @@ import {
 import { Heading, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import type { UforetrygdResponse } from '@/api/initiate'
-import { sjekkOmErVerge } from '@/api/sjekkOmErVerge'
 import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
@@ -27,6 +26,7 @@ interface SnarveierProps {
   pid: string | undefined
   uforetrygdResponse: UforetrygdResponse
   skalViseDineMuligheter: boolean
+  erVergePromise: Promise<boolean>
 }
 
 export const Snarveier: React.FC<SnarveierProps> = async ({
@@ -34,9 +34,10 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
   pid,
   uforetrygdResponse,
   skalViseDineMuligheter,
+  erVergePromise,
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
-  const erVerge = await sjekkOmErVerge(pid || '')
+  const erVerge = await erVergePromise
 
   return (
     <section aria-label="Snarveier">

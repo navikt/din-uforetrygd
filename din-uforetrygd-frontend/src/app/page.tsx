@@ -19,6 +19,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { isEnabled } from '@/utils/unleash'
+import { sjekkOmErVerge } from '@/api/sjekkOmErVerge'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -28,6 +29,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
+  const erVergePromise = sjekkOmErVerge(params.pid || '')
   const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled] = await Promise.all([
     initate(params.pid),
     hentHarMottattVarsel(),
@@ -75,6 +77,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           pid={params.pid}
           uforetrygdResponse={uforetrygdResponse}
           skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
+          erVergePromise={erVergePromise}
         />
         <MeldeFra visningskriterier={visningskriterier} />
         <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={uforetrygdResponse.innloggingstype} />
