@@ -120,8 +120,6 @@ spec:
       value: https://www.nav.no/pensjon/selvbetjening/representasjon
     - name: LINK_REPRESENTASJON_TILLEGGSDATA
       value: https://www.nav.no/representasjon-tilleggsdata
-    - name: FARO_URL
-      value: https://telemetry.nav.no/collect
     - name: LINK_SKRIV_TIL_OSS
       value: https://innboks.nav.no/s/
     - name: LINK_START_ARBEIDSOPPFOLGING
