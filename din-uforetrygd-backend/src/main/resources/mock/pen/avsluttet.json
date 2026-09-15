@@ -1,0 +1,19 @@
+{
+  "saksammendrag": [
+    {
+      "sakId": 519023581092,
+      "sakType": "UFOREP",
+      "sakStatus": "AVSLUTTET",
+      "fomDato": null,
+      "tomDato": null,
+      "enhetId": "4488"
+    }
+  ],
+  "vedtakssammendrag": {
+    "hasIverksattVedtak": false,
+    "vedtakssammendrag": null
+  },
+  "forventedeInntekter": {
+    "sumAvForventedeInntekter": 150000
+  }
+}

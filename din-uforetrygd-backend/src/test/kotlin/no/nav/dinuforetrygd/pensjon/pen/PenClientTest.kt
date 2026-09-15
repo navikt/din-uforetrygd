@@ -26,7 +26,7 @@ class PenClientTest : WebClientTest() {
     @BeforeEach
     override fun setup() {
         super.setup()
-        penClient = PenClient(
+        penClient = PenClientImpl(
             url = baseUrl,
             webClient = WebClient.create(),
             scope = "",

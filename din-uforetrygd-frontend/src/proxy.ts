@@ -38,6 +38,10 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Kjør proxyen på alle sider og undersiden utenom /api, /health, _next og robots.txt
-  matcher: ['/((?!api|health|_next|robots.txt).*)'],
+  // Kjør proxyen på alle sider og undersiden utenom /api, /health, _next og robots.txt.
+  // Next.js prepender automatisk basePath (/uforetrygd/selvbetjening) foran matcheren,
+  // så uten et valgfritt "(...)?" ville selve rot-URL-en (uten avsluttende skråstrek,
+  // som er hvordan forsiden faktisk serveres) ALDRI matche - det krevdes en "/" rett
+  // etter basePath før capture-gruppen kunne matche noe i det hele tatt.
+  matcher: ['/((?!api|health|_next|robots.txt).*)?'],
 }
