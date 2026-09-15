@@ -31,7 +31,13 @@ data class Behandling(
             avslattForutgaendeMedlemskap = vedtak.avslattForutgaendeMedlemskap,
             ferdigstiltDato = vedtak.vedtaksdato,
             etteroppgjor = vedtak.etteroppgjor?.let { Etteroppgjør.fraPenEtteroppgjør(it) },
-            beregning = vedtak.beregning?.let { Beregning(it.nettoUforetrygdPerManed, it.nettoBarnetilleggPerManed) },
+            beregning = vedtak.beregning?.let {
+                val erBarneTillegg = vedtak.krav.arsak == "SOKNAD_BT"
+                Beregning(
+                    nettoUforetrygdPerManed = if (!erBarneTillegg) it.nettoUforetrygdPerManed else 0,
+                    nettoBarnetilleggPerManed = if (erBarneTillegg) it.nettoBarnetilleggPerManed else 0,
+                )
+            },
         )
 
         private fun finnType(krav: Krav, vedtakstype: String? = null): BehandlingType {
