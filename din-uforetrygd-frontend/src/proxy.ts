@@ -4,6 +4,7 @@ import { unleashSessionIdKey } from '@/utils/unleash'
 import logger from './utils/logger'
 
 export function proxy(request: NextRequest) {
+  console.log('ludvik proxy')
   const url = new URL(request.url)
   logger.info({
     message: `Request ${url.pathname}`,
@@ -39,5 +40,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Kjør proxyen på alle sider og undersiden utenom /api, /health, _next og robots.txt
-  matcher: ['/((?!api|health|_next|robots.txt).*)'],
+  matcher: ['/((?!api|health|_next|robots.txt).*)?'],
 }
