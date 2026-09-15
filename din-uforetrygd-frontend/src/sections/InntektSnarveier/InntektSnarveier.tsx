@@ -4,7 +4,7 @@ import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
 import { matchAll } from '@/utils/filterShowFor/filterShowFor'
-import { leggTilInnloggaBrukerNavn, leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
+import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import styles from './inntektSnarveier.module.css'
 
 interface InntektSnarveierProps {
@@ -41,7 +41,7 @@ const getLinks = async (pid: string | undefined) => [
     visInnloggingsModal: false,
   },
   {
-    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid)),
+    href: leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid),
     title: 'Utbetalinger',
     description: 'Oversikt og detaljer',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
