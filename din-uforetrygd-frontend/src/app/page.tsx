@@ -19,6 +19,7 @@ import { InntektSnarveier } from '@/sections/InntektSnarveier/InntektSnarveier'
 import { InterneLenker } from '@/sections/InterneLenker/InterneLenker'
 import { Snarveier } from '@/sections/Snarveier/Snarveier'
 import { isEnabled } from '@/utils/unleash'
+import { sjekkOmErVerge } from '@/api/sjekkOmErVerge'
 
 interface IHomeProps {
   searchParams: Promise<{ pid?: string }>
@@ -27,14 +28,18 @@ interface IHomeProps {
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const initResponse = await initate(params.pid)
-  const uforetrygdResponse = initResponse.uforetrygdResponse
-  const dineMuligheterIsEnabled = await isEnabled('din-uforetrygd.dine-muligheter')
-  const harMottattVarsel = dineMuligheterIsEnabled ? await hentHarMottattVarsel() : false
-  const barnetilleggIsEnabled = await isEnabled('din-uforetrygd.barnetillegg')
-  const uforegradIsEnabled = await isEnabled('din-uforetrygd.statusUforegrad')
-
 
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
+  const erVergePromise = sjekkOmErVerge(params.pid || '')
+  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] = await Promise.all([
+    initate(params.pid),
+    hentHarMottattVarsel(),
+    isEnabled('din-uforetrygd.dine-muligheter'),
+    isEnabled('din-uforetrygd.barnetillegg'),
+    isEnabled('din-uforetrygd.statusUforegrad')
+  ])
+
+  const uforetrygdResponse = initiateResponse.uforetrygdResponse
 
   if (uforetrygdResponse) {
     const visningskriterier: Visningskriterier[] = getVisningskriterier(uforetrygdResponse)
@@ -51,8 +56,8 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
 
         <ForsideBehandlingKort
           behandling={
-            initResponse.uforetrygdResponse.behandling
-              ? toForsideBehandling(initResponse.uforetrygdResponse.behandling, barnetilleggIsEnabled, uforegradIsEnabled)
+            uforetrygdResponse.behandling
+              ? toForsideBehandling(uforetrygdResponse.behandling, barnetilleggIsEnabled, uforegradIsEnabled)
               : null
           }
           visningskriterier={visningskriterier}
@@ -74,6 +79,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           pid={params.pid}
           uforetrygdResponse={uforetrygdResponse}
           skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
+          erVergePromise={erVergePromise}
         />
         <MeldeFra visningskriterier={visningskriterier} />
         <RelevanteSoknader visningskriterier={visningskriterier} innloggingstype={uforetrygdResponse.innloggingstype} />
@@ -87,7 +93,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
     return (
       <section className="main-content">
         <Alert variant="error" role="alert">
-          {resolveErrorText(initResponse.backendError?.message)}
+          {resolveErrorText(initiateResponse.backendError?.message)}
         </Alert>
       </section>
     )

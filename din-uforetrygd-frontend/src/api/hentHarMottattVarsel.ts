@@ -35,6 +35,6 @@ export const hentHarMottattVarsel = async (): Promise<boolean> => {
 
   if (!response.ok) return false
 
-  const json = await response.json()
+  const json = await response.json().catch(() => ({ harMottattVarsel: false }))
   return json.harMottattVarsel
 }

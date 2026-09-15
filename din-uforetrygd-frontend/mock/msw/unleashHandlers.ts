@@ -10,6 +10,7 @@ const localFlags = {
 const features = Object.entries(localFlags).map(([name, enabled]) => ({
   name,
   enabled,
+  strategies: [],
   variants: [],
   impressionData: false,
 }))

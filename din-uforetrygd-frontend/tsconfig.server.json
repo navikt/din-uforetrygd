@@ -5,6 +5,7 @@
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "rewriteRelativeImportExtensions": true,
     "declaration": true,
     "rootDir": "server",
     "outDir": "dist",

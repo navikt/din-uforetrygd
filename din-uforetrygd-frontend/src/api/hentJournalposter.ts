@@ -24,7 +24,7 @@ export const hentJournalposter = async (pid?: string): Promise<Journalpost[]> =>
 
   const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/journalposter`, { headers, cache: 'no-store' })
   if (!response.ok) return []
-  return response.json()
+  return response.json().catch(() => [])
 }
 
 export interface Journalpost {
