@@ -72,15 +72,19 @@ const getLinks = async (
     showFullmaktWarning: false,
     visInnloggingsModal: false,
   },
-  {
-    href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid)),
-    title: 'Utbetalinger',
-    description: 'Oversikt og detaljer',
-    icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
-    showFor: matchNone([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
-  },
+  ...(env('MODE') === 'borger'
+    ? [
+        {
+          href: await leggTilInnloggaBrukerNavn(leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid)),
+          title: 'Utbetalinger',
+          description: 'Oversikt og detaljer',
+          icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
+          showFor: matchNone([Visningskriterier.Uforetrygd]),
+          showFullmaktWarning: false,
+          visInnloggingsModal: false,
+        },
+      ]
+    : []),
   {
     href: env('LINK_DOKUMENTOVERSIKT'),
     title: 'Se alle dokumentene dine',
