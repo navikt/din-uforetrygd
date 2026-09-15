@@ -23,7 +23,7 @@ class RepresentasjonClientTest : WebClientTest() {
     @BeforeEach
     override fun setup() {
         super.setup()
-        representasjonClient = RepresentasjonClient(
+        representasjonClient = RepresentasjonClientImpl(
             baseUrl = baseUrl,
             webClient = WebClient.create(),
             scope = "",
