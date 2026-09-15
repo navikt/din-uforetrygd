@@ -32,10 +32,10 @@ data class Behandling(
             ferdigstiltDato = vedtak.vedtaksdato,
             etteroppgjor = vedtak.etteroppgjor?.let { Etteroppgjør.fraPenEtteroppgjør(it) },
             beregning = vedtak.beregning?.let {
-                val erBarneTillegg = vedtak.krav.arsak == "SOKNAD_BT"
+                val erBarnetillegg = vedtak.krav.arsak == "SOKNAD_BT"
                 Beregning(
-                    nettoUforetrygdPerManed = if (!erBarneTillegg) it.nettoUforetrygdPerManed else 0,
-                    nettoBarnetilleggPerManed = if (erBarneTillegg) it.nettoBarnetilleggPerManed else 0,
+                    nettoUforetrygdPerManed = if (!erBarnetillegg) it.nettoUforetrygdPerManed else 0,
+                    nettoBarnetilleggPerManed = if (erBarnetillegg) it.nettoBarnetilleggPerManed else 0,
                 )
             },
         )
