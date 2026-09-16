@@ -39,5 +39,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Kjør proxyen på alle sider og undersiden utenom /api, /health, _next og robots.txt
-  matcher: ['/((?!api|health|_next|robots.txt).*)'],
+  matcher: ['/((?!api|health|_next|robots.txt).*)?'],
 }
