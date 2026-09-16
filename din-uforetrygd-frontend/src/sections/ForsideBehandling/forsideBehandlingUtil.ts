@@ -155,13 +155,14 @@ function lagBeregning(beregning: Beregning | null, status: Status, behandlingTyp
   if (status !== Status.INNVILGET || beregning === null) return []
 
   const erBarnetillegg = behandlingType === BehandlingType.SØKNAD_BARNETILLEGG
+  const erEndringUforegrad = behandlingType === BehandlingType.SØKNAD_ENDRING_UFØREGRAD
   const beregninger: BeregningRad[] = []
 
   if (!erBarnetillegg && beregning.nettoUforetrygdPerManed)
     beregninger.push({ label: 'Uføretrygd', verdi: `${formatInntekt(beregning.nettoUforetrygdPerManed)} kroner` })
   if (erBarnetillegg && beregning.nettoBarnetilleggPerManed)
     beregninger.push({ label: 'Barnetillegg', verdi: `${formatInntekt(beregning.nettoBarnetilleggPerManed)} kroner` })
-  if (beregning.uforegrad)
+  if (erEndringUforegrad && beregning.uforegrad)
     beregninger.push({ label: 'Ny uføregrad', verdi: `${beregning.uforegrad} prosent` })
   return beregninger
 }
