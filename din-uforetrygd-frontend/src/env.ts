@@ -40,6 +40,11 @@ const serverEnvSchema = z.object({
   PORT: z.coerce.number().int().positive().optional(),
   NODE_ENV: z.enum(['development', 'production', 'test']).optional(),
   CI: z.string().optional(),
+
+  // Settes automatisk av Nais-plattformen i poden. Brukes til å sette
+  // <meta name="nais-app">/<meta name="nais-cluster"> for @nais/apm, se instrumentation-client.ts.
+  NAIS_APP_NAME: z.string().optional(),
+  NAIS_CLUSTER_NAME: z.string().optional(),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>

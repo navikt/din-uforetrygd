@@ -37,6 +37,8 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       <html lang="no">
         <head>
           <title>Din uføretrygd - Veileder</title>
+          <meta name="nais-app" content={env('NAIS_APP_NAME')} />
+          <meta name="nais-cluster" content={env('NAIS_CLUSTER_NAME')} />
         </head>
         <body>
           <Theme>
@@ -62,6 +64,8 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     <html lang="no">
       <head>
         <title>Din uføretrygd - nav.no</title>
+        <meta name="nais-app" content={env('NAIS_APP_NAME')} />
+        <meta name="nais-cluster" content={env('NAIS_CLUSTER_NAME')} />
         <Decorator.HeadAssets />
       </head>
       <body>
