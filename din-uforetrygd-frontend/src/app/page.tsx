@@ -27,8 +27,6 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
-  const initResponse = await initate(params.pid)
-
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
   const erVergePromise = sjekkOmErVerge(params.pid || '')
   const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] = await Promise.all([
