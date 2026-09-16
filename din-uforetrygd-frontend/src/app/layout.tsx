@@ -50,7 +50,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
                 </Suspense>
               </main>
             </ApmErrorBoundary>
-            {process.env.NODE_ENV !== 'production' && <ApmDebugPanel />}
+            <ApmDebugPanel />
           </Theme>
         </body>
       </html>
@@ -84,7 +84,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <FullmaktModal />
             </div>
           </ApmErrorBoundary>
-          {process.env.NODE_ENV !== 'production' && <ApmDebugPanel />}
+          <ApmDebugPanel />
         </Theme>
       </body>
     </html>
