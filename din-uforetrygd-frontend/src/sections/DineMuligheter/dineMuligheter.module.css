@@ -92,4 +92,8 @@
   .ringKnappWrapper {
     align-items: start;
   }
+
+  .rosaContainer {
+    padding-top: var(--ax-space-64);
+  }
 }
