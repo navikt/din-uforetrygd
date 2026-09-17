@@ -7,7 +7,6 @@ import './layout.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
 import { connection } from 'next/server'
-import { ApmDebugPanel } from './ApmDebugPanel'
 import { ApmErrorBoundary } from './ApmErrorBoundary'
 import { ApmRouteTracker } from './ApmRouteTracker'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
@@ -52,7 +51,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
                 </Suspense>
               </main>
             </ApmErrorBoundary>
-            <ApmDebugPanel />
           </Theme>
         </body>
       </html>
@@ -88,7 +86,6 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
               <FullmaktModal />
             </div>
           </ApmErrorBoundary>
-          <ApmDebugPanel />
         </Theme>
       </body>
     </html>

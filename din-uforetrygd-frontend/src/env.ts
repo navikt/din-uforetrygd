@@ -8,6 +8,8 @@ const serverEnvSchema = z.object({
   DIN_UFORETRYGD_BACKEND_SCOPE: z.string(),
   UFORE_VARSLER_SCOPE: z.string(),
   REPRESENTASJON_BANNER: z.url().optional(),
+  NAIS_APP_NAME: z.string().optional(),
+  NAIS_CLUSTER_NAME: z.string().optional(),
 
   LINK_SOKNAD_GRADERT_UFORE: z.url(),
   LINK_SOKNAD_UFORE: z.url(),
@@ -40,11 +42,6 @@ const serverEnvSchema = z.object({
   PORT: z.coerce.number().int().positive().optional(),
   NODE_ENV: z.enum(['development', 'production', 'test']).optional(),
   CI: z.string().optional(),
-
-  // Settes automatisk av Nais-plattformen i poden. Brukes til å sette
-  // <meta name="nais-app">/<meta name="nais-cluster"> for @nais/apm, se instrumentation-client.ts.
-  NAIS_APP_NAME: z.string().optional(),
-  NAIS_CLUSTER_NAME: z.string().optional(),
 })
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>
