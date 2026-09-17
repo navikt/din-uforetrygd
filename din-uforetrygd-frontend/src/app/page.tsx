@@ -27,14 +27,14 @@ interface IHomeProps {
 
 const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
-
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
   const erVergePromise = sjekkOmErVerge(params.pid || '')
-  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled] = await Promise.all([
+  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] = await Promise.all([
     initate(params.pid),
     hentHarMottattVarsel(),
     isEnabled('din-uforetrygd.dine-muligheter'),
     isEnabled('din-uforetrygd.barnetillegg'),
+    isEnabled('din-uforetrygd.statusUforegrad')
   ])
 
   const uforetrygdResponse = initiateResponse.uforetrygdResponse
@@ -55,7 +55,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <ForsideBehandlingKort
           behandling={
             uforetrygdResponse.behandling
-              ? toForsideBehandling(uforetrygdResponse.behandling, barnetilleggIsEnabled)
+              ? toForsideBehandling(uforetrygdResponse.behandling, barnetilleggIsEnabled, uforegradIsEnabled)
               : null
           }
           visningskriterier={visningskriterier}
