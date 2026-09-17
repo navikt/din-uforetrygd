@@ -76,6 +76,11 @@
   max-width: fit-content;
 }
 
+.videoContainer {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
 @media (min-width: 768px) {
   .dineMuligheterWrapper a[role="button"] {
     max-width: 21rem;
