@@ -60,7 +60,7 @@ export default function FortellingKarusell() {
         background={'meta-purple-soft'}
         width={'100%'}
         paddingInline={{ xs: 'space-24', md: 'space-48' }}
-        paddingBlock={{ xs: 'space-0', md: 'space-24' }}
+        paddingBlock="space-24"
       >
         <section
           ref={karusellRef}

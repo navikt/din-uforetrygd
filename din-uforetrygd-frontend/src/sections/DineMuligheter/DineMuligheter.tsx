@@ -39,18 +39,17 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
         <VStack gap={{ xs: 'space-32', md: 'space-40' }} className={styles.fargeContainerContent}>
           <VStack gap={{ xs: 'space-12', md: 'space-24' }}>
             <ExpansionCardMedIkon
-              tittel="Veiledning"
+              tittel="Få veiledning"
               ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
             >
-              <VStack gap="space-12">
-                <BodyShort weight="semibold">Du kan få veiledning</BodyShort>
+              <VStack gap="space-12" marginBlock="space-0 space-12">
                 <List>
                   <List.Item>om arbeidsrettet oppfølging</List.Item>
                   <List.Item>om det du trenger</List.Item>
                   <List.Item>om det du har lyst til å få til</List.Item>
-                  <List.Item>på telefon, videosamtale eller på ditt lokale Nav kontor</List.Item>
                 </List>
               </VStack>
+              <BodyShort>Du kan få veiledning på telefon, videosamtale eller på ditt lokale Nav-kontor.</BodyShort>
             </ExpansionCardMedIkon>
             <ExpansionCardMedIkon
               ikon={<HatSchoolFillIcon color={'#7342B6'} fontSize={'3rem'} />}
@@ -131,7 +130,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
                       </List.Item>
                     </List>
                   </VStack>
-                  <VStack gap="space-12">
+                  <VStack gap="space-12" marginBlock={{ xs: 'space-12 space-0', md: 'space-0' }}>
                     <BodyShort weight="semibold">Økonomi</BodyShort>
                     <List>
                       <List.Item>
