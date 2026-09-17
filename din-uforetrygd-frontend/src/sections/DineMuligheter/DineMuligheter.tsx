@@ -207,7 +207,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
           <iframe
             className={styles.video}
             title="Se hvordan et møte med oss kan være"
-            src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=9bd4d650-a724-45ea-bd41-0d0f1fe20adf&configId=Enterprise"
+            src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=52a427ea-e2d0-40ce-8a3f-969b8aac8916&configId=Enterprise"
             allowFullScreen={true}
           />
           <Button
