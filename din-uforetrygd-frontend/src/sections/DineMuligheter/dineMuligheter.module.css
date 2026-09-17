@@ -3,7 +3,7 @@
   margin-inline: calc(50% - 50vw);
   justify-content: center;
   display: flex;
-  padding: var(--ax-space-48) 0;
+  padding: var(--ax-space-40) 0;
 }
 
 .rosaContainer {
@@ -74,6 +74,14 @@
 
 .snakkMedOssWrapper a[role="button"] {
   max-width: fit-content;
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: 100%;
+  border: none;
+  margin-bottom: var(--ax-space-48);
 }
 
 @media (min-width: 768px) {

@@ -199,21 +199,28 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
       </VStack>
 
       <div className={`${styles.fargeContainer} ${styles.rosaContainer}`} style={{ paddingBottom: '72px' }}>
-        <VStack gap="space-36" className={styles.fargeContainerContent}>
+        <VStack gap={{ xs: 'space-12', md: 'space-12' }} className={styles.fargeContainerContent}>
           <Heading size="medium" level="3">
-            Snakk med oss om dine muligheter
+            Vi vil gjerne prate med deg
           </Heading>
+          <BodyShort>Se hvordan et møte med oss kan være. Vi håper du tør å ta kontakt!</BodyShort>
+          <iframe
+            className={styles.video}
+            title="Se hvordan et møte med oss kan være"
+            src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=52a427ea-e2d0-40ce-8a3f-969b8aac8916&configId=Enterprise"
+            allowFullScreen={true}
+          />
+          <Button
+            as="a"
+            href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+            style={{ width: '100%', marginBottom: 'var(--ax-space-32)' }}
+          >
+            Snakk med oss
+          </Button>
           <BodyShort>
             Få hjelp av en veileder til å utforske mulighetene dine. Det er uforpliktende og du beholder retten til
             uføretrygd.
           </BodyShort>
-          <Button
-            as="a"
-            href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
-            style={{ width: '100%' }}
-          >
-            Snakk med oss
-          </Button>
         </VStack>
       </div>
     </VStack>
