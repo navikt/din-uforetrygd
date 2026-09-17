@@ -67,7 +67,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
                 <VStack gap="space-12">
                   <BodyShort weight="semibold">Jobb og muligheter</BodyShort>
                   <List>
-                    <List.Item>CV, søknad intervju, finne jobb</List.Item>
+                    <List.Item>CV, søknad, intervju, finne jobb</List.Item>
                     <List.Item>få tilrettelegging på jobb</List.Item>
                     <List.Item>starte egen bedrift</List.Item>
                     <List.Item>kurs, førerkort, frivillig arbeid</List.Item>
@@ -125,7 +125,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
                       </List.Item>
                       <List.Item>
                         <Link href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb" target="_blank">
-                          verktøy for å finne jobb
+                          verktøy for å søke jobb
                         </Link>
                       </List.Item>
                     </List>
@@ -135,7 +135,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
                     <List>
                       <List.Item>
                         <Link href="https://www.nav.no/okonomi-gjeld" target="_blank">
-                          økonomisk rådgiving fra Nav (gratis)
+                          økonomisk rådgiving fra Nav
                         </Link>
                       </List.Item>
                       <List.Item>
@@ -188,7 +188,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
       </div>
       <VStack gap={{ xs: 'space-16', md: 'space-48' }}>
         <Heading size="medium" level="3" className={styles.headingKolonne}>
-          Jobbe ved siden av uføretrygd? Slik funker det for Kim
+          Jobbe ved siden av uføretrygden? Slik funker det for Kim
         </Heading>
         <FortellingKarusell />
         <Divider />
@@ -206,14 +206,14 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
           <BodyShort>Se hvordan et møte med oss kan være. Vi håper du tør å ta kontakt!</BodyShort>
           <iframe
             className={styles.video}
-            title="Se hvordan et møte med oss kan være"
+            title="Vi vil gjerne prate med deg"
             src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=52a427ea-e2d0-40ce-8a3f-969b8aac8916&configId=Enterprise"
             allowFullScreen={true}
           />
           <Button
             as="a"
             href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
-            style={{ width: '100%', marginBottom: 'var(--ax-space-32)' }}
+            style={{ width: '100%', marginBottom: 'var(--ax-space-4)' }}
           >
             Snakk med oss
           </Button>

@@ -43,13 +43,12 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
               <ExpansionCardMedIkon
                 ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Ring oss"
-                undertittel="Hverdager 09–15"
-                defaultOpen
+                undertittel="Hverdager 9–15"
               >
                 <HGrid align="center" gap="space-24" columns={{ xs: 2, md: 1 }}>
                   <VStack gap="space-8" align="start">
                     <Heading size="medium">55 55 33 30</Heading>
-                    <BodyShort>Du kommer direkte til en veileder som kan uføretrygd</BodyShort>
+                    <BodyShort>Du kommer direkte til en veileder som kan uføretrygd.</BodyShort>
                   </VStack>
                   <VStack justify="center" className={styles.ringKnappWrapper}>
                     <Button as="a" href="tel:55 55 33 30" style={{ maxWidth: 'fit-content' }}>
@@ -79,7 +78,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                     Skriv til oss
                   </LinkCard.Anchor>
                 </LinkCard.Title>
-                <LinkCard.Description>Du får svar innen 1–2 dager</LinkCard.Description>
+                <LinkCard.Description>Du får svar i løpet av få dager</LinkCard.Description>
               </LinkCard>
               <ExpansionCardMedIkon
                 ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}

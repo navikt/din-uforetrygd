@@ -81,7 +81,7 @@
   aspect-ratio: 16 / 9;
   height: 100%;
   border: none;
-  margin-bottom: var(--ax-space-48);
+  margin-bottom: var(--ax-space-36);
 }
 
 @media (min-width: 768px) {
