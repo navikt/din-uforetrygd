@@ -123,8 +123,6 @@ spec:
       value: api://prod-gcp.ufore.din-uforetrygd-backend/.default
     - name: UFORE_VARSLER_SCOPE
       value: api://prod-gcp.ufore.ufore-varsler/.default
-    - name: FARO_URL
-      value: https://telemetry.nav.no/collect
     - name: LINK_SKRIV_TIL_OSS
       value: https://innboks.nav.no/s/
     - name: LINK_START_ARBEIDSOPPFOLGING

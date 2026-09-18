@@ -1,17 +1,19 @@
 import { Theme } from '@navikt/ds-react'
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import '../global.css'
 import './layout.css'
 import '@navikt/ds-tokens/dist/tokens.css'
 import '@navikt/ds-css'
 import { connection } from 'next/server'
+import { ApmErrorBoundary } from './ApmErrorBoundary'
+import { ApmRouteTracker } from './ApmRouteTracker'
 import Brødsmulesti from '@/components/Brødsmulesti/Brødsmulesti'
 import { FullmaktModal } from '@/components/FullmaktModal/FullmaktModal'
 import RepresentasjonBanner from '@/components/RepresentasjonBanner'
 import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
 import { env } from '@/env'
-import InitializeFaro from '@/utils/faro/faro'
 
 const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
   // Miljøvariabler for borger og veileder i injectes runtime til samme bundle.
@@ -34,15 +36,21 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       <html lang="no">
         <head>
           <title>Din uføretrygd - Veileder</title>
+          <meta name="nais-app" content={env('NAIS_APP_NAME')} />
+          <meta name="nais-cluster" content={env('NAIS_CLUSTER_NAME')} />
         </head>
         <body>
           <Theme>
-            <VeilederBanner />
-            <main className="main-content" id="maincontent" tabIndex={-1}>
-              <Brødsmulesti mode="veileder" />
-              {children}
-            </main>
-            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
+            <ApmErrorBoundary fallback={<p>Noe gikk galt.</p>}>
+              <VeilederBanner />
+              <main className="main-content" id="maincontent" tabIndex={-1}>
+                <Brødsmulesti mode="veileder" />
+                {children}
+                <Suspense fallback={null}>
+                  <ApmRouteTracker />
+                </Suspense>
+              </main>
+            </ApmErrorBoundary>
           </Theme>
         </body>
       </html>
@@ -54,24 +62,30 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     <html lang="no">
       <head>
         <title>Din uføretrygd - nav.no</title>
+        <meta name="nais-app" content={env('NAIS_APP_NAME')} />
+        <meta name="nais-cluster" content={env('NAIS_CLUSTER_NAME')} />
         <Decorator.HeadAssets />
       </head>
       <body>
         <Theme>
-          <div className="layout-wrapper">
-            <Decorator.Header />
-            <RepresentasjonBanner />
-            <main className="main-content" id="maincontent" tabIndex={-1}>
-              <Brødsmulesti mode="borger" />
-              {children}
-            </main>
-            <Decorator.Footer />
-            <Decorator.Scripts loader={Script} />
-            <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
-            <script src="https://widget.uxsignals.com/embed.js" async></script>
-            <FullmaktModal />
-            <InitializeFaro url={env('FARO_URL')} appName={env('NAIS_APP_NAME')} />
-          </div>
+          <ApmErrorBoundary fallback={<p>Noe gikk galt.</p>}>
+            <div className="layout-wrapper">
+              <Decorator.Header />
+              <RepresentasjonBanner />
+              <main className="main-content" id="maincontent" tabIndex={-1}>
+                <Brødsmulesti mode="borger" />
+                {children}
+                <Suspense fallback={null}>
+                  <ApmRouteTracker />
+                </Suspense>
+              </main>
+              <Decorator.Footer />
+              <Decorator.Scripts loader={Script} />
+              <script type="module" src={`${REPRESENTASJON_BANNER}/banner.js`} async></script>
+              <script src="https://widget.uxsignals.com/embed.js" async></script>
+              <FullmaktModal />
+            </div>
+          </ApmErrorBoundary>
         </Theme>
       </body>
     </html>

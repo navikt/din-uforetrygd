@@ -7,9 +7,9 @@ const serverEnvSchema = z.object({
   UFORE_VARSLER: z.string(),
   DIN_UFORETRYGD_BACKEND_SCOPE: z.string(),
   UFORE_VARSLER_SCOPE: z.string(),
-  FARO_URL: z.string(),
-  NAIS_APP_NAME: z.string(),
   REPRESENTASJON_BANNER: z.url().optional(),
+  NAIS_APP_NAME: z.string().optional(),
+  NAIS_CLUSTER_NAME: z.string().optional(),
 
   LINK_SOKNAD_GRADERT_UFORE: z.url(),
   LINK_SOKNAD_UFORE: z.url(),
