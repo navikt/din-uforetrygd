@@ -1,11 +1,11 @@
-import { DittUforevedtak } from '../src/api/hentDittUforevedtak'
+import type { DittUforevedtak } from '../src/api/hentDittUforevedtak'
 
 export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = {
   default: {
     uforegrad: 100,
     virkFom: '2024-12-01',
     uforetidspunkt: '2020-10-01',
-    inntektsgrense: 49611,
+    bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
     kompensasjonsgrad: 65,
@@ -20,7 +20,7 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
     uforegrad: 100,
     virkFom: undefined,
     uforetidspunkt: undefined,
-    inntektsgrense: 49611,
+    bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
     kompensasjonsgrad: 65,
@@ -35,7 +35,7 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
     uforegrad: 50,
     virkFom: '2024-12-01',
     uforetidspunkt: '2020-10-01',
-    inntektsgrense: 49611,
+    bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
     kompensasjonsgrad: 65,
@@ -52,7 +52,7 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
     uforegrad: 100,
     virkFom: '2024-12-01',
     uforetidspunkt: '2020-10-01',
-    inntektsgrense: 49611,
+    bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
     kompensasjonsgrad: 65,
@@ -68,7 +68,7 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
     uforegrad: 100,
     virkFom: undefined,
     uforetidspunkt: undefined,
-    inntektsgrense: 49611,
+    bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
     kompensasjonsgrad: 65,

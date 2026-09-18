@@ -15,7 +15,7 @@ data class DittUforevedtak(
     val uforegrad: Int,
     val virkFom: LocalDate?,
     val uforetidspunkt: LocalDate?,
-    val inntektsgrense: Int?,
+    val bunnfradrag: Int?,
     val inntektstak: Int?,
     val inntektFraSkatt: Double,
     val kompensasjonsgrad: Double?,

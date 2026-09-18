@@ -39,7 +39,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
     },
     {
       href: digitalSøknadHvisHøyInnlogging(env('LINK_SOKNAD_GRADERT_UFORE'), erFullmektig, innloggingstype),
-      text: 'Søknad om endret inntektsgrense ved gradert uføretrygd',
+      text: 'Søknad om endret bunnfradrag ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
       showFullmaktWarning: false,
     },

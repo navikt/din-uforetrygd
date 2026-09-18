@@ -199,7 +199,7 @@ class UforetrygdServiceTest {
         assertEquals(virkFom, response?.virkFom)
         assertEquals(uforetidspunkt, response?.uforetidspunkt)
         assertEquals(FORVENTET_INNTEKT, response?.sumAvForventedeInntekter)
-        assertEquals(inntektsgrense, response?.inntektsgrense)
+        assertEquals(inntektsgrense, response?.bunnfradrag)
         assertEquals(response!!.inntektstak, inntektstak)
         assertEquals(response.kompensasjonsgrad, kompensasjonsgrad)
         assertEquals(response.nettoUtbetalingMnd, nettoUtbetalingMnd)

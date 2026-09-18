@@ -34,7 +34,7 @@ test.describe('Ingen uforesak', () => {
     //Lenker som skal ikke vises
     const endreKontonummer = page.getByRole('link', { name: /Endre kontonummer/i })
     const okonomisketillegg = page.getByRole('link', { name: /Økonomiske tillegg og andre ordninger/i })
-    const gradertUforeEndring = page.getByRole('link', { name: /Søknad om endret inntektsgrense ved gradert uføretrygd/i })
+    const gradertUforeEndring = page.getByRole('link', { name: /Søknad om endret bunnfradrag ved gradert uføretrygd/i })
 
     await expect(endreKontonummer).not.toBeVisible()
     await expect(okonomisketillegg).not.toBeVisible()
