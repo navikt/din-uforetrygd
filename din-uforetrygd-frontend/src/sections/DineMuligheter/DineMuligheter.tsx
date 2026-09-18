@@ -41,6 +41,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
             <ExpansionCardMedIkon
               tittel="Få veiledning"
               ikon={<PersonGroupFillIcon color={'#7342B6'} fontSize={'3rem'} />}
+              data-umami-event="expansion Få veiledning"
             >
               <VStack gap="space-12" marginBlock="space-0 space-12">
                 <List>
@@ -54,6 +55,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
             <ExpansionCardMedIkon
               ikon={<HatSchoolFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               tittel="Snakk med oss om jobb, utdanning og muligheter"
+              data-umami-event="expansion Snakk med oss om jobb, utdanning og muligheter"
             >
               <HGrid gap="space-12" columns={{ xs: 1, md: 2 }}>
                 <VStack gap="space-12">
@@ -78,6 +80,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
             <ExpansionCardMedIkon
               ikon={<PiggybankFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               tittel="Snakk med oss om økonomi"
+              data-umami-event="expansion Snakk med oss om økonomi"
             >
               <HGrid gap="space-8" columns={{ xs: 1, md: 2 }}>
                 <List>
@@ -95,6 +98,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
             <ExpansionCardMedIkon
               ikon={<PersonPencilFillIcon color={'#7342B6'} fontSize={'3rem'} />}
               tittel="Du kan ordne ting selv"
+              data-umami-event="expansion Du kan ordne ting selv"
             >
               <VStack gap="space-12">
                 <BodyShort>
@@ -180,6 +184,7 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
               variant={'primary'}
               as="a"
               href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+              data-umami-event="knapp Snakk med oss topp"
             >
               Snakk med oss
             </Button>
@@ -211,11 +216,13 @@ const DineMuligheter = ({ pid, mode, inntektsplanleggerLenke }: Props) => {
             title="Vi vil gjerne prate med deg"
             src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=52a427ea-e2d0-40ce-8a3f-969b8aac8916&configId=Enterprise"
             allowFullScreen={true}
+            data-umami-event="video Vi vil gjerne prate med deg"
           />
           <Button
             as="a"
             href={`dine-muligheter/snakk-med-oss${mode === 'veileder' ? `?pid=${pid}` : ''}`}
             style={{ width: '100%', marginBottom: 'var(--ax-space-20)' }}
+              data-umami-event="knapp Snakk med oss bunn"
           >
             Snakk med oss
           </Button>

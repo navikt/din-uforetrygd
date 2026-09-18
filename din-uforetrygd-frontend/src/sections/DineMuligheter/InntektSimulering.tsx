@@ -97,6 +97,7 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
                     setValgt(value)
                   }}
                   style={{ justifyContent: 'start' }}
+                  data-umami-event="toggle Endre inntekt graf"
                 >{`${formatInntekt(key)} kr`}</Chips.Toggle>
               ))}
             </HGrid>

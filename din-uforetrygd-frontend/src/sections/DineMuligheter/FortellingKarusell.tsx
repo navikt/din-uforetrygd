@@ -84,6 +84,7 @@ export default function FortellingKarusell() {
         onPageChange={scrollToPage}
         size="small"
         className={styles.fortellingPagineringMobil}
+        data-umami-event="knapp Navigere Kim karusell"
       />
       <Pagination
         page={karusellPage}
@@ -91,6 +92,7 @@ export default function FortellingKarusell() {
         onPageChange={scrollToPage}
         prevNextTexts
         className={styles.fortellingPagineringDesktop}
+        data-umami-event="knapp Navigere Kim karusell"
       />
     </VStack>
   )

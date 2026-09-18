@@ -51,7 +51,12 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                     <BodyShort>Du kommer direkte til en veileder som kan uføretrygd.</BodyShort>
                   </VStack>
                   <VStack justify="center" className={styles.ringKnappWrapper}>
-                    <Button as="a" href="tel:55 55 33 30" style={{ maxWidth: 'fit-content' }}>
+                    <Button
+                      as="a"
+                      href="tel:55 55 33 30"
+                      style={{ maxWidth: 'fit-content' }}
+                      data-umami-event="knapp Ring nå"
+                    >
                       Ring nå
                     </Button>
                   </VStack>
@@ -66,7 +71,9 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   <BodyShort>
                     Du kan velge om du vil snakke med NavBot (døgnåpen) eller en veileder (kl. 9–15 på hverdager).
                   </BodyShort>
-                  <Button onClick={() => openChatbot()}>Start chatten</Button>
+                  <Button onClick={() => openChatbot()} data-umami-event="knapp Chatbot">
+                    Start chatten
+                  </Button>
                 </VStack>
               </ExpansionCardMedIkon>
               <LinkCard aria-label="Skriv til oss" size={'small'}>
@@ -74,7 +81,11 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
                 </LinkCard.Icon>
                 <LinkCard.Title>
-                  <LinkCard.Anchor href={skrivTilOssLenke} data-fullmakt-modal={true}>
+                  <LinkCard.Anchor
+                    href={skrivTilOssLenke}
+                    data-fullmakt-modal={true}
+                    data-umami-event="knapp Skriv til oss"
+                  >
                     Skriv til oss
                   </LinkCard.Anchor>
                 </LinkCard.Title>
@@ -96,7 +107,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   </List>
                   <Dialog>
                     <Dialog.Trigger>
-                      <Button>Start oppfølging</Button>
+                      <Button data-umami-event="knapp Start oppfølging flyt">Start oppfølging</Button>
                     </Dialog.Trigger>
                     <Dialog.Popup position="center">
                       {erFullmakt ? (
@@ -138,13 +149,16 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                           </Dialog.Body>
                           <Dialog.Footer>
                             <Dialog.CloseTrigger>
-                              <Button variant="secondary">Avbryt</Button>
+                              <Button variant="secondary" data-umami-event="knapp Avbryt oppfølging">
+                                Avbryt
+                              </Button>
                             </Dialog.CloseTrigger>
                             <Button
                               variant="primary"
                               as="a"
                               href={startArbeidsoppfølgingLenke}
                               arbeidsrettet-oppfolging
+                              data-umami-event="knapp Start oppfølging nå"
                             >
                               Ja, start nå
                             </Button>
@@ -161,6 +175,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
               as="a"
               variant="secondary"
               href={`/uforetrygd/selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+              data-umami-event="knapp Gå tilbake til snakk med oss"
             >
               Gå tilbake
             </Button>
