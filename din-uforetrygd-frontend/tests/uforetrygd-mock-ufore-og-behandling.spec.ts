@@ -11,7 +11,7 @@ test.describe('Har ufore og sak til behandling', () => {
     await expect(getValueCellByLabel(page, 'Uføretidspunkt')).toHaveText('01.10.2020')
     await expect(getValueCellByLabel(page, 'Innvilget fra')).toHaveText('01.12.2024')
     await expect(getValueCellByLabel(page, /Registrert forventet inntekt/i)).toHaveText('0 kr')
-    await expect(getValueCellByLabel(page, 'Inntektsgrense')).toHaveText('49 611 kr')
+    await expect(getValueCellByLabel(page, 'Bunnfradrag')).toHaveText('49 611 kr')
   })
 
   test('Bekreft at riktige lenker og paneler vises til bruker', async ({ page }) => {
@@ -34,7 +34,7 @@ test.describe('Har ufore og sak til behandling', () => {
     await expect(endreKontonummer).toBeVisible()
 
     //Lenker som skal ikke vises
-    const gradertUforeEndring = page.getByText('Søknad om endret inntektsgrense ved gradert uføretrygd')
+    const gradertUforeEndring = page.getByText('Søknad om endret bunnfradrag ved gradert uføretrygd')
 
     await expect(gradertUforeEndring).not.toBeVisible()
   })

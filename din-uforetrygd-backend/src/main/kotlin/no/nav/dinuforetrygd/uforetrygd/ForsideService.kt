@@ -95,7 +95,7 @@ class ForsideService(
             uforegrad = this.uforegrad,
             virkFom = this.virkFom,
             uforetidspunkt = this.uforetidspunkt,
-            inntektsgrense = this.inntektsgrense,
+            bunnfradrag = this.inntektsgrense,
             inntektstak = this.inntektstak,
             inntektFraSkatt = inntektFraSkatt,
             kompensasjonsgrad = this.kompensasjonsgrad,

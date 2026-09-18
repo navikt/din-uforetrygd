@@ -12,6 +12,8 @@ data class VedtakssammendragResponse(
     val vedtakssammendrag: Vedtakssammendrag?,
 )
 
+
+// TODO: rename etter regelverksendringer her og i pen (UFO-841)
 data class Vedtakssammendrag(
     val uforegrad: Int,
     val virkFom: LocalDate?,

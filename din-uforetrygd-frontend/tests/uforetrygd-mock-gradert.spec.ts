@@ -16,7 +16,7 @@ test.describe('Gradert ufore scenario', () => {
     await expect(getValueCellByLabel(page, 'Uføretidspunkt')).toHaveText('01.10.2020')
     await expect(getValueCellByLabel(page, 'Innvilget fra')).toHaveText('01.12.2024')
     await expect(getValueCellByLabel(page, /Registrert forventet inntekt/i)).toHaveText('0 kr')
-    await expect(getValueCellByLabel(page, 'Inntektsgrense')).toHaveText('49 611 kr')
+    await expect(getValueCellByLabel(page, 'Bunnfradrag')).toHaveText('49 611 kr')
   })
 
   test('displays appropriate lenkekort for gradert ufore', async ({ page }) => {

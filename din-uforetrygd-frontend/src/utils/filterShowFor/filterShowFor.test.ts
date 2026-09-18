@@ -6,7 +6,7 @@ describe('filterShowFor', () => {
   const lenker = [
     {
       href: '#',
-      text: 'Søknad om endret inntektsgrense - gradert uføretrygd',
+      text: 'Søknad om endret bunnfradrag - gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore, Visningskriterier.Uforetrygd]),
     },
     {
@@ -36,7 +36,7 @@ describe('filterShowFor', () => {
         (lenke) => lenke.text
       )
       expect(actual).toEqual([
-        'Søknad om endret inntektsgrense - gradert uføretrygd',
+        'Søknad om endret bunnfradrag - gradert uføretrygd',
         'Søknad om uføretrygd',
         'Søknad om barnetillegg til uføretrygd',
         'Ettersend informasjon',

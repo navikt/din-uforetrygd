@@ -15,6 +15,6 @@ test.describe('Ufore uten datoer', () => {
     await expect(getValueCellByLabel(page, 'Uføretidspunkt')).toBeEmpty()
     await expect(getValueCellByLabel(page, 'Innvilget fra')).toBeEmpty()
     await expect(getValueCellByLabel(page, /Registrert forventet inntekt/i)).toHaveText('150 000 kr')
-    await expect(getValueCellByLabel(page, 'Inntektsgrense')).toHaveText('49 611 kr')
+    await expect(getValueCellByLabel(page, 'Bunnfradrag')).toHaveText('49 611 kr')
   })
 })

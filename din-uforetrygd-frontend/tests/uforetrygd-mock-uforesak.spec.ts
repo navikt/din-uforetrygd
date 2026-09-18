@@ -32,7 +32,7 @@ test.describe('Uforetrygd Content and Status Display', () => {
     await expect(endreKontonummer).toBeVisible()
 
     //Lenker som skal ikke vises
-    const gradertUforeEndring = page.getByText('Søknad om endret inntektsgrense ved gradert uføretrygd')
+    const gradertUforeEndring = page.getByText('Søknad om endret bunnfradrag ved gradert uføretrygd')
 
     await expect(gradertUforeEndring).not.toBeVisible()
   })

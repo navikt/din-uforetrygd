@@ -155,17 +155,17 @@ export function Vedtaksdetaljer({
               <Table.Row shadeOnHover={false}>
                 <Table.DataCell>
                   <HStack gap="space-4">
-                    <BodyShort>Inntektsgrense</BodyShort>
+                    <BodyShort>Bunnfradrag</BodyShort>
                     <HelpText
-                      title="Hva er inntektsgrense?"
-                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Inntektsgrense' })}
+                      title="Hva er bunnfradrag?"
+                      onClick={() => umami(Events.HELPTEXT_VIST, { tekst: 'Bunnfradrag' })}
                     >
                       Den årlige inntekten du kan ha, før vi reduserer uføretrygden din
                     </HelpText>
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.inntektsgrense)} /> kr
+                  <SkeletonLoader promise={promise} render={(verdi) => formatInntekt(verdi?.bunnfradrag)} /> kr
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
@@ -178,14 +178,14 @@ export function Vedtaksdetaljer({
                     >
                       <BodyShort spacing>
                         Vi trekker en prosent lik reduksjonsprosenten fra uføretrygden av hver krone du tjener over
-                        inntektsgrensen din.
+                        bunnfradraget ditt.
                       </BodyShort>
 
                       <BodyShort spacing>Eksempel:</BodyShort>
                       <List>
                         <List.Item>Kim har en reduksjonsprosent på 70 prosent.</List.Item>
                         <List.Item>
-                          For hver krone Kim tjener over inntektsgrensen, trekker vi 70 øre fra uføretrygden til Kim.
+                          For hver krone Kim tjener over bunnfradraget, trekker vi 70 øre fra uføretrygden til Kim.
                         </List.Item>
                         <List.Item>Hvis Kim tjener 10 000 kroner, trekkes 7 000 kroner fra uføretrygden.</List.Item>
                         <List.Item>
