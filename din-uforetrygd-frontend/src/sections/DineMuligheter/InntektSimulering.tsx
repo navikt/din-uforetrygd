@@ -4,7 +4,9 @@ import { BodyShort, Chips, HGrid, InfoCard, Label, LinkCard, VStack } from '@nav
 import { useState } from 'react'
 import InntektSimuleringGraf from '@/sections/DineMuligheter/InntektSimuleringGraf'
 import { formatInntekt } from '@/utils/formatter/formatter'
+import { umami } from '@/utils/umami'
 import styles from './dineMuligheter.module.css'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 
 interface Uføretrygdendring {
   uføretrygdFør: number
@@ -95,9 +97,9 @@ export default function InntektSimulering({ pid, inntektsplanleggerLenke }: Prop
                     }
                     setValgtInntekt(key)
                     setValgt(value)
+                    umami(Events.CHIP_TOGGLED, { tekst: 'Endre inntekt graf' })
                   }}
                   style={{ justifyContent: 'start' }}
-                  data-umami-event="toggle Endre inntekt graf"
                 >{`${formatInntekt(key)} kr`}</Chips.Toggle>
               ))}
             </HGrid>
