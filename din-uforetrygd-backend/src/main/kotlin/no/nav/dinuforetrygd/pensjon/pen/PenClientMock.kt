@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component
  * per scenario på samme måte som "behandling" varierer i mockData.ts, ellers blir behandling
  * lik (eller fraværende) for alle scenarioer uansett hva saksammendrag/vedtakssammendrag sier.
  */
-@Profile("local")
+@Profile("local & !local-q2")
 @Component
 class PenClientMock(
     private val mockScenario: MockScenario,
