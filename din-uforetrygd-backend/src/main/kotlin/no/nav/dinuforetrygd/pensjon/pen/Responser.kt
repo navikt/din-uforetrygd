@@ -12,15 +12,13 @@ data class VedtakssammendragResponse(
     val vedtakssammendrag: Vedtakssammendrag?,
 )
 
-
-// TODO: rename etter regelverksendringer her og i pen (UFO-841)
 data class Vedtakssammendrag(
     val uforegrad: Int,
     val virkFom: LocalDate?,
     val uforetidspunkt: LocalDate?,
-    val inntektsgrense: Int?,
+    val bunnfradrag: Int?,
     val inntektstak: Int?,
-    val kompensasjonsgrad: Double?,
+    val reduksjonsprosent: Double?,
     val nettoUtbetalingMnd: Int,
     val hasBarnetilleggFellesBarn: Boolean,
     val hasBarnetilleggSaerkullsbarn: Boolean,

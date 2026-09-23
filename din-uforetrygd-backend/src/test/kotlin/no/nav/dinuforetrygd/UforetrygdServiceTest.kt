@@ -128,9 +128,9 @@ class UforetrygdServiceTest {
         val virkFom = LocalDate.now()
         val uforetidspunkt = LocalDate.now().minusYears(1)
         val uforegrad = 50
-        val inntektsgrense = 150_000
+        val bunnfradrag = 150_000
         val inntektstak = 200_000
-        val kompensasjonsgrad = 65.5
+        val reduksjonsprosent = 65.5
         val nettoUtbetalingMnd = 20_000
         val vedtakssammendragResponse = VedtakssammendragResponse(
             hasIverksattVedtak = true,
@@ -138,13 +138,13 @@ class UforetrygdServiceTest {
                 uforegrad = uforegrad,
                 virkFom = virkFom,
                 uforetidspunkt = uforetidspunkt,
-                inntektsgrense = inntektsgrense,
+                bunnfradrag = bunnfradrag,
                 hasBarnetilleggFellesBarn = false,
                 hasBarnetilleggSaerkullsbarn = false,
                 hasGjenlevendeTillegg = false,
                 hasVarigTilrettelagtArbeid = false,
                 inntektstak = inntektstak,
-                kompensasjonsgrad = kompensasjonsgrad,
+                reduksjonsprosent = reduksjonsprosent,
                 nettoUtbetalingMnd = nettoUtbetalingMnd
             )
         )
@@ -165,9 +165,9 @@ class UforetrygdServiceTest {
         val virkFom = LocalDate.now()
         val uforetidspunkt = LocalDate.now().minusYears(1)
         val uforegrad = 50
-        val inntektsgrense = 150_000
+        val bunnfradrag = 150_000
         val inntektstak = 200_000
-        val kompensasjonsgrad = 65.5
+        val reduksjonsprosent = 65.5
         val nettoUtbetalingMnd = 20_000
         val inntektFraSkatt = 100_000.0
         val vedtakssammendragResponse = VedtakssammendragResponse(
@@ -176,13 +176,13 @@ class UforetrygdServiceTest {
                 uforegrad = uforegrad,
                 virkFom = virkFom,
                 uforetidspunkt = uforetidspunkt,
-                inntektsgrense = inntektsgrense,
+                bunnfradrag = bunnfradrag,
                 hasBarnetilleggFellesBarn = false,
                 hasBarnetilleggSaerkullsbarn = false,
                 hasGjenlevendeTillegg = false,
                 hasVarigTilrettelagtArbeid = false,
                 inntektstak = inntektstak,
-                kompensasjonsgrad = kompensasjonsgrad,
+                reduksjonsprosent = reduksjonsprosent,
                 nettoUtbetalingMnd = nettoUtbetalingMnd
             )
         )
@@ -199,9 +199,9 @@ class UforetrygdServiceTest {
         assertEquals(virkFom, response?.virkFom)
         assertEquals(uforetidspunkt, response?.uforetidspunkt)
         assertEquals(FORVENTET_INNTEKT, response?.sumAvForventedeInntekter)
-        assertEquals(inntektsgrense, response?.bunnfradrag)
+        assertEquals(bunnfradrag, response?.bunnfradrag)
         assertEquals(response!!.inntektstak, inntektstak)
-        assertEquals(response.kompensasjonsgrad, kompensasjonsgrad)
+        assertEquals(response.reduksjonsprosent, reduksjonsprosent)
         assertEquals(response.nettoUtbetalingMnd, nettoUtbetalingMnd)
         assertEquals(response.inntektFraSkatt, inntektFraSkatt)
         assertFalse(response.hasBarnetilleggFellesBarn)
