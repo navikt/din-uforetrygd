@@ -10,7 +10,7 @@ export interface DittUforevedtak {
   bunnfradrag?: number
   inntektstak?: number
   inntektFraSkatt: number
-  kompensasjonsgrad?: number
+  reduksjonsprosent?: number
   nettoUtbetalingMnd: number
   sumAvForventedeInntekter?: number
   hasBarnetilleggFellesBarn: boolean

@@ -98,7 +98,6 @@ class ForsideService(
             bunnfradrag = this.bunnfradrag,
             inntektstak = this.inntektstak,
             inntektFraSkatt = inntektFraSkatt,
-            kompensasjonsgrad = this.reduksjonsprosent,
             reduksjonsprosent = this.reduksjonsprosent,
             nettoUtbetalingMnd = this.nettoUtbetalingMnd,
             sumAvForventedeInntekter = sumAvForventedeInntekter,
