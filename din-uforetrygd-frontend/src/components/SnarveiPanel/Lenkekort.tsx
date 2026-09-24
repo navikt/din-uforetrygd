@@ -1,6 +1,6 @@
 import type React from 'react'
 import { Box, Hide, LinkCard } from '@navikt/ds-react'
-import styles from '@/components/SnarveiPanel/lenke.module.css'
+import styles from '@/components/SnarveiPanel/lenkekort.module.css'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
@@ -17,7 +17,7 @@ interface Props {
   disabled?: boolean
 }
 
-export const Lenke: React.FC<Props> = ({
+export const Lenkekort: React.FC<Props> = ({
   tittel,
   undertittel,
   href,

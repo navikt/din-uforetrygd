@@ -4,7 +4,7 @@ import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
 import styles from './inntektSnarveier.module.css'
 import { HGrid } from '@navikt/ds-react'
-import { Lenke } from '@/components/SnarveiPanel/Lenke'
+import { Lenkekort } from '@/components/SnarveiPanel/Lenkekort'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]
@@ -16,14 +16,14 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({ visnin
 
   return (
     <HGrid as="section" gap="space-24" columns={{ md: 2 }} aria-label="Snarvei til inntektsplanlegger og utbetalinger">
-      <Lenke
+      <Lenkekort
         tittel="Inntektsplanlegger"
         undertittel="Meld fra om endring i inntekt"
         href={env('LINK_INNTEKTSPLANLEGGER')}
         icon={<CalculatorIcon fontSize="2rem" className={styles.snarveiIcon} />}
         innloggingstype={innloggingstype}
       />
-      <Lenke
+      <Lenkekort
         tittel="Utbetalinger"
         undertittel={
           env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger'

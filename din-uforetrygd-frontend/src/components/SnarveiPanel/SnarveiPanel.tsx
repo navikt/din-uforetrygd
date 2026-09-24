@@ -3,7 +3,7 @@ import type React from 'react'
 import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 import type { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor/filterShowFor'
-import { Lenke } from '@/components/SnarveiPanel/Lenke'
+import { Lenkekort } from '@/components/SnarveiPanel/Lenkekort'
 
 interface ISnarveiPanelProps {
   links: ILink[]
@@ -31,7 +31,7 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
       {relevantLinks.length > 0 && (
         <HGrid gap="space-24" columns={{ md: 2 }}>
           {relevantLinks.map((link) => (
-            <Lenke
+            <Lenkekort
               key={link.title}
               tittel={link.title}
               undertittel={link.description}
