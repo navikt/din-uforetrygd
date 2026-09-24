@@ -69,8 +69,6 @@ const getLinks = async (
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
     icon: <HandShakeHeartIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: skalViseDineMuligheter,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
     href: env('LINK_UTBETALINGER'),
@@ -78,8 +76,6 @@ const getLinks = async (
     description: env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchNone([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
     disabled: env('MODE') === 'veileder',
   },
   {
@@ -88,7 +84,6 @@ const getLinks = async (
     description: 'Alle dokumentene dine',
     icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
     visInnloggingsModal: true,
   },
   {
@@ -97,8 +92,6 @@ const getLinks = async (
     description: 'Registrer tilleggstrekk',
     icon: <PlusMinusSlashIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_FAMILIEFORHOLD'), pid),
@@ -106,8 +99,6 @@ const getLinks = async (
     description: 'Samboerforhold, sivilstand, barn',
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_REPRESENTASJON_TILLEGGSDATA'), pid),
@@ -116,7 +107,6 @@ const getLinks = async (
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: erVerge,
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: env('LINK_FULLMAKTER'),
@@ -125,7 +115,6 @@ const getLinks = async (
     icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: env('LINK_ETTERSENDE'),
@@ -134,7 +123,6 @@ const getLinks = async (
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: 'https://www.nav.no/honnorkort#mangler-honnorkort',
@@ -142,8 +130,6 @@ const getLinks = async (
     description: 'Bestill nytt honnørkort hvis det gamle er mistet eller ødelagt',
     icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   ...(featureVisRegelverksendringerUt2026
     ? [
@@ -153,8 +139,6 @@ const getLinks = async (
           description: 'Regelendringer for uføretrygd',
           icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,
           showFor: true,
-          showFullmaktWarning: false,
-          visInnloggingsModal: false,
         },
       ]
     : []),

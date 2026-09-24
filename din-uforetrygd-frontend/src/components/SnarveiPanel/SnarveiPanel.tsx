@@ -18,8 +18,8 @@ interface ILink {
   description: string
   icon: React.ReactNode
   showFor: ((visningskriterier: Visningskriterier[]) => boolean) | boolean
-  showFullmaktWarning: boolean
-  visInnloggingsModal: boolean
+  showFullmaktWarning?: boolean
+  visInnloggingsModal?: boolean
   disabled?: boolean
 }
 
