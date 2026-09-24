@@ -1,12 +1,9 @@
-import { Box, HGrid, Hide, LinkCard } from '@navikt/ds-react'
-import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
+import { HGrid } from '@navikt/ds-react'
 import type React from 'react'
 import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
-import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
 import type { Innloggingstype, Visningskriterier } from '@/const'
 import filterShowFor from '@/utils/filterShowFor/filterShowFor'
-import { getFullmaktProps } from '@/utils/fullmakt'
-import styles from './snarveiPanel.module.css'
+import { Lenke } from '@/components/SnarveiPanel/Lenke'
 
 interface ISnarveiPanelProps {
   links: ILink[]
@@ -23,6 +20,7 @@ interface ILink {
   showFor: ((visningskriterier: Visningskriterier[]) => boolean) | boolean
   showFullmaktWarning: boolean
   visInnloggingsModal: boolean
+  disabled?: boolean
 }
 
 export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
@@ -33,24 +31,19 @@ export const SnarveiPanel: React.FC<ISnarveiPanelProps> = async (props) => {
       {relevantLinks.length > 0 && (
         <HGrid gap="space-24" columns={{ md: 2 }}>
           {relevantLinks.map((link) => (
-            <LinkCard key={link.title}>
-              <Hide below="sm" asChild>
-                <Box asChild className={styles.iconBox} borderRadius="8" padding="space-8">
-                  <LinkCardIcon>{link.icon}</LinkCardIcon>
-                </Box>
-              </Hide>
-              <LinkCardTitle>
-                <LinkCardAnchor
-                  href={link.href!}
-                  {...getFullmaktProps(link.showFullmaktWarning)}
-                  {...showMinIdModal(props.innloggingstype, link.visInnloggingsModal)}
-                >
-                  {link.title}
-                </LinkCardAnchor>
-              </LinkCardTitle>
-              <LinkCardDescription>{link.description}</LinkCardDescription>
-            </LinkCard>
+            <Lenke
+              key={link.title}
+              tittel={link.title}
+              undertittel={link.description}
+              icon={link.icon}
+              innloggingstype={props.innloggingstype}
+              href={link.href}
+              visFullmaktmodal={link.showFullmaktWarning}
+              visInnloggingsmodal={link.visInnloggingsModal}
+              disabled={link.disabled}
+            />
           ))}
+
           <MinIdDokumentModal innloggingstype={props.innloggingstype} />
         </HGrid>
       )}

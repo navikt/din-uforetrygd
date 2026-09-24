@@ -19,7 +19,7 @@ const serverEnvSchema = z.object({
   LINK_PERSONOPPLYSNINGER: z.url(),
   LINK_OKONOMISKE_TILLEGG: z.url(),
   LINK_KLAGE: z.url(),
-  LINK_UTBETALINGER: z.url(),
+  LINK_UTBETALINGER: z.url().optional(),
   LINK_INNTEKTSPLANLEGGER: z.url(),
   LINK_SKATTETREKK: z.url(),
   LINK_FAMILIEFORHOLD: z.url(),

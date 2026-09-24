@@ -73,13 +73,14 @@ const getLinks = async (
     visInnloggingsModal: false,
   },
   {
-    href: leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid),
+    href: env('LINK_UTBETALINGER'),
     title: 'Utbetalinger',
-    description: 'Oversikt og detaljer',
+    description: env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchNone([Visningskriterier.Uforetrygd]),
     showFullmaktWarning: false,
     visInnloggingsModal: false,
+    disabled: env('MODE') === 'veileder',
   },
   {
     href: env('LINK_DOKUMENTOVERSIKT'),
