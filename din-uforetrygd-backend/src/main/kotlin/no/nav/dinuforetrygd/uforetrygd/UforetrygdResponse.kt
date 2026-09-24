@@ -18,7 +18,7 @@ data class DittUforevedtak(
     val bunnfradrag: Int?,
     val inntektstak: Int?,
     val inntektFraSkatt: Double,
-    val kompensasjonsgrad: Double?,
+    val reduksjonsprosent: Double?,
     val nettoUtbetalingMnd: Int,
     val sumAvForventedeInntekter: Long?,
     val hasBarnetilleggFellesBarn: Boolean,

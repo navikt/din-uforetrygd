@@ -196,7 +196,7 @@ export function Vedtaksdetaljer({
                   </HStack>
                 </Table.DataCell>
                 <Table.DataCell className={styles.dittVedtakTableSecondColumn} align="right">
-                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.kompensasjonsgrad} /> prosent
+                  <SkeletonLoader promise={promise} render={(verdi) => verdi?.reduksjonsprosent} /> prosent
                 </Table.DataCell>
               </Table.Row>
               <Table.Row shadeOnHover={false}>
