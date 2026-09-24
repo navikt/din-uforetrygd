@@ -10,21 +10,21 @@ import {
   PlusMinusSlashIcon,
   WalletIcon,
 } from '@navikt/aksel-icons'
-import { Heading, VStack } from '@navikt/ds-react'
+import { Heading, HGrid, VStack } from '@navikt/ds-react'
 import type React from 'react'
-import type { UforetrygdResponse } from '@/api/initiate'
-import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
-import { type Innloggingstype, Visningskriterier } from '@/const'
+import { Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
-import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import filterShowFor, { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
+import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
+import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  uforetrygdResponse: UforetrygdResponse
+  innloggingstype: Innloggingstype
   skalViseDineMuligheter: boolean
   erVergePromise: Promise<boolean>
 }
@@ -32,31 +32,46 @@ interface SnarveierProps {
 export const Snarveier: React.FC<SnarveierProps> = async ({
   visningskriterier,
   pid,
-  uforetrygdResponse,
+  innloggingstype,
   skalViseDineMuligheter,
   erVergePromise,
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
   const erVerge = await erVergePromise
 
+  const lenker = filterShowFor(
+    visningskriterier,
+    getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, erVerge)
+  )
+  if (lenker.length === 0) return null
+
   return (
-    <section aria-label="Snarveier">
-      <VStack gap="space-20">
-        <Heading level="2" size="medium">
-          Snarveier
-        </Heading>
-        <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, erVerge)}
-          visningskriterier={visningskriterier}
-          pid={pid}
-          innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-        />
-      </VStack>
-    </section>
+    <VStack as="section" gap="space-20" aria-label="Snarveier">
+      <Heading level="2" size="medium">
+        Snarveier
+      </Heading>
+      <HGrid gap="space-24" columns={{ md: 2 }}>
+        {lenker.map((link) => (
+          <Lenkekort
+            key={link.title}
+            tittel={link.title}
+            undertittel={link.description}
+            icon={link.icon}
+            innloggingstype={innloggingstype}
+            href={link.href}
+            visFullmaktmodal={link.showFullmaktWarning}
+            visInnloggingsmodal={link.visInnloggingsModal}
+            disabled={link.disabled}
+          />
+        ))}
+
+        <MinIdDokumentModal innloggingstype={innloggingstype} />
+      </HGrid>
+    </VStack>
   )
 }
 
-const getLinks = async (
+const getLinks = (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean,

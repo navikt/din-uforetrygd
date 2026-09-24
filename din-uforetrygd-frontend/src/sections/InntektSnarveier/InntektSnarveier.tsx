@@ -4,7 +4,7 @@ import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
 import styles from './inntektSnarveier.module.css'
 import { HGrid } from '@navikt/ds-react'
-import { Lenkekort } from '@/components/SnarveiPanel/Lenkekort'
+import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]

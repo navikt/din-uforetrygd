@@ -61,10 +61,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           }
           visningskriterier={visningskriterier}
         />
-        <InntektSnarveier
-          visningskriterier={visningskriterier}
-          innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-        />
+        <InntektSnarveier visningskriterier={visningskriterier} innloggingstype={uforetrygdResponse.innloggingstype} />
         <DittVedtak
           pid={params.pid}
           hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
@@ -75,7 +72,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <Snarveier
           visningskriterier={visningskriterier}
           pid={params.pid}
-          uforetrygdResponse={uforetrygdResponse}
+          innloggingstype={uforetrygdResponse.innloggingstype}
           skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
           erVergePromise={erVergePromise}
         />
