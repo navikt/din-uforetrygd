@@ -16,7 +16,6 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       href: env('LINK_LES_MER_OM_UFORETRYGD'),
       text: 'Les om uføretrygd',
       showFor: true,
-      showFullmaktWarning: false,
     },
     {
       href: env('LINK_ENDRE_KONTONUMMER'),
@@ -34,19 +33,16 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       href: env('LINK_OKONOMISKE_TILLEGG'),
       text: 'Økonomiske tillegg og andre ordninger',
       showFor: matchAll([Visningskriterier.Uforetrygd]),
-      showFullmaktWarning: false,
     },
     {
       href: env('LINK_SAKSBEHANDLINGSTIDER_UFORETRYGD'),
       text: 'Saksbehandlingstider',
       showFor: true,
-      showFullmaktWarning: false,
     },
     {
       href: env('LINK_KLAGE'),
       text: 'Klage',
       showFor: true,
-      showFullmaktWarning: false,
     },
   ]
 

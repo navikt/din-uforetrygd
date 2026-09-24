@@ -3,6 +3,7 @@ import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Behandling } from '@/api/hentSaksoversikt'
 import { env } from '@/env'
+import { Innloggingstype } from '@/const'
 
 export const initate = async (pid: string | undefined) => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
@@ -48,6 +49,6 @@ export interface UforetrygdResponse {
   sak?: Sak
   hasIverksattVedtak: boolean
   uforegrad?: number
-  innloggingstype: 'LEVEL4' | 'LEVEL3' | 'NAV' | 'SYSTEM'
+  innloggingstype: Innloggingstype
   behandling?: Behandling
 }

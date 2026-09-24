@@ -4,7 +4,6 @@ import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { Visningskriterier } from '@/const'
 import { env } from '@/env'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
-import { getFullmaktProps } from '@/utils/fullmakt'
 import styles from './relevanteSoknader.module.css'
 
 interface IRelevanteSoknaderProps {
@@ -29,19 +28,16 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
       href: digitalSøknadHvisHøyInnlogging(env('LINK_SOKNAD_UFORE'), erFullmektig, innloggingstype),
       text: 'Søknad om uføretrygd',
       showFor: true,
-      showFullmaktWarning: false,
     },
     {
       href: digitalSøknadHvisHøyInnlogging(env('LINK_SOKNAD_BARNETILLEGG'), erFullmektig, innloggingstype),
       text: 'Søknad om barnetillegg til uføretrygd',
       showFor: true,
-      showFullmaktWarning: false,
     },
     {
       href: digitalSøknadHvisHøyInnlogging(env('LINK_SOKNAD_GRADERT_UFORE'), erFullmektig, innloggingstype),
       text: 'Søknad om endret bunnfradrag ved gradert uføretrygd',
       showFor: matchAll([Visningskriterier.GradertUfore]),
-      showFullmaktWarning: false,
     },
   ]
 
@@ -61,7 +57,7 @@ export const RelevanteSoknader: React.FC<IRelevanteSoknaderProps> = async ({ vis
           {relevanteLenker.map(
             (lenke) =>
               lenke.href && (
-                <LinkCard key={lenke.href} {...getFullmaktProps(lenke.showFullmaktWarning)}>
+                <LinkCard key={lenke.href}>
                   <LinkCardTitle>
                     <LinkCardAnchor href={lenke.href}>{lenke.text}</LinkCardAnchor>
                   </LinkCardTitle>

@@ -97,8 +97,6 @@ spec:
       value: https://www.nav.no/person/kontakt-oss/tilbakemeldinger
     - name: LINK_MELD_FRA_OM_ENDRINGER
       value: https://www.nav.no/uforetrygd#melde
-    - name: LINK_UTBETALINGER
-      value: https://modiapersonoversikt.intern.nav.no/person/utbetaling
     - name: LINK_INNTEKTSPLANLEGGER
       value: https://veileder.intern.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
     - name: LINK_SKATTETREKK

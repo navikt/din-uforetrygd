@@ -10,21 +10,21 @@ import {
   PlusMinusSlashIcon,
   WalletIcon,
 } from '@navikt/aksel-icons'
-import { Heading, VStack } from '@navikt/ds-react'
+import { Heading, HGrid, VStack } from '@navikt/ds-react'
 import type React from 'react'
-import type { UforetrygdResponse } from '@/api/initiate'
-import { SnarveiPanel } from '@/components/SnarveiPanel/SnarveiPanel'
-import { type Innloggingstype, Visningskriterier } from '@/const'
+import { Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
-import { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
+import filterShowFor, { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import styles from './snarveier.module.css'
+import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
+import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  uforetrygdResponse: UforetrygdResponse
+  innloggingstype: Innloggingstype
   skalViseDineMuligheter: boolean
   erVergePromise: Promise<boolean>
 }
@@ -32,31 +32,46 @@ interface SnarveierProps {
 export const Snarveier: React.FC<SnarveierProps> = async ({
   visningskriterier,
   pid,
-  uforetrygdResponse,
+  innloggingstype,
   skalViseDineMuligheter,
   erVergePromise,
 }) => {
   const featureVisRegelverksendringerUt2026 = await isEnabled('din.uforetrygd.forside.snarvei.regelverksendringer2026')
   const erVerge = await erVergePromise
 
+  const lenker = filterShowFor(
+    visningskriterier,
+    getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, erVerge)
+  )
+  if (lenker.length === 0) return null
+
   return (
-    <section aria-label="Snarveier">
-      <VStack gap="space-20">
-        <Heading level="2" size="medium">
-          Snarveier
-        </Heading>
-        <SnarveiPanel
-          links={await getLinks(pid, featureVisRegelverksendringerUt2026, skalViseDineMuligheter, erVerge)}
-          visningskriterier={visningskriterier}
-          pid={pid}
-          innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-        />
-      </VStack>
-    </section>
+    <VStack as="section" gap="space-20" aria-label="Snarveier">
+      <Heading level="2" size="medium">
+        Snarveier
+      </Heading>
+      <HGrid gap="space-24" columns={{ md: 2 }}>
+        {lenker.map((link) => (
+          <Lenkekort
+            key={link.title}
+            tittel={link.title}
+            undertittel={link.description}
+            icon={link.icon}
+            innloggingstype={innloggingstype}
+            href={link.href}
+            visFullmaktmodal={link.showFullmaktWarning}
+            visInnloggingsmodal={link.visInnloggingsModal}
+            disabled={link.disabled}
+          />
+        ))}
+
+        <MinIdDokumentModal innloggingstype={innloggingstype} />
+      </HGrid>
+    </VStack>
   )
 }
 
-const getLinks = async (
+const getLinks = (
   pid: string | undefined,
   featureVisRegelverksendringerUt2026: boolean,
   skalViseDineMuligheter: boolean,
@@ -69,17 +84,14 @@ const getLinks = async (
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
     icon: <HandShakeHeartIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: skalViseDineMuligheter,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
-    href: leggTilPidHvisVeileder(env('LINK_UTBETALINGER'), pid),
+    href: env('LINK_UTBETALINGER'),
     title: 'Utbetalinger',
-    description: 'Oversikt og detaljer',
+    description: env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger',
     icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchNone([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
+    disabled: env('MODE') === 'veileder',
   },
   {
     href: env('LINK_DOKUMENTOVERSIKT'),
@@ -87,7 +99,6 @@ const getLinks = async (
     description: 'Alle dokumentene dine',
     icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
     visInnloggingsModal: true,
   },
   {
@@ -96,8 +107,6 @@ const getLinks = async (
     description: 'Registrer tilleggstrekk',
     icon: <PlusMinusSlashIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_FAMILIEFORHOLD'), pid),
@@ -105,8 +114,6 @@ const getLinks = async (
     description: 'Samboerforhold, sivilstand, barn',
     icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_REPRESENTASJON_TILLEGGSDATA'), pid),
@@ -115,7 +122,6 @@ const getLinks = async (
     icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: erVerge,
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: env('LINK_FULLMAKTER'),
@@ -124,7 +130,6 @@ const getLinks = async (
     icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: true,
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: env('LINK_ETTERSENDE'),
@@ -133,7 +138,6 @@ const getLinks = async (
     icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
-    visInnloggingsModal: false,
   },
   {
     href: 'https://www.nav.no/honnorkort#mangler-honnorkort',
@@ -141,8 +145,6 @@ const getLinks = async (
     description: 'Bestill nytt honnørkort hvis det gamle er mistet eller ødelagt',
     icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
     showFor: matchSome([Visningskriterier.Uforetrygd]),
-    showFullmaktWarning: false,
-    visInnloggingsModal: false,
   },
   ...(featureVisRegelverksendringerUt2026
     ? [
@@ -152,8 +154,6 @@ const getLinks = async (
           description: 'Regelendringer for uføretrygd',
           icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,
           showFor: true,
-          showFullmaktWarning: false,
-          visInnloggingsModal: false,
         },
       ]
     : []),

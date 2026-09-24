@@ -29,13 +29,14 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
   const params = await searchParams
   const uforevedtakPromise = hentDittUforevedtak(params.pid)
   const erVergePromise = sjekkOmErVerge(params.pid || '')
-  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] = await Promise.all([
-    initate(params.pid),
-    hentHarMottattVarsel(),
-    isEnabled('din-uforetrygd.dine-muligheter'),
-    isEnabled('din-uforetrygd.barnetillegg'),
-    isEnabled('din-uforetrygd.statusUforegrad')
-  ])
+  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] =
+    await Promise.all([
+      initate(params.pid),
+      hentHarMottattVarsel(),
+      isEnabled('din-uforetrygd.dine-muligheter'),
+      isEnabled('din-uforetrygd.barnetillegg'),
+      isEnabled('din-uforetrygd.statusUforegrad'),
+    ])
 
   const uforetrygdResponse = initiateResponse.uforetrygdResponse
 
@@ -60,11 +61,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
           }
           visningskriterier={visningskriterier}
         />
-        <InntektSnarveier
-          visningskriterier={visningskriterier}
-          pid={params.pid}
-          innloggingstype={uforetrygdResponse.innloggingstype as Innloggingstype}
-        />
+        <InntektSnarveier visningskriterier={visningskriterier} innloggingstype={uforetrygdResponse.innloggingstype} />
         <DittVedtak
           pid={params.pid}
           hasIverksattVedtak={uforetrygdResponse.hasIverksattVedtak}
@@ -75,7 +72,7 @@ const Home: React.FC<IHomeProps> = async ({ searchParams }) => {
         <Snarveier
           visningskriterier={visningskriterier}
           pid={params.pid}
-          uforetrygdResponse={uforetrygdResponse}
+          innloggingstype={uforetrygdResponse.innloggingstype}
           skalViseDineMuligheter={dineMuligheterIsEnabled && harMottattVarsel}
           erVergePromise={erVergePromise}
         />
