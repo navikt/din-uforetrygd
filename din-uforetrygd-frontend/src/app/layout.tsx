@@ -5,7 +5,7 @@ import { VeilederBanner } from '@/components/VeilederBanner/VeilederBanner'
 import { env } from '@/env'
 import { NaisMetaTags } from '@nais/apm/react'
 import '@navikt/ds-css'
-import { Theme } from '@navikt/ds-react'
+import { Theme, Alert } from '@navikt/ds-react'
 import '@navikt/ds-tokens/dist/tokens.css'
 import { fetchDecoratorReact } from '@navikt/nav-dekoratoren-moduler/ssr'
 import Script from 'next/script'
@@ -32,6 +32,12 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
     },
   })
 
+  const apmErrorFallback = (
+    <Alert variant="error" role="alert">
+      Noe gikk galt. Prøv igjen senere.
+    </Alert>
+  )
+
   if (env('MODE') === 'veileder') {
     return (
       <html lang="no">
@@ -41,7 +47,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
         </head>
         <body>
           <Theme>
-            <ApmErrorBoundary fallback={<p>Noe gikk galt.</p>}>
+            <ApmErrorBoundary fallback={apmErrorFallback}>
               <VeilederBanner />
               <main className="main-content" id="maincontent" tabIndex={-1}>
                 <Brødsmulesti mode="veileder" />
@@ -67,7 +73,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
       </head>
       <body>
         <Theme>
-          <ApmErrorBoundary fallback={<p>Noe gikk galt.</p>}>
+          <ApmErrorBoundary fallback={apmErrorFallback}>
             <div className="layout-wrapper">
               <Decorator.Header />
               <RepresentasjonBanner />
