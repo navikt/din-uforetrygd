@@ -17,7 +17,6 @@ import { env } from '@/env'
 import filterShowFor, { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
-import styles from './snarveier.module.css'
 import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
 import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
@@ -82,14 +81,14 @@ const getLinks = (
     title: 'Dine muligheter',
     description:
       'Har du mulighet, kan du jobbe, studere eller gjøre andre aktiviteter samtidig som du har uføretrygd. ',
-    icon: <HandShakeHeartIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <HandShakeHeartIcon />,
     showFor: skalViseDineMuligheter,
   },
   {
     href: env('LINK_UTBETALINGER'),
     title: 'Utbetalinger',
     description: env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger',
-    icon: <WalletIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <WalletIcon />,
     showFor: matchNone([Visningskriterier.Uforetrygd]),
     disabled: env('MODE') === 'veileder',
   },
@@ -97,7 +96,7 @@ const getLinks = (
     href: env('LINK_DOKUMENTOVERSIKT'),
     title: 'Se alle dokumentene dine',
     description: 'Alle dokumentene dine',
-    icon: <FolderFileIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <FolderFileIcon />,
     showFor: true,
     visInnloggingsModal: true,
   },
@@ -105,21 +104,21 @@ const getLinks = (
     href: env('LINK_SKATTETREKK'),
     title: 'Frivillig skattetrekk',
     description: 'Registrer tilleggstrekk',
-    icon: <PlusMinusSlashIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <PlusMinusSlashIcon />,
     showFor: true,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_FAMILIEFORHOLD'), pid),
     title: 'Familieforhold',
     description: 'Samboerforhold, sivilstand, barn',
-    icon: <PersonTallShortIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <PersonTallShortIcon />,
     showFor: true,
   },
   {
     href: leggTilPidHvisVeileder(env('LINK_REPRESENTASJON_TILLEGGSDATA'), pid),
     title: 'Administrer vergeforhold',
     description: 'Spesifiser brevadresse for vergemål ',
-    icon: <NotePencilIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <NotePencilIcon />,
     showFor: erVerge,
     showFullmaktWarning: true,
   },
@@ -127,7 +126,7 @@ const getLinks = (
     href: env('LINK_FULLMAKTER'),
     title: 'Dine fullmakter',
     description: 'Gi fullmakt og se dine fullmakter',
-    icon: <BulletListIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <BulletListIcon />,
     showFor: true,
     showFullmaktWarning: true,
   },
@@ -135,7 +134,7 @@ const getLinks = (
     href: env('LINK_ETTERSENDE'),
     title: 'Ettersend dokumentasjon',
     description: 'Her kan du ettersende dokumenter om saken din',
-    icon: <EnvelopeClosedIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <EnvelopeClosedIcon />,
     showFor: matchSome([Visningskriterier.SakTilBehandling, Visningskriterier.Uforetrygd]),
     showFullmaktWarning: true,
   },
@@ -143,7 +142,7 @@ const getLinks = (
     href: 'https://www.nav.no/honnorkort#mangler-honnorkort',
     title: 'Honnørkort',
     description: 'Bestill nytt honnørkort hvis det gamle er mistet eller ødelagt',
-    icon: <CardIcon fontSize="2rem" className={styles.snarveiIcon} />,
+    icon: <CardIcon />,
     showFor: matchSome([Visningskriterier.Uforetrygd]),
   },
   ...(featureVisRegelverksendringerUt2026
@@ -152,7 +151,7 @@ const getLinks = (
           href: env('LINK_REGELVERKSENDRINGER'),
           title: 'Regelverksendringer 2026',
           description: 'Regelendringer for uføretrygd',
-          icon: <ParagraphIcon fontSize="2rem" className={styles.snarveiIcon} />,
+          icon: <ParagraphIcon />,
           showFor: true,
         },
       ]

@@ -31,7 +31,7 @@ export const Lenkekort: React.FC<Props> = ({
     <LinkCard className={disabled ? styles.disabled : undefined}>
       <Hide below="sm" asChild>
         <Box asChild className={styles.iconBox} borderRadius="8" padding="space-8">
-          <LinkCardIcon>{icon}</LinkCardIcon>
+          <LinkCardIcon className={styles.icon}>{icon}</LinkCardIcon>
         </Box>
       </Hide>
       <LinkCardTitle>

@@ -21,8 +21,7 @@ body {
   }
 }
 
-.main-content > h1,
-.main-content > .tittel-wrapper {
+.main-content > h1 {
   max-width: var(--content-width);
   width: 100%;
 }
