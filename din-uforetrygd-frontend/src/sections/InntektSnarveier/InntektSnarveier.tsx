@@ -5,13 +5,19 @@ import { env } from '@/env'
 import styles from './inntektSnarveier.module.css'
 import { HGrid } from '@navikt/ds-react'
 import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
+import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 
 interface InntektSnarveierProps {
   visningskriterier: Visningskriterier[]
   innloggingstype: Innloggingstype
+  pid?: string
 }
 
-export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({ visningskriterier, innloggingstype }) => {
+export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
+  visningskriterier,
+  innloggingstype,
+  pid,
+}) => {
   if (!visningskriterier.includes(Visningskriterier.Uforetrygd)) return null
 
   return (
@@ -19,7 +25,7 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({ visnin
       <Lenkekort
         tittel="Inntektsplanlegger"
         undertittel="Meld fra om endring i inntekt"
-        href={env('LINK_INNTEKTSPLANLEGGER')}
+        href={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)}
         icon={<CalculatorIcon fontSize="2rem" className={styles.snarveiIcon} />}
         innloggingstype={innloggingstype}
       />
