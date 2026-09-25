@@ -2,7 +2,6 @@ import { CalculatorIcon, WalletIcon } from '@navikt/aksel-icons'
 import type React from 'react'
 import { type Innloggingstype, Visningskriterier } from '@/const'
 import { env } from '@/env'
-import styles from './inntektSnarveier.module.css'
 import { HGrid } from '@navikt/ds-react'
 import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
@@ -26,7 +25,7 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
         tittel="Inntektsplanlegger"
         undertittel="Meld fra om endring i inntekt"
         href={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)}
-        icon={<CalculatorIcon fontSize="2rem" className={styles.snarveiIcon} />}
+        icon={<CalculatorIcon />}
         innloggingstype={innloggingstype}
       />
       <Lenkekort
@@ -35,7 +34,7 @@ export const InntektSnarveier: React.FC<InntektSnarveierProps> = async ({
           env('MODE') === 'borger' ? 'Oversikt og detaljer' : 'Veiledere må bruke Salesforce for utbetalinger'
         }
         href={env('LINK_UTBETALINGER')}
-        icon={<WalletIcon fontSize="2rem" className={styles.snarveiIcon} />}
+        icon={<WalletIcon />}
         innloggingstype={innloggingstype}
         disabled={env('MODE') === 'veileder'}
       />
