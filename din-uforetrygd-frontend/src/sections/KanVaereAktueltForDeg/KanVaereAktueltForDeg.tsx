@@ -4,7 +4,6 @@ import { Visningskriterier } from '@/const'
 import { env } from '@/env'
 import filterShowFor, { matchAll } from '@/utils/filterShowFor/filterShowFor'
 import { getFullmaktProps } from '@/utils/fullmakt'
-import styles from './kanVaereAktueltForDeg.module.css'
 
 interface IKanVaereAktueltForDegProps {
   visningskriterier: Visningskriterier[]
@@ -55,12 +54,7 @@ export const KanVaereAktueltForDeg: React.FC<IKanVaereAktueltForDegProps> = (pro
       </Heading>
       <LinkList>
         {aktueltForDegLenker.map((link) => (
-          <Link
-            className={styles.aktueltForDegLenker}
-            key={link.href}
-            href={link.href}
-            {...getFullmaktProps(link.showFullmaktWarning)}
-          >
+          <Link key={link.href} href={link.href} {...getFullmaktProps(link.showFullmaktWarning)}>
             {link.text}
           </Link>
         ))}

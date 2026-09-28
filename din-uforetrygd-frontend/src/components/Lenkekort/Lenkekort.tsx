@@ -4,7 +4,6 @@ import styles from '@/components/Lenkekort/lenkekort.module.css'
 import { LinkCardAnchor, LinkCardDescription, LinkCardIcon, LinkCardTitle } from '@navikt/ds-react/LinkCard'
 import { getFullmaktProps } from '@/utils/fullmakt'
 import { showMinIdModal } from '@/components/MidIdDokumentModal/showMinIdModal'
-import type { Innloggingstype } from '@/const'
 
 interface Props {
   tittel: string
@@ -13,7 +12,6 @@ interface Props {
   icon: React.ReactNode
   visFullmaktmodal?: boolean
   visInnloggingsmodal?: boolean
-  innloggingstype: Innloggingstype
   disabled?: boolean
 }
 
@@ -24,7 +22,6 @@ export const Lenkekort: React.FC<Props> = ({
   icon,
   visFullmaktmodal = false,
   visInnloggingsmodal = false,
-  innloggingstype,
   disabled = false,
 }) => {
   return (
@@ -41,7 +38,7 @@ export const Lenkekort: React.FC<Props> = ({
           <LinkCardAnchor
             href={href || ''}
             {...getFullmaktProps(visFullmaktmodal)}
-            {...showMinIdModal(innloggingstype, visInnloggingsmodal)}
+            {...showMinIdModal(visInnloggingsmodal)}
           >
             {tittel}
           </LinkCardAnchor>

@@ -7,7 +7,7 @@ export const mockData: Record<string, UforetrygdResponse> = {
     pid: '81549300',
     sak: {
       status: 'LOPENDE',
-      sakId: 519023581092,
+      sakId: '519023581092',
     },
     hasIverksattVedtak: true,
     uforegrad: 100,
@@ -87,7 +87,7 @@ export const mockData: Record<string, UforetrygdResponse> = {
     pid: '81549300',
     sak: {
       status: 'LOPENDE',
-      sakId: 519023581092,
+      sakId: '519023581092',
     },
     hasIverksattVedtak: true,
     uforegrad: 100,

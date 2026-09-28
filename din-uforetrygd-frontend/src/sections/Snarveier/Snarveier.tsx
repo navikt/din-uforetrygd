@@ -12,18 +12,16 @@ import {
 } from '@navikt/aksel-icons'
 import { Heading, HGrid, VStack } from '@navikt/ds-react'
 import type React from 'react'
-import { Innloggingstype, Visningskriterier } from '@/const'
+import { Visningskriterier } from '@/const'
 import { env } from '@/env'
 import filterShowFor, { matchNone, matchSome } from '@/utils/filterShowFor/filterShowFor'
 import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 import { isEnabled } from '@/utils/unleash'
 import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
-import { MinIdDokumentModal } from '@/components/MidIdDokumentModal/MinIdDokumentModal'
 
 interface SnarveierProps {
   visningskriterier: Visningskriterier[]
   pid: string | undefined
-  innloggingstype: Innloggingstype
   skalViseDineMuligheter: boolean
   erVergePromise: Promise<boolean>
 }
@@ -31,7 +29,6 @@ interface SnarveierProps {
 export const Snarveier: React.FC<SnarveierProps> = async ({
   visningskriterier,
   pid,
-  innloggingstype,
   skalViseDineMuligheter,
   erVergePromise,
 }) => {
@@ -56,15 +53,12 @@ export const Snarveier: React.FC<SnarveierProps> = async ({
             tittel={link.title}
             undertittel={link.description}
             icon={link.icon}
-            innloggingstype={innloggingstype}
             href={link.href}
             visFullmaktmodal={link.showFullmaktWarning}
             visInnloggingsmodal={link.visInnloggingsModal}
             disabled={link.disabled}
           />
         ))}
-
-        <MinIdDokumentModal innloggingstype={innloggingstype} />
       </HGrid>
     </VStack>
   )

@@ -25,7 +25,7 @@ export function Vedtaksdetaljer({
   const promise = dittUforevedtakPromise
 
   return (
-    <Box>
+    <Box as="section" aria-label="Detaljer om saken din">
       <HGrid gap={{ xs: 'space-32', md: 'space-0 space-40' }} columns={{ md: 2 }}>
         <VStack>
           <Heading size="medium">Om saken din</Heading>

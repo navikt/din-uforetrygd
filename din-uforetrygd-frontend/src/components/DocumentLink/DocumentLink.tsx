@@ -4,7 +4,6 @@ import { Events } from '@navikt/nav-dekoratoren-moduler'
 import type React from 'react'
 import { readableFileSize } from '@/components/DocumentLink/utils'
 import { umami } from '@/utils/umami'
-import styles from './documentLink.module.css'
 
 interface IDocumentLink {
   href: string
@@ -18,7 +17,6 @@ export const DocumentLink: React.FC<IDocumentLink> = (props) => {
       <Link
         href={props.href}
         target="_blank"
-        className={styles.link}
         onClick={(e) => {
           e.stopPropagation()
           umami(Events.LAST_NED, { type: 'Saksdokument', tema: 'Uføretrygd', tittel: 'Dokument' })
