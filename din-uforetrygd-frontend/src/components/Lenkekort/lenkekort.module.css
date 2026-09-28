@@ -1,3 +1,8 @@
+.icon {
+  color: var(--ax-text-accent-subtle);
+  font-size: 2rem;
+}
+
 .iconBox {
   background-color: var(--ax-bg-accent-moderateA);
 }

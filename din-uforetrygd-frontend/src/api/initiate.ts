@@ -41,7 +41,7 @@ export interface Dokument {
 
 export interface Sak {
   status?: 'OPPRETTET' | 'TIL_BEHANDLING' | 'AVSLUTTET' | 'LOPENDE'
-  sakId?: number
+  sakId?: string
 }
 
 export interface UforetrygdResponse {
