@@ -9,10 +9,11 @@ import {
   PersonSuitFillIcon,
 } from '@navikt/aksel-icons'
 import { BodyShort, Button, Dialog, Heading, HGrid, HStack, LinkCard, List, VStack } from '@navikt/ds-react'
-import { openChatbot } from '@navikt/nav-dekoratoren-moduler'
+import { Events, openChatbot } from '@navikt/nav-dekoratoren-moduler'
 import ExpansionCardMedIkon from '@/components/ExpansionCardMedIkon/ExpansionCardMedIkon'
 import useIsFullmakt from '@/hooks/useIsFullmakt'
 import Divider from '@/sections/ForsideBehandling/Divider'
+import { umami } from '@/utils/umami'
 import styles from './dineMuligheter.module.css'
 
 interface Props {
@@ -43,16 +44,20 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
               <ExpansionCardMedIkon
                 ikon={<MobileFillIcon color={'#7342B6'} fontSize={'3rem'} />}
                 tittel="Ring oss"
-                undertittel="Hverdager 09–15"
-                defaultOpen
+                undertittel="Hverdager 9–15"
               >
                 <HGrid align="center" gap="space-24" columns={{ xs: 2, md: 1 }}>
                   <VStack gap="space-8" align="start">
                     <Heading size="medium">55 55 33 30</Heading>
-                    <BodyShort>Du kommer direkte til en veileder som kan uføretrygd</BodyShort>
+                    <BodyShort>Du kommer direkte til en veileder som kan uføretrygd.</BodyShort>
                   </VStack>
                   <VStack justify="center" className={styles.ringKnappWrapper}>
-                    <Button as="a" href="tel:55 55 33 30" style={{ maxWidth: 'fit-content' }}>
+                    <Button
+                      as="a"
+                      href="tel:55 55 33 30"
+                      style={{ maxWidth: 'fit-content' }}
+                      onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Ring nå' })}
+                    >
                       Ring nå
                     </Button>
                   </VStack>
@@ -67,7 +72,14 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   <BodyShort>
                     Du kan velge om du vil snakke med NavBot (døgnåpen) eller en veileder (kl. 9–15 på hverdager).
                   </BodyShort>
-                  <Button onClick={() => openChatbot()}>Start chatten</Button>
+                  <Button
+                    onClick={() => {
+                      umami(Events.KNAPP_KLIKKET, { tekst: 'Chatbot' })
+                      openChatbot()
+                    }}
+                  >
+                    Start chatten
+                  </Button>
                 </VStack>
               </ExpansionCardMedIkon>
               <LinkCard aria-label="Skriv til oss" size={'small'}>
@@ -75,11 +87,15 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   <EnvelopeClosedFillIcon color={'#7342B6'} fontSize={'3rem'} />
                 </LinkCard.Icon>
                 <LinkCard.Title>
-                  <LinkCard.Anchor href={skrivTilOssLenke} data-fullmakt-modal={true}>
+                  <LinkCard.Anchor
+                    href={skrivTilOssLenke}
+                    data-fullmakt-modal={true}
+                    onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Skriv til oss' })}
+                  >
                     Skriv til oss
                   </LinkCard.Anchor>
                 </LinkCard.Title>
-                <LinkCard.Description>Du får svar innen 1–2 dager</LinkCard.Description>
+                <LinkCard.Description>Du får svar i løpet av få dager</LinkCard.Description>
               </LinkCard>
               <ExpansionCardMedIkon
                 ikon={<PersonSuitFillIcon color={'#7342B6'} fontSize={'3rem'} />}
@@ -97,7 +113,9 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                   </List>
                   <Dialog>
                     <Dialog.Trigger>
-                      <Button>Start oppfølging</Button>
+                      <Button onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Start oppfølging flyt' })}>
+                        Start oppfølging
+                      </Button>
                     </Dialog.Trigger>
                     <Dialog.Popup position="center">
                       {erFullmakt ? (
@@ -139,13 +157,19 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
                           </Dialog.Body>
                           <Dialog.Footer>
                             <Dialog.CloseTrigger>
-                              <Button variant="secondary">Avbryt</Button>
+                              <Button
+                                variant="secondary"
+                                onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Avbryt oppfølging' })}
+                              >
+                                Avbryt
+                              </Button>
                             </Dialog.CloseTrigger>
                             <Button
                               variant="primary"
                               as="a"
                               href={startArbeidsoppfølgingLenke}
                               arbeidsrettet-oppfolging
+                              onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Start oppfølging nå' })}
                             >
                               Ja, start nå
                             </Button>
@@ -162,6 +186,7 @@ const SnakkMedOss = ({ pid, mode, skrivTilOssLenke, startArbeidsoppfølgingLenke
               as="a"
               variant="secondary"
               href={`/uforetrygd/selvbetjening/dine-muligheter${mode === 'veileder' ? `?pid=${pid}` : ''}`}
+              onClick={() => umami(Events.KNAPP_KLIKKET, { tekst: 'Gå tilbake til snakk med oss' })}
             >
               Gå tilbake
             </Button>

@@ -51,7 +51,7 @@ jobs:
         run: npm prune --production
 
       - name: docker-build-push
-        uses: nais/docker-build-push@0e73849f69ff260ee27597553c0a7848ca4e9795 # v0
+        uses: nais/docker-build-push@423a915c9b72edf2ba848b88171ccb0489e2a40a # v0
         id: docker-build-push
         with:
           team: ufore
@@ -90,7 +90,7 @@ jobs:
           severity: 'HIGH,CRITICAL'
           limit-severities-for-sarif: true
       - name: Upload results to GitHub Security
-        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
         with:
           sarif_file: 'trivy.sarif'
 
@@ -106,7 +106,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Deploy
-        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # v2
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: din-uforetrygd-frontend/.nais/prod-borger.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml
@@ -136,7 +136,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Deploy
-        uses: nais/deploy/actions/deploy@027a91857992525139798892f2804b0ca21f4af6 # v2
+        uses: nais/deploy/actions/deploy@1de80da70ad26556ecdc5964a8b7ec3bbed98120 # v2
         env:
           CLUSTER: prod-gcp
           RESOURCE: din-uforetrygd-frontend/.nais/prod-veileder.yml,din-uforetrygd-frontend/.nais/unleash-prod.yml

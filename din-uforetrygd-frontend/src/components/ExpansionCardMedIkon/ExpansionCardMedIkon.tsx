@@ -3,6 +3,8 @@
 import { HStack } from '@navikt/ds-react'
 import { ExpansionCard } from '@navikt/ds-react/ExpansionCard'
 import type { ReactNode } from 'react'
+import { umami } from '@/utils/umami'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 
 interface Props {
   ikon: ReactNode
@@ -13,7 +15,16 @@ interface Props {
 }
 export default function ExpansionCardMedIkon({ ikon, tittel, undertittel = '', defaultOpen = false, children }: Props) {
   return (
-    <ExpansionCard aria-label={tittel} size="small" defaultOpen={defaultOpen}>
+    <ExpansionCard
+      aria-label={tittel}
+      size="small"
+      defaultOpen={defaultOpen}
+      onToggle={(open) =>
+        open
+          ? umami(Events.UTVIDBART_KORT_APNET, { tittel: tittel })
+          : umami(Events.UTVIDBART_KORT_LUKKET, { tittel: tittel })
+      }
+    >
       <ExpansionCard.Header>
         <HStack wrap={false} gap="space-16" align="center">
           <div>{ikon}</div>

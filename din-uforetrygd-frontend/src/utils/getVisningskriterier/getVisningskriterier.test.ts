@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import type { Sak, UforetrygdResponse } from '@/api/initiate'
-import { Visningskriterier } from '@/const'
+import { Innloggingstype, Visningskriterier } from '@/const'
 import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 
 const defaultUforeResponse: UforetrygdResponse = {
   pid: '81549300',
-  innloggingstype: 'LEVEL4',
+  innloggingstype: Innloggingstype.LEVEL4,
   sak: undefined,
   hasIverksattVedtak: false,
   uforegrad: undefined,

@@ -3,11 +3,13 @@
 import { BodyShort, Box, Pagination, VStack } from '@navikt/ds-react'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import { umami } from '@/utils/umami'
 import Bilde1 from './Bilde1.svg'
 import Bilde2 from './Bilde2.svg'
 import Bilde3 from './Bilde3.svg'
 import Bilde4 from './Bilde4.svg'
 import styles from './fortellingkarusell.module.css'
+import { Events } from '@navikt/nav-dekoratoren-moduler'
 
 const slides = [
   {
@@ -44,6 +46,8 @@ export default function FortellingKarusell() {
       left: karusell.clientWidth * (page - 1),
       behavior: 'smooth',
     })
+
+    umami(Events.PAGINERING_SIDE_VALGT)
   }
 
   const oppdaterKarusellState = () => {
@@ -60,7 +64,7 @@ export default function FortellingKarusell() {
         background={'meta-purple-soft'}
         width={'100%'}
         paddingInline={{ xs: 'space-24', md: 'space-48' }}
-        paddingBlock={{ xs: 'space-0', md: 'space-24' }}
+        paddingBlock="space-24"
       >
         <section
           ref={karusellRef}

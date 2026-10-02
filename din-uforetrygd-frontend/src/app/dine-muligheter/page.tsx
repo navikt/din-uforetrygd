@@ -3,6 +3,7 @@ import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
 import { env } from '@/env'
 import DineMuligheter from '@/sections/DineMuligheter/DineMuligheter'
 import { isEnabled } from '@/utils/unleash'
+import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
 
 interface Props {
   searchParams: Promise<{ pid?: string }>
@@ -16,7 +17,11 @@ const DineMuligheterPage = async ({ searchParams }: Props) => {
     const harMottattVarsel = await hentHarMottattVarsel()
     if (harMottattVarsel) {
       return (
-        <DineMuligheter pid={params.pid} mode={env('MODE')} inntektsplanleggerLenke={env('LINK_INNTEKTSPLANLEGGER')} />
+        <DineMuligheter
+          pid={params.pid}
+          mode={env('MODE')}
+          inntektsplanleggerLenke={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), params.pid)}
+        />
       )
     }
   }

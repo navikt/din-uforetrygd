@@ -9,7 +9,7 @@ test.describe('Forbidden login level scenario', () => {
 
   test('should not display main uføretrygd content', async ({ page }) => {
     const content = await page.content()
-    expect(/uføregrad|inntektsgrense|vedtak/i.test(content)).toBeFalsy()
+    expect(/uføregrad|bunnfradrag|vedtak/i.test(content)).toBeFalsy()
   })
 
   test('displays login upgrade instructions', async ({ page }) => {

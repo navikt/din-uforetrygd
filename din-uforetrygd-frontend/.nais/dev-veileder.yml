@@ -103,8 +103,6 @@ spec:
       value: https://www.ansatt.dev.nav.no/person/kontakt-oss/tilbakemeldinger
     - name: LINK_MELD_FRA_OM_ENDRINGER
       value: https://www.ansatt.dev.nav.no/uforetrygd#melde
-    - name: LINK_UTBETALINGER
-      value: https://pensjon-pselv-q2.dev.adeo.no/pselv/publisering/mineutbetalinger.jsf?simpleMode=true&_brukerId=PID&_loggedOnName=USER&context=ut
     - name: LINK_INNTEKTSPLANLEGGER
       value: https://veileder.ansatt.dev.nav.no/uforetrygd/selvbetjening/inntektsplanleggeren?pid=PID
     - name: LINK_SKATTETREKK
@@ -129,8 +127,6 @@ spec:
       value: api://dev-gcp.ufore.din-uforetrygd-backend/.default
     - name: UFORE_VARSLER_SCOPE
       value: api://dev-gcp.ufore.ufore-varsler/.default
-    - name: FARO_URL
-      value: https://telemetry.ekstern.dev.nav.no/collect
     - name: LINK_SKRIV_TIL_OSS
       value: https://innboks.dev.nav.no/s/
     - name: LINK_START_ARBEIDSOPPFOLGING

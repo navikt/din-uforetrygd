@@ -98,13 +98,13 @@ class PenClientTest : WebClientTest() {
                     uforegrad = 50,
                     virkFom = LocalDate.parse("2020-01-01"),
                     uforetidspunkt = LocalDate.parse("2020-01-01"),
-                    inntektsgrense = 140_000,
+                    bunnfradrag = 140_000,
                     hasBarnetilleggFellesBarn = false,
                     hasBarnetilleggSaerkullsbarn = false,
                     hasGjenlevendeTillegg = false,
                     hasVarigTilrettelagtArbeid = false,
                     inntektstak = 200000,
-                    kompensasjonsgrad = 65.5,
+                    reduksjonsprosent = 65.5,
                     nettoUtbetalingMnd = 20000
                 )
             ), runBlocking { penClient.getVedtakssammendragResponse(PID) }
@@ -188,13 +188,13 @@ class PenClientTest : WebClientTest() {
                             "uforegrad": 50,
                             "virkFom": "2020-01-01",
                             "uforetidspunkt" : "2020-01-01",
-                            "inntektsgrense": 140000,
+                            "bunnfradrag": 140000,
                             "hasBarnetilleggFellesBarn": false,
                             "hasBarnetilleggSaerkullsbarn": false,
                             "hasGjenlevendeTillegg": false,
                             "hasVarigTilrettelagtArbeid": false,
                             "inntektstak": 200000,
-                            "kompensasjonsgrad": 65.5,
+                            "reduksjonsprosent": 65.5,
                             "nettoUtbetalingMnd": 20000
                         }
                     }

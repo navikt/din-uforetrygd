@@ -3,7 +3,7 @@
   margin-inline: calc(50% - 50vw);
   justify-content: center;
   display: flex;
-  padding: var(--ax-space-48) 0;
+  padding: var(--ax-space-40) 0;
 }
 
 .rosaContainer {
@@ -76,6 +76,14 @@
   max-width: fit-content;
 }
 
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: 100%;
+  border: none;
+  margin-bottom: var(--ax-space-36);
+}
+
 @media (min-width: 768px) {
   .dineMuligheterWrapper a[role="button"] {
     max-width: 21rem;
@@ -83,5 +91,9 @@
 
   .ringKnappWrapper {
     align-items: start;
+  }
+
+  .rosaContainer {
+    padding-top: var(--ax-space-64);
   }
 }

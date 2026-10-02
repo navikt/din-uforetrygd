@@ -7,8 +7,6 @@ const serverEnvSchema = z.object({
   UFORE_VARSLER: z.string(),
   DIN_UFORETRYGD_BACKEND_SCOPE: z.string(),
   UFORE_VARSLER_SCOPE: z.string(),
-  FARO_URL: z.string(),
-  NAIS_APP_NAME: z.string(),
   REPRESENTASJON_BANNER: z.url().optional(),
 
   LINK_SOKNAD_GRADERT_UFORE: z.url(),
@@ -19,7 +17,7 @@ const serverEnvSchema = z.object({
   LINK_PERSONOPPLYSNINGER: z.url(),
   LINK_OKONOMISKE_TILLEGG: z.url(),
   LINK_KLAGE: z.url(),
-  LINK_UTBETALINGER: z.url(),
+  LINK_UTBETALINGER: z.url().optional(),
   LINK_INNTEKTSPLANLEGGER: z.url(),
   LINK_SKATTETREKK: z.url(),
   LINK_FAMILIEFORHOLD: z.url(),

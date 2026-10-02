@@ -7,10 +7,10 @@ export interface DittUforevedtak {
   uforegrad: number
   virkFom?: string
   uforetidspunkt?: string
-  inntektsgrense?: number
+  bunnfradrag?: number
   inntektstak?: number
   inntektFraSkatt: number
-  kompensasjonsgrad?: number
+  reduksjonsprosent?: number
   nettoUtbetalingMnd: number
   sumAvForventedeInntekter?: number
   hasBarnetilleggFellesBarn: boolean
