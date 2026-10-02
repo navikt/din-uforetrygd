@@ -1,0 +1,31 @@
+{
+  "saksammendrag": [
+    {
+      "sakId": 519023581092,
+      "sakType": "UFOREP",
+      "sakStatus": "LOPENDE",
+      "fomDato": null,
+      "tomDato": null,
+      "enhetId": "4488"
+    }
+  ],
+  "vedtakssammendrag": {
+    "hasIverksattVedtak": true,
+    "vedtakssammendrag": {
+      "uforegrad": 50,
+      "virkFom": "2024-12-01",
+      "uforetidspunkt": "2020-10-01",
+      "inntektsgrense": 49611,
+      "inntektstak": 200000,
+      "kompensasjonsgrad": 65.0,
+      "nettoUtbetalingMnd": 20000,
+      "hasBarnetilleggFellesBarn": false,
+      "hasBarnetilleggSaerkullsbarn": false,
+      "hasGjenlevendeTillegg": false,
+      "hasVarigTilrettelagtArbeid": false
+    }
+  },
+  "forventedeInntekter": {
+    "sumAvForventedeInntekter": 0
+  }
+}

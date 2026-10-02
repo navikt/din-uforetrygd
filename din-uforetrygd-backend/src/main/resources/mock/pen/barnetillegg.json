@@ -1,0 +1,52 @@
+{
+  "saksammendrag": [
+    {
+      "sakId": 519023581092,
+      "sakType": "UFOREP",
+      "sakStatus": "LOPENDE",
+      "fomDato": null,
+      "tomDato": null,
+      "enhetId": "4488"
+    }
+  ],
+  "vedtakssammendrag": {
+    "hasIverksattVedtak": true,
+    "vedtakssammendrag": {
+      "uforegrad": 100,
+      "virkFom": "2024-12-09",
+      "uforetidspunkt": "2020-10-01",
+      "inntektsgrense": 49611,
+      "inntektstak": 200000,
+      "kompensasjonsgrad": 65.0,
+      "nettoUtbetalingMnd": 20000,
+      "hasBarnetilleggFellesBarn": true,
+      "hasBarnetilleggSaerkullsbarn": false,
+      "hasGjenlevendeTillegg": false,
+      "hasVarigTilrettelagtArbeid": false
+    }
+  },
+  "forventedeInntekter": {
+    "sumAvForventedeInntekter": 150000
+  },
+  "apentKrav": null,
+  "vedtakIverksattSiste7Dager": [
+    {
+      "vedtakId": 2,
+      "vedtakstype": "REVURD",
+      "vedtakstatus": "IVERKS",
+      "vedtaksdato": "2025-12-14",
+      "avslag": false,
+      "krav": {
+        "kravGjelder": "REVURD",
+        "status": "MOTTATT",
+        "arsak": "SOKNAD_BT",
+        "mottattDato": "2025-12-14"
+      },
+      "beregning": {
+        "nettoUforetrygdPerManed": 123456,
+        "nettoBarnetilleggPerManed": 1234
+      },
+      "avslattForutgaendeMedlemskap": true
+    }
+  ]
+}
