@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
  * et ikke-null beløp (12 500 kr/måned), i tråd med tallstørrelsene brukt i
  * din-uforetrygd-frontend sine MSW-mocker (sumAvForventedeInntekter: 150 000).
  */
-@Profile("local")
+@Profile("mock")
 @Component
 class InntektskomponentenClientMock : InntektskomponentenClient {
 

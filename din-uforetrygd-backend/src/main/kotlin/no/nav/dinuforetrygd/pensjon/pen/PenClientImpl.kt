@@ -20,7 +20,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.util.UriComponentsBuilder
 
-@Profile("!local | local-q2")
+@Profile("!mock")
 @Component
 class PenClientImpl(
     @param:Value("\${pen.endpoint.url}") private val url: String,

@@ -18,7 +18,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriComponentsBuilder
 
-@Profile("!local")
+@Profile("!mock")
 @Component
 class RepresentasjonClientImpl(
     @Value("\${fullmakt.endpoint.url}") private val baseUrl: String,

@@ -3,7 +3,7 @@ package no.nav.dinuforetrygd.fullmakt
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("local")
+@Profile("mock")
 @Component
 class RepresentasjonClientMock : RepresentasjonClient {
 
@@ -11,7 +11,7 @@ class RepresentasjonClientMock : RepresentasjonClient {
         representertPid: String,
         representantPid: String
     ): RepresentasjonsforholdValidity = RepresentasjonsforholdValidity(
-        hasValidRepresentasjonsforhold = false,
+        hasValidRepresentasjonsforhold = true,
         representertNavn = null,
         representertPidKryptert = "",
         representertPid = representertPid

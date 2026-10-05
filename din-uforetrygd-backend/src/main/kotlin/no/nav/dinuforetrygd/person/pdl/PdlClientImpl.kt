@@ -19,7 +19,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 
-@Profile("!local")
+@Profile("!mock")
 @Component
 class PdlClientImpl(
     @Value("\${pdl.endpoint.url}") private val url: String,

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component
  * eksponerer en slik bean (se f.eks. SetPidFilter/TokenXService, som også lager sin egen
  * ObjectMapper() direkte - samme etablerte mønster i denne kodebasen).
  */
-@Profile("local")
+@Profile("mock")
 @Component
 final class MockDataLoader {
 

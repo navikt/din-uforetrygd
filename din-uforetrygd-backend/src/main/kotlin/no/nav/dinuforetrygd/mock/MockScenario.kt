@@ -16,7 +16,7 @@ const val DEFAULT_SCENARIO = "default"
  * HttpServletRequest injiseres her som en request-scoped proxy av Spring (samme mønster
  * som brukes for MDC-context ellers i kodebasen) - trygt å injisere i en singleton-bean.
  */
-@Profile("local")
+@Profile("mock")
 @Component
 class MockScenario(private val request: HttpServletRequest) {
 

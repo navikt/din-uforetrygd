@@ -23,7 +23,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Profile("!local")
+@Profile("!mock")
 @Component
 class InntektskomponentenClientImpl(
     private val webClient: WebClient,

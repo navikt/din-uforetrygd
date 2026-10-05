@@ -3,7 +3,7 @@ package no.nav.dinuforetrygd.person.pdl
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("local")
+@Profile("mock")
 @Component
 class PdlClientMock : PdlClient {
 

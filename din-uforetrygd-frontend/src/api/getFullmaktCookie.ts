@@ -4,8 +4,12 @@ import { cookies } from 'next/headers'
 export const getFullmaktCookie = async () => {
   const cookie = await cookies()
   const fullmaktCookie = cookie.get('nav-obo')
-  if (!fullmaktCookie) return undefined
 
-  const parsedCookie = `${fullmaktCookie.name}=${fullmaktCookie.value}`
-  return parsedCookie
+  if (!fullmaktCookie) {
+    if (process.env.NODE_ENV === 'development') {
+      return `nav-obo=${process.env.LOCAL_PID}`
+    }
+    return undefined
+  }
+  return `${fullmaktCookie.name}=${fullmaktCookie.value}`
 }
