@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others-on-fail \"node --env-file=.env.local server/server.ts \"",
-    "mock": "ENABLE_MSW=true next dev",
+    "mock": "concurrently --kill-others-on-fail \"tsx mock/server/mockServer.ts\" \"MOCK_SERVER=true next dev\"",
     "build": "npm run test && next build && npm run build:server",
     "build:server": "tsc -p tsconfig.server.json",
     "start": "next start",
@@ -53,11 +53,10 @@
     "@types/node": "^26.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "bun": "^1.4.2",
     "concurrently": "^10.0.3",
     "cors": "^2.8.6",
-    "msw": "^2.15.0",
     "playwright": "^1.62.1",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.0.1"
   },
