@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others-on-fail \"node --env-file=.env.local server/server.ts \"",
-    "mock": "concurrently --kill-others-on-fail \"tsx mock/server/mockServer.ts\" \"MOCK_SERVER=true next dev\"",
+    "mock": "concurrently --kill-others-on-fail \"tsx mock/server/mockServer.ts\" \"MOCK_SERVER=true UNLEASH_SERVER_API_URL=http://localhost:8080 next dev\"",
     "build": "npm run test && next build && npm run build:server",
     "build:server": "tsc -p tsconfig.server.json",
     "start": "next start",

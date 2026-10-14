@@ -4,6 +4,7 @@ const localFlags = {
   'din-uforetrygd.barnetillegg': true,
   'din-uforetrygd.dine-muligheter': true,
   'din.uforetrygd.forside.snarvei.regelverksendringer2026': true,
+  'din-uforetrygd.etteroppgjor-informasjon': true,
 }
 
 const features = Object.entries(localFlags).map(([name, enabled]) => ({

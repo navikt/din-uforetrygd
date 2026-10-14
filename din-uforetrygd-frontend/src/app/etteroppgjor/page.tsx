@@ -1,8 +1,13 @@
 import { BodyShort, Button, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
 import styles from './etteroppgjor.module.css'
+import { isEnabled } from '@/utils/unleash'
 
 const InformasjonOmEtteroppgjor = async () => {
+  const skalVise = await isEnabled('din-uforetrygd.etteroppgjor-informasjon')
+
+  if (!skalVise) return null
+
   return (
     <div className={styles.etteroppgjorContent}>
       <VStack gap="space-24">
