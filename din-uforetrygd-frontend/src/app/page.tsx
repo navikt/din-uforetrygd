@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, BodyShort, Box, Heading, Link, VStack } from '@navikt/ds-react'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
@@ -65,6 +65,15 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
         visningskriterier={visningskriterier}
       />
       <InntektSnarveier visningskriterier={visningskriterier} pid={pid} />
+      <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
+        <VStack gap="space-8">
+          <Heading level="2" size="medium">
+            Nå kommer etteroppgjøret
+          </Heading>
+          <BodyShort>Fra 20. oktober starter vi å sende ut etteroppgjør. </BodyShort>
+          <Link href="/uforetrygd/selvbetjening/etteroppgjor">Du kan lese mer om etteroppgjøret her.</Link>
+        </VStack>
+      </Box>
       {uforetrygdResponse.hasIverksattVedtak && (
         <Vedtaksdetaljer
           dittUforevedtakPromise={uforevedtakPromise}
@@ -73,6 +82,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
           arstall={new Date().getFullYear()}
         />
       )}
+
       <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId} pid={pid} />
       <Snarveier
         visningskriterier={visningskriterier}
