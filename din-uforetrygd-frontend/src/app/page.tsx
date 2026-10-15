@@ -78,7 +78,10 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
             <Heading level="2" size="medium">
               Nå kommer etteroppgjøret
             </Heading>
-            <BodyShort>Fra 20. oktober starter vi å sende ut etteroppgjør. </BodyShort>
+            <BodyShort>
+              Har du inntekt i tillegg til uføretrygden, kan du få etteroppgjør. Vi sender ut etteroppgjør fra 20.
+              oktober. Hvis du får etteroppgjør, får du brev fra oss.{' '}
+            </BodyShort>
             <Link href="/uforetrygd/selvbetjening/etteroppgjor">Du kan lese mer om etteroppgjøret her.</Link>
           </VStack>
         </Box>

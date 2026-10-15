@@ -20,12 +20,12 @@ const InformasjonOmEtteroppgjor = async () => {
             beløp i uføretrygd året før.{' '}
           </BodyShort>
           <BodyShort spacing>
-            Har du hatt en annen inntekt enn den vi brukte da vi beregnet uføretrygden din, beregner vi uføretrygden din
-            for det aktuelle året på ny. Dette kalles etteroppgjør.
+            Har du hatt en annen inntekt enn den vi brukte da vi beregnet utbetalingen din, gjør vi en ny beregning for
+            det aktuelle året. Dette kalles etteroppgjør.
           </BodyShort>
           <BodyShort spacing>Etteroppgjøret har mange likheter med skatteoppgjøret:</BodyShort>
           <List as="ul" className={styles.etteroppgjorList}>
-            <ListItem>Har du fått utbetalt for lite, får du penger tilbake fra oss.</ListItem>
+            <ListItem>Har du fått utbetalt for lite, får du penger tilbake.</ListItem>
             <ListItem>Har du fått utbetalt for mye, må du betale tilbake.</ListItem>
             <ListItem>
               Har du fått utbetalt riktig beløp hører du ikke fra oss, og du trenger ikke å gjøre noe.
@@ -38,7 +38,7 @@ const InformasjonOmEtteroppgjor = async () => {
           </Heading>
           <BodyShort spacing>
             Vi jobber med etteroppgjøret over noen måneder hver høst. Derfor får ikke alle etteroppgjør samtidig. Får du
-            et varsel fra oss om etteroppgjør er det viktig at du ser over at beregningen vi har gjort stemmer. Finner
+            et varsel fra oss om etteroppgjør, er det viktig at du ser over at beregningen vi har gjort stemmer. Finner
             du feil eller inntekter som skal holdes utenfor må du gi oss beskjed, så vi kan beregne på nytt.
           </BodyShort>
         </section>
@@ -47,41 +47,43 @@ const InformasjonOmEtteroppgjor = async () => {
             Disse inntektene regnes ikke med i etteroppgjøret
           </Heading>
           <BodyShort spacing>
-            Hvis du har fått utbetalt penger etter at du ble ufør, fra arbeid eller hendelser fra før du ble ufør, skal
-            de normalt ikke gi deg lavere uføretrygd. Eksempler på inntekter som ikke skal regnes med:
+            Utbetaling av penger for arbeid eller hendelser som skjedde før du ble ufør, skal vanligvis holdes utenfor
+            etteroppgjøret.
           </BodyShort>
-          <Heading level="4" size="small" spacing>
-            Erstatning for inntektstap
-          </Heading>
+          <BodyShort spacing>Eksempler på inntekter som ikke skal regnes med: </BodyShort>
           <BodyShort spacing>
-            Har du fått erstatning for inntektstap (for eksempel voldsoffererstatning, pasientskade eller yrkesskade),
-            skal dette ikke regnes med. Du må sende inn dokumentasjon på hva du har fått utbetalt i erstatning.
+            <b>Feriepenger: </b>Feriepenger du tjente opp før du fikk innvilget uføretrygd, eller endret uføregrad, skal
+            ikke påvirke etteroppgjøret. Du trenger ikke sende dokumentasjon på feriepenger, det holder å skrive eller
+            ringe til oss og fortelle at du har fått utbetalt feriepenger fra et avsluttet arbeidsforhold.
           </BodyShort>
           <Button
             variant="secondary"
+            size="small"
+            className={styles.etteroppgjorKnapp}
+            as="a"
+            href="https://www.nav.no/kontaktoss"
+          >
+            Kontakt oss
+          </Button>
+          <BodyShort spacing>
+            <b>Erstatning for inntektstap: </b>Har du fått erstatning for inntektstap (for eksempel
+            voldsoffererstatning, pasientskade eller yrkesskade), skal dette ikke regnes med. Du må sende inn
+            dokumentasjon på hva du har fått utbetalt i erstatning.
+          </BodyShort>
+          <Button
+            variant="secondary"
+            size="small"
             className={styles.etteroppgjorKnapp}
             as="a"
             href="https://www.nav.no/fyllut-ettersending/lospost?tema=UFO"
           >
             Send dokumentasjon
           </Button>
-
-          <Heading level="4" size="small" spacing>
-            Feriepenger
-          </Heading>
-          <BodyShort spacing>
-            Feriepenger du tjente opp før du fikk innvilget uføretrygd, eller endret uføregrad, skal ikke påvirke
-            etteroppgjøret. Du trenger ikke sende dokumentasjon på feriepenger, det holder å skrive eller ringe til oss
-            og fortelle oss hvor mye feriepenger du har opptjent.
-          </BodyShort>
-          <Button variant="secondary" className={styles.etteroppgjorKnapp} as="a" href="https://www.nav.no/kontaktoss">
-            Kontakt oss
-          </Button>
         </section>
         <section>
           <VStack gap="space-12">
             <Heading level="3" size="medium" spacing>
-              Se video om etteroppgjøret
+              Se video: Etteroppgjøret på 1-2-3
             </Heading>
             <iframe
               className={styles.video}
