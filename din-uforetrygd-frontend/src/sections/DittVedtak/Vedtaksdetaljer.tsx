@@ -11,7 +11,7 @@ import { Events } from '@navikt/nav-dekoratoren-moduler'
 
 interface VedtaksdetaljerProps {
   dittUforevedtakPromise: Promise<DittUforevedtak | null>
-  sakId?: string
+  sakId: string | null
   linkInntektsplanlegger: string | undefined
   arstall: number
 }

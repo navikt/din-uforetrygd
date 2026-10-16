@@ -8,7 +8,7 @@ import { Lenkekort } from '@/components/Lenkekort/Lenkekort'
 
 interface InterneLenkerProps {
   visningskriterier: Visningskriterier[]
-  sakId: string | undefined
+  sakId: string | null
   pid?: string
 }
 

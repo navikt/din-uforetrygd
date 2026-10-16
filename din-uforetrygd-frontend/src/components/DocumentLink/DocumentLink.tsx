@@ -7,7 +7,7 @@ import { umami } from '@/utils/umami'
 
 interface IDocumentLink {
   href: string
-  fileSize?: number
+  fileSize: number | null
   children: React.ReactNode
 }
 

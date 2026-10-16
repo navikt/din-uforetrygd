@@ -1,10 +1,13 @@
-import { type BackendError, getMockScenario } from '@/api/common'
+import { type ApiResult, getMockScenario } from '@/api/common'
 import { env } from '@/env'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
-import type { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import { z } from 'zod'
 
-export const hentSaksoversikt = async (saksid: number, pid: string | undefined) => {
+export const hentSaksoversikt = async (
+  saksid: number,
+  pid: string | undefined
+): Promise<ApiResult<SaksoversiktResponse>> => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
     return
@@ -31,34 +34,75 @@ export const hentSaksoversikt = async (saksid: number, pid: string | undefined) 
 
   const json = await response.json().catch(() => undefined)
   if (!response.ok) {
-    return { backendError: json as BackendError }
+    return {
+      ok: false,
+      error: json.message,
+    }
   }
-  return { saksoversiktResponse: json as SaksoversiktResponse }
+
+  const result = saksoversiktSchema.safeParse(json)
+
+  if (!result.success) {
+    return {
+      ok: false,
+      error: 'Noe gikk galt.',
+    }
+  }
+
+  return {
+    ok: true,
+    data: result.data,
+  }
 }
 
-export interface Etteroppgjor {
-  arstall: number
-  avviksbelop: number
-  type: string
-}
+export const behandlingTypeSchema = z.enum([
+  'SØKNAD_UFØRETRYGD',
+  'SØKNAD_ENDRING_UFØREGRAD',
+  'SØKNAD_BARNETILLEGG',
+  'SØKNAD_UNG_UFØR',
+  'SØKNAD_YRKESSKADE',
+  'EKSPORT',
+  'INNTEKTSENDRING',
+  'ETTEROPPGJØR',
+  'ENDRING_IFU',
+  'MELLOMBEHANDLING',
+  'SLUTTBEHANDLING',
+  'REGULERING',
+])
+export const BehandlingType = behandlingTypeSchema.enum
+export type BehandlingType = z.infer<typeof behandlingTypeSchema>
 
-export interface Beregning {
-  nettoUforetrygdPerManed: number
-  nettoBarnetilleggPerManed?: number
-  uforegrad?: number
-}
+export const statusSchema = z.enum(['MOTTATT', 'INNVILGET', 'AVSLAG'])
+export const Status = statusSchema.enum
+export type Status = z.infer<typeof statusSchema>
 
-export interface Behandling {
-  type: BehandlingType
-  status: Status
-  mottattDato: string
-  avslattForutgaendeMedlemskap: boolean
-  ferdigstiltDato?: string
-  etteroppgjor?: Etteroppgjor
-  beregning: Beregning | null
-}
+const etteroppgjorSchema = z.object({
+  arstall: z.number(),
+  avviksbelop: z.number(),
+  type: z.string(),
+})
+export type Etteroppgjor = z.infer<typeof etteroppgjorSchema>
 
-export interface SaksoversiktResponse {
-  aktiveBehandlinger: Behandling[]
-  avsluttedeBehandlinger: Behandling[]
-}
+const beregningSchema = z.object({
+  nettoUforetrygdPerManed: z.number(),
+  nettoBarnetilleggPerManed: z.number().nullable(),
+  uforegrad: z.number().nullable(),
+})
+export type Beregning = z.infer<typeof beregningSchema>
+
+export const behandlingSchema = z.object({
+  type: behandlingTypeSchema,
+  status: statusSchema,
+  mottattDato: z.string(),
+  avslattForutgaendeMedlemskap: z.boolean(),
+  ferdigstiltDato: z.string().nullable(),
+  etteroppgjor: etteroppgjorSchema.nullable(),
+  beregning: beregningSchema.nullable(),
+})
+export type Behandling = z.infer<typeof behandlingSchema>
+
+const saksoversiktSchema = z.object({
+  aktiveBehandlinger: z.array(behandlingSchema),
+  avsluttedeBehandlinger: z.array(behandlingSchema),
+})
+export type SaksoversiktResponse = z.infer<typeof saksoversiktSchema>

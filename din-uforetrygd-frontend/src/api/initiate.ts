@@ -1,11 +1,11 @@
-import { type BackendError, getMockScenario } from '@/api/common'
+import { type ApiResult, getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
-import type { Behandling } from '@/api/hentSaksoversikt'
+import { behandlingSchema } from '@/api/hentSaksoversikt'
 import { env } from '@/env'
-import { Innloggingstype } from '@/const'
+import { z } from 'zod'
 
-export const initate = async (pid: string | undefined) => {
+export const initate = async (pid: string | undefined): Promise<ApiResult<UforetrygdResponse>> => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
   })
@@ -26,29 +26,37 @@ export const initate = async (pid: string | undefined) => {
   const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/initiate`, { headers, cache: 'no-store' })
   const json = await response.json().catch(() => undefined)
 
-  if (!response.ok) {
-    return { backendError: json as BackendError }
+  const result = uforetrygdResponseSchema.safeParse(json)
+  // TODO: hvordan ble backenderror før - fikse
+  if (!result.success) {
+    return {
+      ok: false,
+      error: json.message,
+    }
   }
-  return { uforetrygdResponse: json as UforetrygdResponse }
+
+  return {
+    ok: true,
+    data: result.data,
+  }
 }
 
-export interface Dokument {
-  tittel?: string
-  dokumentInfoId?: string
-  filstorrelse?: number
-  variant?: 'ARKIV' | 'SLADDET'
-}
+const innloggingstypeSchema = z.enum(['LEVEL4', 'LEVEL3', 'NAV', 'SYSTEM', 'IKKE_INNLOGGET'])
+export const Innloggingstype = innloggingstypeSchema.enum
+export type Innloggingstype = z.infer<typeof innloggingstypeSchema>
 
-export interface Sak {
-  status?: 'OPPRETTET' | 'TIL_BEHANDLING' | 'AVSLUTTET' | 'LOPENDE'
-  sakId?: string
-}
+const sakSchema = z.object({
+  status: z.enum(['OPPRETTET', 'TIL_BEHANDLING', 'AVSLUTTET', 'LOPENDE']),
+  sakId: z.string().nullable(),
+})
+export type Sak = z.infer<typeof sakSchema>
 
-export interface UforetrygdResponse {
-  pid?: string
-  sak?: Sak
-  hasIverksattVedtak: boolean
-  uforegrad?: number
-  innloggingstype: Innloggingstype
-  behandling?: Behandling
-}
+const uforetrygdResponseSchema = z.object({
+  pid: z.string(),
+  sak: sakSchema.nullable(),
+  hasIverksattVedtak: z.boolean(),
+  uforegrad: z.number().nullable(),
+  innloggingstype: innloggingstypeSchema,
+  behandling: behandlingSchema.nullable(),
+})
+export type UforetrygdResponse = z.infer<typeof uforetrygdResponseSchema>

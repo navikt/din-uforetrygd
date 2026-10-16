@@ -1,4 +1,4 @@
-import type { DittUforevedtak } from '../src/api/hentDittUforevedtak'
+import type { DittUforevedtak } from '@/api/hentDittUforevedtak'
 
 export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = {
   default: {
@@ -18,8 +18,8 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
   },
   avsluttet: {
     uforegrad: 100,
-    virkFom: undefined,
-    uforetidspunkt: undefined,
+    virkFom: null,
+    uforetidspunkt: null,
     bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,
@@ -66,8 +66,8 @@ export const mockUforevedtakData: Record<string, DittUforevedtak | undefined> = 
   'ingen-uforesak': undefined,
   'ufore-uten-datoer': {
     uforegrad: 100,
-    virkFom: undefined,
-    uforetidspunkt: undefined,
+    virkFom: null,
+    uforetidspunkt: null,
     bunnfradrag: 49611,
     inntektstak: 200000,
     inntektFraSkatt: 150000,

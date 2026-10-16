@@ -1,3 +1,4 @@
+import 'server-only'
 import { getToken, requestOboToken, validateToken } from '@navikt/oasis'
 import { headers } from 'next/headers'
 import { env } from '@/env'

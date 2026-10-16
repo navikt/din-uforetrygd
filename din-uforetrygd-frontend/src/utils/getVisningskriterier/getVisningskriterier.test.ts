@@ -1,18 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import type { Sak, UforetrygdResponse } from '@/api/initiate'
-import { Innloggingstype, Visningskriterier } from '@/const'
+import { Innloggingstype, type Sak, type UforetrygdResponse } from '@/api/initiate'
+import { Visningskriterier } from '@/const'
 import { getVisningskriterier } from '@/utils/getVisningskriterier/getVisningskriterier'
 
 const defaultUforeResponse: UforetrygdResponse = {
   pid: '81549300',
   innloggingstype: Innloggingstype.LEVEL4,
-  sak: undefined,
+  sak: null,
   hasIverksattVedtak: false,
-  uforegrad: undefined,
+  uforegrad: null,
+  behandling: null,
 }
 
 const uforesak: Sak = {
   status: 'LOPENDE',
+  sakId: '123456789',
 }
 
 const uforeResponse: UforetrygdResponse = {
@@ -26,7 +28,7 @@ const uforeOgSakTilBehanndling: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: true,
-  uforegrad: undefined,
+  uforegrad: null,
 }
 
 const gradertUfoereResponse: UforetrygdResponse = {
@@ -40,14 +42,14 @@ const sakTilbehandlingAndIngenVedtak: UforetrygdResponse = {
   ...defaultUforeResponse,
   sak: { ...uforesak, status: 'TIL_BEHANDLING' },
   hasIverksattVedtak: false,
-  uforegrad: undefined,
+  uforegrad: null,
 }
 
 const ingenUforesakResponse: UforetrygdResponse = {
   ...defaultUforeResponse,
   hasIverksattVedtak: false,
-  uforegrad: undefined,
-  sak: undefined,
+  uforegrad: null,
+  sak: null,
 }
 
 describe('getVisningskriterier', () => {
