@@ -2,10 +2,10 @@
 
 import { BodyLong, Button, HStack, Modal, VStack } from '@navikt/ds-react'
 import { useEffect, useRef, useState } from 'react'
-import { Innloggingstype } from '@/const'
+import { Innloggingstype } from '@/api/initiate'
 
 interface MinIdDokumentarkivModalProps {
-  innloggingstype?: Innloggingstype
+  innloggingstype: Innloggingstype | null
 }
 
 export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ innloggingstype }) => {

@@ -2,8 +2,16 @@ import { getMockScenario } from '@/api/common'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getDinUforetrygdBackendOboToken } from './getOboToken'
 import { env } from '@/env'
+import { z } from 'zod'
 
-export const hentBorgerInfo = async (kryptertPid: string) => {
+const borgerInfoSchema = z.object({
+  pid: z.string(),
+  navn: z.string(),
+})
+
+export type BorgerInfo = z.infer<typeof borgerInfoSchema>
+
+export const hentBorgerInfo = async (kryptertPid: string): Promise<BorgerInfo> => {
   const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
     console.error('Error: ', error)
     return
@@ -29,10 +37,5 @@ export const hentBorgerInfo = async (kryptertPid: string) => {
 
   const json = await response.json().catch(() => undefined)
 
-  return json as BorgerInfo
-}
-
-export interface BorgerInfo {
-  pid: string
-  navn: string
+  return borgerInfoSchema.parse(json)
 }

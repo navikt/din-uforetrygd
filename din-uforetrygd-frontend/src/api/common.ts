@@ -4,6 +4,8 @@ export type BackendError = {
   message: string
 }
 
+export type ApiResult<T> = { ok: true; data: T } | { ok: false; error: string }
+
 export const getMockScenario = async () => {
   if (process.env.NODE_ENV !== 'development') {
     return undefined

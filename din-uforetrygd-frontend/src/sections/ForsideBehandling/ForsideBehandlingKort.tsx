@@ -1,11 +1,12 @@
 import { Box, VStack } from '@navikt/ds-react'
 import type React from 'react'
 import { Visningskriterier } from '@/const'
-import { type ForsideBehandling, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import type { ForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
 import { IngenUføretrygd } from '@/sections/ForsideBehandling/IngenUføretrygd'
 import { SøknadAvslått } from '@/sections/ForsideBehandling/SøknadAvslått'
 import { SøknadInnvilget } from '@/sections/ForsideBehandling/SøknadInnvilget'
 import { SøknadMottatt } from '@/sections/ForsideBehandling/SøknadMottatt'
+import { Status } from '@/api/hentSaksoversikt'
 
 interface BehandlingProps {
   behandling: ForsideBehandling | null

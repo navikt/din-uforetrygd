@@ -45,15 +45,15 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     isEnabled('din-uforetrygd.etteroppgjor-informasjon'),
   ])
 
-  if (initiateResponse.backendError) {
+  if (!initiateResponse.ok) {
     return (
       <Alert variant="error" role="alert">
-        {resolveErrorText(initiateResponse.backendError?.message)}
+        {resolveErrorText(initiateResponse.error)}
       </Alert>
     )
   }
 
-  const uforetrygdResponse = initiateResponse.uforetrygdResponse
+  const uforetrygdResponse = initiateResponse.data
   const visningskriterier = getVisningskriterier(uforetrygdResponse)
 
   return (
@@ -89,13 +89,13 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
       {uforetrygdResponse.hasIverksattVedtak && (
         <Vedtaksdetaljer
           dittUforevedtakPromise={uforevedtakPromise}
-          sakId={uforetrygdResponse.sak?.sakId}
+          sakId={uforetrygdResponse.sak?.sakId || null}
           linkInntektsplanlegger={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)}
           arstall={new Date().getFullYear()}
         />
       )}
 
-      <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId} pid={pid} />
+      <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId || null} pid={pid} />
       <Snarveier
         visningskriterier={visningskriterier}
         pid={pid}
