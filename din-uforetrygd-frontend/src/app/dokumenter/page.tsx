@@ -7,6 +7,7 @@ interface DokumentoversiktPageProps {
 
 const DokumentoversiktPage = async ({ searchParams }: DokumentoversiktPageProps) => {
   const params = await searchParams
+  // kryptert
   const pid = params?.pid
   const raaJournalposter = await hentJournalposter(pid)
 

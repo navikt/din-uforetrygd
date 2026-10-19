@@ -1,30 +1,17 @@
-import { getMockScenario } from '@/api/common'
+import { hentData } from '@/api/common'
 import { env } from '@/env'
-import { getFullmaktCookie } from '@/api/getFullmaktCookie'
-import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import type { Dokument } from '@/api/initiate'
+import { headers as nextHeaders } from 'next/dist/server/request/headers'
 
-export const hentJournalposter = async (pid?: string): Promise<Journalpost[]> => {
-  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
-    console.error('Error: ', error)
-  })
+export const hentJournalposter = async (): Promise<Journalpost[]> => {
+  const clientHeaders = await nextHeaders()
+  const pid = clientHeaders.get('x-kryptert-pid')
+  const headers = new Headers()
+  if (pid) headers.set('pid', pid)
 
-  const fullmaktCookie = await getFullmaktCookie()
-
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${oboToken}`,
-    pid: pid || '',
-    Cookie: fullmaktCookie as string,
-  }
-
-  const mockScenario = await getMockScenario()
-  if (mockScenario) {
-    headers['X-Mock-Scenario'] = mockScenario
-  }
-
-  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/journalposter`, { headers, cache: 'no-store' })
-  if (!response.ok) return []
-  return response.json().catch(() => [])
+  const result = await hentData<Journalpost[]>(`${env('DIN_UFORETRYGD_BACKEND')}/api/journalposter`, 'GET', headers)
+  if (!result.ok) return []
+  return result.data
 }
 
 export interface Journalpost {
