@@ -12,14 +12,27 @@ Vi bruker [Biome](https://biomejs.dev/) til linting og formatering.
 
 Installere: `npm i`
 
-For å få kontakt med Unleash lokalt må vi hente noen secrets ved å kjøre `./fetch-secrets.sh`. Dette lagrer nødvendige secrets i .env.local. Du kan eventuelt finne token og URL for Unleash på [Ufore sin Unleash](https://ufore-unleash-web.iap.nav.cloud.nais.io) under Project settings > API access, og sette dem selv.
-Dette trengs bare hvis du kjører mot lokal backend. Hvis du kjører `npm run mock`, mocker vi også responsen fra Unleash. Da må feature flags legges inn i [denne filen](./mock/msw/unleashHandlers.ts)
+### Unleash
+For å få kontakt med Unleash når du kjører mot lokal backend må vi hente noen secrets ved å kjøre `./fetch-secrets.sh`. Dette lagrer nødvendige secrets i `.env.local`. Du kan også finne token og URL for Unleash på [Uføres Unleash](https://ufore-unleash-web.iap.nav.cloud.nais.io) under Project settings > API access og sette dem selv.
+
+Når du kjører mot mock kan du endre togglene i [denne fila](mock/server/unleashHandlers.ts), du trenger ikke fetche secrets.
 
 ### Mock backend
-* Kjør `npm run mock` for standard lokal utvikling (starter både Next.js med MSW som serverer mock data).
-* Scenario-skript (`npm run mock:ingen-uforesak`, `npm run mock:avsluttet`, osv.) starter også mock-backend automatisk.
-* Forskjellige scenarioer kan også tested ved å kjøre `npm run mock` og legge til `scenario=<scenario>` i URL'en (f.eks `http://localhost:3000/uforetrygd/selvbetjening?scenario=avsluttet`).
-* Playwright bruker eigen oppstart via `npm run mock:playwright` frå `playwright.config.ts`. 
+Kjør `npm run mock` for lokal utvikling med mockdata. Da starter Next.js og en Express-server på port `8080`.
+
+Mockserveren håndterer appens backend-endepunkter og Unleash. Den bruker data fra `mock/` og trenger ikke token eller kontakt med eksterne tjenester. Endepunktene er definert i `mock/server/mockServer.ts`, mens lokale Unleash-flagg ligger i `mock/server/unleashHandlers.ts`.
+
+Velg scenario med query-parameteren `scenario`:
+
+```text
+http://localhost:3000/uforetrygd/selvbetjening?scenario=avsluttet
+```
+
+Proxyen videresender scenarioet som `x-mock-scenario` til mockserveren. Eksempler på scenarioer er `avsluttet`, `gradert`, `har-lopende`, `sak-behandling`, `ufore-behandling`, `ingen-uforesak`, `ufore-uten-datoer`, `forbidden`, `ingen-varsel` og `er-verge`. Tilgjengelige data per endepunkt ligger i de respektive `mock/mock*Data.ts`-filene.
+
+Mockmodus laster ikke Dekoratørens, representasjonsbannerets eller UX Signals sine eksterne klientskript. Det hindrer at lokale requests til eksterne sesjonstjenester gir feil i nettleseren.
+
+Playwright bruker fortsatt egen oppstart via `npm run mock:playwright` fra `playwright.config.ts`.
 
 ### Mot lokal backend
 * Start backenden

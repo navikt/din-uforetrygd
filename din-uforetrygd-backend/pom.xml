@@ -15,12 +15,12 @@
     <description>din-uforetrygd-backend</description>
     <properties>
         <java.version>25</java.version>
-        <kotlin.version>2.4.20</kotlin.version>
+        <kotlin.version>2.4.21</kotlin.version>
         <kotlinx-coroutines.version>1.11.0</kotlinx-coroutines.version>
         <tomcat.version>11.0.25</tomcat.version>
         <jackson-version>2.22.3</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <logback.version>1.6.3</logback.version>
+        <logback.version>1.6.5</logback.version>
         <logback-access.version>2.0.15</logback-access.version>
         <micrometer.version>1.17.1</micrometer.version>
         <!-- Test -->

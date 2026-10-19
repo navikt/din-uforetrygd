@@ -1,4 +1,4 @@
-import { Alert, Heading } from '@navikt/ds-react'
+import { Alert, BodyShort, Box, Heading, Link, VStack } from '@navikt/ds-react'
 import { TaskAnalytics } from '@/components/TaskAnalytics/TaskAnalytics'
 import { KanVaereAktueltForDeg } from '@/sections/KanVaereAktueltForDeg/KanVaereAktueltForDeg'
 import { MeldeFra } from '@/sections/MeldeFra/MeldeFra'
@@ -29,14 +29,21 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
   const { pid } = await searchParams
   const uforevedtakPromise = hentDittUforevedtak(pid)
   const erVergePromise = sjekkOmErVerge(pid || '')
-  const [initiateResponse, harMottattVarsel, dineMuligheterIsEnabled, barnetilleggIsEnabled, uforegradIsEnabled] =
-    await Promise.all([
-      initate(pid),
-      hentHarMottattVarsel(),
-      isEnabled('din-uforetrygd.dine-muligheter'),
-      isEnabled('din-uforetrygd.barnetillegg'),
-      isEnabled('din-uforetrygd.statusUforegrad'),
-    ])
+  const [
+    initiateResponse,
+    harMottattVarsel,
+    dineMuligheterIsEnabled,
+    barnetilleggIsEnabled,
+    uforegradIsEnabled,
+    etteroppgjørInformasjonIsEnabled,
+  ] = await Promise.all([
+    initate(pid),
+    hentHarMottattVarsel(),
+    isEnabled('din-uforetrygd.dine-muligheter'),
+    isEnabled('din-uforetrygd.barnetillegg'),
+    isEnabled('din-uforetrygd.statusUforegrad'),
+    isEnabled('din-uforetrygd.etteroppgjor-informasjon'),
+  ])
 
   if (initiateResponse.backendError) {
     return (
@@ -65,6 +72,20 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
         visningskriterier={visningskriterier}
       />
       <InntektSnarveier visningskriterier={visningskriterier} pid={pid} />
+      {etteroppgjørInformasjonIsEnabled && (
+        <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
+          <VStack gap="space-8">
+            <Heading level="2" size="medium">
+              Nå kommer etteroppgjøret
+            </Heading>
+            <BodyShort>
+              Har du inntekt i tillegg til uføretrygden, kan du få etteroppgjør. Vi sender ut etteroppgjør fra 20.
+              oktober. Hvis du får etteroppgjør, får du brev fra oss.{' '}
+            </BodyShort>
+            <Link href="/uforetrygd/selvbetjening/etteroppgjor">Du kan lese mer om etteroppgjøret her.</Link>
+          </VStack>
+        </Box>
+      )}
       {uforetrygdResponse.hasIverksattVedtak && (
         <Vedtaksdetaljer
           dittUforevedtakPromise={uforevedtakPromise}
@@ -73,6 +94,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
           arstall={new Date().getFullYear()}
         />
       )}
+
       <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId} pid={pid} />
       <Snarveier
         visningskriterier={visningskriterier}

@@ -8,7 +8,7 @@ const PATHS: Record<string, { tittel: string; url: string }> = {
   '': { tittel: 'Din uføretrygd', url: '/uforetrygd/selvbetjening' },
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
   dokumenter: { tittel: 'Dokumenter knyttet til saken din', url: '/uforetrygd/selvbetjening/dokumenter' },
-  'kommende-utbetalinger': { tittel: 'Kommende utbetalinger', url: '/uforetrygd/selvbetjening/kommende-utbetalinger' },
+  etteroppgjor: { tittel: 'Informasjon om etteroppgjøret', url: '/uforetrygd/selvbetjening/etteroppgjor' },
   'dine-muligheter': { tittel: 'Dine muligheter', url: '/uforetrygd/selvbetjening/dine-muligheter' },
   'snakk-med-oss': { tittel: 'Snakk med oss', url: '/uforetrygd/selvbetjening/dine-muligheter/snakk-med-oss' },
 }

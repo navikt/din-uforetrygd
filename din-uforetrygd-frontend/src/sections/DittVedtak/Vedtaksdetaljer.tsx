@@ -209,6 +209,7 @@ export function Vedtaksdetaljer({
                     >
                       Den årlige inntekten du kan ha, før du ikke lenger får utbetalt uføretrygd det aktuelle året.
                       Inntektstaket er 80 prosent av inntekten du hadde før uførhet, oppjustert til dagens verdi.
+                      Inntektstaket er kun inntekt, det inkluderer ikke uføretrygd.
                     </HelpText>
                   </HStack>
                 </Table.DataCell>
