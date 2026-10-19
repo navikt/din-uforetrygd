@@ -72,7 +72,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
         visningskriterier={visningskriterier}
       />
       <InntektSnarveier visningskriterier={visningskriterier} pid={pid} />
-      {etteroppgjørInformasjonIsEnabled && (
+      {etteroppgjørInformasjonIsEnabled && uforetrygdResponse.hasIverksattVedtak && (
         <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
           <VStack gap="space-8">
             <Heading level="2" size="medium">
