@@ -2,19 +2,12 @@
 
 import { BodyLong, Button, HStack, Modal, VStack } from '@navikt/ds-react'
 import { useEffect, useRef, useState } from 'react'
-import { Innloggingstype } from '@/const'
 
-interface MinIdDokumentarkivModalProps {
-  innloggingstype?: Innloggingstype
-}
-
-export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ innloggingstype }) => {
+export const MinIdDokumentModal  = () => {
   const modalRef = useRef<HTMLDialogElement>(null)
   const [pendingUrl, setPendingUrl] = useState<string | null>(null)
 
   useEffect(() => {
-    if (innloggingstype !== Innloggingstype.LEVEL3) return
-
     const onClick = (e: MouseEvent) => {
       const link = (e.target as HTMLElement)?.closest<HTMLAnchorElement>('a[data-innloggingstype]')
       if (!link) return
@@ -28,7 +21,7 @@ export const MinIdDokumentModal: React.FC<MinIdDokumentarkivModalProps> = ({ inn
 
     document.addEventListener('click', onClick)
     return () => document.removeEventListener('click', onClick)
-  }, [innloggingstype])
+  }, [])
 
   const close = () => {
     modalRef.current?.close()

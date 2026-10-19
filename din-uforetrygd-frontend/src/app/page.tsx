@@ -8,7 +8,7 @@ import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import type React from 'react'
 import { hentDittUforevedtak } from '@/api/hentDittUforevedtak'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
-import { initate } from '@/api/initiate'
+import { initate, Innloggingstype } from '@/api/initiate'
 import { env } from '@/env'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -45,15 +45,15 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     isEnabled('din-uforetrygd.etteroppgjor-informasjon'),
   ])
 
-  if (initiateResponse.backendError) {
+  if (!initiateResponse.ok) {
     return (
       <Alert variant="error" role="alert">
-        {resolveErrorText(initiateResponse.backendError?.message)}
+        {resolveErrorText(initiateResponse.error)}
       </Alert>
     )
   }
 
-  const uforetrygdResponse = initiateResponse.uforetrygdResponse
+  const uforetrygdResponse = initiateResponse.data
   const visningskriterier = getVisningskriterier(uforetrygdResponse)
 
   return (
@@ -89,13 +89,13 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
       {uforetrygdResponse.hasIverksattVedtak && (
         <Vedtaksdetaljer
           dittUforevedtakPromise={uforevedtakPromise}
-          sakId={uforetrygdResponse.sak?.sakId}
+          sakId={uforetrygdResponse.sak?.sakId || null}
           linkInntektsplanlegger={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)}
           arstall={new Date().getFullYear()}
         />
       )}
 
-      <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId} pid={pid} />
+      <InterneLenker visningskriterier={visningskriterier} sakId={uforetrygdResponse.sak?.sakId || null} pid={pid} />
       <Snarveier
         visningskriterier={visningskriterier}
         pid={pid}
@@ -108,7 +108,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
       <div className={'ux-signals-container'}>
         <div data-uxsignals-embed={'panel-u5y48zl9t7'} className={'ux-signals'} suppressHydrationWarning></div>
       </div>
-      <MinIdDokumentModal innloggingstype={uforetrygdResponse.innloggingstype} />
+      {uforetrygdResponse.innloggingstype !== Innloggingstype.LEVEL3 && <MinIdDokumentModal />}
     </>
   )
 }

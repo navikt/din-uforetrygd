@@ -1,6 +1,5 @@
-import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
-import type { UforetrygdResponse } from '@/api/initiate'
-import { Innloggingstype } from '@/const'
+import { Innloggingstype, type UforetrygdResponse } from '@/api/initiate'
+import { BehandlingType, Status } from '@/api/hentSaksoversikt'
 
 export const mockData: Record<string, UforetrygdResponse> = {
   default: {
@@ -15,49 +14,75 @@ export const mockData: Record<string, UforetrygdResponse> = {
     behandling: {
       type: BehandlingType.SØKNAD_UFØRETRYGD,
       status: Status.INNVILGET,
-      beregning: { nettoUforetrygdPerManed: 123456 },
+      beregning: {
+        nettoUforetrygdPerManed: 123456,
+        nettoBarnetilleggPerManed: null,
+        uforegrad: null,
+      },
       mottattDato: '2025-12-14',
       avslattForutgaendeMedlemskap: true,
+      ferdigstiltDato: null,
+      etteroppgjor: null,
     },
   },
   avsluttet: {
     pid: '81549300',
-    sak: { status: 'AVSLUTTET' },
+    sak: {
+      status: 'AVSLUTTET',
+      sakId: null,
+    },
     hasIverksattVedtak: false,
     uforegrad: 100,
     innloggingstype: Innloggingstype.LEVEL4,
+    behandling: null,
   },
   gradert: {
     pid: '81549300',
-    sak: { status: 'LOPENDE' },
+    sak: {
+      status: 'LOPENDE',
+      sakId: null,
+    },
     hasIverksattVedtak: true,
     uforegrad: 50,
     innloggingstype: Innloggingstype.LEVEL4,
+    behandling: null,
   },
   'har-lopende': {
     pid: '81549300',
-    sak: { status: 'LOPENDE' },
+    sak: {
+      status: 'LOPENDE',
+      sakId: null,
+    },
     hasIverksattVedtak: false,
-    uforegrad: undefined,
+    uforegrad: null,
     innloggingstype: Innloggingstype.LEVEL4,
+    behandling: null,
   },
   'sak-behandling': {
     pid: '81549300',
-    sak: { status: 'TIL_BEHANDLING' },
+    sak: {
+      status: 'TIL_BEHANDLING',
+      sakId: null,
+    },
     hasIverksattVedtak: false,
-    uforegrad: undefined,
+    uforegrad: null,
     behandling: {
       type: BehandlingType.SØKNAD_UFØRETRYGD,
       status: Status.MOTTATT,
       mottattDato: '2025-12-14',
       avslattForutgaendeMedlemskap: false,
       beregning: null,
+      ferdigstiltDato: null,
+      etteroppgjor: null,
     },
     innloggingstype: Innloggingstype.LEVEL4,
   },
   'ufore-behandling': {
     pid: '81549300',
-    sak: { status: 'TIL_BEHANDLING' },
+    sak: {
+      status: 'TIL_BEHANDLING',
+      sakId: null,
+    },
     hasIverksattVedtak: true,
     uforegrad: 100,
     behandling: {
@@ -66,22 +91,29 @@ export const mockData: Record<string, UforetrygdResponse> = {
       mottattDato: '2025-12-14',
       avslattForutgaendeMedlemskap: false,
       beregning: null,
+      ferdigstiltDato: null,
+      etteroppgjor: null,
     },
     innloggingstype: Innloggingstype.LEVEL4,
   },
   'ingen-uforesak': {
     pid: '81549300',
-    sak: undefined,
+    sak: null,
     hasIverksattVedtak: false,
-    uforegrad: undefined,
+    uforegrad: null,
     innloggingstype: Innloggingstype.LEVEL4,
+    behandling: null,
   },
   'ufore-uten-datoer': {
     pid: '81549300',
-    sak: { status: 'LOPENDE' },
+    sak: {
+      status: 'LOPENDE',
+      sakId: null,
+    },
     hasIverksattVedtak: true,
     uforegrad: 100,
     innloggingstype: Innloggingstype.LEVEL4,
+    behandling: null,
   },
   barnetillegg: {
     pid: '81549300',
@@ -95,15 +127,19 @@ export const mockData: Record<string, UforetrygdResponse> = {
     behandling: {
       type: BehandlingType.SØKNAD_BARNETILLEGG,
       status: Status.INNVILGET,
-      beregning: { nettoUforetrygdPerManed: 123456, nettoBarnetilleggPerManed: 1234 },
+      beregning: { nettoUforetrygdPerManed: 123456, nettoBarnetilleggPerManed: 1234, uforegrad: null },
       mottattDato: '2025-12-14',
       avslattForutgaendeMedlemskap: true,
+      ferdigstiltDato: null,
+      etteroppgjor: null,
     },
   },
   forbidden: {
-    pid: undefined,
-    sak: undefined,
+    pid: '12345',
+    sak: null,
     hasIverksattVedtak: false,
     innloggingstype: Innloggingstype.LEVEL3,
+    uforegrad: null,
+    behandling: null,
   },
 }

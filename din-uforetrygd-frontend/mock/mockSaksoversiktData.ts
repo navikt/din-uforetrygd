@@ -1,5 +1,4 @@
-import { BehandlingType, Status } from '../src/sections/ForsideBehandling/forsideBehandlingUtil'
-import { SaksoversiktResponse } from '../src/api/hentSaksoversikt'
+import { BehandlingType, type SaksoversiktResponse, Status } from '../src/api/hentSaksoversikt'
 
 export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
   default: {
@@ -8,8 +7,8 @@ export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
         type: BehandlingType.SØKNAD_UFØRETRYGD,
         status: Status.MOTTATT,
         mottattDato: '2024-10-01',
-        ferdigstiltDato: undefined,
-        etteroppgjor: undefined,
+        ferdigstiltDato: null,
+        etteroppgjor: null,
         avslattForutgaendeMedlemskap: false,
         beregning: null,
       },
@@ -33,7 +32,7 @@ export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
         status: Status.MOTTATT,
         mottattDato: '2024-10-01',
         ferdigstiltDato: '2024-10-01',
-        etteroppgjor: undefined,
+        etteroppgjor: null,
         avslattForutgaendeMedlemskap: false,
         beregning: null,
       },
@@ -47,7 +46,7 @@ export const mockSaksoversiktData: Record<string, SaksoversiktResponse> = {
         status: Status.MOTTATT,
         mottattDato: '2024-10-01',
         ferdigstiltDato: '2024-10-01',
-        etteroppgjor: undefined,
+        etteroppgjor: null,
         avslattForutgaendeMedlemskap: false,
         beregning: null,
       },

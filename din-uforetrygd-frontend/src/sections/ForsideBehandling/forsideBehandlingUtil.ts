@@ -1,4 +1,4 @@
-import type { Behandling, Beregning } from '@/api/hentSaksoversikt'
+import { type Behandling, BehandlingType, type Beregning, Status } from '@/api/hentSaksoversikt'
 import { formatInntekt } from '@/utils/formatter/formatter'
 
 export interface ForsideBehandling {
@@ -11,27 +11,6 @@ export interface ForsideBehandling {
   avslattForutgaendeMedlemskap: boolean
 }
 
-export enum Status {
-  MOTTATT = 'MOTTATT',
-  INNVILGET = 'INNVILGET',
-  AVSLAG = 'AVSLAG',
-}
-
-export enum BehandlingType {
-  SØKNAD_UFØRETRYGD = 'SØKNAD_UFØRETRYGD',
-  SØKNAD_ENDRING_UFØREGRAD = 'SØKNAD_ENDRING_UFØREGRAD',
-  SØKNAD_BARNETILLEGG = 'SØKNAD_BARNETILLEGG',
-  SØKNAD_UNG_UFØR = 'SØKNAD_UNG_UFØR',
-  SØKNAD_YRKESSKADE = 'SØKNAD_YRKESSKADE',
-  EKSPORT = 'EKSPORT',
-  INNTEKTSENDRING = 'INNTEKTSENDRING',
-  ETTEROPPGJØR = 'ETTEROPPGJØR',
-  ENDRING_IFU = 'ENDRING_IFU',
-  MELLOMBEHANDLING = 'MELLOMBEHANDLING',
-  SLUTTBEHANDLING = 'SLUTTBEHANDLING',
-  REGULERING = 'REGULERING',
-}
-
 export interface Lenke {
   href: string
   visningstekst: string
@@ -42,7 +21,11 @@ export interface BeregningRad {
   verdi: string
 }
 
-export function toForsideBehandling(fra: Behandling, visBarnetillegg: boolean, visUforegrad: boolean): ForsideBehandling | null {
+export function toForsideBehandling(
+  fra: Behandling,
+  visBarnetillegg: boolean,
+  visUforegrad: boolean
+): ForsideBehandling | null {
   if (
     (fra.type !== BehandlingType.SØKNAD_ENDRING_UFØREGRAD || !visUforegrad) &&
     fra.type !== BehandlingType.SØKNAD_UFØRETRYGD &&

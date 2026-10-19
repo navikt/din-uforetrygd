@@ -1,4 +1,4 @@
-import { Journalpost } from '../src/api/hentJournalposter'
+import type { Journalpost } from '@/api/hentJournalposter'
 
 export const mockJournalposterData: Record<string, Journalpost[]> = {
   default: [
@@ -11,18 +11,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -35,6 +43,8 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Søknad om alderspensjon',
           dokumentInfoId: '454376701',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -47,18 +57,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -71,18 +89,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -95,18 +121,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -119,18 +153,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -143,18 +185,26 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
         {
           tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
           dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dine rettigheter og plikter',
           dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Opplysninger brukt i beregningen',
           dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
         },
         {
           tittel: 'Dette er din månedlige pensjon før skatt',
           dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
         },
       ],
     },
@@ -166,10 +216,30 @@ export const mockJournalposterData: Record<string, Journalpost[]> = {
       opprettetAv: 'NAV',
       opprettetDato: '2025-03-14T11:36:39',
       dokumenter: [
-        { tittel: 'Vedtak - innvilgelse av alderspensjon (auto)', dokumentInfoId: '454376702' },
-        { tittel: 'Dine rettigheter og plikter', dokumentInfoId: '454376703' },
-        { tittel: 'Opplysninger brukt i beregningen', dokumentInfoId: '454376704' },
-        { tittel: 'Dette er din månedlige pensjon før skatt', dokumentInfoId: '454376705' },
+        {
+          tittel: 'Vedtak - innvilgelse av alderspensjon (auto)',
+          dokumentInfoId: '454376702',
+          filstorrelse: null,
+          variant: null,
+        },
+        {
+          tittel: 'Dine rettigheter og plikter',
+          dokumentInfoId: '454376703',
+          filstorrelse: null,
+          variant: null,
+        },
+        {
+          tittel: 'Opplysninger brukt i beregningen',
+          dokumentInfoId: '454376704',
+          filstorrelse: null,
+          variant: null,
+        },
+        {
+          tittel: 'Dette er din månedlige pensjon før skatt',
+          dokumentInfoId: '454376705',
+          filstorrelse: null,
+          variant: null,
+        },
       ],
     },
   ],

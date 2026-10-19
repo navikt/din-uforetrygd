@@ -1,5 +1,10 @@
-import type { Behandling, Etteroppgjor, SaksoversiktResponse } from '@/api/hentSaksoversikt'
-import { BehandlingType, Status } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
+import {
+  type Behandling,
+  BehandlingType,
+  type Etteroppgjor,
+  type SaksoversiktResponse,
+  Status,
+} from '@/api/hentSaksoversikt'
 
 export interface SaksoversiktType {
   aktiveBehandlinger: SaksoversiktBehandling[]
@@ -9,7 +14,7 @@ export interface SaksoversiktType {
 export interface SaksoversiktBehandling {
   tittel: string
   mottattDato: string
-  ferdigstiltDato?: string | null
+  ferdigstiltDato: string | null
   avslag: boolean
   etteroppgjør: EtteroppgjorType | null
   steg: StegType[]
@@ -24,7 +29,7 @@ export interface EtteroppgjorType {
 export interface StegType {
   tittel: string
   undertekst?: string | null
-  dato?: string
+  dato: string | null
 }
 
 export const mapTilSaksoversiktType = (fra: SaksoversiktResponse): SaksoversiktType => {
@@ -50,7 +55,7 @@ const lagSteg = (
   behandlingType: BehandlingType,
   status: Status,
   mottattDato: string,
-  ferdigstiltDato?: string
+  ferdigstiltDato: string | null
 ): StegType[] => {
   switch (behandlingType) {
     case BehandlingType.EKSPORT:

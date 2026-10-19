@@ -15,20 +15,18 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
   const pid = params?.pid
 
   if (saksid) {
-    const saksoversiktResponse = await hentSaksoversikt(saksid, pid)
-    const saksoversikt =
-      saksoversiktResponse.saksoversiktResponse && mapTilSaksoversiktType(saksoversiktResponse.saksoversiktResponse)
-
-    if (saksoversikt) {
-      return <Saksoversikt saksoversikt={saksoversikt} />
-    } else
+    const resultat = await hentSaksoversikt(saksid, pid)
+    if (!resultat.ok)
       return (
         <section className="main-content">
           <Alert variant="error" role="alert">
-            {resolveErrorText(saksoversiktResponse.backendError?.message)}
+            {resolveErrorText(resultat.error)}
           </Alert>
         </section>
       )
+    const saksoversikt = resultat.data && mapTilSaksoversiktType(resultat.data)
+
+    return <Saksoversikt saksoversikt={saksoversikt} />
   }
 }
 
