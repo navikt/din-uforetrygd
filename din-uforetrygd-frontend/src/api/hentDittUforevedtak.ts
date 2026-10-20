@@ -1,4 +1,6 @@
-import { hentDataOgLeggTilPid } from '@/api/common'
+import { getMockScenario } from '@/api/common'
+import { getFullmaktCookie } from '@/api/getFullmaktCookie'
+import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
 import { env } from '@/env'
 
 export interface DittUforevedtak {
@@ -17,9 +19,26 @@ export interface DittUforevedtak {
   hasVarigTilrettelagtArbeid: boolean
 }
 
-export const hentDittUforevedtak = async (): Promise<DittUforevedtak | null> => {
-  const result = await hentDataOgLeggTilPid<DittUforevedtak>(`${env('DIN_UFORETRYGD_BACKEND')}/api/uforevedtak`, 'GET')
+export const hentDittUforevedtak = async (pid?: string): Promise<DittUforevedtak | null> => {
+  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
+    console.error('Error: ', error)
+  })
 
-  if (!result.ok) return null
-  return result.data
+  const fullmaktCookie = await getFullmaktCookie()
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${oboToken}`,
+    pid: pid || '',
+    Cookie: fullmaktCookie as string,
+  }
+
+  const mockScenario = await getMockScenario()
+  if (mockScenario) {
+    headers['X-Mock-Scenario'] = mockScenario
+  }
+
+  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/uforevedtak`, { headers, cache: 'no-store' })
+
+  if (!response.ok) return null
+  return response.json().catch(() => null)
 }
