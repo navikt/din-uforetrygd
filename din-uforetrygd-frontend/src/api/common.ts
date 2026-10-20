@@ -2,6 +2,7 @@ import { headers as nextHeaders } from 'next/headers'
 import { env } from '@/env'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getOboToken } from '@/api/getOboToken'
+import logger from '@/utils/logger'
 
 export type BackendError = {
   message: string
@@ -39,17 +40,16 @@ export const hentData = async <T>(
       headers: headers,
       body: body,
     })
+    const json = await response.json()
 
     if (!response.ok) {
-      const json = await response.json()
       const errorCode = json.message ?? ErrorCode.GENERIC_ERROR
       return { ok: false, error: errorCode }
+    } else {
+      return { ok: true, data: json }
     }
-
-    const data = await response.json()
-
-    return { ok: true, data: data }
-  } catch {
+  } catch (error) {
+    logger.error({ message: `Ujent feil ved kall til url: ${url}, error: ${error}` })
     return { ok: false, error: ErrorCode.GENERIC_ERROR }
   }
 }
@@ -58,7 +58,7 @@ export type Result<T> = { ok: true; data: T } | { ok: false; error: ErrorCode }
 
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-enum ErrorCode {
+export enum ErrorCode {
   LOGIN_LEVEL_TOO_LOW,
   VEILEDER_UNAUTHORIZED,
   NO_FULLMAKT_PRESENT,
