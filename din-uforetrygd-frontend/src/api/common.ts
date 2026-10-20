@@ -17,20 +17,11 @@ export const getMockScenario = async () => {
   return clientHeaders.get('x-mock-scenario') || process.env.MOCK_SCENARIO || 'default'
 }
 
-export const hentDataOgLeggTilPid = async <T>(url: string, method: Method, body?: string): Promise<Result<T>> => {
-  const clientHeaders = await nextHeaders()
-  const pid = clientHeaders.get('x-kryptert-pid')
-  const headers = new Headers()
-  if (pid) headers.set('pid', pid)
-
-  return hentData(url, method, headers, env('DIN_UFORETRYGD_BACKEND_SCOPE'), body)
-}
-
 export const hentData = async <T>(
   url: string,
   method: Method,
   headers: Headers,
-  tokenScope: string,
+  tokenScope: string = env('DIN_UFORETRYGD_BACKEND_SCOPE'),
   body?: string
 ): Promise<Result<T>> => {
   try {
@@ -48,15 +39,15 @@ export const hentData = async <T>(
       credentials: 'include',
       headers: headers,
       body: body,
-      cache: 'no-store',
     })
     const json = await response.json()
 
     if (!response.ok) {
       const errorCode = json.message ?? ErrorCode.GENERIC_ERROR
       return { ok: false, error: errorCode }
+    } else {
+      return { ok: true, data: json }
     }
-    return { ok: true, data: json }
   } catch (error) {
     logger.error({ message: `Ujent feil ved kall til url: ${url}, error: ${error}` })
     return { ok: false, error: ErrorCode.GENERIC_ERROR }
