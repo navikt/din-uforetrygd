@@ -10,7 +10,7 @@ export const getDinUforetrygdBackendOboToken = async () => {
   return getOboToken(env('DIN_UFORETRYGD_BACKEND_SCOPE'))
 }
 
-const getOboToken = async (scope: string): Promise<string> => {
+export const getOboToken = async (scope: string): Promise<string> => {
   if (env('NODE_ENV') !== 'production') {
     // biome-ignore lint/style/noNonNullAssertion: Må være tilgjengelig ved utvikling
     return env('ACCESS_TOKEN')!
