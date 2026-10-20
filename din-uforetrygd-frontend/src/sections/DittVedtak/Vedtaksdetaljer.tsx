@@ -6,8 +6,9 @@ import { SkeletonLoader } from '@/sections/DittVedtak/SkeletonLoader'
 import { getManedligBeregnetYtelseTekst, getTilleggsoppsummeringTekst } from '@/sections/DittVedtak/utils'
 import { formatDate, formatInntekt } from '@/utils/formatter/formatter'
 import { umami } from '@/utils/umami'
-import { BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
+import { Alert, BodyShort, Box, Heading, HelpText, HGrid, HStack, Link, List, Table, VStack } from '@navikt/ds-react'
 import { Events } from '@navikt/nav-dekoratoren-moduler'
+import { useEffect, useState } from 'react'
 
 interface VedtaksdetaljerProps {
   dittUforevedtakPromise: Promise<DittUforevedtak | null>
@@ -23,6 +24,17 @@ export function Vedtaksdetaljer({
   arstall,
 }: VedtaksdetaljerProps) {
   const promise = dittUforevedtakPromise
+  const [harFeilet, setHarFeilet] = useState(false)
+
+  useEffect(() => {
+    promise.then((result) => {
+      setHarFeilet(result == null)
+    })
+  }, [promise])
+
+  if (harFeilet) {
+    return <Alert variant="error">Kunne ikke hente vedtaksdetaljer</Alert>
+  }
 
   return (
     <Box as="section" aria-label="Detaljer om saken din">
