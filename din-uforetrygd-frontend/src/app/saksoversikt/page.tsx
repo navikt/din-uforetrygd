@@ -4,6 +4,7 @@ import { hentSaksoversikt } from '@/api/hentSaksoversikt'
 import { Saksoversikt } from '@/sections/Saksoversikt/Saksoversikt'
 import { mapTilSaksoversiktType } from '@/sections/Saksoversikt/saksoversiktType'
 import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
+import { ErrorCode } from '@/api/common'
 
 interface Props {
   searchParams: Promise<{ saksid: number; pid: string }>
@@ -25,7 +26,8 @@ const SaksoversiktPage: React.FC<Props> = async ({ searchParams }) => {
       return (
         <section className="main-content">
           <Alert variant="error" role="alert">
-            {resolveErrorText(saksoversiktResponse.backendError?.message)}
+            {/*TODO*/}
+            {resolveErrorText(ErrorCode.GENERIC_ERROR)}
           </Alert>
         </section>
       )

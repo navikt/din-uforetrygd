@@ -57,8 +57,7 @@ export const hentData = async <T>(
       return { ok: false, error: errorCode }
     }
     return { ok: true, data: json }
-  } catch (error) {
-    logger.error({ message: `Ujent feil ved kall til url: ${url}, error: ${error}` })
+  } catch {
     return { ok: false, error: ErrorCode.GENERIC_ERROR }
   }
 }

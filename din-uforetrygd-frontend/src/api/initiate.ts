@@ -1,35 +1,10 @@
-import { type BackendError, getMockScenario } from '@/api/common'
-import { getFullmaktCookie } from '@/api/getFullmaktCookie'
-import { getDinUforetrygdBackendOboToken } from '@/api/getOboToken'
+import { hentDataOgLeggTilPid, Result } from '@/api/common'
 import type { Behandling } from '@/api/hentSaksoversikt'
 import { env } from '@/env'
 import { Innloggingstype } from '@/const'
 
-export const initate = async (pid: string | undefined) => {
-  const oboToken = await getDinUforetrygdBackendOboToken().catch((error) => {
-    console.error('Error: ', error)
-  })
-
-  const fullmaktCookie = await getFullmaktCookie()
-
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${oboToken}`,
-    pid: pid || '',
-    Cookie: fullmaktCookie as string,
-  }
-
-  const mockScenario = await getMockScenario()
-  if (mockScenario) {
-    headers['X-Mock-Scenario'] = mockScenario
-  }
-
-  const response = await fetch(`${env('DIN_UFORETRYGD_BACKEND')}/api/initiate`, { headers, cache: 'no-store' })
-  const json = await response.json().catch(() => undefined)
-
-  if (!response.ok) {
-    return { backendError: json as BackendError }
-  }
-  return { uforetrygdResponse: json as UforetrygdResponse }
+export const initiate = async (): Promise<Result<UforetrygdResponse>> => {
+  return await hentDataOgLeggTilPid<UforetrygdResponse>(`${env('DIN_UFORETRYGD_BACKEND')}/api/initiate`, 'GET')
 }
 
 export interface Dokument {

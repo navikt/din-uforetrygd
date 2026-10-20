@@ -8,7 +8,7 @@ import { resolveErrorText } from '@/utils/resolveErrorText/resolveErrorText'
 import type React from 'react'
 import { hentDittUforevedtak } from '@/api/hentDittUforevedtak'
 import { hentHarMottattVarsel } from '@/api/hentHarMottattVarsel'
-import { initate } from '@/api/initiate'
+import { initiate } from '@/api/initiate'
 import { env } from '@/env'
 import { ForsideBehandlingKort } from '@/sections/ForsideBehandling/ForsideBehandlingKort'
 import { toForsideBehandling } from '@/sections/ForsideBehandling/forsideBehandlingUtil'
@@ -37,7 +37,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     uforegradIsEnabled,
     etteroppgjørInformasjonIsEnabled,
   ] = await Promise.all([
-    initate(pid),
+    initiate(),
     hentHarMottattVarsel(),
     isEnabled('din-uforetrygd.dine-muligheter'),
     isEnabled('din-uforetrygd.barnetillegg'),
@@ -45,15 +45,15 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     isEnabled('din-uforetrygd.etteroppgjor-informasjon'),
   ])
 
-  if (initiateResponse.backendError) {
+  if (!initiateResponse.ok) {
     return (
       <Alert variant="error" role="alert">
-        {resolveErrorText(initiateResponse.backendError?.message)}
+        {resolveErrorText(initiateResponse.error)}
       </Alert>
     )
   }
 
-  const uforetrygdResponse = initiateResponse.uforetrygdResponse
+  const uforetrygdResponse = initiateResponse.data
   const visningskriterier = getVisningskriterier(uforetrygdResponse)
 
   return (
