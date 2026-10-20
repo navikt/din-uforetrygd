@@ -2,7 +2,6 @@ import { headers as nextHeaders } from 'next/headers'
 import { env } from '@/env'
 import { getFullmaktCookie } from '@/api/getFullmaktCookie'
 import { getOboToken } from '@/api/getOboToken'
-import logger from '@/utils/logger'
 
 export type BackendError = {
   message: string
@@ -57,8 +56,7 @@ export const hentData = async <T>(
       return { ok: false, error: errorCode }
     }
     return { ok: true, data: json }
-  } catch (error) {
-    logger.error({ message: `Ujent feil ved kall til url: ${url}, error: ${error}` })
+  } catch {
     return { ok: false, error: ErrorCode.GENERIC_ERROR }
   }
 }
