@@ -1,40 +1,24 @@
-import { headers } from 'next/headers'
-import { getMockScenario } from '@/api/common'
-import { getFullmaktCookie } from '@/api/getFullmaktCookie'
-import { getUforeVarslerOboToken } from '@/api/getOboToken'
+import { headers as nextHeaders } from 'next/headers'
+import { hentData } from '@/api/common'
 import { env } from '@/env'
 
 export const hentHarMottattVarsel = async (): Promise<boolean> => {
-  const oboToken = await getUforeVarslerOboToken().catch((error) => {
-    console.error('Error: ', error)
-    return
-  })
+  const clientHeaders = await nextHeaders()
+  const body = env('MODE') === 'veileder' ? { fnr: clientHeaders.get('x-kryptert-pid') } : undefined
 
-  const nextHeaders = await headers()
-  const body = env('MODE') === 'veileder' ? { fnr: nextHeaders.get('x-kryptert-pid') } : undefined
+  const headers = new Headers()
 
-  const fullmaktCookie = await getFullmaktCookie()
+  const result = await hentData<HarMottattVarselResponse>(
+    `${env('UFORE_VARSLER')}/api/varsler/status`,
+    'POST',
+    headers,
+    env('UFORE_VARSLER_SCOPE'),
+    body && JSON.stringify(body)
+  )
+  if (!result.ok) return false
+  return result.data.harMottattVarsel
+}
 
-  const headere: Record<string, string> = {
-    Authorization: `Bearer ${oboToken}`,
-    Cookie: fullmaktCookie as string,
-    'Content-Type': 'application/json',
-  }
-
-  const mockScenario = await getMockScenario()
-  if (mockScenario) {
-    headere['X-Mock-Scenario'] = mockScenario
-  }
-
-  const response = await fetch(`${env('UFORE_VARSLER')}/api/varsler/status`, {
-    method: 'POST',
-    headers: headere,
-    cache: 'no-store',
-    body: body && JSON.stringify(body),
-  })
-
-  if (!response.ok) return false
-
-  const json = await response.json().catch(() => ({ harMottattVarsel: false }))
-  return json.harMottattVarsel
+interface HarMottattVarselResponse {
+  harMottattVarsel: boolean
 }
