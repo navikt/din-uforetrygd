@@ -18,7 +18,7 @@
         <kotlin.version>2.4.21</kotlin.version>
         <kotlinx-coroutines.version>1.11.0</kotlinx-coroutines.version>
         <tomcat.version>11.0.25</tomcat.version>
-        <jackson-version>2.22.3</jackson-version>
+        <jackson-version>2.22.4</jackson-version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <logback.version>1.6.5</logback.version>
         <logback-access.version>2.0.15</logback-access.version>
