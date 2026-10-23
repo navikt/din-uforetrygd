@@ -3,6 +3,7 @@ package no.nav.dinuforetrygd.security
 import no.nav.dinuforetrygd.uforetrygd.Innloggingstype
 import no.nav.dinuforetrygd.configuration.AppId
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.env.Profiles
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
 class TokenService(
     @Value("\${oauth2.azureAd.issuer}") private val azureAdIssuer: String,
     @Value("\${oauth2.tokenX.issuer}") private val tokenXIssuer: String,
+    @Value("\${auth.tokenx.requesting-pid-from-claim:false}") private val requestingPidFromClaim: Boolean,
     private val azureAdService: AzureAdService,
     private val tokenXService: TokenXService,
 ) {
@@ -109,11 +111,14 @@ class TokenService(
     fun isLoginLevelHigh(): Boolean = getInnloggingstype() == Innloggingstype.LEVEL4
 
     fun determineRequestingPid(): String {
-        SecurityContextHolder.getContext().authentication!!.let {
-            if (determineTokenType() == TokenType.TOKEN_X) {
-                return it.name
-            }
-            return ""
+        val auth = SecurityContextHolder.getContext().authentication ?: return ""
+        if (determineTokenType() != TokenType.TOKEN_X) return ""
+
+        val jwt = (auth as JwtAuthenticationToken).token
+        return if (requestingPidFromClaim) {
+            jwt.getClaim("pid") ?: throw IllegalStateException("Mangler pid claim i token")
+        } else {
+            auth.name
         }
     }
 

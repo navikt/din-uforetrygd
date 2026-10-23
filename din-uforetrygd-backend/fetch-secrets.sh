@@ -30,15 +30,11 @@ if [[ "${1:-}" != "--force" ]] && envFileContainsRequiredSecretPrefixes; then
   exit 0
 fi
 
-accessToken=$(printf 'n\n' | nais auth print-access-token --nais 2>/dev/null)
-
-# Logg inn hvis output ikke inneholder en gyldig JWT.
-if [[ ! "$accessToken" =~ ^eyJ[^.]+\.[^.]+\..+ ]]; then
-  nais login --nais -y
-fi
+nais login --nais -y
 
 : > "$envFile"
 
+echo "Starter henting av secrets for $appName..."
 for secretName in "${!secretPrefixes[@]}"; do
   prefix="${secretPrefixes[$secretName]}"
 
