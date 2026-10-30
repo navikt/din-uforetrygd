@@ -29,12 +29,14 @@ class RepresentasjonClient(
     fun hasValidRepresentasjonsforhold(representertPid: String, representantPid: String): RepresentasjonsforholdValidity? {
         return try {
             tokenService.getEgressToken(scope, audience, representantPid, AppId.PENSJON_REPRESENTASJON).let {
+                val representantPidIRequest =
+                    if (tokenService.determineTokenType() == TokenService.TokenType.TOKEN_X) null else representantPid
                 webClient
                     .post()
                     .uri(urlValidRepresentasjonsforhold())
                     .bodyValue(ValidRepresentasjonsforholdRequest(
                         representertPid,
-                        representantPid,
+                        representantPidIRequest,
                         VALID_FULLMAKT_TYPER + VALID_VERGE_TYPER))
                     .headers { header ->
                         header.setBearerAuth(it!!)
@@ -68,6 +70,8 @@ class RepresentasjonClient(
 
     fun harRepresentasjonsforhold(representantPid: String, validRepresentasjonstyper: List<String>): HarRepresentasjonsforhold? {
         return try {
+            val representantPidIRequest =
+                if (tokenService.determineTokenType() == TokenService.TokenType.TOKEN_X) null else representantPid
             tokenService.getEgressToken(scope, audience, representantPid, AppId.PENSJON_REPRESENTASJON).let {
                 webClient
                     .post()
@@ -78,7 +82,7 @@ class RepresentasjonClient(
                         header[HttpHeaders.ACCEPT] = MediaType.APPLICATION_JSON_VALUE
                         header[NAV_CALL_ID] = MDC.get(NAV_CALL_ID)
                     }
-                    .bodyValue(HarRepresentasjonforholdRequest(representantPid, validRepresentasjonstyper))
+                    .bodyValue(HarRepresentasjonforholdRequest(representantPidIRequest, validRepresentasjonstyper))
                     .retrieve()
                     .bodyToMono(HarRepresentasjonsforhold::class.java)
                     .retryWhen(retryOnTimeout)
@@ -102,7 +106,6 @@ class RepresentasjonClient(
             throw RepresentasjonException(SERVICE, "harRepresentasjonsforhold", "Failed to call service", e)
         }
     }
-
 
     private fun urlValidRepresentasjonsforhold() = UriComponentsBuilder.fromUriString(baseUrl)
             .path(PATH_HAS_VALID_REPRESENTASJONSFORHOLD)
@@ -132,4 +135,3 @@ class RepresentasjonClient(
 
     }
 }
-
