@@ -19,12 +19,12 @@ import org.springframework.web.reactive.function.client.WebClient
 class PdlClientTest: WebClientTest(){
     val tokenService: TokenService = mock(TokenService::class.java)
     val azureAdService: AzureAdService = mock(AzureAdService::class.java)
-    lateinit var pdlClient: PdlClientImpl
+    lateinit var pdlClient: PdlClient
 
     @BeforeEach
     override fun setup() {
         super.setup()
-        pdlClient = PdlClientImpl(
+        pdlClient = PdlClient(
             url = baseUrl,
             webClient = WebClient.create(),
             scope = "",

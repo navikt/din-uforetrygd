@@ -21,8 +21,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "nav_call_id": "%header{nav-call-id}",
-                        "mock_scenario": "%header{X-Mock-Scenario}"
+                        "nav_call_id": "%header{nav-call-id}"
                         }
                     </pattern>
                 </pattern>
