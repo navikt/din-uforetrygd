@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-envFile=".env.local"
+scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+envFile="$scriptDir/.env.local"
 appName="din-uforetrygd-frontend"
 sourceName="$appName-unleash-api-token"
 reason="Kjøre $appName lokalt"
@@ -23,14 +24,24 @@ updateEnvVariable() {
   fi
 }
 
-accessToken=$(printf 'n\n' | nais auth print-access-token --nais 2>/dev/null)
+envFileContainsRequiredSecretPrefixes() {
+  [[ -f "$envFile" ]] || return 1
 
-# Logg inn hvis output ikke inneholder en gyldig JWT.
-if [[ ! "$accessToken" =~ ^eyJ[^.]+\.[^.]+\..+ ]]; then
-  nais login --nais -y
+  for prefix in "UNLEASH"; do
+    grep -q "^${prefix}" "$envFile" || return 1
+  done
+
+  return 0
+}
+
+if [[ "${1:-}" != "--force" ]] && envFileContainsRequiredSecretPrefixes; then
+  echo "Secrets finnes allerede i $envFile. Kjør fetch-secrets.sh med --force for å hente secrets på nytt."
+  exit 0
 fi
+  
+nais login --nais -y
 
-echo "Henter secrets for Unleash..."
+echo "Henter secrets for $appName..."
 
 nais secret get "$sourceName" \
   --team "$team" \

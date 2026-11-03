@@ -2,6 +2,7 @@ package no.nav.dinuforetrygd
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import kotlin.collections.emptyList
 
 @SpringBootApplication
 class MinUføretrygdApplication
@@ -12,12 +13,14 @@ fun main(args: Array<String>) {
 }
 
 fun fetchSecretsLokalt() {
-    val isLocal = System.getProperty("spring.profiles.active")
-        ?.split(",")
-        ?.contains("local") == true
+    val activeProfiles = (System.getProperty("spring.profiles.active")
+        ?: System.getenv("SPRING_PROFILES_ACTIVE"))
+        ?.split(",") ?: emptyList()
+    val isLocal = activeProfiles.contains("local")
+    val runningViaTilt = System.getenv("RUNNING_VIA_TILT") == "true"
 
-    if (isLocal) {
-        ProcessBuilder("./din-uforetrygd-backend/fetch-secrets.sh")
+    if (isLocal && !runningViaTilt) {
+        ProcessBuilder("./fetch-secrets.sh")
             .inheritIO()
             .start()
             .waitFor()
