@@ -1,15 +1,15 @@
 import { BodyShort, Button, Heading, Link, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
-import styles from './etteroppgjor.module.css'
 import { isEnabled } from '@/utils/unleash'
+import { notFound } from 'next/navigation'
 
 const InformasjonOmEtteroppgjor = async () => {
   const skalVise = await isEnabled('din-uforetrygd.etteroppgjor-informasjon')
 
-  if (!skalVise) return null
+  if (!skalVise) return notFound()
 
   return (
-    <div className={styles.etteroppgjorContent}>
+    <div style={{ marginBottom: '56px' }}>
       <VStack gap="space-24">
         <section>
           <Heading level="2" size="large" spacing>
@@ -24,7 +24,7 @@ const InformasjonOmEtteroppgjor = async () => {
             det aktuelle året. Dette kalles etteroppgjør.
           </BodyShort>
           <BodyShort spacing>Etteroppgjøret har mange likheter med skatteoppgjøret:</BodyShort>
-          <List as="ul" className={styles.etteroppgjorList}>
+          <List as="ul" style={{ marginBottom: '12px' }}>
             <ListItem>Har du fått utbetalt for lite, får du penger tilbake.</ListItem>
             <ListItem>Har du fått utbetalt for mye, må du betale tilbake.</ListItem>
             <ListItem>
@@ -59,8 +59,8 @@ const InformasjonOmEtteroppgjor = async () => {
           <Button
             variant="secondary"
             size="small"
-            className={styles.etteroppgjorKnapp}
             as="a"
+            style={{ marginBottom: '16px' }}
             href="https://www.nav.no/kontaktoss"
           >
             Kontakt oss
@@ -73,8 +73,8 @@ const InformasjonOmEtteroppgjor = async () => {
           <Button
             variant="secondary"
             size="small"
-            className={styles.etteroppgjorKnapp}
             as="a"
+            style={{ marginBottom: '16px' }}
             href="https://www.nav.no/fyllut-ettersending/lospost?tema=UFO"
           >
             Send dokumentasjon
@@ -86,9 +86,9 @@ const InformasjonOmEtteroppgjor = async () => {
               Se video: Etteroppgjøret på 1-2-3
             </Heading>
             <iframe
-              className={styles.video}
-              title="Vi vil gjerne prate med deg"
-              src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=9bd4d650-a724-45ea-bd41-0d0f1fe20adf&configId=Enterprise"
+              className="video"
+              title="Etteroppgjøret på 1-2-3"
+              src="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=f4e32dae-6e05-4e86-a87c-c3efe056c85c&configId=Enterprise"
               allowFullScreen={true}
             />
             <Link href="https://www.nav.no/uforetrygd#etteroppgjor">Du kan lese mer om etteroppgjøret her.</Link>

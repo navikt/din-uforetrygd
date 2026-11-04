@@ -36,6 +36,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     barnetilleggIsEnabled,
     uforegradIsEnabled,
     etteroppgjørInformasjonIsEnabled,
+    inntektNesteÅrInformasjonIsEnabled,
   ] = await Promise.all([
     initate(pid),
     hentHarMottattVarsel(),
@@ -43,6 +44,7 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
     isEnabled('din-uforetrygd.barnetillegg'),
     isEnabled('din-uforetrygd.statusUforegrad'),
     isEnabled('din-uforetrygd.etteroppgjor-informasjon'),
+    isEnabled('din-uforetrygd.informasjon.inntekt-neste-ar'),
   ])
 
   if (initiateResponse.backendError) {
@@ -72,6 +74,24 @@ const Home: React.FC<Props> = async ({ searchParams }) => {
         visningskriterier={visningskriterier}
       />
       <InntektSnarveier visningskriterier={visningskriterier} pid={pid} />
+      {inntektNesteÅrInformasjonIsEnabled && uforetrygdResponse.hasIverksattVedtak && (
+        <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
+          <VStack gap="space-8">
+            <Heading level="2" size="medium">
+              Nå bør du melde fra om inntekt til neste år
+            </Heading>
+            <BodyShort>
+              Har du hatt inntekt ved siden av uføretrygden i år, eller forventer du å ha inntekt neste år? Da bør du
+              melde fra til oss hva du forventer å tjene allerede nå, så blir utbetaling av uføretrygden riktig fra
+              januar.
+            </BodyShort>
+            <Link href="/uforetrygd/selvbetjening/inntekt-neste-ar">
+              Les mer om å melde fra om inntekt til neste år her.
+            </Link>
+          </VStack>
+        </Box>
+      )}
+      {/* TODO: fjerne denne når skrudd av */}
       {etteroppgjørInformasjonIsEnabled && uforetrygdResponse.hasIverksattVedtak && (
         <Box background="accent-moderate" paddingBlock="space-32" paddingInline="space-24" borderRadius="12">
           <VStack gap="space-8">
