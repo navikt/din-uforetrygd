@@ -2,11 +2,18 @@ import { BodyShort, Button, Heading, List, VStack } from '@navikt/ds-react'
 import { ListItem } from '@navikt/ds-react/List'
 import { isEnabled } from '@/utils/unleash'
 import { notFound } from 'next/navigation'
+import { leggTilPidHvisVeileder } from '@/utils/getUrl/getUrl'
+import { env } from '@/env'
 
-const MeldeFraOmInntektNesteÅr = async () => {
+interface Props {
+  searchParams: Promise<{ pid?: string }>
+}
+
+const MeldeFraOmInntektNesteÅr = async ({searchParams}: Props) => {
   const skalVise = await isEnabled('din-uforetrygd.informasjon.inntekt-neste-ar')
-
   if (!skalVise) return notFound()
+
+  const { pid } = await searchParams
 
   return (
     <div style={{ marginBottom: '56px' }}>
@@ -39,7 +46,7 @@ const MeldeFraOmInntektNesteÅr = async () => {
               Skal du ikke ha inntekt til neste år lenger? Da registrerer du 0 kroner som forventet inntekt.
             </ListItem>
           </List>
-          <Button>Gå til inntektsplanleggeren</Button>
+          <Button as="a" href={leggTilPidHvisVeileder(env('LINK_INNTEKTSPLANLEGGER'), pid)} style={{marginTop: '12px', marginBottom: '12px'}}>Gå til inntektsplanleggeren</Button>
         </section>
         <section>
           <Heading level="3" size="medium" spacing>
@@ -56,12 +63,12 @@ const MeldeFraOmInntektNesteÅr = async () => {
             Dette skjer hvis du ikke melder fra
           </Heading>
           <BodyShort spacing>
-            Hvis du ikke melder fra om inntekt får du et brev fra oss 2. desember. Der ser du beregningen for
-            utbetalingen din i januar, hvor den oppjusterte inntekten er lagt til grunn.
+            Hvis du ikke melder fra om inntekt får du et brev fra oss i begynnelsen av desember. Der ser du beregningen
+            for utbetalingen din i januar, hvor den oppjusterte inntekten er lagt til grunn.
           </BodyShort>
           <BodyShort spacing>
             Når du får brevet, har du fortsatt mulighet til å gi oss beskjed eller gjøre endringer i inntekten i
-            inntektsplanleggeren. Du kan melde fra om riktig inntekt til og med 31. Desember. Hvis vi ikke får beskjed
+            inntektsplanleggeren. Du kan melde fra om riktig inntekt til og med 31. desember. Hvis vi ikke får beskjed
             fra deg om en annen inntekt, vil vi beregne uføretrygden etter den inntekten som står i brevet.
           </BodyShort>
         </section>
