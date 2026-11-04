@@ -9,6 +9,10 @@ const PATHS: Record<string, { tittel: string; url: string }> = {
   saksoversikt: { tittel: 'Saksoversikt', url: '/uforetrygd/selvbetjening/saksoversikt' },
   dokumenter: { tittel: 'Dokumenter knyttet til saken din', url: '/uforetrygd/selvbetjening/dokumenter' },
   etteroppgjor: { tittel: 'Informasjon om etteroppgjøret', url: '/uforetrygd/selvbetjening/etteroppgjor' },
+  'inntekt-neste-ar': {
+    tittel: 'Melde fra om inntekt til neste år',
+    url: '/uforetrygd/selvbetjening/inntekt-neste-ar',
+  },
   'dine-muligheter': { tittel: 'Dine muligheter', url: '/uforetrygd/selvbetjening/dine-muligheter' },
   'snakk-med-oss': { tittel: 'Snakk med oss', url: '/uforetrygd/selvbetjening/dine-muligheter/snakk-med-oss' },
 }
