@@ -1,6 +1,5 @@
 import { BodyShort, Box, CopyButton, HStack, InternalHeader, Spacer } from '@navikt/ds-react'
 import { InternalHeaderTitle, InternalHeaderUser } from '@navikt/ds-react/InternalHeader'
-import { headers } from 'next/headers'
 import { hentBorgerInfo } from '@/api/hentBorgerInfo'
 import { getAzureUserPayload } from '@/utils/getAzureUserPayload/getAzureUserPayload'
 
@@ -10,11 +9,7 @@ const formatFnr = (fnr: string) => {
 
 export const VeilederBanner = async () => {
   const veileder = await getAzureUserPayload()
-
-  const headere = await headers()
-  const kryptertPid = headere.get('x-kryptert-pid') ?? undefined
-
-  const borgerInfo = kryptertPid && (await hentBorgerInfo(kryptertPid))
+  const borgerInfo = await hentBorgerInfo()
 
   return (
     <>

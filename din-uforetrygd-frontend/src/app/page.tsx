@@ -27,8 +27,8 @@ interface Props {
 
 const Home: React.FC<Props> = async ({ searchParams }) => {
   const { pid } = await searchParams
-  const uforevedtakPromise = hentDittUforevedtak(pid)
-  const erVergePromise = sjekkOmErVerge(pid || '')
+  const uforevedtakPromise = hentDittUforevedtak()
+  const erVergePromise = sjekkOmErVerge()
   const [
     initiateResponse,
     harMottattVarsel,
