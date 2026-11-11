@@ -24,7 +24,7 @@
         <logback-access.version>2.0.15</logback-access.version>
         <micrometer.version>1.17.2</micrometer.version>
         <!-- Test -->
-        <mockk.version>1.14.11</mockk.version>
+        <mockk.version>1.14.12</mockk.version>
         <mockwebserver.version>5.5.1</mockwebserver.version>
     </properties>
     <dependencies>
