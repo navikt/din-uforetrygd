@@ -14,11 +14,9 @@ spec:
             round(
                 sum(rate(http_server_requests_seconds_count{app=~"din-uforetrygd-.*", status=~"[5].."}[5m])) by (app, uri) / sum(rate(http_server_requests_seconds_count{app=~"din-uforetrygd-backend"}[5m])) by (app, uri) * 100 
             ) > 10
-          for: 2m
+          for: 3m
           annotations:
-            message: "*{{ $labels.app }}*: {{ $value }}% 5xx-feil fra `{{ $labels.uri }}` siste 2 min!"
-            action: "https://logs.az.nav.no/goto/ae4094e3dd306b3e8e64f2a0086f2db7?security_tenant=navlogs"
-            dashboard_url: 'https://grafana.nav.cloud.nais.io/d/din-uforetrygd-monitoring/din-uforetrygd'
+            message: "*{{ $labels.app }}*: {{ $value }}% 5xx-feil fra `{{ $labels.uri }}` siste 3 min!"
           labels:
             severity: error
             namespace: ufore
