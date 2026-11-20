@@ -84,6 +84,8 @@ const MeldeFraOmInntektNesteÅr = async ({searchParams}: Props) => {
               allowFullScreen={true}
             />
           </VStack>
+          {/* @ts-expect-error ikke typet */}
+          <skyra-survey slug="arbeids-og-velferdsetaten-nav/inntektsplanleggeren-video"></skyra-survey>
         </section>
       </VStack>
     </div>
